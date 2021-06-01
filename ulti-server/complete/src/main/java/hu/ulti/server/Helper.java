@@ -1,6 +1,7 @@
 package hu.ulti.server;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -113,6 +114,14 @@ public class Helper {
 		hands.add(1, hand2);
 		hands.add(2, hand3);
 		return hands;
+	}
+	
+	public static List<Card> orderHand(List<Card> hand, int orderId) {
+		if (orderId == 0)
+			hand.sort(Comparator.comparing(Card::isTalon).thenComparing(Card::getColorId));
+		else
+			hand.sort(Comparator.comparing(Card::isTalon).thenComparing(Card::getColorlessId));
+		return hand;
 	}
 
 }

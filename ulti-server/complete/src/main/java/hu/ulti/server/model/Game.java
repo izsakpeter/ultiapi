@@ -1,34 +1,28 @@
 package hu.ulti.server.model;
 
-import java.util.List;
-
 public class Game {
 
-	private int order;
-	private List<Card> hand;
+	private int startingValue;
+	private Player player;
 
 	public Game() {
-		this.order = 0;
+		this.startingValue = 0;
 	}
 
-	public Game(List<Card> hand) {
-		this.order = 0;
-		this.hand = hand;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public int getOrder() {
-		return order;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
-	public void setOrder(int order) {
-		this.order = order;
+	public int getStartingValue() {
+		return startingValue;
 	}
 
-	public List<Card> getHand() {
-		return hand;
+	public void setStartingValue(int startingValue) {
+		this.startingValue = startingValue;
 	}
 
-	public void setHand(List<Card> hand) {
-		this.hand = hand;
-	}
 }

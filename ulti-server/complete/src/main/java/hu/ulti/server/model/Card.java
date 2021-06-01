@@ -3,6 +3,8 @@ package hu.ulti.server.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.ulti.server.Helper;
+
 public class Card {
 	private static final String MAKK = "makk";
 	private static final String ZOLD = "zold";
@@ -74,6 +76,53 @@ public class Card {
 		return allCards;
 	}
 
+	public static List<Card> showTalon(List<Card> hand, int orderId) {
+
+		for (Card card : hand) {
+			card.setTalon(false);
+		}
+
+		Helper.orderHand(hand, orderId);
+
+		return hand;
+	}
+
+	public static List<Card> removeTalon(List<Card> hand, int orderId, int talon1, int talon2) {
+
+		for (Card card : hand) {
+			if (card.getColorId() == talon1) {
+				hand.remove(card);
+				break;
+			}
+		}
+
+		for (Card card : hand) {
+			if (card.getColorId() == talon2) {
+				hand.remove(card);
+				break;
+			}
+		}
+
+		Helper.orderHand(hand, orderId);
+
+		return hand;
+	}
+
+	public static List<Card> addTalon(List<Card> hand, int orderId, int talon1, int talon2) {
+		List<Card> cards = getAllCards();
+
+		for (Card card : cards) {
+			if (card.getColorId() == talon1 || card.getColorId() == talon2) {
+				card.setTalon(true);
+				hand.add(card);
+			}
+		}
+
+		Helper.orderHand(hand, orderId);
+
+		return hand;
+	}
+
 	public int getColorId() {
 		return colorId;
 	}
@@ -113,5 +162,4 @@ public class Card {
 	public void setTalon(boolean isTalon) {
 		this.isTalon = isTalon;
 	}
-
 }

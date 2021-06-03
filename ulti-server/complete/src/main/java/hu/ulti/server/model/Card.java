@@ -24,14 +24,12 @@ public class Card {
 	private int colorlessId;
 	private String color;
 	private String value;
-	private boolean isTalon;
 
 	public Card(int colorlessId, int colorId, String color, String value) {
 		this.colorId = colorId;
 		this.colorlessId = colorlessId;
 		this.color = color;
 		this.value = value;
-		this.isTalon = false;
 	}
 
 	public static List<Card> getAllCards() {
@@ -75,52 +73,49 @@ public class Card {
 
 		return allCards;
 	}
-
-	public static List<Card> showTalon(List<Card> hand, int orderId) {
-
-		for (Card card : hand) {
-			card.setTalon(false);
-		}
-
-		Helper.orderHand(hand, orderId);
-
-		return hand;
+	
+	public static List<Card> addTalon(Player player, List<Card> talon) {
+		
+		player.getHand().add(talon.get(0));
+		player.getHand().add(talon.get(1));
+		
+		Helper.orderHand(player.getHand(), player.getOrder());
+		
+		return player.getHand();
 	}
-
-	public static List<Card> removeTalon(List<Card> hand, int orderId, int talon1, int talon2) {
-
-		for (Card card : hand) {
-			if (card.getColorId() == talon1) {
-				hand.remove(card);
+	
+	public static List<Card> getTalonById(List<Integer> talonid) {
+		
+		List<Card> talon = new ArrayList<Card>();
+		List<Card> allCards = getAllCards();
+		
+		for (Card card : allCards) {
+			if (card.getColorId() == talonid.get(0) || card.getColorId() == talonid.get(1))
+				talon.add(card);
+		}
+		
+		return talon;
+	}
+	
+	public static List<Card> removeTalon(Player player, List<Card> talon) {
+		
+		for (Card card : player.getHand()) {
+			if (card.getColorId() == talon.get(0).getColorId()) {
+				player.getHand().remove(card);
 				break;
 			}
 		}
 
-		for (Card card : hand) {
-			if (card.getColorId() == talon2) {
-				hand.remove(card);
+		for (Card card : player.getHand()) {
+			if (card.getColorId() == talon.get(1).getColorId()) {
+				player.getHand().remove(card);
 				break;
 			}
 		}
 
-		Helper.orderHand(hand, orderId);
+		Helper.orderHand(player.getHand(), player.getOrder());
 
-		return hand;
-	}
-
-	public static List<Card> addTalon(List<Card> hand, int orderId, int talon1, int talon2) {
-		List<Card> cards = getAllCards();
-
-		for (Card card : cards) {
-			if (card.getColorId() == talon1 || card.getColorId() == talon2) {
-				card.setTalon(true);
-				hand.add(card);
-			}
-		}
-
-		Helper.orderHand(hand, orderId);
-
-		return hand;
+		return player.getHand();
 	}
 
 	public int getColorId() {
@@ -155,11 +150,7 @@ public class Card {
 		this.value = value;
 	}
 
-	public boolean isTalon() {
-		return isTalon;
-	}
+	
 
-	public void setTalon(boolean isTalon) {
-		this.isTalon = isTalon;
-	}
+	
 }

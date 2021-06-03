@@ -14,10 +14,12 @@ public class Call {
 	private static final String SZAZ40 = "40szaz";
 	private static final String ULTI = "ulti";
 	private static final String BETLI = "betli";
-	private static final String DURI = "duri";
+	private static final String DURI_SZINES = "szinesduri";
+	private static final String DURI_SZINTELEN = "szintelenduri";
 	private static final String SZAZ20 = "20szaz";
 	private static final String BETLI_TERITETT = "teritettbetli";
-	private static final String DURI_TERITETT = "teritettduri";
+	private static final String DURI_SZINES_TERITETT = "teritettduri";
+	private static final String DURI_SZINELEN_TERITETT = "teritettduri";
 	
 	private static final int PASSZ_VALUE = 1;
 	private static final int SZAZ40_VALUE = 4;
@@ -48,37 +50,45 @@ public class Call {
 		calls.add(new Call(1, MAKK, SZAZ40, SZAZ40_VALUE));
 		calls.add(new Call(2, MAKK, ULTI, ULTI_VALUE));
 		calls.add(new Call(3, MAKK, BETLI, BETLI_VALUE));
-		calls.add(new Call(4, MAKK, DURI, DURI_VALUE));
-		calls.add(new Call(5, MAKK, SZAZ20, SZAZ20_VALUE));
-		calls.add(new Call(6, MAKK, BETLI_TERITETT, BETLI_TERITETT_VALUE));
-		calls.add(new Call(7, MAKK, DURI_TERITETT, DURI_TERITETT_VALUE));
+		calls.add(new Call(4, MAKK, DURI_SZINES, DURI_VALUE));
+		calls.add(new Call(5, MAKK, DURI_SZINTELEN, DURI_VALUE));
+		calls.add(new Call(6, MAKK, SZAZ20, SZAZ20_VALUE));
+		calls.add(new Call(7, MAKK, BETLI_TERITETT, BETLI_TERITETT_VALUE));
+		calls.add(new Call(8, MAKK, DURI_SZINES_TERITETT, DURI_TERITETT_VALUE));
+		calls.add(new Call(9, MAKK, DURI_SZINELEN_TERITETT, DURI_TERITETT_VALUE));
 		
-		calls.add(new Call(8, ZOLD, PASSZ, PASSZ_VALUE * 2));
-		calls.add(new Call(9, ZOLD, SZAZ40, SZAZ40_VALUE * 2));
-		calls.add(new Call(10, ZOLD, ULTI, ULTI_VALUE * 2));
-		calls.add(new Call(11, ZOLD, BETLI, BETLI_VALUE * 2));
-		calls.add(new Call(12, ZOLD, DURI, DURI_VALUE * 2 ));
-		calls.add(new Call(13, ZOLD, SZAZ20, SZAZ20_VALUE * 1));
-		calls.add(new Call(14, ZOLD, BETLI_TERITETT, BETLI_TERITETT_VALUE * 2));
-		calls.add(new Call(15, ZOLD, DURI_TERITETT, DURI_TERITETT_VALUE * 2));
+		calls.add(new Call(10, ZOLD, PASSZ, PASSZ_VALUE * 2));
+		calls.add(new Call(11, ZOLD, SZAZ40, SZAZ40_VALUE * 2));
+		calls.add(new Call(12, ZOLD, ULTI, ULTI_VALUE * 2));
+		calls.add(new Call(13, ZOLD, BETLI, BETLI_VALUE * 2));
+		calls.add(new Call(14, ZOLD, DURI_SZINES, DURI_VALUE * 2 ));
+		calls.add(new Call(15, ZOLD, DURI_SZINTELEN, DURI_VALUE * 2 ));
+		calls.add(new Call(16, ZOLD, SZAZ20, SZAZ20_VALUE * 1));
+		calls.add(new Call(17, ZOLD, BETLI_TERITETT, BETLI_TERITETT_VALUE * 2));
+		calls.add(new Call(18, ZOLD, DURI_SZINES_TERITETT, DURI_TERITETT_VALUE * 2));
+		calls.add(new Call(19, ZOLD, DURI_SZINELEN_TERITETT, DURI_TERITETT_VALUE * 2));
 		
-		calls.add(new Call(16, TOK, PASSZ, PASSZ_VALUE * 3));
-		calls.add(new Call(17, TOK, SZAZ40, SZAZ40_VALUE * 3));
-		calls.add(new Call(18, TOK, ULTI, ULTI_VALUE * 3));
-		calls.add(new Call(19, TOK, BETLI, BETLI_VALUE * 3));
-		calls.add(new Call(20, TOK, DURI, DURI_VALUE * 3));
-		calls.add(new Call(21, TOK, SZAZ20, SZAZ20_VALUE * 3));
-		calls.add(new Call(22, TOK, BETLI_TERITETT, BETLI_TERITETT_VALUE * 3));
-		calls.add(new Call(23, TOK, DURI_TERITETT, DURI_TERITETT_VALUE * 3));
+		calls.add(new Call(20, TOK, PASSZ, PASSZ_VALUE * 3));
+		calls.add(new Call(21, TOK, SZAZ40, SZAZ40_VALUE * 3));
+		calls.add(new Call(22, TOK, ULTI, ULTI_VALUE * 3));
+		calls.add(new Call(23, TOK, BETLI, BETLI_VALUE * 3));
+		calls.add(new Call(24, TOK, DURI_SZINES, DURI_VALUE * 3));
+		calls.add(new Call(25, TOK, DURI_SZINTELEN, DURI_VALUE * 3));
+		calls.add(new Call(26, TOK, SZAZ20, SZAZ20_VALUE * 3));
+		calls.add(new Call(27, TOK, BETLI_TERITETT, BETLI_TERITETT_VALUE * 3));
+		calls.add(new Call(28, TOK, DURI_SZINES_TERITETT, DURI_TERITETT_VALUE * 3));
+		calls.add(new Call(29, TOK, DURI_SZINELEN_TERITETT, DURI_TERITETT_VALUE * 3));
 		
-		calls.add(new Call(24, PIROS, PASSZ, PASSZ_VALUE * 4));
-		calls.add(new Call(25, PIROS, SZAZ40, SZAZ40_VALUE * 4));
-		calls.add(new Call(26, PIROS, ULTI, ULTI_VALUE * 4));
-		calls.add(new Call(27, PIROS, BETLI, BETLI_VALUE * 4));
-		calls.add(new Call(28, PIROS, DURI, DURI_VALUE * 4));
-		calls.add(new Call(29, PIROS, SZAZ20, SZAZ20_VALUE * 4));
-		calls.add(new Call(30, PIROS, BETLI_TERITETT, BETLI_TERITETT_VALUE * 4));
-		calls.add(new Call(31, PIROS, DURI_TERITETT, DURI_TERITETT_VALUE * 4));
+		calls.add(new Call(30, PIROS, PASSZ, PASSZ_VALUE * 4));
+		calls.add(new Call(31, PIROS, SZAZ40, SZAZ40_VALUE * 4));
+		calls.add(new Call(32, PIROS, ULTI, ULTI_VALUE * 4));
+		calls.add(new Call(33, PIROS, BETLI, BETLI_VALUE * 4));
+		calls.add(new Call(34, PIROS, DURI_SZINES, DURI_VALUE * 4));
+		calls.add(new Call(35, PIROS, DURI_SZINTELEN, DURI_VALUE * 4));
+		calls.add(new Call(36, PIROS, SZAZ20, SZAZ20_VALUE * 4));
+		calls.add(new Call(37, PIROS, BETLI_TERITETT, BETLI_TERITETT_VALUE * 4));
+		calls.add(new Call(38, PIROS, DURI_SZINES_TERITETT, DURI_TERITETT_VALUE * 4));
+		calls.add(new Call(39, PIROS, DURI_SZINELEN_TERITETT, DURI_TERITETT_VALUE * 4));
 		
 		return calls;
 	}

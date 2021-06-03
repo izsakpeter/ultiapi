@@ -15,6 +15,7 @@ public class Helper {
 		List<Card> hand1 = new ArrayList<Card>();
 		List<Card> hand2 = new ArrayList<Card>();
 		List<Card> hand3 = new ArrayList<Card>();
+		List<Card> talon = new ArrayList<Card>();
 
 		for (int i = 0; i < 5; i++) {
 
@@ -49,10 +50,7 @@ public class Helper {
 	
 					Random rand = new Random();
 					int random = rand.nextInt(cards.size());
-	
-					cards.get(random).setTalon(true);
-					
-					hand2.add(cards.get(random));
+					talon.add(cards.get(random));
 					cards.remove(random);
 				}
 				break;
@@ -61,10 +59,7 @@ public class Helper {
 	
 					Random rand = new Random();
 					int random = rand.nextInt(cards.size());
-					
-					cards.get(random).setTalon(true);
-	
-					hand3.add(cards.get(random));
+					talon.add(cards.get(random));
 					cards.remove(random);
 				}
 				break;
@@ -73,10 +68,7 @@ public class Helper {
 	
 					Random rand = new Random();
 					int random = rand.nextInt(cards.size());
-					
-					cards.get(random).setTalon(true);
-	
-					hand1.add(cards.get(random));
+					talon.add(cards.get(random));
 					cards.remove(random);
 				}
 				break;
@@ -113,14 +105,15 @@ public class Helper {
 		hands.add(0, hand1);
 		hands.add(1, hand2);
 		hands.add(2, hand3);
+		hands.add(3, talon);
 		return hands;
 	}
 	
 	public static List<Card> orderHand(List<Card> hand, int orderId) {
 		if (orderId == 0)
-			hand.sort(Comparator.comparing(Card::isTalon).thenComparing(Card::getColorId));
+			hand.sort(Comparator.comparing(Card::getColorId));
 		else
-			hand.sort(Comparator.comparing(Card::isTalon).thenComparing(Card::getColorlessId));
+			hand.sort(Comparator.comparing(Card::getColorlessId));
 		return hand;
 	}
 

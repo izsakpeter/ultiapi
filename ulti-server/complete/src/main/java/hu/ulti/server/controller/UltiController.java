@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.ulti.server.Helper;
+import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
@@ -30,9 +31,6 @@ public class UltiController {
 	Game game = new Game();
 
 	private int dealer = 3;
-	private int activePlayer = 1;
-	private int startingValue = 0;
-	private int lastCaller = 1;
 
 	@GetMapping("/ulti")
 	public Game shuffle(@RequestParam int id) {
@@ -40,11 +38,14 @@ public class UltiController {
 		switch (id) {
 		case 1:
 			isPlayer1Ready = true;
+			player1.setId(id);
 			break;
 		case 2:
 			isPlayer2Ready = true;
+			player2.setId(id);
 			break;
 		case 3:
+			player3.setId(id);
 			isPlayer3Ready = true;
 			break;
 		}
@@ -61,14 +62,14 @@ public class UltiController {
 
 			Player player = new Player();
 
-			if (id == 1)
+			if (id == player1.getId())
 				player = player1;
-			if (id == 2)
+			if (id == player2.getId())
 				player = player2;
-			if (id == 3)
+			if (id == player3.getId())
 				player = player3;
 
-			player.getHand().sort(Comparator.comparing(Card::getColorId));
+			player.getHand().sort(Comparator.comparing(Card::getOrderColorId));
 
 			game.setPlayer(player);
 
@@ -83,11 +84,11 @@ public class UltiController {
 
 		Player player = new Player();
 
-		if (id == 1)
+		if (id == player1.getId())
 			player = player1;
-		if (id == 2)
+		if (id == player2.getId())
 			player = player2;
-		if (id == 3)
+		if (id == player3.getId())
 			player = player3;
 
 		if (orderid == 0)
@@ -104,33 +105,29 @@ public class UltiController {
 
 	@GetMapping("/startingValue")
 	public Game setStartingValue(@RequestParam int id, @RequestParam int value) {
-		
-		// 1 makk
-		// 2 zold
-		// 3 tok
-		// 4 piros
 
-		if (id == activePlayer) {
-			startingValue = value;
-
+		if (id == game.getActivePlayer()) {
 			Player player = new Player();
 
-			if (id == 1) {
+			if (id == player1.getId()) {
 				player1.setHand(Card.addTalon(player1, talon));
+				player1.setForcedCallId(value);
 				player = player1;
 			}
 
-			if (id == 2) {
+			if (id == player2.getId()) {
 				player2.setHand(Card.addTalon(player2, talon));
+				player2.setForcedCallId(value);
 				player = player2;
 			}
 
-			if (id == 3) {
+			if (id == player3.getId()) {
 				player3.setHand(Card.addTalon(player3, talon));
+				player3.setForcedCallId(value);
 				player = player3;
 			}
 
-			game.setStartingValue(startingValue);
+			game.setStartingValue(value);
 			game.setPlayer(player);
 
 			return game;
@@ -140,33 +137,29 @@ public class UltiController {
 	}
 
 	@GetMapping("/call")
-	public Game call(@RequestParam int id, @RequestParam List<Integer> value, @RequestParam List<Integer> talonid) {
+	public Game call(@RequestParam int id, @RequestParam List<Integer> call, @RequestParam List<Integer> talonid) {
 
 		talon = Card.getTalonById(talonid);
 
-		if (id == activePlayer) {
+		if (id == game.getActivePlayer()) {
 			Player player = new Player();
 
-			if (id == 1) {
-				player1.setHand(Card.removeTalon(player1, talon));
-				player = player1;
-				activePlayer = 2;
-				lastCaller = 1;
+			if (id == player1.getId()) {
+
+				if (Call.callChecker(game.getPreviousCall(), call, player.getForcedCallId())) {
+					game.setLastCallerId(id);
+					game.setPreviousCall(call);
+					player1.setHand(Card.removeTalon(player1, talon));
+					player = player1;
+					game.setActivePlayer(player2.getId());
+
+				} else {
+					player1.setCallOk(false);
+					player = player1;
+				}
 			}
 
-			if (id == 2) {
-				player1.setHand(Card.removeTalon(player2, talon));
-				player = player1;
-				activePlayer = 3;
-				lastCaller = 2;
-			}
-
-			if (id == 3) {
-				player1.setHand(Card.removeTalon(player3, talon));
-				player = player1;
-				activePlayer = 1;
-				lastCaller = 3;
-			}
+			// p2 p3
 
 			game.setPlayer(player);
 
@@ -181,43 +174,52 @@ public class UltiController {
 		// action 0 passz
 		// action 1 beszállás
 
-		if (id == activePlayer) {
+		if (id == game.getActivePlayer()) {
 
 			Player player = new Player();
 
 			if (action == 0) {
-				
-				if (lastCaller == activePlayer) {
-					// kezdődik a játék
-					return null;
+
+				if (game.getLastCallerId() == game.getActivePlayer()) {
+					if (id == player1.getId())
+						player = player1;
+					if (id == player2.getId())
+						player = player2;
+					if (id == player3.getId())
+						player = player3;
+
+					game.setGameReadyToStart(true);
+					game.setPlayer(player);
+
+					return game;
 				}
-				
-				if (id == 1) {
+
+				if (id == player1.getId()) {
 					player = player1;
-					activePlayer = 2;
+					game.setActivePlayer(player2.getId());
 				}
 
-				if (id == 2) {
+				if (id == player2.getId()) {
 					player = player2;
-					activePlayer = 3;
+					game.setActivePlayer(player3.getId());
 				}
 
-				if (id == 3) {
+				if (id == player3.getId()) {
 					player = player3;
-					activePlayer = 1;
+					game.setActivePlayer(player1.getId());
 				}
 			} else {
-				if (id == 1) {
+				if (id == player1.getId()) {
 					player1.setHand(Card.addTalon(player1, talon));
 					player = player1;
 				}
 
-				if (id == 2) {
+				if (id == player2.getId()) {
 					player2.setHand(Card.addTalon(player2, talon));
 					player = player2;
 				}
 
-				if (id == 3) {
+				if (id == player3.getId()) {
 					player3.setHand(Card.addTalon(player3, talon));
 					player = player3;
 				}

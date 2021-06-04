@@ -36,24 +36,36 @@ public class UltiController {
 	public Game shuffle(@RequestParam int id) {
 
 		switch (id) {
-		case 1:
-			isPlayer1Ready = true;
-			player1.setId(id);
-			break;
-		case 2:
-			isPlayer2Ready = true;
-			player2.setId(id);
-			break;
-		case 3:
-			player3.setId(id);
-			isPlayer3Ready = true;
-			break;
+			case 1:
+				isPlayer1Ready = true;
+				player1.setId(id);
+				break;
+			case 2:
+				isPlayer2Ready = true;
+				player2.setId(id);
+				break;
+			case 3:
+				player3.setId(id);
+				isPlayer3Ready = true;
+				break;
 		}
 
 		if (isPlayer1Ready && isPlayer2Ready && isPlayer3Ready) {
 
 			if (hands == null)
 				hands = Helper.getHands(dealer);
+
+			switch (dealer) {
+				case 1:
+					game.setActivePlayer(player2.getId());
+					break;
+				case 2:
+					game.setActivePlayer(player3.getId());
+					break;
+				case 3:
+					game.setActivePlayer(player1.getId());
+					break;
+			}
 
 			player1.setHand(hands.get(0));
 			player2.setHand(hands.get(1));
@@ -111,19 +123,19 @@ public class UltiController {
 
 			if (id == player1.getId()) {
 				player1.setHand(Card.addTalon(player1, talon));
-				player1.setForcedCallId(value);
+				player1.setForcedColorId(value);
 				player = player1;
 			}
 
 			if (id == player2.getId()) {
 				player2.setHand(Card.addTalon(player2, talon));
-				player2.setForcedCallId(value);
+				player2.setForcedColorId(value);
 				player = player2;
 			}
 
 			if (id == player3.getId()) {
 				player3.setHand(Card.addTalon(player3, talon));
-				player3.setForcedCallId(value);
+				player3.setForcedColorId(value);
 				player = player3;
 			}
 
@@ -139,14 +151,13 @@ public class UltiController {
 	@GetMapping("/call")
 	public Game call(@RequestParam int id, @RequestParam List<Integer> call, @RequestParam List<Integer> talonid) {
 
-		talon = Card.getTalonById(talonid);
-
 		if (id == game.getActivePlayer()) {
 			Player player = new Player();
 
 			if (id == player1.getId()) {
 
-				if (Call.callChecker(game.getPreviousCall(), call, player.getForcedCallId())) {
+				if (Call.callChecker(game.getPreviousCall(), call, player1.getForcedColorId())) {
+					talon = Card.getTalonById(talonid);
 					game.setLastCallerId(id);
 					game.setPreviousCall(call);
 					player1.setHand(Card.removeTalon(player1, talon));
@@ -159,7 +170,37 @@ public class UltiController {
 				}
 			}
 
-			// p2 p3
+			if (id == player2.getId()) {
+
+				if (Call.callChecker(game.getPreviousCall(), call, player2.getForcedColorId())) {
+					talon = Card.getTalonById(talonid);
+					game.setLastCallerId(id);
+					game.setPreviousCall(call);
+					player2.setHand(Card.removeTalon(player2, talon));
+					player = player2;
+					game.setActivePlayer(player3.getId());
+
+				} else {
+					player2.setCallOk(false);
+					player = player2;
+				}
+			}
+
+			if (id == player3.getId()) {
+
+				if (Call.callChecker(game.getPreviousCall(), call, player3.getForcedColorId())) {
+					talon = Card.getTalonById(talonid);
+					game.setLastCallerId(id);
+					game.setPreviousCall(call);
+					player3.setHand(Card.removeTalon(player3, talon));
+					player = player3;
+					game.setActivePlayer(player3.getId());
+
+				} else {
+					player3.setCallOk(false);
+					player = player3;
+				}
+			}
 
 			game.setPlayer(player);
 

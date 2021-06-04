@@ -7,7 +7,7 @@ public class Player {
 	private int id;
 	private int order;
 	private List<Card> hand;
-	private int forcedCallId = 0;
+	private int forcedColorId = 0;
 	private boolean isCallOk = true;
 
 	public Player() {
@@ -43,12 +43,12 @@ public class Player {
 		this.hand = hand;
 	}
 
-	public int getForcedCallId() {
-		return forcedCallId;
+	public int getForcedColorId() {
+		return forcedColorId;
 	}
 
-	public void setForcedCallId(int forcedCallId) {
-		this.forcedCallId = forcedCallId;
+	public void setForcedColorId(int forcedColorId) {
+		this.forcedColorId = forcedColorId;
 	}
 
 	public boolean isCallOk() {

@@ -11,6 +11,7 @@ public class Game {
 	private boolean isGameReadyToStart = false;
 	private int lastCallerId;
 	private int activePlayer;
+	private Strike kor = new Strike();
 
 	public Game() {
 		this.startingValue = 0;
@@ -63,4 +64,13 @@ public class Game {
 	public void setActivePlayer(int activePlayer) {
 		this.activePlayer = activePlayer;
 	}
+
+	public Strike getKor() {
+		return kor;
+	}
+
+	public void setKor(Strike kor) {
+		this.kor = kor;
+	}
+
 }

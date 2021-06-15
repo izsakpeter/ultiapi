@@ -118,6 +118,21 @@ public class Card {
 
 		return player.getHand();
 	}
+	
+	public static List<Card> removeCardbyId(Player player, int cardId) {
+		
+		for (Card card : player.getHand()) {
+			if (card.getOrderColorId() == cardId) {
+				player.getHand().remove(card);
+				break;
+			}
+		}
+		
+		Helper.orderHand(player.getHand(), player.getOrder());
+		
+		return player.getHand();
+	}
+	
 
 	public int getOrderColorId() {
 		return orderColorId;

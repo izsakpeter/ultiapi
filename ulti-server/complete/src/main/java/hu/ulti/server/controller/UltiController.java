@@ -13,6 +13,7 @@ import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
+import hu.ulti.server.model.Strike;
 
 @RestController
 public class UltiController {
@@ -29,25 +30,25 @@ public class UltiController {
 	private Player player3 = new Player();
 
 	Game game = new Game();
-
+	
 	private int dealer = 3;
 
 	@GetMapping("/ulti")
 	public Game shuffle(@RequestParam int id) {
 
 		switch (id) {
-			case 1:
-				isPlayer1Ready = true;
-				player1.setId(id);
-				break;
-			case 2:
-				isPlayer2Ready = true;
-				player2.setId(id);
-				break;
-			case 3:
-				player3.setId(id);
-				isPlayer3Ready = true;
-				break;
+		case 1:
+			isPlayer1Ready = true;
+			player1.setId(id);
+			break;
+		case 2:
+			isPlayer2Ready = true;
+			player2.setId(id);
+			break;
+		case 3:
+			player3.setId(id);
+			isPlayer3Ready = true;
+			break;
 		}
 
 		if (isPlayer1Ready && isPlayer2Ready && isPlayer3Ready) {
@@ -56,15 +57,15 @@ public class UltiController {
 				hands = Helper.getHands(dealer);
 
 			switch (dealer) {
-				case 1:
-					game.setActivePlayer(player2.getId());
-					break;
-				case 2:
-					game.setActivePlayer(player3.getId());
-					break;
-				case 3:
-					game.setActivePlayer(player1.getId());
-					break;
+			case 1:
+				game.setActivePlayer(player2.getId());
+				break;
+			case 2:
+				game.setActivePlayer(player3.getId());
+				break;
+			case 3:
+				game.setActivePlayer(player1.getId());
+				break;
 			}
 
 			player1.setHand(hands.get(0));
@@ -274,4 +275,57 @@ public class UltiController {
 		return null;
 	}
 
+	@GetMapping("/play")
+	public Game play(@RequestParam int id, @RequestParam int cardid) {
+
+		if (game.isGameReadyToStart() && id == game.getActivePlayer()) {
+			
+			Player player = new Player();
+			
+			if (id == player1.getId()) {
+				game.getKor().setCard1(cardid);
+				player1.setHand(Card.removeCardbyId(player1, cardid));
+				game.setActivePlayer(player2.getId());
+			}
+
+			if (id == player2.getId()) {
+				game.getKor().setCard2(cardid);
+				player1.setHand(Card.removeCardbyId(player1, cardid));
+				game.setActivePlayer(player3.getId());
+			}
+
+			if (id == player3.getId()) {
+				game.getKor().setCard3(cardid);
+				player1.setHand(Card.removeCardbyId(player1, cardid));
+				game.setActivePlayer(player1.getId());
+			}
+			
+			
+			strikeHandler();
+			
+			game.setPlayer(player);
+		}
+
+		return game;
+	}
+	
+	
+	private void strikeHandler() {
+		
+		
+		roundProcess(game);
+		
+		game.setActivePlayer(player1.getId());
+		player1.setUtesek(game.getKor());
+		game.setKor(new Strike());
+		
+	}
+
+	private void roundProcess(Game game) {
+		
+		//game.setActivePlayer(1);
+		
+	}
+	
+	
 }

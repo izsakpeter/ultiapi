@@ -1,5 +1,6 @@
 package hu.ulti.server.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -9,6 +10,7 @@ public class Player {
 	private List<Card> hand;
 	private int forcedColorId = 0;
 	private boolean isCallOk = true;
+	private List<Strike> utesek = new ArrayList<Strike>();
 
 	public Player() {
 		this.order = 0;
@@ -57,6 +59,14 @@ public class Player {
 
 	public void setCallOk(boolean isCallOk) {
 		this.isCallOk = isCallOk;
+	}
+
+	public List<Strike> getUtesek() {
+		return utesek;
+	}
+
+	public void setUtesek(Strike utes) {
+		this.utesek.add(utes);
 	}
 
 }

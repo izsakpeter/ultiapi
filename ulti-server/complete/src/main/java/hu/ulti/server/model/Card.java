@@ -6,6 +6,7 @@ import java.util.List;
 import hu.ulti.server.Helper;
 
 public class Card {
+	
 	private static final String MAKK = "makk";
 	private static final String ZOLD = "zold";
 	private static final String TOK = "tok";
@@ -133,7 +134,6 @@ public class Card {
 		return player.getHand();
 	}
 	
-
 	public int getOrderColorId() {
 		return orderColorId;
 	}
@@ -173,5 +173,4 @@ public class Card {
 	public void setColorId(int colorId) {
 		this.colorId = colorId;
 	}
-
 }

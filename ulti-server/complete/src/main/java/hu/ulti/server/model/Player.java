@@ -10,7 +10,7 @@ public class Player {
 	private List<Card> hand;
 	private int forcedColorId = 0;
 	private boolean isCallOk = true;
-	private List<Strike> utesek = new ArrayList<Strike>();
+	private List<Strike> strikes = new ArrayList<Strike>();
 
 	public Player() {
 		this.order = 0;
@@ -61,12 +61,11 @@ public class Player {
 		this.isCallOk = isCallOk;
 	}
 
-	public List<Strike> getUtesek() {
-		return utesek;
+	public List<Strike> getStrikes() {
+		return strikes;
 	}
 
-	public void setUtesek(Strike utes) {
-		this.utesek.add(utes);
+	public void setStrikes(Strike strike) {
+		this.strikes.add(strike);
 	}
-
 }

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.ulti.server.Helper;
+import hu.ulti.server.StrikeHandler;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
-import hu.ulti.server.model.Strike;
 
 @RestController
 public class UltiController {
@@ -22,33 +22,33 @@ public class UltiController {
 	private boolean isPlayer2Ready = false;
 	private boolean isPlayer3Ready = false;
 
-	private List<List<Card>> hands = null;
-	private List<Card> talon = new ArrayList<Card>();
-
 	private Player player1 = new Player();
 	private Player player2 = new Player();
 	private Player player3 = new Player();
-
-	Game game = new Game();
 	
 	private int dealer = 3;
 
-	@GetMapping("/ulti")
+	private List<List<Card>> hands = null;
+	private List<Card> talon = new ArrayList<Card>();
+
+	Game game = new Game();
+
+	@GetMapping("/start")
 	public Game shuffle(@RequestParam int id) {
 
 		switch (id) {
-		case 1:
-			isPlayer1Ready = true;
-			player1.setId(id);
-			break;
-		case 2:
-			isPlayer2Ready = true;
-			player2.setId(id);
-			break;
-		case 3:
-			player3.setId(id);
-			isPlayer3Ready = true;
-			break;
+			case 1:
+				isPlayer1Ready = true;
+				player1.setId(id);
+				break;
+			case 2:
+				isPlayer2Ready = true;
+				player2.setId(id);
+				break;
+			case 3:
+				player3.setId(id);
+				isPlayer3Ready = true;
+				break;
 		}
 
 		if (isPlayer1Ready && isPlayer2Ready && isPlayer3Ready) {
@@ -57,15 +57,15 @@ public class UltiController {
 				hands = Helper.getHands(dealer);
 
 			switch (dealer) {
-			case 1:
-				game.setActivePlayer(player2.getId());
-				break;
-			case 2:
-				game.setActivePlayer(player3.getId());
-				break;
-			case 3:
-				game.setActivePlayer(player1.getId());
-				break;
+				case 1:
+					game.setActivePlayer(player2.getId());
+					break;
+				case 2:
+					game.setActivePlayer(player3.getId());
+					break;
+				case 3:
+					game.setActivePlayer(player1.getId());
+					break;
 			}
 
 			player1.setHand(hands.get(0));
@@ -283,49 +283,77 @@ public class UltiController {
 			Player player = new Player();
 			
 			if (id == player1.getId()) {
-				game.getKor().setCard1(cardid);
+				game.getRound().setCard1Id(cardid);
 				player1.setHand(Card.removeCardbyId(player1, cardid));
 				game.setActivePlayer(player2.getId());
-			}
-
-			if (id == player2.getId()) {
-				game.getKor().setCard2(cardid);
-				player1.setHand(Card.removeCardbyId(player1, cardid));
+				player = player1;
+				
+			} else if (id == player2.getId()) {
+				game.getRound().setCard2Id(cardid);
+				player2.setHand(Card.removeCardbyId(player1, cardid));
 				game.setActivePlayer(player3.getId());
-			}
-
-			if (id == player3.getId()) {
-				game.getKor().setCard3(cardid);
-				player1.setHand(Card.removeCardbyId(player1, cardid));
+				player = player2;
+				
+			} else if (id == player3.getId()) {
+				game.getRound().setCard3Id(cardid);
+				player3.setHand(Card.removeCardbyId(player1, cardid));
 				game.setActivePlayer(player1.getId());
+				player = player3;
 			}
 			
+			game = StrikeHandler.strikeHandler(game);
 			
-			strikeHandler();
+			if (id == player3.getId()) {
+				switch (game.getLastStrikeId()) {
+					case 1:
+						player1.setStrikes(game.getLastStrike());
+						break;
+					case 2:
+						player2.setStrikes(game.getLastStrike());		
+						break;
+					case 3:
+						player3.setStrikes(game.getLastStrike());
+						break;
+				}
+			} else if (id == player1.getId()) {
+				
+				switch (game.getLastStrikeId()) {
+					case 1:
+						player2.setStrikes(game.getLastStrike());
+						break;
+					case 2:
+						player3.setStrikes(game.getLastStrike());		
+						break;
+					case 3:
+						player1.setStrikes(game.getLastStrike());
+						break;
+				}
+			} else if (id == player2.getId()) {
+				
+				switch (game.getLastStrikeId()) {
+					case 1:
+						player3.setStrikes(game.getLastStrike());
+						break;
+					case 2:
+						player1.setStrikes(game.getLastStrike());		
+						break;
+					case 3:
+						player2.setStrikes(game.getLastStrike());
+						break;
+				}
+			}
+			game.setLastStrikeId(0);
+			
+			/*
+			if (player1.getHand().size() == 0 && player2.getHand().size() == 0 &&
+					player3.getHand().size() == 0) {
+				// eredmény
+			}*/
 			
 			game.setPlayer(player);
+			
 		}
 
 		return game;
 	}
-	
-	
-	private void strikeHandler() {
-		
-		
-		roundProcess(game);
-		
-		game.setActivePlayer(player1.getId());
-		player1.setUtesek(game.getKor());
-		game.setKor(new Strike());
-		
-	}
-
-	private void roundProcess(Game game) {
-		
-		//game.setActivePlayer(1);
-		
-	}
-	
-	
 }

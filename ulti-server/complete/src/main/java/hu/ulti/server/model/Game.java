@@ -11,7 +11,10 @@ public class Game {
 	private boolean isGameReadyToStart = false;
 	private int lastCallerId;
 	private int activePlayer;
-	private Strike kor = new Strike();
+	private Strike round = new Strike();
+	
+	private int lastStrikeId = 0;
+	private Strike lastStrike;
 
 	public Game() {
 		this.startingValue = 0;
@@ -65,12 +68,28 @@ public class Game {
 		this.activePlayer = activePlayer;
 	}
 
-	public Strike getKor() {
-		return kor;
+	public Strike getRound() {
+		return round;
 	}
 
-	public void setKor(Strike kor) {
-		this.kor = kor;
+	public void setRound(Strike round) {
+		this.round = round;
+	}
+
+	public int getLastStrikeId() {
+		return lastStrikeId;
+	}
+
+	public void setLastStrikeId(int lastStrikeId) {
+		this.lastStrikeId = lastStrikeId;
+	}
+
+	public Strike getLastStrike() {
+		return lastStrike;
+	}
+
+	public void setLastStrike(Strike lastStrike) {
+		this.lastStrike = lastStrike;
 	}
 
 }

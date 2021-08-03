@@ -116,5 +116,4 @@ public class Helper {
 			hand.sort(Comparator.comparing(Card::getOrderColorlessId));
 		return hand;
 	}
-
 }

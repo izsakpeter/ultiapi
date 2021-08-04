@@ -5,11 +5,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Request {
+import org.json.JSONObject;
 
-	public static String joinReq(int id) {
-		String res = "nope";
-		String url = "http://localhost:8080/ulti?id=" + id;
+public class Request {
+	
+	public static JSONObject joinReq(int id) {
+		JSONObject res = null;
+		String url = "http://localhost:8888/start?id=" + id;
 
 		try {
 			URL obj = new URL(url);
@@ -22,15 +24,15 @@ public class Request {
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
+			
 			while ((inputLine = in.readLine()) != null) {
 				response.append(inputLine);
 			}
 			in.close();
-			res = response.toString();
-			System.out.println(res);
 			
-			//JSONObject myResponse = new JSONObject(response.toString());
+			System.out.println(response.toString());
 			
+			res = new JSONObject(response.toString());
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -38,5 +40,4 @@ public class Request {
 
 		return res;
 	}
-
 }

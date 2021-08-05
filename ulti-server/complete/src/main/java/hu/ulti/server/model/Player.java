@@ -6,18 +6,19 @@ import java.util.List;
 public class Player {
 
 	private int id;
-	private int order;
+	private boolean isColorOrder;
+
 	private List<Card> hand;
 	private int forcedColorId = 0;
 	private boolean isCallOk = true;
 	private List<Strike> strikes = new ArrayList<Strike>();
 
 	public Player() {
-		this.order = 0;
+		this.isColorOrder = true;
 	}
 
 	public Player(List<Card> hand) {
-		this.order = 0;
+		this.isColorOrder = true;
 		this.hand = hand;
 	}
 
@@ -29,12 +30,16 @@ public class Player {
 		this.id = id;
 	}
 
-	public int getOrder() {
-		return order;
+	public boolean isColorOrder() {
+		return isColorOrder;
 	}
 
-	public void setOrder(int order) {
-		this.order = order;
+	public void setColorOrder(boolean isColorOrder) {
+		this.isColorOrder = isColorOrder;
+	}
+
+	public void setStrikes(List<Strike> strikes) {
+		this.strikes = strikes;
 	}
 
 	public List<Card> getHand() {

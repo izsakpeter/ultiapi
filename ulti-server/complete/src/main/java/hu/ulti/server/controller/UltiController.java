@@ -73,17 +73,8 @@ public class UltiController {
 			player3.setHand(hands.get(2));
 			talon = hands.get(3);
 
-			Player player = new Player();
-
-			if (id == player1.getId())
-				player = player1;
-			if (id == player2.getId())
-				player = player2;
-			if (id == player3.getId())
-				player = player3;
-
+			Player player = getPlayerById(id);
 			player.getHand().sort(Comparator.comparing(Card::getOrderColorId));
-
 			game.setPlayer(player);
 
 			return game;
@@ -93,23 +84,14 @@ public class UltiController {
 	}
 
 	@GetMapping("/order")
-	public Game changeOrder(@RequestParam int id, @RequestParam int orderid) {
+	public Game changeOrder(@RequestParam int id, @RequestParam boolean iscolororder) {
 
-		Player player = new Player();
+		Player player = getPlayerById(id);
 
-		if (id == player1.getId())
-			player = player1;
-		if (id == player2.getId())
-			player = player2;
-		if (id == player3.getId())
-			player = player3;
-
-		if (orderid == 0)
-			player.setOrder(0);
+		if (iscolororder)
+			player.setColorOrder(true);
 		else
-			player.setOrder(1);
-
-		Helper.orderHand(player.getHand(), orderid);
+			player.setColorOrder(false);
 
 		game.setPlayer(player);
 
@@ -120,21 +102,18 @@ public class UltiController {
 	public Game setStartingValue(@RequestParam int id, @RequestParam int value) {
 
 		if (id == game.getActivePlayer()) {
+			
 			Player player = new Player();
 
 			if (id == player1.getId()) {
 				player1.setHand(Card.addTalon(player1, talon));
 				player1.setForcedColorId(value);
 				player = player1;
-			}
-
-			if (id == player2.getId()) {
+			} else if (id == player2.getId()) {
 				player2.setHand(Card.addTalon(player2, talon));
 				player2.setForcedColorId(value);
 				player = player2;
-			}
-
-			if (id == player3.getId()) {
+			} else if (id == player3.getId()) {
 				player3.setHand(Card.addTalon(player3, talon));
 				player3.setForcedColorId(value);
 				player = player3;
@@ -223,12 +202,8 @@ public class UltiController {
 			if (action == 0) {
 
 				if (game.getLastCallerId() == game.getActivePlayer()) {
-					if (id == player1.getId())
-						player = player1;
-					if (id == player2.getId())
-						player = player2;
-					if (id == player3.getId())
-						player = player3;
+					
+					player = getPlayerById(id);
 
 					game.setGameReadyToStart(true);
 					game.setPlayer(player);
@@ -239,29 +214,22 @@ public class UltiController {
 				if (id == player1.getId()) {
 					player = player1;
 					game.setActivePlayer(player2.getId());
-				}
-
-				if (id == player2.getId()) {
+				} else if (id == player2.getId()) {
 					player = player2;
 					game.setActivePlayer(player3.getId());
-				}
-
-				if (id == player3.getId()) {
+				} else if (id == player3.getId()) {
 					player = player3;
 					game.setActivePlayer(player1.getId());
 				}
 			} else {
+				
 				if (id == player1.getId()) {
 					player1.setHand(Card.addTalon(player1, talon));
 					player = player1;
-				}
-
-				if (id == player2.getId()) {
+				} else if (id == player2.getId()) {
 					player2.setHand(Card.addTalon(player2, talon));
 					player = player2;
-				}
-
-				if (id == player3.getId()) {
+				} else if (id == player3.getId()) {
 					player3.setHand(Card.addTalon(player3, talon));
 					player = player3;
 				}
@@ -355,5 +323,20 @@ public class UltiController {
 		}
 
 		return game;
+	}
+	
+
+	private Player getPlayerById(int id) {
+		
+		Player player = new Player();
+		
+		if (id == player1.getId())
+			player = player1;
+		else if (id == player2.getId())
+			player = player2;
+		else if (id == player3.getId())
+			player = player3;
+		
+		return player;
 	}
 }

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class Player {
 
 	private int id;
-	private int order;
+	private boolean isColorOrder;
 	private List<Card> hand = new ArrayList<>();
 	private int forcedColorId = 0;
 	private boolean isCallOk = true;
@@ -20,15 +20,15 @@ public class Player {
 
 	public Player(JSONObject jsonObj) {
 		this.id = jsonObj.getInt("id");
-		this.order = jsonObj.getInt("order");
+		this.isColorOrder = jsonObj.getBoolean("colorOrder");
 		this.forcedColorId = jsonObj.getInt("forcedColorId");
 		this.isCallOk = jsonObj.getBoolean("callOk");
-		
+
 		JSONArray handArray = jsonObj.getJSONArray("hand");
 		for (int i = 0; i < handArray.length(); i++) {
 			this.hand.add(new Card(handArray.getJSONObject(i)));
 		}
-		
+
 		JSONArray strikesArray = jsonObj.getJSONArray("strikes");
 		for (int i = 0; i < strikesArray.length(); i++) {
 			this.strikes.add(new Strike(strikesArray.getJSONObject(i)));
@@ -43,12 +43,12 @@ public class Player {
 		this.id = id;
 	}
 
-	public int getOrder() {
-		return order;
+	public boolean isColorOrder() {
+		return isColorOrder;
 	}
 
-	public void setOrder(int order) {
-		this.order = order;
+	public void setColorOrder(boolean isColorOrder) {
+		this.isColorOrder = isColorOrder;
 	}
 
 	public List<Card> getHand() {

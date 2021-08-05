@@ -109,11 +109,15 @@ public class Helper {
 		return hands;
 	}
 	
-	public static List<Card> orderHand(List<Card> hand, int orderId) {
-		if (orderId == 0)
+	public static List<Card> orderHand(List<Card> hand, boolean isColorOrder) {
+		if (isColorOrder)
 			hand.sort(Comparator.comparing(Card::getOrderColorId));
 		else
 			hand.sort(Comparator.comparing(Card::getOrderColorlessId));
 		return hand;
 	}
+	
+	
+	
+	
 }

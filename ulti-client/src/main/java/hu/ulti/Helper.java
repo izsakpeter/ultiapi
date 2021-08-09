@@ -1,6 +1,7 @@
 package hu.ulti;
 
 import java.util.List;
+import java.util.Set;
 
 import com.vaadin.flow.component.html.Image;
 
@@ -165,5 +166,10 @@ public class Helper {
 				return 4;
 		}
 		return 1;
+	}
+
+	public static List<Integer> getCallList(String value, Set<String> value2) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

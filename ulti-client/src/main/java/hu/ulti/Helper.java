@@ -80,7 +80,11 @@ public class Helper {
 		return null;
 	}
 
+	private static List<Card> orderedCards;
+
 	public static List<Card> getOrderedHand(List<Card> cards, boolean isColorOrder) {
+
+		orderedCards = cards;
 
 		if (!isColorOrder) {
 			int m10Index = -1;
@@ -107,129 +111,59 @@ public class Helper {
 				}
 			}
 
-			if (m10Index != -1) {
+			if (m10Index != -1)
+				orderCards(m10Index, 4, 5, 6);
 
-				if ((m10Index + 1 < cards.size())
-						&& (cards.get(m10Index + 1).getOrderColorId() == 4
-						|| cards.get(m10Index + 1).getOrderColorId() == 5
-						|| cards.get(m10Index + 1).getOrderColorId() == 6)) {
+			if (z10Index != -1)
+				orderCards(z10Index, 12, 13, 14);
 
-					Card tmp = cards.get(m10Index);
-					cards.remove(m10Index);
-					cards.add(m10Index + 1, tmp);
-				}
+			if (t10Index != -1)
+				orderCards(t10Index, 20, 21, 22);
 
-				if ((m10Index + 2 < cards.size())
-						&& (cards.get(m10Index + 2).getOrderColorId() == 5
-						|| cards.get(m10Index + 2).getOrderColorId() == 6)) {
-
-					Card tmp = cards.get(m10Index + 1);
-					cards.remove(m10Index + 1);
-					cards.add(m10Index + 2, tmp);
-				}
-
-				if ((m10Index + 3 < cards.size())
-						&& cards.get(m10Index + 3).getOrderColorId() == 6) {
-
-					Card tmp = cards.get(m10Index + 2);
-					cards.remove(m10Index + 2);
-					cards.add(m10Index + 3, tmp);
-				}
-			}
-
-			if (z10Index != -1) {
-
-				if ((z10Index + 1 < cards.size())
-						&& (cards.get(z10Index + 1).getOrderColorId() == 12
-						|| cards.get(z10Index + 1).getOrderColorId() == 13
-						|| cards.get(z10Index + 1).getOrderColorId() == 14)) {
-
-					Card tmp = cards.get(z10Index);
-					cards.remove(z10Index);
-					cards.add(z10Index + 1, tmp);
-				}
-
-				if ((z10Index + 2 < cards.size())
-						&& (cards.get(z10Index + 2).getOrderColorId() == 13
-						|| cards.get(z10Index + 2).getOrderColorId() == 14)) {
-
-					Card tmp = cards.get(z10Index + 1);
-					cards.remove(z10Index + 1);
-					cards.add(z10Index + 2, tmp);
-				}
-
-				if ((z10Index + 3 < cards.size())
-						&& cards.get(z10Index + 3).getOrderColorId() == 14) {
-
-					Card tmp = cards.get(z10Index + 2);
-					cards.remove(z10Index + 2);
-					cards.add(z10Index + 3, tmp);
-				}
-			}
-
-			if (t10Index != -1) {
-
-				if ((t10Index + 1 < cards.size())
-						&& (cards.get(t10Index + 1).getOrderColorId() == 20
-						|| cards.get(t10Index + 1).getOrderColorId() == 21
-						|| cards.get(t10Index + 1).getOrderColorId() == 22)) {
-
-					Card tmp = cards.get(t10Index);
-					cards.remove(t10Index);
-					cards.add(t10Index + 1, tmp);
-				}
-
-				if ((t10Index + 2 < cards.size()) 
-						&&(cards.get(t10Index + 2).getOrderColorId() == 21
-						|| cards.get(t10Index + 2).getOrderColorId() == 22)) {
-
-					Card tmp = cards.get(t10Index + 1);
-					cards.remove(t10Index + 1);
-					cards.add(t10Index + 2, tmp);
-				}
-
-				System.out.println(t10Index + 3);
-				
-				if ((t10Index + 3 < cards.size()
-						&& cards.get(t10Index + 3).getOrderColorId() == 22)) {
-
-					Card tmp = cards.get(t10Index + 2);
-					cards.remove(t10Index + 2);
-					cards.add(t10Index + 3, tmp);
-				}
-			}
-			
-			if (p10Index != -1) {
-
-				if ((p10Index + 1 < cards.size())
-						&& (cards.get(p10Index + 1).getOrderColorId() == 28 || cards.get(p10Index + 1).getOrderColorId() == 29
-						|| cards.get(p10Index + 1).getOrderColorId() == 30)) {
-
-					Card tmp = cards.get(p10Index);
-					cards.remove(p10Index);
-					cards.add(p10Index + 1, tmp);
-				}
-
-				if ((p10Index + 2 < cards.size())
-						&& (cards.get(p10Index + 2).getOrderColorId() == 29
-						|| cards.get(p10Index + 2).getOrderColorId() == 30)) {
-
-					Card tmp = cards.get(p10Index + 1);
-					cards.remove(p10Index + 1);
-					cards.add(p10Index + 2, tmp);
-				}
-
-				if ((p10Index + 3 < cards.size())
-						&& cards.get(p10Index + 3).getOrderColorId() == 30) {
-
-					Card tmp = cards.get(p10Index + 2);
-					cards.remove(p10Index + 2);
-					cards.add(p10Index + 3, tmp);
-				}
-			}
+			if (p10Index != -1)
+				orderCards(p10Index, 28, 29, 30);
 		}
 
-		return cards;
+		return orderedCards;
 	}
 
+	private static void orderCards(int index, int poz1, int poz2, int poz3) {
+		if ((index + 1 < orderedCards.size()) && (orderedCards.get(index + 1).getOrderColorId() == poz1
+				|| orderedCards.get(index + 1).getOrderColorId() == poz2
+				|| orderedCards.get(index + 1).getOrderColorId() == poz3)) {
+
+			Card tmp = orderedCards.get(index);
+			orderedCards.remove(index);
+			orderedCards.add(index + 1, tmp);
+		}
+
+		if ((index + 2 < orderedCards.size()) && (orderedCards.get(index + 2).getOrderColorId() == poz2
+				|| orderedCards.get(index + 2).getOrderColorId() == poz3)) {
+
+			Card tmp = orderedCards.get(index + 1);
+			orderedCards.remove(index + 1);
+			orderedCards.add(index + 2, tmp);
+		}
+
+		if ((index + 3 < orderedCards.size()) && orderedCards.get(index + 3).getOrderColorId() == poz3) {
+
+			Card tmp = orderedCards.get(index + 2);
+			orderedCards.remove(index + 2);
+			orderedCards.add(index + 3, tmp);
+		}
+	}
+
+	public static int getSelectedId(String color) {
+		switch (color) {
+			case "makk":
+				return 1;
+			case "zold":
+				return 2;
+			case "tok":
+				return 3;
+			case "piros":
+				return 4;
+		}
+		return 1;
+	}
 }

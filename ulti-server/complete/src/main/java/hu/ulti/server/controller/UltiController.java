@@ -118,7 +118,7 @@ public class UltiController {
 				player3.setForcedColorId(value);
 				player = player3;
 			}
-
+			
 			game.setStartingValue(value);
 			game.setPlayer(player);
 

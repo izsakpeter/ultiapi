@@ -27,7 +27,11 @@ import hu.ulti.model.Game;
 public class UlticlientView extends Div {
 
 	private static final long serialVersionUID = 1L;
+	
 	private static Game game;
+	private HorizontalLayout cardsHP = new HorizontalLayout();
+
+	private static final int PLAYER_1_ID = 1;
 
 	public UlticlientView() {
 		addClassName("ulticlient-view");
@@ -35,73 +39,73 @@ public class UlticlientView extends Div {
 		VerticalLayout layout = new VerticalLayout();
 		add(layout);
 
-		JSONObject json1 = Request.joinReq(1);
+		JSONObject json1 = Request.joinReq(PLAYER_1_ID);
 		JSONObject json2 = Request.joinReq(2);
 		JSONObject json3 = Request.joinReq(3);
 
 		json1 = Request.joinReq(1);
 		json2 = Request.joinReq(2);
 
-		game = new Game(json1);
-		List<Card> cards = game.getPlayer().getHand();
 		VerticalLayout hand1Vp = new VerticalLayout();
-		HorizontalLayout hand1Hp = new HorizontalLayout();
-		
+
 		Button button1 = new Button("rendezés");
 		button1.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
 			private static final long serialVersionUID = 7162213404334728757L;
 
 			@Override
 			public void onComponentEvent(ClickEvent<Button> event) {
-				
-				JSONObject jsonOrderChange = Request.changeOrder(game.getPlayer().getId(), !game.getPlayer().isColorOrder());
-				game = new Game(jsonOrderChange);
-				List<Card> cardsOrderChange = Helper.getOrderedHand(game.getPlayer().getHand(), game.getPlayer().isColorOrder());
-				
-				hand1Hp.removeAll();
-				
-				for (int i = 0; i < cardsOrderChange.size(); i++) {
-					hand1Hp.add(Helper.getCardImg(cardsOrderChange.get(i).getOrderColorId()));
-				}
+
+				JSONObject jsonOrderChange = Request.changeOrder(game.getPlayer().getId(),
+						!game.getPlayer().isColorOrder());
+				refreshCards(jsonOrderChange);
 			}
 		});
 		hand1Vp.add(button1);
-		
-		hand1Vp.add(hand1Hp);
 
-		for (int i = 0; i < cards.size(); i++) {
-			hand1Hp.add(Helper.getCardImg(cards.get(i).getOrderColorId()));
-		}
+		refreshCards(json1);
+		hand1Vp.add(cardsHP);
+
 		layout.add(hand1Vp);
-		
-		
+
 		if (game.getActivePlayer() == 1) {
-			
+
 			Dialog dialog = new Dialog();
-			
+
 			RadioButtonGroup<String> startingValue = new RadioButtonGroup<>();
 			startingValue.setLabel("Mire veszed fel a talont?");
-			startingValue.setItems("makk", "zold", "tok", "piros", "ANYÁDRA");
+			startingValue.setItems("makk", "zold", "tok", "piros");
 			startingValue.setValue("makk");
-			
+
 			dialog.add(startingValue);
-			
+
 			Button buttonOK = new Button("OK");
 			buttonOK.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
 				private static final long serialVersionUID = 5729248453300980960L;
 
 				@Override
 				public void onComponentEvent(ClickEvent<Button> event) {
-					//Request.setStartingValue(1, startingValue.getValue().get)
-					
+					JSONObject setStartingValue = Request.setStartingValue(PLAYER_1_ID,
+							Helper.getSelectedId(startingValue.getValue()));
+					refreshCards(setStartingValue);
 					dialog.close();
 				}
 			});
-			
+
 			dialog.add(buttonOK);
-			
+
 			dialog.open();
 		}
-		
+
+	}
+
+	private void refreshCards(JSONObject jsonObj) {
+		game = new Game(jsonObj);
+		List<Card> orderedcards = Helper.getOrderedHand(game.getPlayer().getHand(), game.getPlayer().isColorOrder());
+
+		cardsHP.removeAll();
+
+		for (int i = 0; i < orderedcards.size(); i++) {
+			cardsHP.add(Helper.getCardImg(orderedcards.get(i).getOrderColorId()));
+		}
 	}
 }

@@ -8,11 +8,10 @@ import java.net.URL;
 import org.json.JSONObject;
 
 public class Request {
-
-	public static JSONObject joinReq(int id) {
+	
+	private static JSONObject request(String url) {
 		JSONObject res = null;
-		String url = "http://localhost:8888/start?id=" + id;
-
+		
 		try {
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -41,37 +40,18 @@ public class Request {
 		return res;
 	}
 
+	public static JSONObject joinReq(int id) {
+		String url = "http://localhost:8888/start?id=" + id;
+		return request(url);
+	}
+
 	public static JSONObject changeOrder(int id, boolean isColoredOrder) {
-
-		JSONObject res = null;
 		String url = "http://localhost:8888/order?id=" + id + "&iscolororder=" + isColoredOrder;
-
-		try {
-			URL obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("User-Agent", "Mozilla/5.0");
-			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
-			res = new JSONObject(response.toString());
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		return res;
+		return request(url);
 	}
 
 	public static JSONObject setStartingValue(int id, int value) {
-
-		System.out.println(value + " sfhpokdfőhkhhidfjohpjdfpoihjdpofihjpoidfjhpoidfpoidpoidfhjo");
-
-		return null;
+		String url = "http://localhost:8888/startingValue?id=" + id + "&value=" + value;
+		return request(url);
 	}
 }

@@ -63,7 +63,7 @@ public class Card {
 		player.getHand().add(talon.get(0));
 		player.getHand().add(talon.get(1));
 
-		Helper.orderHand(player.getHand(), player.isColorOrder());
+		Helper.orderHand(player.getHand());
 
 		return player.getHand();
 	}
@@ -97,7 +97,7 @@ public class Card {
 			}
 		}
 
-		Helper.orderHand(player.getHand(), player.isColorOrder());
+		Helper.orderHand(player.getHand());
 
 		return player.getHand();
 	}
@@ -111,7 +111,7 @@ public class Card {
 			}
 		}
 
-		Helper.orderHand(player.getHand(), player.isColorOrder());
+		Helper.orderHand(player.getHand());
 
 		return player.getHand();
 	}

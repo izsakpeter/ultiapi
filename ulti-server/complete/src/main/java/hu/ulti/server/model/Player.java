@@ -10,8 +10,9 @@ public class Player {
 	private boolean isColorOrder = true;
 	private List<Card> hand;
 	private boolean isCallOk = true;
-	private List<Strike> strikes = new ArrayList<Strike>();
 	private boolean isColorForced = false;
+
+	private List<Strike> strikes = new ArrayList<Strike>();
 
 	public Player() {
 	}
@@ -19,7 +20,6 @@ public class Player {
 	public Player(int id) {
 		this.id = id;
 		this.isReady = true;
-		this.isColorForced = true;
 	}
 
 	public Player(List<Card> hand) {

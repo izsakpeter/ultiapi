@@ -45,16 +45,15 @@ public class UltiController {
 				if (hands == null)
 					hands = Helper.getHands(dealer);
 
-				switch (dealer) {
-				case 1:
+				if (dealer == 1) {
+					player2.setColorForced(true);
 					game.setActivePlayer(player2.getId());
-					break;
-				case 2:
+				} else if (dealer == 2) {
+					player3.setColorForced(true);
 					game.setActivePlayer(player3.getId());
-					break;
-				case 3:
+				} else if (dealer == 3) {
+					player1.setColorForced(true);
 					game.setActivePlayer(player1.getId());
-					break;
 				}
 
 				player1.setHand(hands.get(0));
@@ -80,10 +79,10 @@ public class UltiController {
 
 		Player player = getPlayerById(id);
 
+		player.setColorOrder(false);
+
 		if (iscolororder)
 			player.setColorOrder(true);
-		else
-			player.setColorOrder(false);
 
 		game.setPlayer(player);
 
@@ -95,18 +94,14 @@ public class UltiController {
 
 		if (id == game.getActivePlayer()) {
 
-			Player player = new Player();
-
-			if (id == player1.getId()) {
+			if (id == player1.getId())
 				player1.setHand(Card.addTalon(player1, talon));
-				player = player1;
-			} else if (id == player2.getId()) {
+			else if (id == player2.getId())
 				player2.setHand(Card.addTalon(player2, talon));
-				player = player2;
-			} else if (id == player3.getId()) {
+			else if (id == player3.getId())
 				player3.setHand(Card.addTalon(player3, talon));
-				player = player3;
-			}
+
+			Player player = getPlayerById(id);
 
 			game.setStartingValue(value);
 			game.setPlayer(player);
@@ -121,62 +116,51 @@ public class UltiController {
 	public Game call(@RequestParam int id, @RequestParam List<Integer> call, @RequestParam List<Integer> talonid) {
 
 		if (id == game.getActivePlayer()) {
-			Player player = new Player();
 
 			if (id == player1.getId()) {
 
 				if (Call.callChecker(game, call, player1.isColorForced())) {
 					if (player1.isColorForced())
 						player1.setColorForced(false);
-					
+
 					player1.setCallOk(true);
 					talon = Card.getTalonById(talonid);
-					game.setLastCallerId(id);
-					game.setPreviousCall(call);
 					player1.setHand(Card.removeTalon(player1, talon));
 					game.setActivePlayer(player2.getId());
-					player = player1;
 				} else {
 					player1.setCallOk(false);
-					player = player1;
 				}
 			} else if (id == player2.getId()) {
 
 				if (Call.callChecker(game, call, player2.isColorForced())) {
 					if (player2.isColorForced())
 						player2.setColorForced(false);
-					
+
 					player2.setCallOk(true);
 					talon = Card.getTalonById(talonid);
-					game.setLastCallerId(id);
-					game.setPreviousCall(call);
 					player2.setHand(Card.removeTalon(player2, talon));
 					game.setActivePlayer(player3.getId());
-					player = player2;
 				} else {
 					player2.setCallOk(false);
-					player = player2;
 				}
 			} else if (id == player3.getId()) {
 
 				if (Call.callChecker(game, call, player3.isColorForced())) {
 					if (player3.isColorForced())
 						player3.setColorForced(false);
-					
+
 					player3.setCallOk(true);
 					talon = Card.getTalonById(talonid);
-					game.setLastCallerId(id);
-					game.setPreviousCall(call);
 					player3.setHand(Card.removeTalon(player3, talon));
 					game.setActivePlayer(player1.getId());
-					
-					player = player3;
 				} else {
 					player3.setCallOk(false);
-					player = player3;
 				}
 			}
 
+			Player player = getPlayerById(id);
+			game.setLastCallerId(id);
+			game.setPreviousCall(call);
 			game.setPlayer(player);
 
 			return game;
@@ -201,27 +185,24 @@ public class UltiController {
 					return game;
 				}
 
-				if (id == player1.getId()) {
-					player = player1;
+				if (id == player1.getId())
 					game.setActivePlayer(player2.getId());
-				} else if (id == player2.getId()) {
-					player = player2;
+				else if (id == player2.getId())
 					game.setActivePlayer(player3.getId());
-				} else if (id == player3.getId()) {
-					player = player3;
+				else if (id == player3.getId())
 					game.setActivePlayer(player1.getId());
-				}
+
+				player = getPlayerById(id);
+
 			} else {
-				if (id == player1.getId()) {
+				if (id == player1.getId())
 					player1.setHand(Card.addTalon(player1, talon));
-					player = player1;
-				} else if (id == player2.getId()) {
+				else if (id == player2.getId())
 					player2.setHand(Card.addTalon(player2, talon));
-					player = player2;
-				} else if (id == player3.getId()) {
+				else if (id == player3.getId())
 					player3.setHand(Card.addTalon(player3, talon));
-					player = player3;
-				}
+
+				player = getPlayerById(id);
 			}
 
 			game.setPlayer(player);

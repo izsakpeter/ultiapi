@@ -40,6 +40,7 @@ public class UlticlientView extends Div {
 	private HorizontalLayout talonHP = new HorizontalLayout();
 
 	private List<Integer> talonList = new ArrayList<Integer>();
+	private List<String> colorList = Call.getColorList();
 
 	@SuppressWarnings("serial")
 	public UlticlientView() {
@@ -89,9 +90,8 @@ public class UlticlientView extends Div {
 
 						RadioButtonGroup<String> startingValue = new RadioButtonGroup<>();
 						startingValue.setLabel("Mire veszed fel a talont?");
-						startingValue.setItems(Call.MAKK, Call.ZOLD, Call.TOK, Call.PIROS);
-						startingValue.setValue(Call.MAKK);
-
+						startingValue.setItems(colorList);
+						startingValue.setValue(colorList.get(0));
 						dialog.add(startingValue);
 
 						Button buttonOK = new Button("OK");
@@ -189,11 +189,28 @@ public class UlticlientView extends Div {
 		
 		Label errorLabel = new Label();
 		layout.add(errorLabel);
-
+		
 		RadioButtonGroup<String> color = new RadioButtonGroup<>();
 		color.setLabel("Mondás");
-		color.setItems(Call.MAKK, Call.ZOLD, Call.TOK, Call.PIROS);
-		color.setValue(Call.MAKK);
+		color.setItems(colorList);
+		color.setValue(colorList.get(0));
+		
+		if (game.getPlayer().isColorForced()) {
+			if (game.getStartingValue() == Call.MAKK_COLOR_ID) {
+				color.setValue(colorList.get(0));
+				color.setItemEnabledProvider(item-> colorList.get(0).equals(item));
+			} else if (game.getStartingValue() == Call.ZOLD_COLOR_ID) {
+				color.setValue(colorList.get(1));
+				color.setItemEnabledProvider(item-> colorList.get(1).equals(item));
+			} else if (game.getStartingValue() == Call.TOK_COLOR_ID) {
+				color.setValue(colorList.get(2));
+				color.setItemEnabledProvider(item-> colorList.get(2).equals(item));
+			} else if (game.getStartingValue() == Call.PIROS_COLOR_ID) {
+				color.setValue(colorList.get(3));
+				color.setItemEnabledProvider(item-> colorList.get(3).equals(item));
+			}
+		}
+		
 		layout.add(color);
 
 		CheckboxGroup<String> value = new CheckboxGroup<>();
@@ -215,6 +232,7 @@ public class UlticlientView extends Div {
 
 				if (game.getPlayer().isCallOk()) {
 					refreshCards();
+					errorLabel.setText("");
 					dialog.close();
 				} else {
 					errorLabel.setText("rossz hivás");

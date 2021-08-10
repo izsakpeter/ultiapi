@@ -70,4 +70,15 @@ public class Call {
 
 		return callList;
 	}
+	
+	public static List<String> getColorList(){
+		
+		List<String> list = new ArrayList<String>();
+		list.add(0, MAKK);
+		list.add(1, ZOLD);
+		list.add(2, TOK);
+		list.add(3, PIROS);
+		
+		return list;
+	}
 }

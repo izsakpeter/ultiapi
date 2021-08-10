@@ -1,50 +1,73 @@
 package hu.ulti.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import hu.ulti.Helper;
+
 public class Call {
 
-	private int id;
-	private String color;
-	private String call;
-	private int value;
-	private int colorId;
+	public static final String MAKK = "makk";
+	public static final String ZOLD = "zold";
+	public static final String TOK = "tok";
+	public static final String PIROS = "piros";
 
-	public int getId() {
-		return id;
-	}
+	public static final int MAKK_COLOR_ID = 1;
+	public static final int ZOLD_COLOR_ID = 2;
+	public static final int TOK_COLOR_ID = 3;
+	public static final int PIROS_COLOR_ID = 4;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	public static final String PASSZ = "passz";
+	public static final String SZAZ40 = "40szaz";
+	public static final String ULTI = "ulti";
+	public static final String BETLI = "betli";
+	public static final String DURI_SZINES = "szinesduri";
+	public static final String DURI_SZINTELEN = "szintelenduri";
+	public static final String SZAZ20 = "20szaz";
+	public static final String BETLI_TERITETT = "teritettbetli";
+	public static final String DURI_SZINES_TERITETT = "teritettdurisz";
+	public static final String DURI_SZINTELEN_TERITETT = "teritettduri";
 
-	public String getColor() {
-		return color;
-	}
+	public static List<Integer> getCallList(String colorString, Set<String> calls) {
 
-	public void setColor(String color) {
-		this.color = color;
-	}
+		int colorId = Helper.getSelectedId(colorString);
 
-	public String getCall() {
-		return call;
-	}
+		List<Integer> callList = new ArrayList<Integer>();
 
-	public void setCall(String call) {
-		this.call = call;
-	}
+		for (String call : calls) {
+			
+			int colorValue = 0;
+			
+			if(colorId == ZOLD_COLOR_ID)
+				colorValue = 10;
+			else if(colorId == TOK_COLOR_ID)
+				colorValue = 20;
+			else if(colorId == PIROS_COLOR_ID)
+				colorValue = 30;
+			
+			if (call.equals(PASSZ))
+				callList.add(0 + colorValue);
+			else if (call.equals(SZAZ40))
+				callList.add(1 + colorValue);
+			else if (call.equals(ULTI))
+				callList.add(2 + colorValue);
+			else if (call.equals(BETLI))
+				callList.add(3 + colorValue);
+			else if (call.equals(DURI_SZINES))
+				callList.add(4 + colorValue);
+			else if (call.equals(DURI_SZINTELEN))
+				callList.add(5 + colorValue);
+			else if (call.equals(SZAZ20))
+				callList.add(6 + colorValue);
+			else if (call.equals(BETLI_TERITETT))
+				callList.add(7 + colorValue);
+			else if (call.equals(DURI_SZINES_TERITETT))
+				callList.add(8 + colorValue);
+			else if (call.equals(DURI_SZINTELEN_TERITETT))
+				callList.add(9 + colorValue);
+		}
 
-	public int getValue() {
-		return value;
-	}
-
-	public void setValue(int value) {
-		this.value = value;
-	}
-
-	public int getColorId() {
-		return colorId;
-	}
-
-	public void setColorId(int colorId) {
-		this.colorId = colorId;
+		return callList;
 	}
 }

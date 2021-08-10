@@ -11,8 +11,7 @@ public class Player {
 	private int id;
 	private boolean isColorOrder;
 	private List<Card> hand = new ArrayList<>();
-	private int forcedColorId = 0;
-	private boolean isCallOk = true;
+	private boolean isCallOk;
 	private List<Strike> strikes = new ArrayList<Strike>();
 
 	public Player() {
@@ -21,7 +20,6 @@ public class Player {
 	public Player(JSONObject jsonObj) {
 		this.id = jsonObj.getInt("id");
 		this.isColorOrder = jsonObj.getBoolean("colorOrder");
-		this.forcedColorId = jsonObj.getInt("forcedColorId");
 		this.isCallOk = jsonObj.getBoolean("callOk");
 
 		JSONArray handArray = jsonObj.getJSONArray("hand");
@@ -57,14 +55,6 @@ public class Player {
 
 	public void setHand(List<Card> hand) {
 		this.hand = hand;
-	}
-
-	public int getForcedColorId() {
-		return forcedColorId;
-	}
-
-	public void setForcedColorId(int forcedColorId) {
-		this.forcedColorId = forcedColorId;
 	}
 
 	public boolean isCallOk() {

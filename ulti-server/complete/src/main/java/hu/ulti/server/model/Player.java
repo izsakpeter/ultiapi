@@ -5,20 +5,24 @@ import java.util.List;
 
 public class Player {
 
-	private int id;
-	private boolean isColorOrder;
-
+	private int id = 0;
+	private boolean isReady = false;
+	private boolean isColorOrder = true;
 	private List<Card> hand;
-	private int forcedColorId = 0;
 	private boolean isCallOk = true;
 	private List<Strike> strikes = new ArrayList<Strike>();
+	private boolean isColorForced = false;
 
 	public Player() {
-		this.isColorOrder = true;
+	}
+
+	public Player(int id) {
+		this.id = id;
+		this.isReady = true;
+		this.isColorForced = true;
 	}
 
 	public Player(List<Card> hand) {
-		this.isColorOrder = true;
 		this.hand = hand;
 	}
 
@@ -50,14 +54,6 @@ public class Player {
 		this.hand = hand;
 	}
 
-	public int getForcedColorId() {
-		return forcedColorId;
-	}
-
-	public void setForcedColorId(int forcedColorId) {
-		this.forcedColorId = forcedColorId;
-	}
-
 	public boolean isCallOk() {
 		return isCallOk;
 	}
@@ -72,5 +68,21 @@ public class Player {
 
 	public void setStrikes(Strike strike) {
 		this.strikes.add(strike);
+	}
+
+	public boolean isReady() {
+		return isReady;
+	}
+
+	public void setReady(boolean isReady) {
+		this.isReady = isReady;
+	}
+
+	public boolean isColorForced() {
+		return isColorForced;
+	}
+
+	public void setColorForced(boolean isColorForced) {
+		this.isColorForced = isColorForced;
 	}
 }

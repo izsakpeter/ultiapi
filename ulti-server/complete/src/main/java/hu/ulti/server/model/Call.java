@@ -9,7 +9,7 @@ public class Call {
 	private static final String ZOLD = "zold";
 	private static final String TOK = "tok";
 	private static final String PIROS = "piros";
-	
+
 	private static final int MAKK_COLOR_ID = 1;
 	private static final int ZOLD_COLOR_ID = 2;
 	private static final int TOK_COLOR_ID = 3;
@@ -99,43 +99,51 @@ public class Call {
 		return calls;
 	}
 
-	public static boolean callChecker(List<Integer> previousCall, List<Integer> calls, int forcedColorId) {
+	public static boolean callChecker(Game game, List<Integer> calls, boolean isColorForced) {
 
-		if (forcedColorId != 0) {
-			List<Call> allCalls = getAllCalls();
-			List<Integer> filteredIds = new ArrayList<Integer>();
+		if (isColorForced) {
+			int forcedColorId = game.getStartingValue();
 
-			for (Call call : allCalls) {
-				if (call.getColorId() == forcedColorId)
-					filteredIds.add(call.getId());
-			}
-			
-			for (Integer call : calls) {
-				if (!filteredIds.contains(call))
+			for (Integer callId : calls) {
+				if (forcedColorId == MAKK_COLOR_ID && callId > 9)
+					return false;
+				else if (forcedColorId == ZOLD_COLOR_ID && (callId > 19 || callId < 10))
+					return false;
+				else if (forcedColorId == TOK_COLOR_ID && (callId > 29 || callId < 20))
+					return false;
+				else if (forcedColorId == PIROS_COLOR_ID && callId < 30)
 					return false;
 			}
 		}
 
-		int prevCallValue = getCallValue(previousCall);
+		int prevCallValue = getCallValue(game.getPreviousCall());
 		int callValue = getCallValue(calls);
 
 		if (prevCallValue > callValue)
 			return false;
-		
-		//+100 finomitás kell még ide
+
+		if (prevCallValue == callValue) {
+
+			if (game.getPreviousCall().size() > calls.size())
+				return false;
+
+			if (game.getPreviousCall().size() == 1 && calls.size() == 1 
+					&& game.getPreviousCall().get(0) == 2 && calls.get(0) == 30)
+				return false;			
+		}
 
 		return true;
 	}
 
 	private static int getCallValue(List<Integer> call) {
 		int value = 0;
-		
+
 		List<Call> calls = getCallsById(call);
-		
+
 		for (Call call2 : calls) {
 			value += call2.getValue();
 		}
-		
+
 		return value;
 	}
 

@@ -1,10 +1,10 @@
 package hu.ulti;
 
 import java.util.List;
-import java.util.Set;
 
 import com.vaadin.flow.component.html.Image;
 
+import hu.ulti.model.Call;
 import hu.ulti.model.Card;
 
 public class Helper {
@@ -128,25 +128,25 @@ public class Helper {
 		return orderedCards;
 	}
 
-	private static void orderCards(int index, int poz1, int poz2, int poz3) {
-		if ((index + 1 < orderedCards.size()) && (orderedCards.get(index + 1).getOrderColorId() == poz1
-				|| orderedCards.get(index + 1).getOrderColorId() == poz2
-				|| orderedCards.get(index + 1).getOrderColorId() == poz3)) {
+	private static void orderCards(int index, int cardId1, int cardId2, int cardId3) {
+		if ((index + 1 < orderedCards.size()) && (orderedCards.get(index + 1).getOrderColorId() == cardId1
+				|| orderedCards.get(index + 1).getOrderColorId() == cardId2
+				|| orderedCards.get(index + 1).getOrderColorId() == cardId3)) {
 
 			Card tmp = orderedCards.get(index);
 			orderedCards.remove(index);
 			orderedCards.add(index + 1, tmp);
 		}
 
-		if ((index + 2 < orderedCards.size()) && (orderedCards.get(index + 2).getOrderColorId() == poz2
-				|| orderedCards.get(index + 2).getOrderColorId() == poz3)) {
+		if ((index + 2 < orderedCards.size()) && (orderedCards.get(index + 2).getOrderColorId() == cardId2
+				|| orderedCards.get(index + 2).getOrderColorId() == cardId3)) {
 
 			Card tmp = orderedCards.get(index + 1);
 			orderedCards.remove(index + 1);
 			orderedCards.add(index + 2, tmp);
 		}
 
-		if ((index + 3 < orderedCards.size()) && orderedCards.get(index + 3).getOrderColorId() == poz3) {
+		if ((index + 3 < orderedCards.size()) && orderedCards.get(index + 3).getOrderColorId() == cardId3) {
 
 			Card tmp = orderedCards.get(index + 2);
 			orderedCards.remove(index + 2);
@@ -156,20 +156,15 @@ public class Helper {
 
 	public static int getSelectedId(String color) {
 		switch (color) {
-			case "makk":
+			case Call.MAKK:
 				return 1;
-			case "zold":
+			case Call.ZOLD:
 				return 2;
-			case "tok":
+			case Call.TOK:
 				return 3;
-			case "piros":
+			case Call.PIROS:
 				return 4;
 		}
 		return 1;
-	}
-
-	public static List<Integer> getCallList(String value, Set<String> value2) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

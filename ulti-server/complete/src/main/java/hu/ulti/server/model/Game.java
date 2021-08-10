@@ -8,11 +8,12 @@ public class Game {
 	private int startingValue;
 	private Player player;
 	private List<Integer> previousCall = new ArrayList<Integer>();
-	private boolean isGameReadyToStart = false;
+	private boolean isRoundStarted = false;
+	private boolean isPlayReadyToStart = false;
 	private int lastCallerId;
 	private int activePlayer;
 	private Strike round = new Strike();
-	
+
 	private int lastStrikeId = 0;
 	private Strike lastStrike;
 
@@ -44,12 +45,12 @@ public class Game {
 		this.previousCall = previousCall;
 	}
 
-	public boolean isGameReadyToStart() {
-		return isGameReadyToStart;
+	public boolean isRoundStarted() {
+		return isRoundStarted;
 	}
 
-	public void setGameReadyToStart(boolean isGameReadyToStart) {
-		this.isGameReadyToStart = isGameReadyToStart;
+	public void setRoundStarted(boolean isRoundStarted) {
+		this.isRoundStarted = isRoundStarted;
 	}
 
 	public int getLastCallerId() {
@@ -90,6 +91,14 @@ public class Game {
 
 	public void setLastStrike(Strike lastStrike) {
 		this.lastStrike = lastStrike;
+	}
+
+	public boolean isPlayReadyToStart() {
+		return isPlayReadyToStart;
+	}
+
+	public void setPlayReadyToStart(boolean isPlayReadyToStart) {
+		this.isPlayReadyToStart = isPlayReadyToStart;
 	}
 
 }

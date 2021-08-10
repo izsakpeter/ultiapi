@@ -1,7 +1,6 @@
 package hu.ulti.views;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -14,15 +13,18 @@ import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouteAlias;
 
 import hu.ulti.Helper;
 import hu.ulti.Request;
+import hu.ulti.model.Call;
 import hu.ulti.model.Card;
 import hu.ulti.model.Game;
 
@@ -32,127 +34,174 @@ import hu.ulti.model.Game;
 public class UlticlientView extends Div {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static Game game;
 	private HorizontalLayout cardsHP = new HorizontalLayout();
 	private HorizontalLayout talonHP = new HorizontalLayout();
-	
-	private List<Integer> talon = new ArrayList<Integer>();
 
-	private static final int PLAYER_1_ID = 1;
-	
-	private static int storedIndex = 0;
+	private List<Integer> talonList = new ArrayList<Integer>();
 
+	@SuppressWarnings("serial")
 	public UlticlientView() {
 		addClassName("ulticlient-view");
 
 		VerticalLayout layout = new VerticalLayout();
 		add(layout);
 
-		JSONObject json1 = Request.joinReq(PLAYER_1_ID);
-		JSONObject json2 = Request.joinReq(2);
-		JSONObject json3 = Request.joinReq(3);
+		HorizontalLayout loginLayout = new HorizontalLayout();
 
-		json1 = Request.joinReq(1);
-		json2 = Request.joinReq(2);
+		TextField loginTF = new TextField();
+		Button loginButton = new Button("ok");
 
-		VerticalLayout hand1Vp = new VerticalLayout();
-
-		Button button1 = new Button("rendezés");
-		button1.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
-			private static final long serialVersionUID = 7162213404334728757L;
-
+		loginButton.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
 			@Override
 			public void onComponentEvent(ClickEvent<Button> event) {
 
-				JSONObject jsonOrderChange = Request.changeOrder(game.getPlayer().getId(),
-						!game.getPlayer().isColorOrder());
-				refreshCards(jsonOrderChange);
+				JSONObject json = Request.joinReq(Integer.parseInt(loginTF.getValue()));
+
+				VerticalLayout hand1Vp = new VerticalLayout();
+
+				Button changeOrderButton = new Button("rendezés");
+				changeOrderButton.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
+					private static final long serialVersionUID = 7162213404334728757L;
+
+					@Override
+					public void onComponentEvent(ClickEvent<Button> event) {
+
+						JSONObject jsonOrderChange = Request.changeOrder(game.getPlayer().getId(),
+								!game.getPlayer().isColorOrder());
+						game = new Game(jsonOrderChange);
+						refreshCards();
+					}
+				});
+				hand1Vp.add(changeOrderButton);
+
+				game = new Game(json);
+				refreshCards();
+				hand1Vp.add(cardsHP);
+				hand1Vp.add(talonHP);
+				layout.add(hand1Vp);
+
+				if (game.getActivePlayer() == game.getPlayer().getId() && game.getPlayer().getHand().size() == 10) {
+
+					if (game.getStartingValue() == 0) {
+						Dialog dialog = new Dialog();
+
+						RadioButtonGroup<String> startingValue = new RadioButtonGroup<>();
+						startingValue.setLabel("Mire veszed fel a talont?");
+						startingValue.setItems(Call.MAKK, Call.ZOLD, Call.TOK, Call.PIROS);
+						startingValue.setValue(Call.MAKK);
+
+						dialog.add(startingValue);
+
+						Button buttonOK = new Button("OK");
+						buttonOK.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
+							private static final long serialVersionUID = 5729248453300980960L;
+
+							@Override
+							public void onComponentEvent(ClickEvent<Button> event) {
+								JSONObject setStartingValue = Request.setStartingValue(game.getPlayer().getId(),
+										Helper.getSelectedId(startingValue.getValue()));
+								game = new Game(setStartingValue);
+								refreshCards();
+								dialog.close();
+							}
+						});
+
+						dialog.add(buttonOK);
+
+						dialog.open();
+					} else {
+
+						VerticalLayout navVp = new VerticalLayout();
+
+						Button joinButton = new Button("Felvesz");
+						joinButton.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
+							private static final long serialVersionUID = 5729248453300980960L;
+
+							@Override
+							public void onComponentEvent(ClickEvent<Button> event) {
+								JSONObject joinObj = Request.join(game.getPlayer().getId(), true);
+								game = new Game(joinObj);
+								refreshCards();
+							}
+						});
+						
+						Button passzButton = new Button("Passz");
+						passzButton.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
+							private static final long serialVersionUID = 5729248453300980960L;
+
+							@Override
+							public void onComponentEvent(ClickEvent<Button> event) {
+								JSONObject joinObj = Request.join(game.getPlayer().getId(), false);
+								game = new Game(joinObj);
+								refreshCards();
+							}
+						});
+
+						navVp.add(joinButton);
+						navVp.add(passzButton);
+
+						hand1Vp.add(navVp);
+					}
+				}
 			}
 		});
-		hand1Vp.add(button1);
 
-		refreshCards(json1);
-		hand1Vp.add(cardsHP);
-		
-		hand1Vp.add(talonHP);
+		loginLayout.add(loginTF);
+		loginLayout.add(loginButton);
 
-		layout.add(hand1Vp);
-
-		if (game.getActivePlayer() == PLAYER_1_ID && game.getPlayer().getHand().size() == 10) {
-
-			Dialog dialog = new Dialog();
-
-			RadioButtonGroup<String> startingValue = new RadioButtonGroup<>();
-			startingValue.setLabel("Mire veszed fel a talont?");
-			startingValue.setItems("makk", "zold", "tok", "piros");
-			startingValue.setValue("makk");
-
-			dialog.add(startingValue);
-
-			Button buttonOK = new Button("OK");
-			buttonOK.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
-				private static final long serialVersionUID = 5729248453300980960L;
-
-				@Override
-				public void onComponentEvent(ClickEvent<Button> event) {
-					JSONObject setStartingValue = Request.setStartingValue(PLAYER_1_ID,
-							Helper.getSelectedId(startingValue.getValue()));
-					refreshCards(setStartingValue);
-					dialog.close();
-				}
-			});
-
-			dialog.add(buttonOK);
-
-			dialog.open();
-		}
-
+		layout.add(loginLayout);
 	}
 
 	@SuppressWarnings("serial")
-	private void refreshCards(JSONObject jsonObj) {
-		game = new Game(jsonObj);
+	private void refreshCards() {
 		List<Card> orderedcards = Helper.getOrderedHand(game.getPlayer().getHand(), game.getPlayer().isColorOrder());
 
 		cardsHP.removeAll();
-		
+		talonHP.removeAll();
+
 		for (Card card : orderedcards) {
 			Image image = Helper.getCardImg(card.getOrderColorId());
-			image.addClickListener(new ComponentEventListener<ClickEvent<Image>>() {
-				@Override
-				public void onComponentEvent(ClickEvent<Image> event) {
-					talonHP.add(image);
-					talon.add(card.getOrderColorId());
-					
-					if (talon.size() == 2) {
-						showValuesDialog();
+			
+			if (game.getActivePlayer() == game.getPlayer().getId()) {
+				image.addClickListener(new ComponentEventListener<ClickEvent<Image>>() {
+					@Override
+					public void onComponentEvent(ClickEvent<Image> event) {
+						talonHP.add(image);
+						talonList.add(card.getOrderColorId());
+
+						if (talonList.size() == 2) {
+							showValuesDialog();
+						}
 					}
-				}
-			});
+				});
+			}
 			
 			cardsHP.add(image);
 		}
 	}
-	
+
 	private void showValuesDialog() {
 		Dialog dialog = new Dialog();
-		
+
 		VerticalLayout layout = new VerticalLayout();
 		
+		Label errorLabel = new Label();
+		layout.add(errorLabel);
+
 		RadioButtonGroup<String> color = new RadioButtonGroup<>();
 		color.setLabel("Mondás");
-		color.setItems("makk", "zold", "tok", "piros");
-		color.setValue("makk");
+		color.setItems(Call.MAKK, Call.ZOLD, Call.TOK, Call.PIROS);
+		color.setValue(Call.MAKK);
 		layout.add(color);
-		
+
 		CheckboxGroup<String> value = new CheckboxGroup<>();
-		value.setItems("passz", "40-100", "ulti", "betli", "duri szines", "20-100",
-				"duri szintelen", "teritett betli", "teritett duri szines", "teritett duri szintelen" );
+		value.setItems(Call.PASSZ, Call.SZAZ40, Call.ULTI, Call.BETLI, Call.DURI_SZINES, Call.DURI_SZINTELEN,
+				Call.SZAZ20, Call.BETLI_TERITETT, Call.DURI_SZINES_TERITETT, Call.DURI_SZINTELEN_TERITETT);
 		value.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
+		color.setValue(Call.PASSZ);
 		layout.add(value);
-		
-		List<Integer> call = Helper.getCallList(color.getValue(), value.getValue());
 
 		Button buttonOK = new Button("OK");
 		buttonOK.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
@@ -160,18 +209,22 @@ public class UlticlientView extends Div {
 
 			@Override
 			public void onComponentEvent(ClickEvent<Button> event) {
-				
-				Request.call(PLAYER_1_ID, call, talon);
-				
-				//JSONObject callObject = Request.call(PLAYER_1_ID, call, talon);
-				//refreshCards(callObject);
-				dialog.close();
+				List<Integer> callList = Call.getCallList(color.getValue(), value.getSelectedItems());
+				JSONObject callObject = Request.call(game.getPlayer().getId(), callList, talonList);
+				game = new Game(callObject);
+
+				if (game.getPlayer().isCallOk()) {
+					refreshCards();
+					dialog.close();
+				} else {
+					errorLabel.setText("rossz hivás");
+				}
 			}
 		});
 		layout.add(buttonOK);
 
 		dialog.add(layout);
-		
+
 		dialog.open();
 	}
 }

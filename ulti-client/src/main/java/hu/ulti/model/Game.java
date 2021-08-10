@@ -11,7 +11,8 @@ public class Game {
 	private int startingValue;
 	private Player player;
 	private List<Integer> previousCall = new ArrayList<Integer>();
-	private boolean isGameReadyToStart = false;
+	private boolean isRoundStarted = false;
+	private boolean isPlayReadyToStart = false;
 	private int lastCallerId;
 	private int activePlayer;
 	private Strike round = new Strike();
@@ -23,7 +24,7 @@ public class Game {
 		this.lastCallerId = jsonObj.getInt("lastCallerId");
 		this.activePlayer = jsonObj.getInt("activePlayer");
 		this.lastStrikeId = jsonObj.getInt("lastStrikeId");
-		this.isGameReadyToStart = jsonObj.getBoolean("gameReadyToStart");		
+		this.isPlayReadyToStart = jsonObj.getBoolean("playReadyToStart");		
 		this.round = new Strike(jsonObj.getJSONObject("round"));
 		//this.lastStrike = new Strike(jsonObj.getJSONObject("lastStrike"));
 		this.player = new Player(jsonObj.getJSONObject("player"));
@@ -56,14 +57,6 @@ public class Game {
 
 	public void setPreviousCall(List<Integer> previousCall) {
 		this.previousCall = previousCall;
-	}
-
-	public boolean isGameReadyToStart() {
-		return isGameReadyToStart;
-	}
-
-	public void setGameReadyToStart(boolean isGameReadyToStart) {
-		this.isGameReadyToStart = isGameReadyToStart;
 	}
 
 	public int getLastCallerId() {
@@ -105,5 +98,23 @@ public class Game {
 	public void setLastStrike(Strike lastStrike) {
 		this.lastStrike = lastStrike;
 	}
+
+	public boolean isRoundStarted() {
+		return isRoundStarted;
+	}
+
+	public void setRoundStarted(boolean isRoundStarted) {
+		this.isRoundStarted = isRoundStarted;
+	}
+
+	public boolean isPlayReadyToStart() {
+		return isPlayReadyToStart;
+	}
+
+	public void setPlayReadyToStart(boolean isPlayReadyToStart) {
+		this.isPlayReadyToStart = isPlayReadyToStart;
+	}
+	
+	
 
 }

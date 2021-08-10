@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 
@@ -52,14 +53,19 @@ public class Request {
 	}
 
 	public static JSONObject setStartingValue(int id, int value) {
-		String url = "http://localhost:8888/startingValue?id=" + id + "&value=" + value;
+		String url = "http://localhost:8888/startingvalue?id=" + id + "&value=" + value;
 		return request(url);
 	}
 	
-	//public static JSONObject call(int id, List<Integer> call, List<Integer> talon) {
-	public static void call(int id, List<Integer> call, List<Integer> talon) {
-		String url = "http://localhost:8888/call?id=" + id + "&call=" + call + "&talonid=" + talon;
-		System.out.println(url + " url");
-		//return request(url);
+	public static JSONObject call(int id, List<Integer> call, List<Integer> talon) {
+		String url = "http://localhost:8888/call?id=" + id + "&call=" + call.stream().map(String::valueOf)
+			    .collect(Collectors.joining(",")) + "&talonid=" + talon.stream().map(String::valueOf)
+			    .collect(Collectors.joining(","));
+		return request(url);
+	}
+	
+	public static JSONObject join(int id, boolean isjoin) {
+		String url = "http://localhost:8888/join?id=" + id + "&isjoin=" + isjoin;
+		return request(url);
 	}
 }

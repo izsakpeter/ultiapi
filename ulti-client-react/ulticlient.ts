@@ -1,5 +1,5 @@
-import { Game } from "./model/game";
-import { startRequest } from "./request";
+import { Game } from "./src/model/game";
+import { startRequest } from "./src/request";
 
 let message: string = "ulti kliens";
 console.log(message);

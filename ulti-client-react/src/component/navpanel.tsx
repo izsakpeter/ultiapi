@@ -1,11 +1,12 @@
-import * as React from 'react'
+import * as React from 'react';
 
 export default class NavPanel extends React.Component {
 
-    render(){
+    render() {
         return (
             <div className="nav">
-                <div className = "buttons"></div>
+                <button>beszáll</button>
+                <button>passz</button>
             </div>
         );
     }

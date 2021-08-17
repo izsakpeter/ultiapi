@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Game } from '../model/game';
 import axios, { AxiosRequestConfig } from "axios";
 
-export default class Login extends React.Component<{}, { username: string, gotCards: boolean, game: Game }> {
+export default class Login extends React.Component<{}, { username: string, gotCards: boolean, game: Game, isWrongLogin:boolean }> {
 
     constructor(props) {
         super(props);
@@ -10,7 +10,8 @@ export default class Login extends React.Component<{}, { username: string, gotCa
         this.state = {
             username: '',
             gotCards: false,
-            game: null
+            game: null,
+            isWrongLogin: false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,30 +24,27 @@ export default class Login extends React.Component<{}, { username: string, gotCa
 
     handleSubmit(event) {
 
-        if (this.state.username === "admin") {
+        let configuration: AxiosRequestConfig = {
+            timeout: 10000
+        };
 
-            let configuration: AxiosRequestConfig = {
-                timeout: 10000
-            };
+        configuration.baseURL = "http://localhost:8888";
 
-            configuration.baseURL = "http://localhost:8888";
+        const target = `/start?id=` + this.state.username;
 
-            const target = `/start?id=1`;
+        axios.get<Game>(target, configuration)
+            .then(respone => {
+                const gameRes = respone.data;
+                this.setState({ game: gameRes });
 
-            axios.get<Game>(target, configuration)
-                .then(respone => {
-                    const gameRes = respone.data;
-                    this.setState({ game: gameRes });
+                console.log(this.state.game.player.id + " idididiidididiididididididididiididididididi")
 
-                    console.log(this.state.game.player.id + " idididiidididiididididididididiididididididi")
+                this.setState({ gotCards: true, isWrongLogin: false });
 
-                }).catch(error => {
-                    console.log(error);
-                });
-
-
-            this.setState({ gotCards: true });
-        }
+            }).catch(error => {
+                this.setState({ gotCards: false, isWrongLogin: true });
+                console.log(error);
+            });
 
         event.preventDefault();
     }
@@ -60,16 +58,32 @@ export default class Login extends React.Component<{}, { username: string, gotCa
                 </label>
                 <input type="submit" value="Submit" />
 
-                <ShowTable gotCards={this.state.gotCards} />
+                <ErrorComp isWrongLogin={this.state.isWrongLogin}/>
+
+                <ShowTable gotCards={this.state.gotCards} game={this.state.game} />
+               
 
             </form>
         );
     }
 }
 
+function ErrorComp(props) {
+    if (props.isWrongLogin) {
+        return (
+            <div>
+               ERROR
+            </div>
+        )
+    } else {
+        return null;
+    }
+}
+
 function ShowTable(props) {
     if (props.gotCards) {
         return (
+            
             <div>
                 AMADEUSZ
             </div>

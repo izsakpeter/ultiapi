@@ -10,7 +10,4 @@ export class Player {
 	public isCallOk: boolean;
 	public strikes: Array<Strike>;
 	public isColorForced: boolean = false;
-
-
-
 }

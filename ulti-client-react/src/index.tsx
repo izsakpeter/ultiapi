@@ -1,8 +1,6 @@
 import * as ReactDOM from "react-dom";
 import * as React from "react";
-import { App } from "./component/app";
-
-/* global BigInt */
+import { App } from "./components/App";
 
 const element = <App/>;
 

@@ -1,9 +1,20 @@
 package hu.ulti.server.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +26,7 @@ import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
 
+@CrossOrigin
 @RestController
 public class UltiController {
 	private Player player1 = new Player();

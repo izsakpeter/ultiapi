@@ -110,7 +110,7 @@ public class Helper {
 	}
 	
 	public static List<Card> orderHand(List<Card> hand) {
-		hand.sort(Comparator.comparing(Card::getOrderColorId));
+		hand.sort(Comparator.comparing(Card::getId));
 		return hand;
 	}
 }

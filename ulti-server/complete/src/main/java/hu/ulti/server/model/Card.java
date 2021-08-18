@@ -7,53 +7,52 @@ import hu.ulti.server.Helper;
 
 public class Card {
 
-	private int orderColorId;
-	private int orderColorlessId;
+	private int id;
 	private int colorId;
 
-	public Card(int orderColorlessId, int orderColorId, int colorId) {
-		this.orderColorId = orderColorId;
-		this.orderColorlessId = orderColorlessId;
+	public Card(int id,  int colorId) {
+		this.id = id;
+		this.colorId = colorId;
 	}
 
 	public static List<Card> getAllCards() {
 		List<Card> allCards = new ArrayList<Card>();
 
-		allCards.add(new Card(0, 0, 1));
-		allCards.add(new Card(1, 1, 1));
-		allCards.add(new Card(2, 2, 1));
-		allCards.add(new Card(3, 6, 1));
-		allCards.add(new Card(4, 3, 1));
-		allCards.add(new Card(5, 4, 1));
-		allCards.add(new Card(6, 5, 1));
-		allCards.add(new Card(7, 7, 1));
+		allCards.add(new Card(0, 1));
+		allCards.add(new Card(1, 1));
+		allCards.add(new Card(2, 1));
+		allCards.add(new Card(3, 1));
+		allCards.add(new Card(4, 1));
+		allCards.add(new Card(5, 1));
+		allCards.add(new Card(6, 1));
+		allCards.add(new Card(7, 1));
 
-		allCards.add(new Card(8, 8, 2));
-		allCards.add(new Card(9, 9, 2));
-		allCards.add(new Card(10, 10, 2));
-		allCards.add(new Card(11, 14, 2));
-		allCards.add(new Card(12, 11, 2));
-		allCards.add(new Card(13, 12, 2));
-		allCards.add(new Card(14, 13, 2));
-		allCards.add(new Card(15, 15, 2));
+		allCards.add(new Card(8, 2));
+		allCards.add(new Card(9, 2));
+		allCards.add(new Card(10, 2));
+		allCards.add(new Card(11, 2));
+		allCards.add(new Card(12, 2));
+		allCards.add(new Card(13, 2));
+		allCards.add(new Card(14, 2));
+		allCards.add(new Card(15, 2));
 
-		allCards.add(new Card(16, 16, 3));
-		allCards.add(new Card(17, 17, 3));
-		allCards.add(new Card(18, 18, 3));
-		allCards.add(new Card(19, 22, 3));
-		allCards.add(new Card(20, 19, 3));
-		allCards.add(new Card(21, 20, 3));
-		allCards.add(new Card(22, 21, 3));
-		allCards.add(new Card(23, 23, 3));
+		allCards.add(new Card(16, 3));
+		allCards.add(new Card(17, 3));
+		allCards.add(new Card(18, 3));
+		allCards.add(new Card(19, 3));
+		allCards.add(new Card(20, 3));
+		allCards.add(new Card(21, 3));
+		allCards.add(new Card(22, 3));
+		allCards.add(new Card(23, 3));
 
-		allCards.add(new Card(24, 24, 4));
-		allCards.add(new Card(25, 25, 4));
-		allCards.add(new Card(26, 26, 4));
-		allCards.add(new Card(27, 30, 4));
-		allCards.add(new Card(28, 27, 4));
-		allCards.add(new Card(29, 28, 4));
-		allCards.add(new Card(30, 29, 4));
-		allCards.add(new Card(31, 31, 4));
+		allCards.add(new Card(24, 4));
+		allCards.add(new Card(25, 4));
+		allCards.add(new Card(26, 4));
+		allCards.add(new Card(27, 4));
+		allCards.add(new Card(28, 4));
+		allCards.add(new Card(29, 4));
+		allCards.add(new Card(30, 4));
+		allCards.add(new Card(31, 4));
 
 		return allCards;
 	}
@@ -74,7 +73,7 @@ public class Card {
 		List<Card> allCards = getAllCards();
 
 		for (Card card : allCards) {
-			if (card.getOrderColorId() == talonid.get(0) || card.getOrderColorId() == talonid.get(1))
+			if (card.getId() == talonid.get(0) || card.getId() == talonid.get(1))
 				talon.add(card);
 		}
 
@@ -84,14 +83,14 @@ public class Card {
 	public static List<Card> removeTalon(Player player, List<Card> talon) {
 
 		for (Card card : player.getHand()) {
-			if (card.getOrderColorId() == talon.get(0).getOrderColorId()) {
+			if (card.getId() == talon.get(0).getId()) {
 				player.getHand().remove(card);
 				break;
 			}
 		}
 
 		for (Card card : player.getHand()) {
-			if (card.getOrderColorId() == talon.get(1).getOrderColorId()) {
+			if (card.getId() == talon.get(1).getId()) {
 				player.getHand().remove(card);
 				break;
 			}
@@ -105,7 +104,7 @@ public class Card {
 	public static List<Card> removeCardbyId(Player player, int cardId) {
 
 		for (Card card : player.getHand()) {
-			if (card.getOrderColorId() == cardId) {
+			if (card.getId() == cardId) {
 				player.getHand().remove(card);
 				break;
 			}
@@ -116,20 +115,12 @@ public class Card {
 		return player.getHand();
 	}
 
-	public int getOrderColorId() {
-		return orderColorId;
+	public int getId() {
+		return id;
 	}
 
-	public void setOrderColorId(int orderColorId) {
-		this.orderColorId = orderColorId;
-	}
-
-	public int getOrderColorlessId() {
-		return orderColorlessId;
-	}
-
-	public void setOrderColorlessId(int orderColorlessId) {
-		this.orderColorlessId = orderColorlessId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getColorId() {

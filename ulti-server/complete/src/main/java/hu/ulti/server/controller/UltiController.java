@@ -1,18 +1,8 @@
 package hu.ulti.server.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,7 +67,7 @@ public class UltiController {
 			}
 
 			Player player = getPlayerById(id);
-			player.getHand().sort(Comparator.comparing(Card::getOrderColorId));
+			player.getHand().sort(Comparator.comparing(Card::getId));
 			game.setPlayer(player);
 
 			return game;
@@ -87,13 +77,13 @@ public class UltiController {
 	}
 
 	@GetMapping("/order")
-	public Game changeOrder(@RequestParam int id, @RequestParam boolean iscolororder) {
+	public Game changeOrder(@RequestParam int id, @RequestParam boolean colorOrder) {
 
 		Player player = getPlayerById(id);
 
 		player.setColorOrder(false);
 
-		if (iscolororder)
+		if (colorOrder)
 			player.setColorOrder(true);
 
 		game.setPlayer(player);

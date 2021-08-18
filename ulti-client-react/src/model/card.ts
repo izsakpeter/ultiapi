@@ -1,7 +1,7 @@
 
 export class Card{
     
-    public orderColorId: number;
+    public id: number;
 	public orderColorlessId: number;
 	public colorId: number;
 }

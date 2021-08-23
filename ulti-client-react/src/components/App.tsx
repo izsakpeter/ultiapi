@@ -23,7 +23,7 @@ export default class App extends React.Component<{}, { username: string, gotCard
 
     render() {
         return (
-            <>
+            <div>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         ID:
@@ -34,9 +34,9 @@ export default class App extends React.Component<{}, { username: string, gotCard
 
 
                 <ErrorComp isWrongLogin={this.state.isWrongLogin} />
-                <Table gotCards={this.state.gotCards} game={this.state.game} />
                 <button onClick={this.changeOrder}>rendez</button>
-            </>
+                <Table gotCards={this.state.gotCards} game={this.state.game} />
+            </div>
         );
     }
 

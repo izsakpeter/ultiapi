@@ -1,6 +1,6 @@
 
 
- export function GetCardSource(id: number): string {
+export function GetCardSource(id: number): string {
 
 	switch (id) {
 		case 0: return "/resources/img/cards/m7.png";
@@ -39,11 +39,7 @@
 	return null;
 }
 
-
-
 export function GetOrderedHand(cards: Array<number>, isColorOrder: boolean): Array<number> {
-
-	console.log(isColorOrder + " isColorOrderisColorOrderisColorOrderisColorOrderisColorOrderisColorOrderisColorOrder");
 
 	var orderedCards = cards;
 
@@ -59,8 +55,6 @@ export function GetOrderedHand(cards: Array<number>, isColorOrder: boolean): Arr
 
 	return orderedCards;
 }
-
-
 
 function OrderCards(cards: Array<number>, index: number, checkIndex: number): Array<number> {
 	if ((index + 1 < cards.length) && (cards[index + 1] == checkIndex + 1

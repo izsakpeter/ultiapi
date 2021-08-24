@@ -1,6 +1,8 @@
 import * as React from "react";
 import { GetCardSource, GetOrderedHand } from "../helper/cardHandler";
 import { Game } from "../model/game";
+import { Call } from "./Call";
+import { StartingValue } from "./StartingValue";
 
 export class Table extends React.Component<{ gotCards: boolean, game: Game }, { talon: number[], hand: number[] }> {
 
@@ -51,8 +53,10 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game }, { 
         return (
             <div>
                 <div> {cardsImg}</div>
+                <div><StartingValue game={this.props.game}/></div>
                 <div> {talonImg} </div>
-                
+                <div><Call talon={this.state.talon} game={this.props.game} hand={this.state.hand}/></div>
+
             </div>
         )
     }

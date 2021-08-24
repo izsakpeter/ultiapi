@@ -32,7 +32,6 @@ export default class App extends React.Component<{}, { username: string, gotCard
                     <input type="submit" value="Submit" />
                 </form>
 
-
                 <ErrorComp isWrongLogin={this.state.isWrongLogin} />
                 <button onClick={this.changeOrder}>rendez</button>
                 <Table gotCards={this.state.gotCards} game={this.state.game} />

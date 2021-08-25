@@ -8,7 +8,7 @@ export class Game {
 	public player: Player;
 	public previousCall: Array<number>;
 	public isRoundStarted: boolean = false;
-	public isPlayReadyToStart: boolean = false;
+	public playReadyToStart: boolean = false;
 	public lastCallerId: number;
 	public activePlayer: number;
 	public round: Strike;

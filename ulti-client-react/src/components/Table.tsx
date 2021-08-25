@@ -1,7 +1,7 @@
 import * as React from "react";
 import { GetCardSource, GetOrderedHand } from "../helper/cardHandler";
 import { Game } from "../model/game";
-import { Call } from "./Call";
+import { CallComponent } from "./CallComponent";
 import { StartingValue } from "./StartingValue";
 
 export class Table extends React.Component<{ gotCards: boolean, game: Game }, { talon: number[], hand: number[] }> {
@@ -55,14 +55,14 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game }, { 
                 <div> {cardsImg}</div>
                 <div><StartingValue game={this.props.game}/></div>
                 <div> {talonImg} </div>
-                <div><Call talon={this.state.talon} game={this.props.game} hand={this.state.hand}/></div>
+                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand}/></div>
 
             </div>
         )
     }
 
     addToTalon(event) {
-        if (this.state.talon.length < 2) { //<2 = 2 ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+        if (this.state.hand.length + this.state.talon.length == 12 && this.state.talon.length < 2) { //<2 = 2 ????????????????????????????????????
             const index = this.state.hand.indexOf(parseInt(event.target.id));
             this.state.hand.splice(index, 1);
             this.setState({ talon: [...this.state.talon, parseInt(event.target.id)] });

@@ -1,10 +1,11 @@
+import { Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
 import { Request } from "../helper/request";
 import { Call, getCallList } from "../model/call";
 import { Game } from "../model/game";
 import { PassOrJoin } from "./PassOrJoin";
 
-export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number> }, { colorId: any, callList: Array<number>, game: Game }>{
+export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number>, onSetGame: (target: string) => void }, { colorId: number, callList: Array<number>, game: Game }>{
 
     constructor(props) {
         super(props);
@@ -29,26 +30,28 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         this.onChooseTSzDuri = this.onChooseTSzDuri.bind(this);
     }
 
+    static getDerivedStateFromProps(props: { game: Game }, state: { colorId: number }) {
+        state.colorId = props.game.startingValue;
+        return state;
+    }
+
     render() {
 
         if (this.props.game.activePlayer != this.props.game.player.id || this.props.game.playReadyToStart || this.props.game.startingValue == 0)
             return <></>;
 
         if (this.props.hand.length == 10 && this.props.talon.length == 0) {
-            return <PassOrJoin game={this.props.game} />;
+            return <PassOrJoin game={this.props.game} onSetGame={this.props.onSetGame}/>;
         } else if (this.props.hand.length + this.props.talon.length == 12) {
+
             return (
                 <div>
+                    <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.MAKK_ID, this.props.game)} />
+                    <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.ZOLD_ID, this.props.game)} />
+                    <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.TOK_ID, this.props.game)} />
+                    <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.PIROS_ID, this.props.game)} />
                     <table>
                         <tbody>
-                            <tr>
-                                <td onChange={this.onChooseColor}>
-                                    <input type="radio" disabled={this.isRadioButtonDisabled(Call.MAKK_ID, this.props.game)} defaultChecked={!this.isRadioButtonChecked(Call.MAKK_ID, this.props.game)} value="1" name="sv" /> MAKK
-                                    <input type="radio" disabled={this.isRadioButtonDisabled(Call.ZOLD_ID, this.props.game)} defaultChecked={!this.isRadioButtonChecked(Call.ZOLD_ID, this.props.game)} value="2" name="sv" /> ZOLD
-                                    <input type="radio" disabled={this.isRadioButtonDisabled(Call.TOK_ID, this.props.game)} defaultChecked={!this.isRadioButtonChecked(Call.TOK_ID, this.props.game)} value="3" name="sv" /> TOK
-                                    <input type="radio" disabled={this.isRadioButtonDisabled(Call.PIROS_ID, this.props.game)} defaultChecked={!this.isRadioButtonChecked(Call.PIROS_ID, this.props.game)} value="4" name="sv" /> PIROS
-                                </td>
-                            </tr>
                             <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.PASSZ_ID)} disabled={this.isCheckBoxDisable(Call.PASSZ_ID)} onChange={this.onChoosePassz} /> passz </td></tr>
                             <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.SZAZ40_ID)} disabled={this.isCheckBoxDisable(Call.SZAZ40_ID)} onChange={this.onChoose40100} /> 40-100 </td></tr>
                             <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.ULTI_ID)} disabled={this.isCheckBoxDisable(Call.ULTI_ID)} onChange={this.onChooseUlti} /> ulti </td></tr>
@@ -72,7 +75,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         if (this.props.talon.length == 2) {
             let finalCallList = getCallList(this.state.colorId, this.state.callList);
             const target = "/call?id=" + this.props.game.player.id + "&call=" + finalCallList + "&talonid=" + this.props.talon;
-            await this.setStateFromRequest(target);
+            this.props.onSetGame(target);
         } else {
             console.log("TALON!");
         }
@@ -134,31 +137,12 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         }
     }
 
-    async setStateFromRequest(target: string) {
-        const res = await Request(target);
-        this.setState({ game: res });
-    }
-
     isRadioButtonDisabled(id: number, game: Game): boolean {
-
-        if (game.startingValue == id)
-            return false;
-
-        if (game.previousCall.length > 0)
-            return false;
-
-        return true;
+        return !(game.startingValue > 0 && id == this.state.colorId && game.previousCall.length == 0);
     }
 
     isRadioButtonChecked(id: number, game: Game): boolean {
-
-        if (game.previousCall.length > 0)
-            return false;
-
-        if (game.startingValue == id)
-            return false;
-
-        return true;
+        return (game.startingValue > 0 && id == this.state.colorId && game.previousCall.length == 0);
     }
 
     isCheckBoxDisable(id: number): boolean {
@@ -244,9 +228,6 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
     }
 
     isCheckboxCheck(id: number): boolean {
-        if (this.state.callList.includes(id))
-            return true;
-
-        return false;
+        return this.state.callList.includes(id);
     }
 }

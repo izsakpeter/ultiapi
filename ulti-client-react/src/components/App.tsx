@@ -18,7 +18,6 @@ export default class App extends React.Component<{}, { username: string, gotCard
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.changeOrder = this.changeOrder.bind(this);
     }
 
     render() {
@@ -31,10 +30,8 @@ export default class App extends React.Component<{}, { username: string, gotCard
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
-
                 <ErrorComp isWrongLogin={this.state.isWrongLogin} />
-                <button onClick={this.changeOrder}>rendez</button>
-                <Table gotCards={this.state.gotCards} game={this.state.game} />
+                <Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.setStartingValue}/>
             </div>
         );
     }
@@ -51,13 +48,6 @@ export default class App extends React.Component<{}, { username: string, gotCard
         await this.setStateFromRequest(target);
     }
 
-    async changeOrder(event) {
-        event.preventDefault();
-
-        const target = `/order?id=` + this.state.username + `&colorOrder=` + !this.state.game.player.colorOrder;
-        await this.setStateFromRequest(target);
-    }
-
     async setStateFromRequest(target: string) {
         const res = await Request(target);
         if (res != null) {
@@ -65,6 +55,11 @@ export default class App extends React.Component<{}, { username: string, gotCard
         } else {
             this.setState({ gotCards: false, isWrongLogin: true });
         }
+    }
+
+    setStartingValue = (target: string): Promise<void> => {
+        console.log("targetURL: " + target);
+        return this.setStateFromRequest(target);
     }
 }
 

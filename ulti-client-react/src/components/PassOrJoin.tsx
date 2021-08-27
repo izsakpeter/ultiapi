@@ -2,7 +2,7 @@ import React = require("react");
 import { Request } from "../helper/request";
 import { Game } from "../model/game";
 
-export class PassOrJoin extends React.Component<{ game: Game }, {}> {
+export class PassOrJoin extends React.Component<{ game: Game, onSetGame: (target: string) => void }, {}> {
 
     constructor(props) {
         super(props)
@@ -22,19 +22,11 @@ export class PassOrJoin extends React.Component<{ game: Game }, {}> {
 
     async onPass(event) {
         const target = `/join?id=` + this.props.game.player.id + `&isjoin=` + false;
-        await this.setStateFromRequest(target);
+        this.props.onSetGame(target);
     }
 
     async onJoin(event) {
         const target = `/join?id=` + this.props.game.player.id + `&isjoin=` + true;
-        await this.setStateFromRequest(target);
-    }
-
-    async setStateFromRequest(target: string) {
-        const res = await Request(target);
-
-        if (res != null) {
-            this.setState({ game: res });
-        }
+        this.props.onSetGame(target);
     }
 }

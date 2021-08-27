@@ -76,6 +76,10 @@ module.exports = smp.wrap({
             "window.jQuery": "jquery",
             "window.$": "jquery",
         }),
+        new webpack.DefinePlugin({
+            "process.env": "{}",
+            global: {}
+        })
         // new ExtractTextPlugin('[name].css')
     ],
 });

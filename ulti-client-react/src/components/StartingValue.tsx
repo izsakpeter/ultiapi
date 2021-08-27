@@ -1,16 +1,17 @@
+import { Radio } from "@blueprintjs/core";
 import React = require("react");
 import { Request } from "../helper/request";
+import { Call } from "../model/call";
 import { Game } from "../model/game";
 
-export class StartingValue extends React.Component<{ game: Game }, { value: number, id: number, game: Game }> {
+export class StartingValue extends React.Component<{ game: Game, onSetGame: (target: string) => void }, { value: number, id: number }> {
 
     constructor(props) {
         super(props);
 
         this.state = {
             value: 0,
-            id: -1,
-            game: null
+            id: -1
         }
 
         this.onChangeValue = this.onChangeValue.bind(this);
@@ -28,11 +29,11 @@ export class StartingValue extends React.Component<{ game: Game }, { value: numb
             return <></>;
 
         return (
-            <div onChange={this.onChangeValue}>
-                <input type="radio" value="1" name="sv" /> MAKK
-                <input type="radio" value="2" name="sv" /> ZOLD
-                <input type="radio" value="3" name="sv" /> TOK
-                <input type="radio" value="4" name="sv" /> PIROS
+            <div>
+                <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChangeValue} />
+                <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChangeValue} />
+                <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChangeValue} />
+                <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChangeValue} />
                 <button onClick={this.setStartingValue}>ok</button>
             </div>
         )
@@ -42,19 +43,8 @@ export class StartingValue extends React.Component<{ game: Game }, { value: numb
         this.setState({ value: event.target.value });
     }
 
-    async setStartingValue(event) {
-        event.preventDefault();
-
+    setStartingValue(event) {
         const target = `/startingvalue?id=` + this.state.id + `&value=` + this.state.value;
-        await this.setStateFromRequest(target);
-
-    }
-
-    async setStateFromRequest(target: string) {
-        const res = await Request(target);
-
-        if (res != null) {
-            this.setState({ game: res });
-        }
+        this.props.onSetGame(target);
     }
 }

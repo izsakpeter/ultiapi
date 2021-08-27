@@ -35,9 +35,9 @@ public class UltiController {
 
 		if (player1.getId() == 0)
 			player1 = new Player(id);
-		else if (player2.getId() == 0)
+		else if (player2.getId() == 0 && id != player1.getId())
 			player2 = new Player(id);
-		else if (player3.getId() == 0)
+		else if (player3.getId() == 0 && id != player1.getId() && id != player2.getId())
 			player3 = new Player(id);
 
 		if (player1.isReady() && player2.isReady() && player3.isReady()) {

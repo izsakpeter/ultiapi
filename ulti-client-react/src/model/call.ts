@@ -28,7 +28,7 @@ export class Call {
 export function getCallList(colorNum: number, list: Array<number>): Array<number> {
 
 	let colorValue: number = 0;
-	let res: Array<number> = [];
+	let res: Array<number> = [];	
 	
 	if (colorNum == Call.ZOLD_ID)
 		colorValue = 10;

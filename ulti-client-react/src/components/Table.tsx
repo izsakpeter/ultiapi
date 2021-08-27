@@ -4,7 +4,7 @@ import { Game } from "../model/game";
 import { CallComponent } from "./CallComponent";
 import { StartingValue } from "./StartingValue";
 
-export class Table extends React.Component<{ gotCards: boolean, game: Game }, { talon: number[], hand: number[] }> {
+export class Table extends React.Component<{ gotCards: boolean, game: Game, onSetGame: (target: string) => void }, { talon: number[], hand: number[] }> {
 
     cards: number[] = [];
 
@@ -20,15 +20,16 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game }, { 
 
         this.addToTalon = this.addToTalon.bind(this);
         this.backToHand = this.backToHand.bind(this);
+        this.changeOrder = this.changeOrder.bind(this);
     }
 
     static getDerivedStateFromProps(props: { gotCards: boolean, game: Game }, state: { talon: number[], hand: number[] }) {
         let cards: number[] = [];
-        if (props.gotCards === true && state.hand.length === 0) {
+        if (props.gotCards === true && props.game.player && state.talon.length == 0) {
             for (let i = 0; i < props.game.player.hand.length; i++) {
                 cards.push(props.game.player.hand[i].id);
             }
-
+            
             state.hand = cards;
         }
         return state;
@@ -52,13 +53,20 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game }, { 
 
         return (
             <div>
-                <div> {cardsImg}</div>
-                <div><StartingValue game={this.props.game}/></div>
+                <div><button onClick={this.changeOrder}>rendez</button>{cardsImg}</div>
+                <div><StartingValue game={this.props.game} onSetGame={this.props.onSetGame} /></div>
                 <div> {talonImg} </div>
-                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand}/></div>
+                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} onSetGame={this.props.onSetGame} /></div>
 
             </div>
         )
+    }
+
+    async changeOrder(event) {
+        event.preventDefault();
+
+        const target = `/order?id=` + this.props.game.player.id + `&colorOrder=` + !this.props.game.player.colorOrder;
+        this.props.onSetGame(target);
     }
 
     addToTalon(event) {

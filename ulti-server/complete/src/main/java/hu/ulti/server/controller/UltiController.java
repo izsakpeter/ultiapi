@@ -3,11 +3,14 @@ package hu.ulti.server.controller;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import hu.ulti.server.Helper;
 import hu.ulti.server.StrikeHandler;
@@ -30,8 +33,11 @@ public class UltiController {
 
 	Game game = new Game();
 
+	private final static Long LONG_POLLING_TIMEOUT = 5000L;
+	private ExecutorService startPoll = Executors.newFixedThreadPool(5);
+
 	@GetMapping("/start")
-	public Game shuffle(@RequestParam int id) {
+	public DeferredResult<Game> shuffle(@RequestParam int id) {
 
 		if (player1.getId() == 0)
 			player1 = new Player(id);
@@ -40,40 +46,60 @@ public class UltiController {
 		else if (player3.getId() == 0 && id != player1.getId() && id != player2.getId())
 			player3 = new Player(id);
 
-		if (player1.isReady() && player2.isReady() && player3.isReady()) {
+		DeferredResult<Game> output = new DeferredResult<>(LONG_POLLING_TIMEOUT);
 
-			if (!game.isRoundStarted()) {
+		startPoll.execute(() -> {
+			int i = 0;
 
-				if (hands == null)
-					hands = Helper.getHands(dealer);
-
-				if (dealer == 1) {
-					player2.setColorForced(true);
-					game.setActivePlayer(player2.getId());
-				} else if (dealer == 2) {
-					player3.setColorForced(true);
-					game.setActivePlayer(player3.getId());
-				} else if (dealer == 3) {
-					player1.setColorForced(true);
-					game.setActivePlayer(player1.getId());
+			while (i < 30) {
+				try {
+					Thread.sleep(1000);
+					output.setResult(game);
+				} catch (Exception e) {
+					output.setErrorResult("ERROR");
 				}
 
-				player1.setHand(hands.get(0));
-				player2.setHand(hands.get(1));
-				player3.setHand(hands.get(2));
-				talon = hands.get(3);
+				if (player1.isReady() && player2.isReady() && player3.isReady()) {
 
-				game.setRoundStarted(true);
+					if (!game.isRoundStarted()) {
+
+						if (hands == null)
+							hands = Helper.getHands(dealer);
+
+						if (dealer == 1) {
+							player2.setColorForced(true);
+							game.setActivePlayer(player2.getId());
+						} else if (dealer == 2) {
+							player3.setColorForced(true);
+							game.setActivePlayer(player3.getId());
+						} else if (dealer == 3) {
+							player1.setColorForced(true);
+							game.setActivePlayer(player1.getId());
+						}
+
+						player1.setHand(hands.get(0));
+						player2.setHand(hands.get(1));
+						player3.setHand(hands.get(2));
+						talon = hands.get(3);
+
+						game.setRoundStarted(true);
+					}
+
+					Player player = getPlayerById(id);
+					player.getHand().sort(Comparator.comparing(Card::getId));
+					game.setPlayer(player);
+					output.setResult(game);
+					break;
+				}
+				i++;
 			}
+		});
 
-			Player player = getPlayerById(id);
-			player.getHand().sort(Comparator.comparing(Card::getId));
-			game.setPlayer(player);
-
-			return game;
-		}
-
-		return null;
+		output.onTimeout(() -> {
+			game.setErrorMessage("hiba");
+			output.setResult(game);
+		});
+		return output;
 	}
 
 	@GetMapping("/order")

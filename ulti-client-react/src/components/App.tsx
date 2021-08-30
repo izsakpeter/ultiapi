@@ -3,63 +3,42 @@ import { Game } from '../model/game';
 import axios, { AxiosRequestConfig } from "axios";
 import { Table } from './Table';
 import { Request } from '../helper/request';
+import { LoginComponent } from './LoginComponent';
 
-export default class App extends React.Component<{}, { username: string, gotCards: boolean, game: Game, isWrongLogin: boolean }> {
+export default class App extends React.Component<{}, { gotCards: boolean, game: Game, isWrongLogin: boolean }> {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            username: '',
             gotCards: false,
             game: null,
             isWrongLogin: false
         }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        ID:
-                        <input type="text" value={this.state.username} onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
+                <LoginComponent onSetGame={this.doHtttpReq}/>
                 <ErrorComp isWrongLogin={this.state.isWrongLogin} />
-                <Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.setStartingValue}/>
+                <Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.doHtttpReq}/>
             </div>
         );
     }
 
-    handleChange(event) {
-        this.setState({ username: event.target.value });
-    }
-
-    async handleSubmit(event) {
-
-        event.preventDefault();
-
-        const target = `/start?id=` + this.state.username;
-        await this.setStateFromRequest(target);
+    doHtttpReq = (target: string): Promise<void> => {
+        return this.setStateFromRequest(target);
     }
 
     async setStateFromRequest(target: string) {
+        console.log("targetURL: " + target);
         const res = await Request(target);
         if (res != null) {
             this.setState({ game: res, gotCards: true, isWrongLogin: false });
         } else {
             this.setState({ gotCards: false, isWrongLogin: true });
         }
-    }
-
-    setStartingValue = (target: string): Promise<void> => {
-        console.log("targetURL: " + target);
-        return this.setStateFromRequest(target);
     }
 }
 

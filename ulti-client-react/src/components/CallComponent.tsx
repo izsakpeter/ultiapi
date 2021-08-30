@@ -5,7 +5,7 @@ import { Call, getCallList } from "../model/call";
 import { Game } from "../model/game";
 import { PassOrJoin } from "./PassOrJoin";
 
-export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number>, onSetGame: (target: string) => void }, { colorId: number, callList: Array<number>, game: Game }>{
+export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number>, onSetGame: (target: string) => void, clearTalon: () => void }, { colorId: number, callList: Array<number>, game: Game }>{
 
     constructor(props) {
         super(props);
@@ -41,15 +41,15 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
             return <></>;
 
         if (this.props.hand.length == 10 && this.props.talon.length == 0) {
-            return <PassOrJoin game={this.props.game} onSetGame={this.props.onSetGame}/>;
+            return <PassOrJoin game={this.props.game} onSetGame={this.props.onSetGame} />;
         } else if (this.props.hand.length + this.props.talon.length == 12) {
 
             return (
                 <div>
-                    <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.MAKK_ID, this.props.game)} />
-                    <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.ZOLD_ID, this.props.game)} />
-                    <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.TOK_ID, this.props.game)} />
-                    <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.PIROS_ID, this.props.game)} />
+                    <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChooseColor} />
+                    <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChooseColor} />
+                    <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChooseColor} />
+                    <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChooseColor} />
                     <table>
                         <tbody>
                             <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.PASSZ_ID)} disabled={this.isCheckBoxDisable(Call.PASSZ_ID)} onChange={this.onChoosePassz} /> passz </td></tr>
@@ -76,6 +76,8 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
             let finalCallList = getCallList(this.state.colorId, this.state.callList);
             const target = "/call?id=" + this.props.game.player.id + "&call=" + finalCallList + "&talonid=" + this.props.talon;
             this.props.onSetGame(target);
+            this.props.clearTalon();
+
         } else {
             console.log("TALON!");
         }
@@ -136,6 +138,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
             this.setState({ callList: tmpArray });
         }
     }
+    /*
 
     isRadioButtonDisabled(id: number, game: Game): boolean {
         return !(game.startingValue > 0 && id == this.state.colorId && game.previousCall.length == 0);
@@ -143,7 +146,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
     isRadioButtonChecked(id: number, game: Game): boolean {
         return (game.startingValue > 0 && id == this.state.colorId && game.previousCall.length == 0);
-    }
+    }*/
 
     isCheckBoxDisable(id: number): boolean {
         switch (id) {

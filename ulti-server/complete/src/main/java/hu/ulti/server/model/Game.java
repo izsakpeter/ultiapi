@@ -7,12 +7,14 @@ public class Game {
 
 	private int startingValue;
 	private Player player;
-	private List<Integer> previousCall = new ArrayList<Integer>();
 	private boolean isRoundStarted = false;
 	private boolean isPlayReadyToStart = false;
 	private int lastCallerId;
 	private int activePlayer;
 	private Strike round = new Strike();
+	private List<Integer> call = new ArrayList<Integer>();
+	private List<Integer> previousCall = new ArrayList<Integer>();
+	private String errorMessage = "";
 
 	private int lastStrikeId = 0;
 	private Strike lastStrike;
@@ -101,4 +103,19 @@ public class Game {
 		this.isPlayReadyToStart = isPlayReadyToStart;
 	}
 
+	public List<Integer> getCall() {
+		return call;
+	}
+
+	public void setCall(List<Integer> call) {
+		this.call = call;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 }

@@ -6,7 +6,6 @@ export class Game {
 
     public startingValue: number;
 	public player: Player;
-	public previousCall: Array<number>;
 	public isRoundStarted: boolean = false;
 	public playReadyToStart: boolean = false;
 	public lastCallerId: number;
@@ -15,7 +14,6 @@ export class Game {
 	public lastStrikeId: number = 0;
 	public lastStrike: Strike;
 
-
-
-
+	public previousCall: Array<number>;
+	public call: Array<number>;
 }

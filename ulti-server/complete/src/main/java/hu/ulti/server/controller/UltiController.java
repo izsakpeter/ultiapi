@@ -119,41 +119,52 @@ public class UltiController {
 
 		if (id == game.getActivePlayer()) {
 
+			game.setCall(call);
+
 			if (id == player1.getId()) {
 
-				if (Call.callChecker(game, call, player1.isColorForced())) {
+				if (Call.callChecker(game, player1.isColorForced())) {
 					if (player1.isColorForced())
 						player1.setColorForced(false);
 
 					player1.setCallOk(true);
 					talon = Card.getTalonById(talonid);
 					player1.setHand(Card.removeTalon(player1, talon));
+					game.setLastCallerId(id);
+					game.setPreviousCall(game.getCall());
+					game.setCall(new ArrayList<>());
 					game.setActivePlayer(player2.getId());
 				} else {
 					player1.setCallOk(false);
 				}
 			} else if (id == player2.getId()) {
 
-				if (Call.callChecker(game, call, player2.isColorForced())) {
+				if (Call.callChecker(game, player2.isColorForced())) {
 					if (player2.isColorForced())
 						player2.setColorForced(false);
 
 					player2.setCallOk(true);
 					talon = Card.getTalonById(talonid);
 					player2.setHand(Card.removeTalon(player2, talon));
+					game.setLastCallerId(id);
+					game.setPreviousCall(game.getCall());
+					game.setCall(new ArrayList<>());
 					game.setActivePlayer(player3.getId());
 				} else {
 					player2.setCallOk(false);
 				}
 			} else if (id == player3.getId()) {
 
-				if (Call.callChecker(game, call, player3.isColorForced())) {
+				if (Call.callChecker(game, player3.isColorForced())) {
 					if (player3.isColorForced())
 						player3.setColorForced(false);
 
 					player3.setCallOk(true);
 					talon = Card.getTalonById(talonid);
 					player3.setHand(Card.removeTalon(player3, talon));
+					game.setLastCallerId(id);
+					game.setPreviousCall(game.getCall());
+					game.setCall(new ArrayList<>());
 					game.setActivePlayer(player1.getId());
 				} else {
 					player3.setCallOk(false);
@@ -161,8 +172,6 @@ public class UltiController {
 			}
 
 			Player player = getPlayerById(id);
-			game.setLastCallerId(id);
-			game.setPreviousCall(call);
 			game.setPlayer(player);
 
 			return game;

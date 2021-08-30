@@ -21,6 +21,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
         this.addToTalon = this.addToTalon.bind(this);
         this.backToHand = this.backToHand.bind(this);
         this.changeOrder = this.changeOrder.bind(this);
+        this.clearTalon = this.clearTalon.bind(this);
     }
 
     static getDerivedStateFromProps(props: { gotCards: boolean, game: Game }, state: { talon: number[], hand: number[] }) {
@@ -56,7 +57,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
                 <div><button onClick={this.changeOrder}>rendez</button>{cardsImg}</div>
                 <div><StartingValue game={this.props.game} onSetGame={this.props.onSetGame} /></div>
                 <div> {talonImg} </div>
-                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} onSetGame={this.props.onSetGame} /></div>
+                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} onSetGame={this.props.onSetGame} clearTalon={this.clearTalon} /></div>
 
             </div>
         )
@@ -81,5 +82,9 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
         const index = this.state.talon.indexOf(parseInt(event.target.id));
         this.state.talon.splice(index, 1);
         this.setState({ hand: [...this.state.hand, parseInt(event.target.id)] });
+    }
+
+    clearTalon(){
+        this.setState({talon: []});
     }
 }

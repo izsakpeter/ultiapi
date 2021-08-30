@@ -99,12 +99,12 @@ public class Call {
 		return calls;
 	}
 
-	public static boolean callChecker(Game game, List<Integer> calls, boolean isColorForced) {
+	public static boolean callChecker(Game game, boolean isColorForced) {
 
 		if (isColorForced) {
 			int forcedColorId = game.getStartingValue();
 
-			for (Integer callId : calls) {
+			for (Integer callId : game.getCall()) {
 				if (forcedColorId == MAKK_COLOR_ID && callId > 9)
 					return false;
 				else if (forcedColorId == ZOLD_COLOR_ID && (callId > 19 || callId < 10))
@@ -117,18 +117,18 @@ public class Call {
 		}
 
 		int prevCallValue = getCallValue(game.getPreviousCall());
-		int callValue = getCallValue(calls);
+		int callValue = getCallValue(game.getCall());
 
 		if (prevCallValue > callValue)
 			return false;
 
 		if (prevCallValue == callValue) {
 
-			if (game.getPreviousCall().size() > calls.size())
+			if (game.getPreviousCall().size() > game.getCall().size())
 				return false;
 
-			if (game.getPreviousCall().size() == 1 && calls.size() == 1 
-					&& game.getPreviousCall().get(0) == 2 && calls.get(0) == 30)
+			if (game.getPreviousCall().size() == 1 && game.getCall().size() == 1 
+					&& game.getPreviousCall().get(0) == 2 && game.getCall().get(0) == 30)
 				return false;			
 		}
 

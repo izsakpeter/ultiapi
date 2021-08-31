@@ -1,0 +1,8 @@
+.border {
+    border-style: solid;
+    border: 8px;
+}
+
+.ok-button {
+    width: 200px;
+}

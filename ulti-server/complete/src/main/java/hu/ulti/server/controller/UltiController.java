@@ -33,7 +33,7 @@ public class UltiController {
 
 	Game game = new Game();
 
-	private final static Long LONG_POLLING_TIMEOUT = 5000L;
+	private final static Long LONG_POLLING_TIMEOUT = 30000L;
 	private ExecutorService startPoll = Executors.newFixedThreadPool(5);
 
 	@GetMapping("/start")
@@ -50,48 +50,50 @@ public class UltiController {
 
 		startPoll.execute(() -> {
 			int i = 0;
+			
+			try {
+				
+				while (i < 30) {
+					if (player1.isReady() && player2.isReady() && player3.isReady()) {
 
-			while (i < 30) {
-				try {
-					Thread.sleep(1000);
-					output.setResult(game);
-				} catch (Exception e) {
-					output.setErrorResult("ERROR");
-				}
+						if (!game.isRoundStarted()) {
 
-				if (player1.isReady() && player2.isReady() && player3.isReady()) {
+							if (hands == null)
+								hands = Helper.getHands(dealer);
 
-					if (!game.isRoundStarted()) {
+							if (dealer == 1) {
+								player2.setColorForced(true);
+								game.setActivePlayer(player2.getId());
+							} else if (dealer == 2) {
+								player3.setColorForced(true);
+								game.setActivePlayer(player3.getId());
+							} else if (dealer == 3) {
+								player1.setColorForced(true);
+								game.setActivePlayer(player1.getId());
+							}
 
-						if (hands == null)
-							hands = Helper.getHands(dealer);
+							player1.setHand(hands.get(0));
+							player2.setHand(hands.get(1));
+							player3.setHand(hands.get(2));
+							talon = hands.get(3);
 
-						if (dealer == 1) {
-							player2.setColorForced(true);
-							game.setActivePlayer(player2.getId());
-						} else if (dealer == 2) {
-							player3.setColorForced(true);
-							game.setActivePlayer(player3.getId());
-						} else if (dealer == 3) {
-							player1.setColorForced(true);
-							game.setActivePlayer(player1.getId());
+							game.setRoundStarted(true);
 						}
 
-						player1.setHand(hands.get(0));
-						player2.setHand(hands.get(1));
-						player3.setHand(hands.get(2));
-						talon = hands.get(3);
-
-						game.setRoundStarted(true);
+						Player player = getPlayerById(id);
+						player.getHand().sort(Comparator.comparing(Card::getId));
+						game.setPlayer(player);
+						
+						break;
 					}
-
-					Player player = getPlayerById(id);
-					player.getHand().sort(Comparator.comparing(Card::getId));
-					game.setPlayer(player);
-					output.setResult(game);
-					break;
+					i++;
+					
+					Thread.sleep(1000);
 				}
-				i++;
+				
+				output.setResult(game);
+			} catch (Exception e) {
+				output.setErrorResult("ERROR");
 			}
 		});
 
@@ -120,7 +122,7 @@ public class UltiController {
 	@GetMapping("/startingvalue")
 	public Game setStartingValue(@RequestParam int id, @RequestParam int value) {
 
-		if (id == game.getActivePlayer()) {
+		if (id == game.getActivePlayer() && value > 0) {
 
 			if (id == player1.getId())
 				player1.setHand(Card.addTalon(player1, talon));

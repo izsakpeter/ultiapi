@@ -7,7 +7,7 @@ export class Player {
     public id: number;
 	public colorOrder: boolean;
 	public hand: Array<Card>;
-	public isCallOk: boolean;
+	public callOk: boolean;
 	public strikes: Array<Strike>;
 	public isColorForced: boolean = false;
 }

@@ -4,6 +4,7 @@ import { Request } from "../helper/request";
 import { Call, getCallList } from "../model/call";
 import { Game } from "../model/game";
 import { PassOrJoin } from "./PassOrJoin";
+import { WronCallComponent } from "./WrongCallComponent";
 
 export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number>, onSetGame: (target: string) => void, clearTalon: () => void }, { colorId: number, callList: Array<number>, game: Game }>{
 
@@ -45,7 +46,10 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         } else if (this.props.hand.length + this.props.talon.length == 12) {
 
             return (
+                <>
+                
                 <div>
+                    <WronCallComponent game={this.props.game}/>
                     <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChooseColor} />
                     <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChooseColor} />
                     <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChooseColor} />
@@ -65,7 +69,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
                         </tbody>
                     </table>
                     <button onClick={this.call}>ok</button>
-                </div>
+                </div></>
             )
         }
     }
@@ -79,7 +83,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
             this.props.clearTalon();
 
         } else {
-            console.log("TALON!");
+            console.log("Nincs TALON!");
         }
     }
 

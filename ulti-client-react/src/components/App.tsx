@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Game } from '../model/game';
 import axios, { AxiosRequestConfig } from "axios";
-import { Table } from './Table';
+import { Table } from './TableComponent';
 import { Request } from '../helper/request';
 import { LoginComponent } from './LoginComponent';
 
@@ -20,7 +20,7 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
     render() {
         return (
             <div>
-                <LoginComponent onSetGame={this.doHtttpReq}/>
+                <div className={"align-right"}><LoginComponent onSetGame={this.doHtttpReq}/></div>
                 <ErrorComp isWrongLogin={this.state.isWrongLogin} />
                 <Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.doHtttpReq}/>
             </div>

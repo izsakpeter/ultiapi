@@ -1,4 +1,4 @@
-import { Radio } from "@blueprintjs/core";
+import { Button, Radio } from "@blueprintjs/core";
 import React = require("react");
 import { Request } from "../helper/request";
 import { Call } from "../model/call";
@@ -29,12 +29,14 @@ export class StartingValue extends React.Component<{ game: Game, onSetGame: (tar
             return <></>;
 
         return (
-            <div>
-                <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChangeValue} />
-                <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChangeValue} />
-                <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChangeValue} />
-                <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChangeValue} />
-                <button onClick={this.setStartingValue}>ok</button>
+            <div className={"border"}>
+                <div>
+                    <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChangeValue} />
+                    <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChangeValue} />
+                    <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChangeValue} />
+                    <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChangeValue} />
+                </div>
+                <div><Button className={"ok-button"} onClick={this.setStartingValue}>ok</Button></div>
             </div>
         )
     }
@@ -44,7 +46,11 @@ export class StartingValue extends React.Component<{ game: Game, onSetGame: (tar
     }
 
     setStartingValue(event) {
-        const target = `/startingvalue?id=` + this.state.id + `&value=` + this.state.value;
-        this.props.onSetGame(target);
+        if (this.state.value > 0){
+            const target = `/startingvalue?id=` + this.state.id + `&value=` + this.state.value;
+            this.props.onSetGame(target);
+        } else {
+            console.log("Válasz szint!");
+        }
     }
 }

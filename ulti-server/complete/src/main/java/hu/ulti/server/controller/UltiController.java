@@ -8,6 +8,8 @@ import java.util.concurrent.Executors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -17,6 +19,7 @@ import hu.ulti.server.StrikeHandler;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
+import hu.ulti.server.model.KeepAlive;
 import hu.ulti.server.model.Player;
 
 @CrossOrigin
@@ -36,8 +39,21 @@ public class UltiController {
 	private final static Long LONG_POLLING_TIMEOUT = 30000L;
 	private ExecutorService startPoll = Executors.newFixedThreadPool(5);
 
-	@GetMapping("/start")
-	public DeferredResult<Game> shuffle(@RequestParam int id) {
+	@PostMapping("status")
+	public DeferredResult<Game> keepAlive(@RequestBody KeepAlive alive) {
+		DeferredResult<Game> output = new DeferredResult<>(LONG_POLLING_TIMEOUT);
+		Player player = getPlayerById(alive.getId());
+		game.setPlayer(player);
+		Game clone = game.clone();
+		output.setResult(clone);
+
+		return output;
+	}
+
+	@PostMapping("start")
+	public String shuffle(@RequestBody KeepAlive alive) {
+		
+		int id = alive.getId();
 
 		if (player1.getId() == 0)
 			player1 = new Player(id);
@@ -46,62 +62,38 @@ public class UltiController {
 		else if (player3.getId() == 0 && id != player1.getId() && id != player2.getId())
 			player3 = new Player(id);
 
-		DeferredResult<Game> output = new DeferredResult<>(LONG_POLLING_TIMEOUT);
+		if (player1.isReady() && player2.isReady() && player3.isReady()) {
 
-		startPoll.execute(() -> {
-			int i = 0;
-			
-			try {
-				
-				while (i < 30) {
-					if (player1.isReady() && player2.isReady() && player3.isReady()) {
+			if (!game.isRoundStarted()) {
 
-						if (!game.isRoundStarted()) {
+				if (hands == null)
+					hands = Helper.getHands(dealer);
 
-							if (hands == null)
-								hands = Helper.getHands(dealer);
-
-							if (dealer == 1) {
-								player2.setColorForced(true);
-								game.setActivePlayer(player2.getId());
-							} else if (dealer == 2) {
-								player3.setColorForced(true);
-								game.setActivePlayer(player3.getId());
-							} else if (dealer == 3) {
-								player1.setColorForced(true);
-								game.setActivePlayer(player1.getId());
-							}
-
-							player1.setHand(hands.get(0));
-							player2.setHand(hands.get(1));
-							player3.setHand(hands.get(2));
-							talon = hands.get(3);
-
-							game.setRoundStarted(true);
-						}
-
-						Player player = getPlayerById(id);
-						player.getHand().sort(Comparator.comparing(Card::getId));
-						game.setPlayer(player);
-						
-						Game clone = game.clone();
-						output.setResult(clone);
-						break;
-					}
-					i++;
-					
-					Thread.sleep(1000);
+				if (dealer == 1) {
+					player2.setColorForced(true);
+					game.setActivePlayer(player2.getId());
+				} else if (dealer == 2) {
+					player3.setColorForced(true);
+					game.setActivePlayer(player3.getId());
+				} else if (dealer == 3) {
+					player1.setColorForced(true);
+					game.setActivePlayer(player1.getId());
 				}
-			} catch (Exception e) {
-				output.setErrorResult("ERROR");
-			}
-		});
 
-		output.onTimeout(() -> {
-			game.setErrorMessage("hiba");
-			output.setResult(game);
-		});
-		return output;
+				player1.setHand(hands.get(0));
+				player2.setHand(hands.get(1));
+				player3.setHand(hands.get(2));
+				talon = hands.get(3);
+
+				game.setRoundStarted(true);
+			}
+
+			Player player = getPlayerById(id);
+			player.getHand().sort(Comparator.comparing(Card::getId));
+			game.setPlayer(player);
+		}
+
+		return "ok";
 	}
 
 	@GetMapping("/order")
@@ -251,86 +243,54 @@ public class UltiController {
 
 		return null;
 	}
-
-	@GetMapping("/play")
-	public Game play(@RequestParam int id, @RequestParam int cardid) {
-
-		if (game.isPlayReadyToStart() && id == game.getActivePlayer()) {
-
-			Player player = new Player();
-
-			if (id == player1.getId()) {
-				game.getRound().setCard1Id(cardid);
-				player1.setHand(Card.removeCardbyId(player1, cardid));
-				game.setActivePlayer(player2.getId());
-				player = player1;
-
-			} else if (id == player2.getId()) {
-				game.getRound().setCard2Id(cardid);
-				player2.setHand(Card.removeCardbyId(player1, cardid));
-				game.setActivePlayer(player3.getId());
-				player = player2;
-
-			} else if (id == player3.getId()) {
-				game.getRound().setCard3Id(cardid);
-				player3.setHand(Card.removeCardbyId(player1, cardid));
-				game.setActivePlayer(player1.getId());
-				player = player3;
-			}
-
-			game = StrikeHandler.strikeHandler(game);
-
-			if (id == player3.getId()) {
-				switch (game.getLastStrikeId()) {
-				case 1:
-					player1.setStrikes(game.getLastStrike());
-					break;
-				case 2:
-					player2.setStrikes(game.getLastStrike());
-					break;
-				case 3:
-					player3.setStrikes(game.getLastStrike());
-					break;
-				}
-			} else if (id == player1.getId()) {
-
-				switch (game.getLastStrikeId()) {
-				case 1:
-					player2.setStrikes(game.getLastStrike());
-					break;
-				case 2:
-					player3.setStrikes(game.getLastStrike());
-					break;
-				case 3:
-					player1.setStrikes(game.getLastStrike());
-					break;
-				}
-			} else if (id == player2.getId()) {
-
-				switch (game.getLastStrikeId()) {
-				case 1:
-					player3.setStrikes(game.getLastStrike());
-					break;
-				case 2:
-					player1.setStrikes(game.getLastStrike());
-					break;
-				case 3:
-					player2.setStrikes(game.getLastStrike());
-					break;
-				}
-			}
-			game.setLastStrikeId(0);
-
-			if (player1.getHand().size() == 0 && player2.getHand().size() == 0 && player3.getHand().size() == 0) {
-				// eredmény
-			}
-
-			game.setPlayer(player);
-
-		}
-
-		return game;
-	}
+	/*
+	 * @GetMapping("/play") public Game play(@RequestParam int id, @RequestParam int
+	 * cardid) {
+	 * 
+	 * if (game.isPlayReadyToStart() && id == game.getActivePlayer()) {
+	 * 
+	 * Player player = new Player();
+	 * 
+	 * if (id == player1.getId()) { game.getRound().setCard1Id(cardid);
+	 * player1.setHand(Card.removeCardbyId(player1, cardid));
+	 * game.setActivePlayer(player2.getId()); player = player1;
+	 * 
+	 * } else if (id == player2.getId()) { game.getRound().setCard2Id(cardid);
+	 * player2.setHand(Card.removeCardbyId(player1, cardid));
+	 * game.setActivePlayer(player3.getId()); player = player2;
+	 * 
+	 * } else if (id == player3.getId()) { game.getRound().setCard3Id(cardid);
+	 * player3.setHand(Card.removeCardbyId(player1, cardid));
+	 * game.setActivePlayer(player1.getId()); player = player3; }
+	 * 
+	 * game = StrikeHandler.strikeHandler(game);
+	 * 
+	 * if (id == player3.getId()) { switch (game.getLastStrikeId()) { case 1:
+	 * player1.setStrikes(game.getLastStrike()); break; case 2:
+	 * player2.setStrikes(game.getLastStrike()); break; case 3:
+	 * player3.setStrikes(game.getLastStrike()); break; } } else if (id ==
+	 * player1.getId()) {
+	 * 
+	 * switch (game.getLastStrikeId()) { case 1:
+	 * player2.setStrikes(game.getLastStrike()); break; case 2:
+	 * player3.setStrikes(game.getLastStrike()); break; case 3:
+	 * player1.setStrikes(game.getLastStrike()); break; } } else if (id ==
+	 * player2.getId()) {
+	 * 
+	 * switch (game.getLastStrikeId()) { case 1:
+	 * player3.setStrikes(game.getLastStrike()); break; case 2:
+	 * player1.setStrikes(game.getLastStrike()); break; case 3:
+	 * player2.setStrikes(game.getLastStrike()); break; } } game.setLastStrikeId(0);
+	 * 
+	 * if (player1.getHand().size() == 0 && player2.getHand().size() == 0 &&
+	 * player3.getHand().size() == 0) { // eredmény }
+	 * 
+	 * game.setPlayer(player);
+	 * 
+	 * }
+	 * 
+	 * return game; }
+	 */
 
 	private Player getPlayerById(int id) {
 

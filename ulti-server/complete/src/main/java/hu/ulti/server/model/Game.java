@@ -23,6 +23,23 @@ public class Game {
 		this.startingValue = 0;
 	}
 
+	public Game(int startingValue, Player player, boolean isRoundStarted, boolean isPlayReadyToStart, int lastCallerId,
+			int activePlayer, Strike round, List<Integer> call, List<Integer> previousCall, String errorMessage,
+			int lastStrikeId, Strike lastStrike) {
+		this.startingValue = startingValue;
+		this.player = player;
+		this.isRoundStarted = isRoundStarted;
+		this.isPlayReadyToStart = isPlayReadyToStart;
+		this.lastCallerId = lastCallerId;
+		this.activePlayer = activePlayer;
+		this.round = round;
+		this.call = call;
+		this.previousCall = previousCall;
+		this.errorMessage = errorMessage;
+		this.lastStrikeId = lastStrikeId;
+		this.lastStrike = lastStrike;
+	}
+
 	public Player getPlayer() {
 		return player;
 	}
@@ -117,5 +134,16 @@ public class Game {
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+
+	@Override
+	public Game clone() {
+		try {
+			return (Game) super.clone();
+		} catch (Exception e) {
+			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart, this.lastCallerId,
+					this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage, this.lastStrikeId, this.lastStrike);
+		}
+
 	}
 }

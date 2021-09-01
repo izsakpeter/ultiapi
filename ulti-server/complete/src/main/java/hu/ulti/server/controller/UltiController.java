@@ -84,14 +84,14 @@ public class UltiController {
 						player.getHand().sort(Comparator.comparing(Card::getId));
 						game.setPlayer(player);
 						
+						Game clone = game.clone();
+						output.setResult(clone);
 						break;
 					}
 					i++;
 					
 					Thread.sleep(1000);
 				}
-				
-				output.setResult(game);
 			} catch (Exception e) {
 				output.setErrorResult("ERROR");
 			}

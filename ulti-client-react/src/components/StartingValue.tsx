@@ -30,13 +30,13 @@ export class StartingValue extends React.Component<{ game: Game, onSetGame: (tar
 
         return (
             <div className={"border"}>
-                <div>
+                <div className={"margin"} >
                     <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChangeValue} />
                     <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChangeValue} />
                     <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChangeValue} />
                     <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChangeValue} />
                 </div>
-                <div><Button className={"ok-button"} onClick={this.setStartingValue}>ok</Button></div>
+                <div><Button className={"button-ok"} onClick={this.setStartingValue}>ok</Button></div>
             </div>
         )
     }

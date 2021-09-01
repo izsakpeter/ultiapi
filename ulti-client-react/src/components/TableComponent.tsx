@@ -55,8 +55,9 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
             <div >
                 <div className={"align-center"}><StartingValue game={this.props.game} onSetGame={this.props.onSetGame} /></div>
                 <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} onSetGame={this.props.onSetGame} clearTalon={this.clearTalon} /></div>
-                <div className={"align-center"}>{talonImg} </div>
-                <div className={"align-center"}><Button onClick={this.changeOrder}>rendez</Button>{cardsImg}</div>
+                <div className={"talon"}>{talonImg} </div>
+                <div className={"align-center-bottom"}>{cardsImg}</div>
+                <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>
             </div>
         )
     }

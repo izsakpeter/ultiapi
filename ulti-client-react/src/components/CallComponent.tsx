@@ -1,4 +1,4 @@
-import { Radio, RadioGroup } from "@blueprintjs/core";
+import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
 import { Request } from "../helper/request";
 import { Call, getCallList } from "../model/call";
@@ -48,7 +48,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
             return (
                 <>
                 
-                <div>
+                <div className={"call-table-border"}>
                     <WronCallComponent game={this.props.game}/>
                     <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChooseColor} />
                     <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChooseColor} />
@@ -68,7 +68,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
                             <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINTELEN_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_TERITETT_ID)} onChange={this.onChooseTSzDuri} /> szintelen teritett duri </td></tr>
                         </tbody>
                     </table>
-                    <button onClick={this.call}>ok</button>
+                    <div className={"align-center"}><Button className={"button-ok"} onClick={this.call}>ok</Button></div>
                 </div></>
             )
         }

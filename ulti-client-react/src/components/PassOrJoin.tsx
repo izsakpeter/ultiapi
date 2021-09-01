@@ -1,3 +1,4 @@
+import { Button } from "@blueprintjs/core";
 import React = require("react");
 import { Request } from "../helper/request";
 import { Game } from "../model/game";
@@ -13,9 +14,9 @@ export class PassOrJoin extends React.Component<{ game: Game, onSetGame: (target
 
     render() {
         return (
-            <div>
-                <button onClick={this.onPass}>pass</button>
-                <button onClick={this.onJoin}>felvesz</button>
+            <div className={"p-o-j-frame"}>
+                <Button className={"p-o-j-button"} onClick={this.onPass}>passz</Button>
+                <Button className={"p-o-j-button"} onClick={this.onJoin}>felvesz</Button>
             </div>
         )
     }

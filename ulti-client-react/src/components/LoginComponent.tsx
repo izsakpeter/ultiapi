@@ -1,6 +1,6 @@
 import React = require("react");
 
-export class LoginComponent extends React.Component <{onSetGame: (target: string) => void},{username: string}> {
+export class LoginComponent extends React.Component <{startID: (target: string) => void},{username: string}> {
 
     constructor(props){
         super(props)
@@ -30,10 +30,7 @@ export class LoginComponent extends React.Component <{onSetGame: (target: string
     }
 
     async handleSubmit(event) {
-
         event.preventDefault();
-
-        const target = `/start?id=` + this.state.username;
-        this.props.onSetGame(target);
+        this.props.startID(this.state.username);
     }
 }

@@ -1,15 +1,7 @@
-.align-center {
-    text-align: center;
-}
-
 .align-center-bottom {
     position: absolute;
     top: 70%;
     left: 3%;
-}
-
-.align-right {
-    text-align: right;
 }
 
 .button-card {

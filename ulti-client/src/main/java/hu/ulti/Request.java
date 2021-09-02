@@ -36,7 +36,7 @@ public class Request {
 			res = new JSONObject(response.toString());
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("ERROR: " + e);
 		}
 
 		return res;

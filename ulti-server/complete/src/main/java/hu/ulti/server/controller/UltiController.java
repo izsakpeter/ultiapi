@@ -1,7 +1,9 @@
 package hu.ulti.server.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,23 +38,50 @@ public class UltiController {
 
 	Game game = new Game();
 
-	private final static Long LONG_POLLING_TIMEOUT = 30000L;
-	private ExecutorService startPoll = Executors.newFixedThreadPool(5);
+	private final static Long LONG_POLLING_TIMEOUT = 60000L;
+	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
 
 	@PostMapping("status")
-	public DeferredResult<Game> keepAlive(@RequestBody KeepAlive alive) {
+	public DeferredResult<Game> keepAlive(@RequestBody KeepAlive status) {
 		DeferredResult<Game> output = new DeferredResult<>(LONG_POLLING_TIMEOUT);
-		Player player = getPlayerById(alive.getId());
-		game.setPlayer(player);
-		Game clone = game.clone();
-		output.setResult(clone);
+		statusPoll.execute(new Runnable() {
+			@Override
+			public void run() {
+
+				int i = 0;
+
+				try {
+					while (i < 60) {
+
+						if (game.getLastModificationTimeStamp() >= status.getLastTimeStamp()) {
+							game.setLastModificationTimeStamp(System.currentTimeMillis());
+							Player player = getPlayerById(status.getId());
+							Game clone = game.clone();
+							clone.setPlayer(player);
+							output.setResult(clone);
+							break;
+						}
+						i++;
+						Thread.sleep(1000);
+					}
+
+				} catch (Exception e) {
+					output.setErrorResult("ERROR");
+				}
+			}
+		});
+
+		output.onTimeout(() -> {
+			game.setErrorMessage("TIMEOUT");
+			output.setResult(game);
+		});
 
 		return output;
 	}
 
 	@PostMapping("start")
 	public String shuffle(@RequestBody KeepAlive alive) {
-		
+
 		int id = alive.getId();
 
 		if (player1.getId() == 0)
@@ -62,36 +91,39 @@ public class UltiController {
 		else if (player3.getId() == 0 && id != player1.getId() && id != player2.getId())
 			player3 = new Player(id);
 
-		if (player1.isReady() && player2.isReady() && player3.isReady()) {
+		if (!player1.isReady() || !player2.isReady() || !player3.isReady())
+			return "waitng";
 
-			if (!game.isRoundStarted()) {
+		if (game.isRoundStarted())
+			return "Round started";
 
-				if (hands == null)
-					hands = Helper.getHands(dealer);
+		if (!game.isRoundStarted()) {
 
-				if (dealer == 1) {
-					player2.setColorForced(true);
-					game.setActivePlayer(player2.getId());
-				} else if (dealer == 2) {
-					player3.setColorForced(true);
-					game.setActivePlayer(player3.getId());
-				} else if (dealer == 3) {
-					player1.setColorForced(true);
-					game.setActivePlayer(player1.getId());
-				}
+			if (hands == null)
+				hands = Helper.getHands(dealer);
 
-				player1.setHand(hands.get(0));
-				player2.setHand(hands.get(1));
-				player3.setHand(hands.get(2));
-				talon = hands.get(3);
-
-				game.setRoundStarted(true);
+			if (dealer == 1) {
+				player2.setColorForced(true);
+				game.setActivePlayer(player2.getId());
+			} else if (dealer == 2) {
+				player3.setColorForced(true);
+				game.setActivePlayer(player3.getId());
+			} else if (dealer == 3) {
+				player1.setColorForced(true);
+				game.setActivePlayer(player1.getId());
 			}
 
-			Player player = getPlayerById(id);
-			player.getHand().sort(Comparator.comparing(Card::getId));
-			game.setPlayer(player);
+			player1.setHand(hands.get(0));
+			player2.setHand(hands.get(1));
+			player3.setHand(hands.get(2));
+			talon = hands.get(3);
+
+			game.setRoundStarted(true);
 		}
+
+		Player player = getPlayerById(id);
+		player.getHand().sort(Comparator.comparing(Card::getId));
+		game.setPlayer(player);
 
 		return "ok";
 	}

@@ -19,13 +19,15 @@ public class Game {
 	private int lastStrikeId = 0;
 	private Strike lastStrike;
 
+	private long lastModificationTimeStamp = 0;
+
 	public Game() {
 		this.startingValue = 0;
 	}
 
 	public Game(int startingValue, Player player, boolean isRoundStarted, boolean isPlayReadyToStart, int lastCallerId,
 			int activePlayer, Strike round, List<Integer> call, List<Integer> previousCall, String errorMessage,
-			int lastStrikeId, Strike lastStrike) {
+			int lastStrikeId, Strike lastStrike, long lastModificationTimeStamp) {
 		this.startingValue = startingValue;
 		this.player = player;
 		this.isRoundStarted = isRoundStarted;
@@ -38,6 +40,7 @@ public class Game {
 		this.errorMessage = errorMessage;
 		this.lastStrikeId = lastStrikeId;
 		this.lastStrike = lastStrike;
+		this.lastModificationTimeStamp = lastModificationTimeStamp;
 	}
 
 	public Player getPlayer() {
@@ -136,13 +139,22 @@ public class Game {
 		this.errorMessage = errorMessage;
 	}
 
+	public long getLastModificationTimeStamp() {
+		return lastModificationTimeStamp;
+	}
+
+	public void setLastModificationTimeStamp(long lastModificationTimeStamp) {
+		this.lastModificationTimeStamp = lastModificationTimeStamp;
+	}
+
 	@Override
 	public Game clone() {
 		try {
 			return (Game) super.clone();
 		} catch (Exception e) {
-			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart, this.lastCallerId,
-					this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage, this.lastStrikeId, this.lastStrike);
+			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart,
+					this.lastCallerId, this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage,
+					this.lastStrikeId, this.lastStrike, this.lastModificationTimeStamp);
 		}
 
 	}

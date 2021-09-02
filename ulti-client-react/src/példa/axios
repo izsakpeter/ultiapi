@@ -1,0 +1,58 @@
+public async makeRequest<Req extends ClientRequest, Resp extends ClientResponseBase>(
+        endpoint: string, request?: ClientRequestWithoutBaseProperties<Req>, requestConfig?: AxiosRequestConfig
+    ): Promise<ServerResponse<Resp>> {
+        let configuration: AxiosRequestConfig = {
+            timeout: 45000,
+        };
+        if (requestConfig) {
+            configuration = requestConfig;
+            if (!requestConfig.timeout)
+                configuration.timeout = DEFAULT_HTTP_REQUEST_TIMEOUT;
+        }
+        try {
+            const req = {
+                sid: this.sessionId,
+                ...request
+            };
+            const target = `/api/${endpoint}`;
+            const response = await axios.post<Resp>(target, req, configuration);
+            if (response.status === 200) {
+                if (response.data && response.data.successful === true) {
+                    return {
+                        successful: true,
+                        data: response.data,
+                        errorMessage: null
+                    };
+                } else {
+                    return {
+                        successful: false,
+                        data: response.data,
+                        errorMessage: response.data.errorMessage
+                    };
+                }
+            } else {
+                return {
+                    successful: false,
+                    data: response.data,
+                    errorMessage: `HTTP error ${response.status}`
+                };
+            }
+        } catch (error) {
+            return {
+                successful: false,
+                data: null,
+                errorMessage: typeof error === "string" ? error : error.message
+            };
+        }
+    }
+
+
+
+    public async createDevice(request: ClientRequestWithoutBaseProperties<CreateDeviceRequest>, requestSettings?: AxiosRequestConfig)
+        : Promise<ServerResponse<ClientResponseBase>> {
+        return this.serverConnection.makeRequest<CreateDeviceRequest, ClientResponseBase>(
+            "devices/createDevice",
+            request,
+            requestSettings
+        );
+    }

@@ -38,7 +38,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
     render() {
 
         if (!this.props.gotCards)
-            return null;
+            return <></>;
 
         let cardsInHand = GetOrderedHand(this.state.hand.sort((a, b) => a - b), this.props.game.player.colorOrder);
         let cardsImg = [];

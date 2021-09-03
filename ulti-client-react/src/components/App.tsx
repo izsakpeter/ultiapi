@@ -25,7 +25,7 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
             <div>
                 <div className={"align-left"}><ErrorComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn}/></div>
                 <div className={"align-right"}><LoginComponent startID={this.startRequest}/></div>
-                <div className={"align-center"}><Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.doHtttpReq}/></div>
+                <div className={"align-center"}><Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.doHtttpReq} postReq={this.postRequest}/></div>
             </div>
         );
     }
@@ -72,5 +72,15 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
         } else {
             this.setState({ gotCards: false, isWrongLogin: true });
         }*/
+    }
+
+    postRequest = (reqObj: Request): Promise<void> => {
+        return this.orderRequestImpl(reqObj);
+    }
+
+    async orderRequestImpl(reqObj: Request){
+        
+        //await StartPostRequest(parseInt(target));
+        //this.keepAlive(parseInt(target));
     }
 }

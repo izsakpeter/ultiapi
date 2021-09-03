@@ -23,5 +23,4 @@ public class KeepAlive {
 	public void setLastTimeStamp(Long lastTimeStamp) {
 		this.lastTimeStamp = lastTimeStamp;
 	}
-
 }

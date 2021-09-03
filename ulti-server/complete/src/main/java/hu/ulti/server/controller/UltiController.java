@@ -79,7 +79,7 @@ public class UltiController {
 
 	@PostMapping("start")
 	public String shuffle(@RequestBody Request request) {
-		
+
 		int id = request.getId();
 
 		if (player1.getId() == 0)
@@ -122,14 +122,14 @@ public class UltiController {
 
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
-			
+
 			return "ok";
 		}
 	}
 
 	@PostMapping("order")
 	public String changeOrder(@RequestBody Request request) {
-		
+
 		if (request.getId() == player1.getId())
 			player1.setColorOrder(request.isColorOrder());
 		else if (request.getId() == player2.getId())
@@ -137,7 +137,6 @@ public class UltiController {
 		else if (request.getId() == player3.getId())
 			player3.setColorOrder(request.isColorOrder());
 
-		
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return "ok";
 	}
@@ -155,16 +154,16 @@ public class UltiController {
 				player3.setHand(Card.addTalon(player3, talon));
 
 			game.setStartingValue(request.getValue());
-			
+
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
-			
+
 			return "ok";
 		}
-		
+
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return "bad";
 	}
-	
+
 	@PostMapping("call")
 	public String call(@RequestBody Request request) {
 
@@ -225,15 +224,14 @@ public class UltiController {
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return "ok";
 		}
-		
+
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return "bad";
 	}
 
-	
 	@PostMapping("join")
 	public String join(@RequestBody Request request) {
-		
+
 		if (request.getId() == game.getActivePlayer()) {
 			if (!request.isIsjoin()) {
 
@@ -251,7 +249,7 @@ public class UltiController {
 					game.setActivePlayer(player1.getId());
 
 				game.setLastModificationTimeStamp(System.currentTimeMillis());
-				
+
 				return "passz";
 
 			} else {
@@ -263,13 +261,41 @@ public class UltiController {
 					player3.setHand(Card.addTalon(player3, talon));
 
 				game.setLastModificationTimeStamp(System.currentTimeMillis());
-				
+
 				return "felvette";
 			}
 		}
 
 		return "bad";
 	}
+
+	@PostMapping("play")
+	public String play(@RequestBody Request request) {
+
+		if (game.isPlayReadyToStart() && request.getId() == game.getActivePlayer()) {
+			if (request.getId() == player1.getId()) {
+				game.getRound().setCard1Id(request.getCardid());
+				player1.setHand(Card.removeCardbyId(player1, request.getCardid()));
+				game.setActivePlayer(player2.getId());
+			} else if (request.getId() == player2.getId()) {
+				game.getRound().setCard2Id(request.getCardid());
+				player2.setHand(Card.removeCardbyId(player1, request.getCardid()));
+				game.setActivePlayer(player3.getId());
+
+			} else if (request.getId() == player3.getId()) {
+				game.getRound().setCard3Id(request.getCardid());
+				player3.setHand(Card.removeCardbyId(player1, request.getCardid()));
+				game.setActivePlayer(player1.getId());
+			}
+			
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
+			return "ok";
+		}
+
+		game.setLastModificationTimeStamp(System.currentTimeMillis());
+		return "bad";
+	}
+
 	/*
 	 * @GetMapping("/play") public Game play(@RequestParam int id, @RequestParam int
 	 * cardid) {

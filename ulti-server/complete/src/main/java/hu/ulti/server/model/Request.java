@@ -11,6 +11,7 @@ public class Request {
 	private List<Integer> call;
 	private List<Integer> talonid;
 	private boolean isjoin;
+	private int cardid;
 
 	public Request() {
 	}
@@ -69,5 +70,13 @@ public class Request {
 
 	public void setIsjoin(boolean isjoin) {
 		this.isjoin = isjoin;
+	}
+
+	public int getCardid() {
+		return cardid;
+	}
+
+	public void setCardid(int cardid) {
+		this.cardid = cardid;
 	}
 }

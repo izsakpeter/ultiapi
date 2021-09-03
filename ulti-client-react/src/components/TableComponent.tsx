@@ -5,6 +5,7 @@ import { CallComponent } from "./CallComponent";
 import { StartingValue } from "./StartingValueComponent";
 import { Button } from "@blueprintjs/core";
 import { RequestModel } from "../model/requestModel";
+import { PlaygroundComponent } from "./PlaygroundComponent";
 
 export class Table extends React.Component<{ gotCards: boolean, game: Game, onSetGame: (target: string) => void, postReq: (reqObj: RequestModel) => void }, { talon: number[], hand: number[] }> {
 
@@ -56,6 +57,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
             <div >
                 <div className={"align-center"}><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
                 <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
+                <div className={"playground"}><PlaygroundComponent game={this.props.game}/></div>
                 <div className={"talon"}>{talonImg} </div>
                 <div className={"align-center-bottom"}>{cardsImg}</div>
                 <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>

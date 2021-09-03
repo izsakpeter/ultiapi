@@ -2,8 +2,9 @@ import { Button, Radio } from "@blueprintjs/core";
 import React = require("react");
 import { Call } from "../model/call";
 import { Game } from "../model/game";
+import { RequestModel } from "../model/requestModel";
 
-export class StartingValue extends React.Component<{ game: Game, onSetGame: (target: string) => void }, { value: number, id: number }> {
+export class StartingValue extends React.Component<{ game: Game, postReq: (reqObj: RequestModel) => void }, { value: number, id: number }> {
 
     constructor(props) {
         super(props);
@@ -45,9 +46,16 @@ export class StartingValue extends React.Component<{ game: Game, onSetGame: (tar
     }
 
     setStartingValue(event) {
-        if (this.state.value > 0){
-            const target = `/startingvalue?id=` + this.state.id + `&value=` + this.state.value;
-            this.props.onSetGame(target);
+        if (this.state.value > 0) {
+
+            let reqObj: RequestModel = {
+                dest: "startingvalue",
+                id: this.props.game.player.id,
+                value: this.state.value
+            }
+
+            this.props.postReq(reqObj);
+
         } else {
             console.log("Válasz szint!");
         }

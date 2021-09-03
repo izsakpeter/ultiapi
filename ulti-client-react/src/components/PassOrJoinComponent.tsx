@@ -1,8 +1,9 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
 import { Game } from "../model/game";
+import { RequestModel } from "../model/requestModel";
 
-export class PassOrJoin extends React.Component<{ game: Game, onSetGame: (target: string) => void }, {}> {
+export class PassOrJoin extends React.Component<{ game: Game, postReq: (reqObj: RequestModel) => void}, {}> {
 
     constructor(props) {
         super(props)
@@ -21,12 +22,24 @@ export class PassOrJoin extends React.Component<{ game: Game, onSetGame: (target
     }
 
     async onPass(event) {
-        const target = `/join?id=` + this.props.game.player.id + `&isjoin=` + false;
-        this.props.onSetGame(target);
+
+        let reqObj: RequestModel = {
+            dest: "join",
+            id: this.props.game.player.id,
+            isjoin: false
+        }
+
+        this.props.postReq(reqObj);
     }
 
     async onJoin(event) {
-        const target = `/join?id=` + this.props.game.player.id + `&isjoin=` + true;
-        this.props.onSetGame(target);
+
+        let reqObj: RequestModel = {
+            dest: "join",
+            id: this.props.game.player.id,
+            isjoin: false
+        }
+
+        this.props.postReq(reqObj);
     }
 }

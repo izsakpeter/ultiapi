@@ -142,78 +142,78 @@ public class UltiController {
 		return "ok";
 	}
 
-	@GetMapping("/startingvalue")
-	public Game setStartingValue(@RequestParam int id, @RequestParam int value) {
+	@PostMapping("startingvalue")
+	public String setStartingValue(@RequestBody Request request) {
 
-		if (id == game.getActivePlayer() && value > 0) {
+		if (request.getId() == game.getActivePlayer() && request.getValue() > 0) {
 
-			if (id == player1.getId())
+			if (request.getId() == player1.getId())
 				player1.setHand(Card.addTalon(player1, talon));
-			else if (id == player2.getId())
+			else if (request.getId() == player2.getId())
 				player2.setHand(Card.addTalon(player2, talon));
-			else if (id == player3.getId())
+			else if (request.getId() == player3.getId())
 				player3.setHand(Card.addTalon(player3, talon));
 
-			Player player = getPlayerById(id);
-
-			game.setStartingValue(value);
-			game.setPlayer(player);
-
-			return game;
+			game.setStartingValue(request.getValue());
+			
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
+			
+			return "ok";
 		}
-
-		return null;
+		
+		game.setLastModificationTimeStamp(System.currentTimeMillis());
+		return "bad";
 	}
+	
+	@PostMapping("call")
+	public String call(@RequestBody Request request) {
 
-	@GetMapping("/call")
-	public Game call(@RequestParam int id, @RequestParam List<Integer> call, @RequestParam List<Integer> talonid) {
+		if (request.getId() == game.getActivePlayer()) {
 
-		if (id == game.getActivePlayer()) {
+			game.setCall(request.getCall());
 
-			game.setCall(call);
-
-			if (id == player1.getId()) {
+			if (request.getId() == player1.getId()) {
 
 				if (Call.callChecker(game, player1.isColorForced())) {
 					if (player1.isColorForced())
 						player1.setColorForced(false);
 
 					player1.setCallOk(true);
-					talon = Card.getTalonById(talonid);
+					talon = Card.getTalonById(request.getTalonid());
 					player1.setHand(Card.removeTalon(player1, talon));
-					game.setLastCallerId(id);
+					game.setLastCallerId(request.getId());
 					game.setPreviousCall(game.getCall());
 					game.setCall(new ArrayList<>());
 					game.setActivePlayer(player2.getId());
 				} else {
 					player1.setCallOk(false);
 				}
-			} else if (id == player2.getId()) {
+			} else if (request.getId() == player2.getId()) {
 
 				if (Call.callChecker(game, player2.isColorForced())) {
 					if (player2.isColorForced())
 						player2.setColorForced(false);
 
 					player2.setCallOk(true);
-					talon = Card.getTalonById(talonid);
+					talon = Card.getTalonById(request.getTalonid());
 					player2.setHand(Card.removeTalon(player2, talon));
-					game.setLastCallerId(id);
+					game.setLastCallerId(request.getId());
 					game.setPreviousCall(game.getCall());
 					game.setCall(new ArrayList<>());
 					game.setActivePlayer(player3.getId());
 				} else {
 					player2.setCallOk(false);
 				}
-			} else if (id == player3.getId()) {
+			} else if (request.getId() == player3.getId()) {
 
 				if (Call.callChecker(game, player3.isColorForced())) {
 					if (player3.isColorForced())
 						player3.setColorForced(false);
 
 					player3.setCallOk(true);
-					talon = Card.getTalonById(talonid);
+					talon = Card.getTalonById(request.getTalonid());
 					player3.setHand(Card.removeTalon(player3, talon));
-					game.setLastCallerId(id);
+					game.setLastCallerId(request.getId());
 					game.setPreviousCall(game.getCall());
 					game.setCall(new ArrayList<>());
 					game.setActivePlayer(player1.getId());
@@ -222,57 +222,53 @@ public class UltiController {
 				}
 			}
 
-			Player player = getPlayerById(id);
-			game.setPlayer(player);
-
-			return game;
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
+			return "ok";
 		}
-
-		return null;
+		
+		game.setLastModificationTimeStamp(System.currentTimeMillis());
+		return "bad";
 	}
 
-	@GetMapping("/join")
-	public Game call(@RequestParam int id, @RequestParam boolean isjoin) {
-		if (id == game.getActivePlayer()) {
-
-			Player player = new Player();
-
-			if (!isjoin) {
+	
+	@PostMapping("join")
+	public String join(@RequestBody Request request) {
+		
+		if (request.getId() == game.getActivePlayer()) {
+			if (!request.isIsjoin()) {
 
 				if (game.getLastCallerId() == game.getActivePlayer()) {
-					player = getPlayerById(id);
 					game.setPlayReadyToStart(true);
-					game.setPlayer(player);
-
-					return game;
+					game.setLastModificationTimeStamp(System.currentTimeMillis());
+					return "kezdődik a játék";
 				}
 
-				if (id == player1.getId())
+				if (request.getId() == player1.getId())
 					game.setActivePlayer(player2.getId());
-				else if (id == player2.getId())
+				else if (request.getId() == player2.getId())
 					game.setActivePlayer(player3.getId());
-				else if (id == player3.getId())
+				else if (request.getId() == player3.getId())
 					game.setActivePlayer(player1.getId());
 
-				player = getPlayerById(id);
+				game.setLastModificationTimeStamp(System.currentTimeMillis());
+				
+				return "passz";
 
 			} else {
-				if (id == player1.getId())
+				if (request.getId() == player1.getId())
 					player1.setHand(Card.addTalon(player1, talon));
-				else if (id == player2.getId())
+				else if (request.getId() == player2.getId())
 					player2.setHand(Card.addTalon(player2, talon));
-				else if (id == player3.getId())
+				else if (request.getId() == player3.getId())
 					player3.setHand(Card.addTalon(player3, talon));
 
-				player = getPlayerById(id);
+				game.setLastModificationTimeStamp(System.currentTimeMillis());
+				
+				return "felvette";
 			}
-
-			game.setPlayer(player);
-
-			return game;
 		}
 
-		return null;
+		return "bad";
 	}
 	/*
 	 * @GetMapping("/play") public Game play(@RequestParam int id, @RequestParam int

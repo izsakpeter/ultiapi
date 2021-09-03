@@ -54,8 +54,8 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
 
         return (
             <div >
-                <div className={"align-center"}><StartingValue game={this.props.game} onSetGame={this.props.onSetGame} /></div>
-                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} onSetGame={this.props.onSetGame} clearTalon={this.clearTalon} /></div>
+                <div className={"align-center"}><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
+                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
                 <div className={"talon"}>{talonImg} </div>
                 <div className={"align-center-bottom"}>{cardsImg}</div>
                 <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>
@@ -72,7 +72,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
             colorOrder: !this.props.game.player.colorOrder
         }
 
-        this.props.postReq(reqObj)
+        this.props.postReq(reqObj);
     }
 
     addToTalon(event) {

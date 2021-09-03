@@ -1,12 +1,16 @@
 package hu.ulti.server.model;
 
+import java.util.List;
+
 public class Request {
 
 	private int id;
-
 	private Long lastTimeStamp;
-
 	private boolean colorOrder;
+	private int value;
+	private List<Integer> call;
+	private List<Integer> talonid;
+	private boolean isjoin;
 
 	public Request() {
 	}
@@ -35,4 +39,35 @@ public class Request {
 		this.colorOrder = colorOrder;
 	}
 
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public List<Integer> getCall() {
+		return call;
+	}
+
+	public void setCall(List<Integer> call) {
+		this.call = call;
+	}
+
+	public List<Integer> getTalonid() {
+		return talonid;
+	}
+
+	public void setTalonid(List<Integer> talonid) {
+		this.talonid = talonid;
+	}
+
+	public boolean isIsjoin() {
+		return isjoin;
+	}
+
+	public void setIsjoin(boolean isjoin) {
+		this.isjoin = isjoin;
+	}
 }

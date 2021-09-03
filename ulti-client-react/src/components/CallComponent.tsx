@@ -2,10 +2,11 @@ import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
 import { Call, getCallList } from "../model/call";
 import { Game } from "../model/game";
+import { RequestModel } from "../model/requestModel";
 import { PassOrJoin } from "./PassOrJoinComponent";
 import { WronCallComponent } from "./WrongCallComponent";
 
-export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number>, onSetGame: (target: string) => void, clearTalon: () => void }, { colorId: number, callList: Array<number>, game: Game }>{
+export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number>, postReq: (reqObj: RequestModel) => void, clearTalon: () => void }, { colorId: number, callList: Array<number>, game: Game }>{
 
     constructor(props) {
         super(props);
@@ -41,7 +42,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
             return <></>;
 
         if (this.props.hand.length == 10 && this.props.talon.length == 0) {
-            return <PassOrJoin game={this.props.game} onSetGame={this.props.onSetGame} />;
+            return <PassOrJoin game={this.props.game} postReq={this.props.postReq} />;
         } else if (this.props.hand.length + this.props.talon.length == 12) {
 
             return (
@@ -77,8 +78,15 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
         if (this.props.talon.length == 2) {
             let finalCallList = getCallList(this.state.colorId, this.state.callList);
-            const target = "/call?id=" + this.props.game.player.id + "&call=" + finalCallList + "&talonid=" + this.props.talon;
-            this.props.onSetGame(target);
+
+            let reqObj: RequestModel = {
+                dest: "call",
+                id: this.props.game.player.id,
+                call: finalCallList,
+                talonid: this.props.talon
+            }
+
+            this.props.postReq(reqObj);
             this.props.clearTalon();
 
         } else {

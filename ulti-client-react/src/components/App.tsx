@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Game } from '../model/game';
 import axios, { AxiosRequestConfig } from "axios";
 import { Table } from './TableComponent';
-import { PostRequest, StartPostRequest, StatusPostRequest } from '../helper/request';
+import { PostRequest, StatusPostRequest } from '../helper/request';
 import { LoginComponent } from './LoginComponent';
 import { ErrorComponent } from './ErrorComponent';
 import { RequestModel } from '../model/requestModel';
@@ -25,8 +25,8 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
         return (
             <div>
                 <div className={"align-left"}><ErrorComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn}/></div>
-                <div className={"align-right"}><LoginComponent startID={this.startRequest}/></div>
-                <div className={"align-center"}><Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.doHtttpReq} postReq={this.postRequest}/></div>
+                <div className={"align-right"}><LoginComponent postReq={this.postRequest}/></div>
+                <div><Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.doHtttpReq} postReq={this.postRequest}/></div>
             </div>
         );
     }
@@ -62,15 +62,8 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
 
     async postRequestImpl(reqObj: RequestModel){
         await PostRequest(reqObj);
-    }
 
-    startRequest = (target: string): Promise<void> => {
-        return this.startRequestImpl(target);
-    }
-
-    async startRequestImpl(target: string){
-        
-        await StartPostRequest(parseInt(target));
-        this.keepAlive(parseInt(target));
+        if (reqObj.dest === "start")
+            this.keepAlive(reqObj.id);
     }
 }

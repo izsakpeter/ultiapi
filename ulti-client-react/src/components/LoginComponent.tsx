@@ -1,6 +1,7 @@
 import React = require("react");
+import { RequestModel } from "../model/requestModel";
 
-export class LoginComponent extends React.Component <{startID: (target: string) => void},{username: string}> {
+export class LoginComponent extends React.Component <{postReq: (reqObj: RequestModel) => void},{username: string}> {
 
     constructor(props){
         super(props)
@@ -31,6 +32,12 @@ export class LoginComponent extends React.Component <{startID: (target: string) 
 
     async handleSubmit(event) {
         event.preventDefault();
-        this.props.startID(this.state.username);
+
+        let reqObj: RequestModel = {
+            dest: "start",
+            id: parseInt(this.state.username)
+        }
+
+        this.props.postReq(reqObj);
     }
 }

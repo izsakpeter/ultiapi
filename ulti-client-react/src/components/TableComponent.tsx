@@ -2,11 +2,11 @@ import * as React from "react";
 import { GetCardSource, GetOrderedHand } from "../helper/cardHandler";
 import { Game } from "../model/game";
 import { CallComponent } from "./CallComponent";
-import { StartingValue } from "./StartingValue";
+import { StartingValue } from "./StartingValueComponent";
 import { Button } from "@blueprintjs/core";
-import { Request } from "../model/request";
+import { RequestModel } from "../model/requestModel";
 
-export class Table extends React.Component<{ gotCards: boolean, game: Game, onSetGame: (target: string) => void, postReq: (reqObj: Request) => void }, { talon: number[], hand: number[] }> {
+export class Table extends React.Component<{ gotCards: boolean, game: Game, onSetGame: (target: string) => void, postReq: (reqObj: RequestModel) => void }, { talon: number[], hand: number[] }> {
 
     cards: number[] = [];
 
@@ -66,10 +66,11 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
     async changeOrder(event) {
         event.preventDefault();
 
-        let reqObj: Request;
-        reqObj.dest = "order";
-        reqObj.id = this.props.game.player.id;
-        reqObj.order = !this.props.game.player.colorOrder;
+        let reqObj: RequestModel = {
+            dest: "order",
+            id: this.props.game.player.id,
+            colorOrder: !this.props.game.player.colorOrder
+        }
 
         this.props.postReq(reqObj)
     }

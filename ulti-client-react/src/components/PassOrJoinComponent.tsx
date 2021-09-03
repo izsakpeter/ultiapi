@@ -1,6 +1,5 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
-import { Request } from "../helper/request";
 import { Game } from "../model/game";
 
 export class PassOrJoin extends React.Component<{ game: Game, onSetGame: (target: string) => void }, {}> {

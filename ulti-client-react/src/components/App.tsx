@@ -2,9 +2,10 @@ import * as React from 'react';
 import { Game } from '../model/game';
 import axios, { AxiosRequestConfig } from "axios";
 import { Table } from './TableComponent';
-import { Request, StartPostRequest, StatusPostRequest } from '../helper/request';
+import { PostRequest, StartPostRequest, StatusPostRequest } from '../helper/request';
 import { LoginComponent } from './LoginComponent';
 import { ErrorComponent } from './ErrorComponent';
+import { RequestModel } from '../model/requestModel';
 
 export default class App extends React.Component<{}, { gotCards: boolean, game: Game, isWrongLogin: boolean, isLoggedIn: boolean, lastTimeStamp: number}> {
 
@@ -30,14 +31,9 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
         );
     }
 
-    startRequest = (target: string): Promise<void> => {
-        return this.startRequestImpl(target);
-    }
-
-    async startRequestImpl(target: string){
-        
-        await StartPostRequest(parseInt(target));
-        this.keepAlive(parseInt(target));
+    //ez kuka lesz
+    doHtttpReq = (target: string): Promise<void> => {
+        return null;
     }
 
     async keepAlive(id: number){
@@ -53,34 +49,28 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
             this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true });
             this.setState({lastTimeStamp: Date.now()});
 
-            await this.keepAlive(id);
-
         } else {
             this.setState({ gotCards: false, isWrongLogin: true, isLoggedIn: true });
         }
+
+        await this.keepAlive(id);
     }
 
-    doHtttpReq = (target: string): Promise<void> => {
-        return this.setStateFromRequest(target);
+    postRequest = (reqObj: RequestModel): Promise<void> => {
+        return this.postRequestImpl(reqObj);
     }
 
-    async setStateFromRequest(target: string) {
-        /*console.log("targetURL: " + target);
-        const res = await Request(target);
-        if (res != null) {
-            this.setState({ game: res, gotCards: true, isWrongLogin: false });
-        } else {
-            this.setState({ gotCards: false, isWrongLogin: true });
-        }*/
+    async postRequestImpl(reqObj: RequestModel){
+        await PostRequest(reqObj);
     }
 
-    postRequest = (reqObj: Request): Promise<void> => {
-        return this.orderRequestImpl(reqObj);
+    startRequest = (target: string): Promise<void> => {
+        return this.startRequestImpl(target);
     }
 
-    async orderRequestImpl(reqObj: Request){
+    async startRequestImpl(target: string){
         
-        //await StartPostRequest(parseInt(target));
-        //this.keepAlive(parseInt(target));
+        await StartPostRequest(parseInt(target));
+        this.keepAlive(parseInt(target));
     }
 }

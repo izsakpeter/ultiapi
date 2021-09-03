@@ -21,7 +21,7 @@ import hu.ulti.server.StrikeHandler;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
-import hu.ulti.server.model.KeepAlive;
+import hu.ulti.server.model.Request;
 import hu.ulti.server.model.Player;
 
 @CrossOrigin
@@ -42,7 +42,7 @@ public class UltiController {
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
 
 	@PostMapping("status")
-	public DeferredResult<Game> keepAlive(@RequestBody KeepAlive status) {
+	public DeferredResult<Game> keepAlive(@RequestBody Request request) {
 		DeferredResult<Game> output = new DeferredResult<>(LONG_POLLING_TIMEOUT);
 		statusPoll.execute(new Runnable() {
 			@Override
@@ -51,18 +51,16 @@ public class UltiController {
 				int i = 0;
 
 				try {
-					while (i < 60) {
-
-						if (game.getLastModificationTimeStamp() >= status.getLastTimeStamp()) {
-							game.setLastModificationTimeStamp(System.currentTimeMillis());
-							Player player = getPlayerById(status.getId());
+					while (i < 600) {
+						if (game.getLastModificationTimeStamp() > request.getLastTimeStamp()) {
+							Player player = getPlayerById(request.getId());
 							Game clone = game.clone();
 							clone.setPlayer(player);
 							output.setResult(clone);
 							break;
 						}
 						i++;
-						Thread.sleep(1000);
+						Thread.sleep(100);
 					}
 
 				} catch (Exception e) {
@@ -80,9 +78,9 @@ public class UltiController {
 	}
 
 	@PostMapping("start")
-	public String shuffle(@RequestBody KeepAlive alive) {
-
-		int id = alive.getId();
+	public String shuffle(@RequestBody Request request) {
+		
+		int id = request.getId();
 
 		if (player1.getId() == 0)
 			player1 = new Player(id);
@@ -91,14 +89,15 @@ public class UltiController {
 		else if (player3.getId() == 0 && id != player1.getId() && id != player2.getId())
 			player3 = new Player(id);
 
-		if (!player1.isReady() || !player2.isReady() || !player3.isReady())
-			return "waitng";
+		if (!player1.isReady() || !player2.isReady() || !player3.isReady()) {
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
+			return "waiting";
+		}
 
-		if (game.isRoundStarted())
+		if (game.isRoundStarted()) {
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return "Round started";
-
-		if (!game.isRoundStarted()) {
-
+		} else {
 			if (hands == null)
 				hands = Helper.getHands(dealer);
 
@@ -114,33 +113,33 @@ public class UltiController {
 			}
 
 			player1.setHand(hands.get(0));
+			player1.getHand().sort(Comparator.comparing(Card::getId));
 			player2.setHand(hands.get(1));
+			player2.getHand().sort(Comparator.comparing(Card::getId));
 			player3.setHand(hands.get(2));
+			player3.getHand().sort(Comparator.comparing(Card::getId));
 			talon = hands.get(3);
 
 			game.setRoundStarted(true);
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
+			
+			return "ok";
 		}
-
-		Player player = getPlayerById(id);
-		player.getHand().sort(Comparator.comparing(Card::getId));
-		game.setPlayer(player);
-
-		return "ok";
 	}
 
-	@GetMapping("/order")
-	public Game changeOrder(@RequestParam int id, @RequestParam boolean colorOrder) {
+	@PostMapping("order")
+	public String changeOrder(@RequestBody Request request) {
+		
+		if (request.getId() == player1.getId())
+			player1.setColorOrder(request.isColorOrder());
+		else if (request.getId() == player2.getId())
+			player2.setColorOrder(request.isColorOrder());
+		else if (request.getId() == player3.getId())
+			player3.setColorOrder(request.isColorOrder());
 
-		Player player = getPlayerById(id);
-
-		player.setColorOrder(false);
-
-		if (colorOrder)
-			player.setColorOrder(true);
-
-		game.setPlayer(player);
-
-		return game;
+		
+		game.setLastModificationTimeStamp(System.currentTimeMillis());
+		return "ok";
 	}
 
 	@GetMapping("/startingvalue")
@@ -326,7 +325,7 @@ public class UltiController {
 
 	private Player getPlayerById(int id) {
 
-		Player player = new Player();
+		Player player = null;
 
 		if (id == player1.getId())
 			player = player1;

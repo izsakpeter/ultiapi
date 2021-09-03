@@ -1,11 +1,14 @@
 package hu.ulti.server.model;
 
-public class KeepAlive {
+public class Request {
 
 	private int id;
+
 	private Long lastTimeStamp;
 
-	public KeepAlive() {
+	private boolean colorOrder;
+
+	public Request() {
 	}
 
 	public int getId() {
@@ -23,4 +26,13 @@ public class KeepAlive {
 	public void setLastTimeStamp(Long lastTimeStamp) {
 		this.lastTimeStamp = lastTimeStamp;
 	}
+
+	public boolean isColorOrder() {
+		return colorOrder;
+	}
+
+	public void setColorOrder(boolean colorOrder) {
+		this.colorOrder = colorOrder;
+	}
+
 }

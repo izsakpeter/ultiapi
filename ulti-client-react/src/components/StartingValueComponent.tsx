@@ -1,6 +1,5 @@
 import { Button, Radio } from "@blueprintjs/core";
 import React = require("react");
-import { Request } from "../helper/request";
 import { Call } from "../model/call";
 import { Game } from "../model/game";
 

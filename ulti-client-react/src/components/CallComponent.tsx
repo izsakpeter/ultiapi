@@ -1,9 +1,8 @@
 import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
-import { Request } from "../helper/request";
 import { Call, getCallList } from "../model/call";
 import { Game } from "../model/game";
-import { PassOrJoin } from "./PassOrJoin";
+import { PassOrJoin } from "./PassOrJoinComponent";
 import { WronCallComponent } from "./WrongCallComponent";
 
 export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number>, onSetGame: (target: string) => void, clearTalon: () => void }, { colorId: number, callList: Array<number>, game: Game }>{

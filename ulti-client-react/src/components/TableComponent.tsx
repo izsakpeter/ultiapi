@@ -7,7 +7,7 @@ import { Button } from "@blueprintjs/core";
 import { RequestModel } from "../model/requestModel";
 import { PlaygroundComponent } from "./PlaygroundComponent";
 
-export class Table extends React.Component<{ gotCards: boolean, game: Game, onSetGame: (target: string) => void, postReq: (reqObj: RequestModel) => void }, { talon: number[], hand: number[] }> {
+export class Table extends React.Component<{ gotCards: boolean, game: Game, postReq: (reqObj: RequestModel) => void }, { talon: number[], hand: number[] }> {
 
     cards: number[] = [];
 
@@ -19,7 +19,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
             hand: []
         };
 
-        this.addToTalon = this.addToTalon.bind(this);
+        this.cardAction = this.cardAction.bind(this);
         this.backToHand = this.backToHand.bind(this);
         this.changeOrder = this.changeOrder.bind(this);
         this.clearTalon = this.clearTalon.bind(this);
@@ -45,7 +45,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
         let cardsInHand = GetOrderedHand(this.state.hand.sort((a, b) => a - b), this.props.game.player.colorOrder);
         let cardsImg = [];
         for (let i = 0; i < cardsInHand.length; i++) {
-            cardsImg.push(<Button key={"idh" + i} ><img src={GetCardSource(cardsInHand[i])} className="button-card" onClick={this.addToTalon} id={cardsInHand[i].toString()} /></Button>);
+            cardsImg.push(<Button key={"idh" + i} ><img src={GetCardSource(cardsInHand[i])} className="button-card" onClick={this.cardAction} id={cardsInHand[i].toString()} /></Button>);
         }
 
         let talonImg = [];
@@ -57,7 +57,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
             <div >
                 <div className={"align-center"}><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
                 <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
-                <div className={"playground"}><PlaygroundComponent game={this.props.game}/></div>
+                <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
                 <div className={"talon"}>{talonImg} </div>
                 <div className={"align-center-bottom"}>{cardsImg}</div>
                 <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>
@@ -77,8 +77,19 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, onSe
         this.props.postReq(reqObj);
     }
 
-    addToTalon(event) {
-        if (this.state.hand.length + this.state.talon.length == 12 && this.state.talon.length < 2) { //<2 = 2 ????????????????????????????????????
+    cardAction(event) {
+
+        if (this.props.game.playReadyToStart) {
+
+            let reqObj: RequestModel = {
+                dest: "play",
+                id: this.props.game.player.id,
+                cardid: event.target.id
+            }
+
+            this.props.postReq(reqObj);
+
+        } else if (this.state.hand.length + this.state.talon.length == 12 && this.state.talon.length < 2) { //<2 = 2 ????????????????????????????????????
             const index = this.state.hand.indexOf(parseInt(event.target.id));
             this.state.hand.splice(index, 1);
             this.setState({ talon: [...this.state.talon, parseInt(event.target.id)] });

@@ -24,16 +24,11 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
     render() {
         return (
             <div>
-                <div className={"align-left"}><ErrorComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn}/></div>
+                <div className={"align-left"}><ErrorComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} /></div>
                 <div className={"align-right"}><LoginComponent postReq={this.postRequest}/></div>
-                <div><Table gotCards={this.state.gotCards} game={this.state.game} onSetGame={this.doHtttpReq} postReq={this.postRequest}/></div>
+                <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest}/></div>
             </div>
         );
-    }
-
-    //ez kuka lesz
-    doHtttpReq = (target: string): Promise<void> => {
-        return null;
     }
 
     async keepAlive(id: number){

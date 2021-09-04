@@ -13,7 +13,7 @@ export class ErrorComponent extends React.Component<{gotCards: boolean, isLogged
     }
 
 
-    static getDerivedStateFromProps(props: {gotCards: boolean, isLoggedIn: boolean }, state: { gotCards: boolean, isLoggedIn: boolean }) {
+    static getDerivedStateFromProps(props: {gotCards: boolean, isLoggedIn: boolean, game: Game }, state: { gotCards: boolean, isLoggedIn: boolean}) {
         state.gotCards = props.gotCards;
         state.isLoggedIn = props.isLoggedIn;
         return state;

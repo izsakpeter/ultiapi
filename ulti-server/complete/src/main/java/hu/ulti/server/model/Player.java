@@ -11,7 +11,6 @@ public class Player {
 	private List<Card> hand;
 	private boolean isCallOk = true;
 	private boolean isColorForced = false;
-
 	private List<Strike> strikes = new ArrayList<Strike>();
 
 	public Player() {
@@ -66,7 +65,7 @@ public class Player {
 		return strikes;
 	}
 
-	public void setStrikes(Strike strike) {
+	public void addStrike(Strike strike) {
 		this.strikes.add(strike);
 	}
 

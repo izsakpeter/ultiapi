@@ -16,6 +16,9 @@ export class RequestModel {
 
     //passz/join
     public isjoin?: boolean;
+
+    //play
+    public cardid?: number;
 }
 
 export function getRequestJson(model: RequestModel): any {
@@ -45,6 +48,11 @@ export function getRequestJson(model: RequestModel): any {
             return {
                 id: model.id,
                 isjoin: model.isjoin
+            };
+        case "play":
+            return {
+                id: model.id,
+                cardid: model.cardid
             };
 
         default:

@@ -1,26 +1,31 @@
 import React = require("react");
+import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
 
 
-export class PlaygroundComponent extends React.Component<{game: Game},{}> {
+export class PlaygroundComponent extends React.Component<{ game: Game }, {}> {
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    render(){
+    render() {
 
-        if(!this.props.game.playReadyToStart){
-            return(
+        if (!this.props.game.playReadyToStart) {
+            return (
                 <></>
             )
         } else {
-            return(
-                <div>harctér</div>
+            return (
+                <div>
+                    <div><img src={GetCardSource(this.props.game.round.card1Id)} className="button-card" /></div>
+                    <div><img src={GetCardSource(this.props.game.round.card2Id)} className="button-card" /></div>
+                    <div><img src={GetCardSource(this.props.game.round.card3Id)} className="button-card" /></div>
+                </div>
             )
         }
 
-        
+
     }
 
 }

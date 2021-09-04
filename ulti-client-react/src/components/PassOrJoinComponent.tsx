@@ -37,7 +37,7 @@ export class PassOrJoin extends React.Component<{ game: Game, postReq: (reqObj: 
         let reqObj: RequestModel = {
             dest: "join",
             id: this.props.game.player.id,
-            isjoin: false
+            isjoin: true
         }
 
         this.props.postReq(reqObj);

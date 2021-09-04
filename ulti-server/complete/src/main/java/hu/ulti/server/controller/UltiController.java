@@ -1,27 +1,23 @@
 package hu.ulti.server.controller;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import hu.ulti.server.Helper;
-import hu.ulti.server.StrikeHandler;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Request;
+import hu.ulti.server.model.Strike;
 import hu.ulti.server.model.Player;
 
 @CrossOrigin
@@ -279,13 +275,25 @@ public class UltiController {
 				game.setActivePlayer(player2.getId());
 			} else if (request.getId() == player2.getId()) {
 				game.getRound().setCard2Id(request.getCardid());
-				player2.setHand(Card.removeCardbyId(player1, request.getCardid()));
+				player2.setHand(Card.removeCardbyId(player2, request.getCardid()));
 				game.setActivePlayer(player3.getId());
 
 			} else if (request.getId() == player3.getId()) {
 				game.getRound().setCard3Id(request.getCardid());
-				player3.setHand(Card.removeCardbyId(player1, request.getCardid()));
+				player3.setHand(Card.removeCardbyId(player3, request.getCardid()));
 				game.setActivePlayer(player1.getId());
+			}
+			
+			if (game.getRound().getCard1Id() != -1 && game.getRound().getCard2Id() != -1 && game.getRound().getCard3Id() != -1) {
+				
+				if (true) {
+					
+					player1.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
+					
+					game.getRound().setCard1Id(-1);
+					game.getRound().setCard2Id(-1);
+					game.getRound().setCard3Id(-1);
+				}
 			}
 			
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -295,55 +303,6 @@ public class UltiController {
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return "bad";
 	}
-
-	/*
-	 * @GetMapping("/play") public Game play(@RequestParam int id, @RequestParam int
-	 * cardid) {
-	 * 
-	 * if (game.isPlayReadyToStart() && id == game.getActivePlayer()) {
-	 * 
-	 * Player player = new Player();
-	 * 
-	 * if (id == player1.getId()) { game.getRound().setCard1Id(cardid);
-	 * player1.setHand(Card.removeCardbyId(player1, cardid));
-	 * game.setActivePlayer(player2.getId()); player = player1;
-	 * 
-	 * } else if (id == player2.getId()) { game.getRound().setCard2Id(cardid);
-	 * player2.setHand(Card.removeCardbyId(player1, cardid));
-	 * game.setActivePlayer(player3.getId()); player = player2;
-	 * 
-	 * } else if (id == player3.getId()) { game.getRound().setCard3Id(cardid);
-	 * player3.setHand(Card.removeCardbyId(player1, cardid));
-	 * game.setActivePlayer(player1.getId()); player = player3; }
-	 * 
-	 * game = StrikeHandler.strikeHandler(game);
-	 * 
-	 * if (id == player3.getId()) { switch (game.getLastStrikeId()) { case 1:
-	 * player1.setStrikes(game.getLastStrike()); break; case 2:
-	 * player2.setStrikes(game.getLastStrike()); break; case 3:
-	 * player3.setStrikes(game.getLastStrike()); break; } } else if (id ==
-	 * player1.getId()) {
-	 * 
-	 * switch (game.getLastStrikeId()) { case 1:
-	 * player2.setStrikes(game.getLastStrike()); break; case 2:
-	 * player3.setStrikes(game.getLastStrike()); break; case 3:
-	 * player1.setStrikes(game.getLastStrike()); break; } } else if (id ==
-	 * player2.getId()) {
-	 * 
-	 * switch (game.getLastStrikeId()) { case 1:
-	 * player3.setStrikes(game.getLastStrike()); break; case 2:
-	 * player1.setStrikes(game.getLastStrike()); break; case 3:
-	 * player2.setStrikes(game.getLastStrike()); break; } } game.setLastStrikeId(0);
-	 * 
-	 * if (player1.getHand().size() == 0 && player2.getHand().size() == 0 &&
-	 * player3.getHand().size() == 0) { // eredmény }
-	 * 
-	 * game.setPlayer(player);
-	 * 
-	 * }
-	 * 
-	 * return game; }
-	 */
 
 	private Player getPlayerById(int id) {
 

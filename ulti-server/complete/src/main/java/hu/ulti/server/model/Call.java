@@ -5,35 +5,35 @@ import java.util.List;
 
 public class Call {
 
-	private static final String MAKK = "makk";
-	private static final String ZOLD = "zold";
-	private static final String TOK = "tok";
-	private static final String PIROS = "piros";
+	public static final String MAKK = "makk";
+	public static final String ZOLD = "zold";
+	public static final String TOK = "tok";
+	public static final String PIROS = "piros";
 
-	private static final int MAKK_COLOR_ID = 1;
-	private static final int ZOLD_COLOR_ID = 2;
-	private static final int TOK_COLOR_ID = 3;
-	private static final int PIROS_COLOR_ID = 4;
+	public static final int MAKK_COLOR_ID = 1;
+	public static final int ZOLD_COLOR_ID = 2;
+	public static final int TOK_COLOR_ID = 3;
+	public static final int PIROS_COLOR_ID = 4;
 
-	private static final String PASSZ = "passz";
-	private static final String SZAZ40 = "40szaz";
-	private static final String ULTI = "ulti";
-	private static final String BETLI = "betli";
-	private static final String DURI_SZINES = "szinesduri";
-	private static final String DURI_SZINTELEN = "szintelenduri";
-	private static final String SZAZ20 = "20szaz";
-	private static final String BETLI_TERITETT = "teritettbetli";
-	private static final String DURI_SZINES_TERITETT = "teritettduri";
-	private static final String DURI_SZINELEN_TERITETT = "teritettduri";
+	public static final String PASSZ = "passz";
+	public static final String SZAZ40 = "40szaz";
+	public static final String ULTI = "ulti";
+	public static final String BETLI = "betli";
+	public static final String DURI_SZINES = "szinesduri";
+	public static final String DURI_SZINTELEN = "szintelenduri";
+	public static final String SZAZ20 = "20szaz";
+	public static final String BETLI_TERITETT = "teritettbetli";
+	public static final String DURI_SZINES_TERITETT = "teritettduri";
+	public static final String DURI_SZINELEN_TERITETT = "teritettduri";
 
-	private static final int PASSZ_VALUE = 1;
-	private static final int SZAZ40_VALUE = 4;
-	private static final int ULTI_VALUE = 4;
-	private static final int BETLI_VALUE = 5;
-	private static final int DURI_VALUE = 6;
-	private static final int SZAZ20_VALUE = 8;
-	private static final int BETLI_TERITETT_VALUE = 10;
-	private static final int DURI_TERITETT_VALUE = 12;
+	public static final int PASSZ_VALUE = 1;
+	public static final int SZAZ40_VALUE = 4;
+	public static final int ULTI_VALUE = 4;
+	public static final int BETLI_VALUE = 5;
+	public static final int DURI_VALUE = 6;
+	public static final int SZAZ20_VALUE = 8;
+	public static final int BETLI_TERITETT_VALUE = 10;
+	public static final int DURI_TERITETT_VALUE = 12;
 
 	private int id;
 	private String color;
@@ -98,70 +98,7 @@ public class Call {
 
 		return calls;
 	}
-
-	public static boolean callChecker(Game game, boolean isColorForced) {
-
-		if (isColorForced) {
-			int forcedColorId = game.getStartingValue();
-
-			for (Integer callId : game.getCall()) {
-				if (forcedColorId == MAKK_COLOR_ID && callId > 9)
-					return false;
-				else if (forcedColorId == ZOLD_COLOR_ID && (callId > 19 || callId < 10))
-					return false;
-				else if (forcedColorId == TOK_COLOR_ID && (callId > 29 || callId < 20))
-					return false;
-				else if (forcedColorId == PIROS_COLOR_ID && callId < 30)
-					return false;
-			}
-		}
-
-		int prevCallValue = getCallValue(game.getPreviousCall());
-		int callValue = getCallValue(game.getCall());
-
-		if (prevCallValue > callValue)
-			return false;
-
-		if (prevCallValue == callValue) {
-
-			if (game.getPreviousCall().size() > game.getCall().size())
-				return false;
-
-			if (game.getPreviousCall().size() == 1 && game.getCall().size() == 1 
-					&& game.getPreviousCall().get(0) == 2 && game.getCall().get(0) == 30)
-				return false;			
-		}
-
-		return true;
-	}
-
-	private static int getCallValue(List<Integer> call) {
-		int value = 0;
-
-		List<Call> calls = getCallsById(call);
-
-		for (Call call2 : calls) {
-			value += call2.getValue();
-		}
-
-		return value;
-	}
-
-	public static List<Call> getCallsById(List<Integer> ids) {
-
-		List<Call> calls = new ArrayList<Call>();
-		List<Call> allCalls = getAllCalls();
-
-		for (Call call : allCalls) {
-			for (Integer id : ids) {
-				if (call.getValue() == id)
-					calls.add(call);
-			}
-		}
-
-		return calls;
-	}
-
+	
 	public int getId() {
 		return id;
 	}

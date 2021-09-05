@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import hu.ulti.server.CallHandler;
 import hu.ulti.server.Helper;
-import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Request;
@@ -169,7 +169,7 @@ public class UltiController {
 
 			if (request.getId() == player1.getId()) {
 
-				if (Call.callChecker(game, player1.isColorForced())) {
+				if (CallHandler.callChecker(game, player1.isColorForced())) {
 					if (player1.isColorForced())
 						player1.setColorForced(false);
 
@@ -185,7 +185,7 @@ public class UltiController {
 				}
 			} else if (request.getId() == player2.getId()) {
 
-				if (Call.callChecker(game, player2.isColorForced())) {
+				if (CallHandler.callChecker(game, player2.isColorForced())) {
 					if (player2.isColorForced())
 						player2.setColorForced(false);
 
@@ -201,7 +201,7 @@ public class UltiController {
 				}
 			} else if (request.getId() == player3.getId()) {
 
-				if (Call.callChecker(game, player3.isColorForced())) {
+				if (CallHandler.callChecker(game, player3.isColorForced())) {
 					if (player3.isColorForced())
 						player3.setColorForced(false);
 

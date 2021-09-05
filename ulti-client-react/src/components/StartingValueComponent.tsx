@@ -10,7 +10,7 @@ export class StartingValue extends React.Component<{ game: Game, postReq: (reqOb
         super(props);
 
         this.state = {
-            value: 0,
+            value: 1,
             id: -1
         }
 
@@ -31,7 +31,7 @@ export class StartingValue extends React.Component<{ game: Game, postReq: (reqOb
         return (
             <div className={"border"}>
                 <div className={"margin"} >
-                    <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChangeValue} />
+                    <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChangeValue} defaultChecked={true} />
                     <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChangeValue} />
                     <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChangeValue} />
                     <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChangeValue} />
@@ -57,7 +57,7 @@ export class StartingValue extends React.Component<{ game: Game, postReq: (reqOb
             this.props.postReq(reqObj);
 
         } else {
-            console.log("Válasz szint!");
+            console.log("Válassz szint!");
         }
     }
 }

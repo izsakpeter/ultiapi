@@ -14,6 +14,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import hu.ulti.server.CallHandler;
 import hu.ulti.server.Helper;
+import hu.ulti.server.StrikeHandler;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Request;
@@ -270,29 +271,29 @@ public class UltiController {
 
 		if (game.isPlayReadyToStart() && request.getId() == game.getActivePlayer()) {
 			if (request.getId() == player1.getId()) {
-				game.getRound().setCard1Id(request.getCardid());
+				game.getRound().addCardToStrike(request.getCardid());
 				player1.setHand(Card.removeCardbyId(player1, request.getCardid()));
 				game.setActivePlayer(player2.getId());
 			} else if (request.getId() == player2.getId()) {
-				game.getRound().setCard2Id(request.getCardid());
+				game.getRound().addCardToStrike(request.getCardid());
 				player2.setHand(Card.removeCardbyId(player2, request.getCardid()));
 				game.setActivePlayer(player3.getId());
 
 			} else if (request.getId() == player3.getId()) {
-				game.getRound().setCard3Id(request.getCardid());
+				game.getRound().addCardToStrike(request.getCardid());
 				player3.setHand(Card.removeCardbyId(player3, request.getCardid()));
 				game.setActivePlayer(player1.getId());
 			}
 			
 			if (game.getRound().getCard1Id() != -1 && game.getRound().getCard2Id() != -1 && game.getRound().getCard3Id() != -1) {
 				
+				//StrikeHandler.strikeHandler(game);
+				
 				if (true) {
 					
 					player1.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
 					
-					game.getRound().setCard1Id(-1);
-					game.getRound().setCard2Id(-1);
-					game.getRound().setCard3Id(-1);
+					game.getRound().clearStrike();
 				}
 			}
 			

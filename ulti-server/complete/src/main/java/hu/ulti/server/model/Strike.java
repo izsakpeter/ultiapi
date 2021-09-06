@@ -38,4 +38,19 @@ public class Strike {
 	public void setCard3Id(int card3Id) {
 		this.card3Id = card3Id;
 	}
+
+	public void addCardToStrike(int cardId) {
+		if (this.getCard1Id() == -1)
+			this.setCard1Id(cardId);
+		else if (this.getCard2Id() == -1)
+			this.setCard2Id(cardId);
+		else if (this.getCard3Id() == -1)
+			this.setCard3Id(cardId);
+	}
+	
+	public void clearStrike() {
+		this.setCard1Id(-1);
+		this.setCard2Id(-1);
+		this.setCard3Id(-1);
+	}
 }

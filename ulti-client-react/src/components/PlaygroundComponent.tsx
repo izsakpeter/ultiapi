@@ -18,9 +18,9 @@ export class PlaygroundComponent extends React.Component<{ game: Game }, {}> {
         } else {
             return (
                 <div>
-                    <div><img src={GetCardSource(this.props.game.round.card1Id)} className="button-card" /></div>
-                    <div><img src={GetCardSource(this.props.game.round.card2Id)} className="button-card" /></div>
-                    <div><img src={GetCardSource(this.props.game.round.card3Id)} className="button-card" /></div>
+                    <img src={GetCardSource(this.props.game.round.card1Id)} className="button-card" />
+                    <img src={GetCardSource(this.props.game.round.card2Id)} className="button-card" />
+                    <img src={GetCardSource(this.props.game.round.card3Id)} className="button-card" />
                 </div>
             )
         }

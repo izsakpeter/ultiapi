@@ -33,6 +33,15 @@ export class Call {
 	public static DURI_SZINES_TERITETT_ID: number = 8;
 	public static DURI_SZINTELEN_TERITETT_ID: number = 9;
 
+	public static PASSZ_VALUE: number = 1;
+	public static SZAZ40_VALUE: number = 4;
+	public static ULTI_VALUE: number = 4;
+	public static BETLI_VALUE: number = 5;
+	public static DURI_VALUE: number = 6;
+	public static SZAZ20_VALUE: number = 8;
+	public static BETLI_TERITETT_VALUE: number = 10;
+	public static DURI_TERITETT_VALUE: number = 12;
+
 }
 
 export function getCallList(colorNum: number, list: Array<number>): Array<number> {

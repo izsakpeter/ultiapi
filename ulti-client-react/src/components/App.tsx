@@ -4,7 +4,6 @@ import axios, { AxiosRequestConfig } from "axios";
 import { Table } from './TableComponent';
 import { PostRequest, StatusPostRequest } from '../helper/request';
 import { LoginComponent } from './LoginComponent';
-import { ErrorComponent } from './ErrorComponent';
 import { RequestModel } from '../model/requestModel';
 import { MessageComponent } from './MessageComponent';
 
@@ -25,9 +24,8 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
     render() {
         return (
             <div>
-                <div className={"align-left"}><ErrorComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} /></div>
                 <div className={"align-right"}><LoginComponent postReq={this.postRequest}/></div>
-                <div className={"align-center"}><MessageComponent game={this.state.game}/></div>
+                <div className={"align-center"}><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn}/></div>
                 <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest}/></div>
             </div>
         );

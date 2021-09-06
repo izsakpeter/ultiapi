@@ -12,7 +12,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         super(props);
 
         this.state = {
-            colorId: 0,
+            colorId: 1,
             callList: [],
             game: null
         }
@@ -36,12 +36,10 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
     static getDerivedStateFromProps(props: { game: Game }, state: { colorId: number, callList: Array<number> }) {
 
-
         if (props.game.previousCall.length === 0) {
             state.colorId = props.game.startingValue;
             state.callList = [0];
         }
-
 
         return state;
     }
@@ -57,24 +55,25 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
             return (
                 <>
+                    <div><WronCallComponent game={this.props.game} /></div>
                     <div className={"call-table-border"}>
-                        <WronCallComponent game={this.props.game} />
+
                         <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChooseColorMakk} defaultChecked={this.isRadioButtonChecked(Call.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.MAKK_ID, this.props.game)} />
                         <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChooseColorZold} defaultChecked={this.isRadioButtonChecked(Call.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.ZOLD_ID, this.props.game)} />
                         <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChooseColorTok} defaultChecked={this.isRadioButtonChecked(Call.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.TOK_ID, this.props.game)} />
                         <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChooseColorPiros} defaultChecked={this.isRadioButtonChecked(Call.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.PIROS_ID, this.props.game)} />
                         <table>
                             <tbody>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.PASSZ_ID)} disabled={this.isCheckBoxDisable(Call.PASSZ_ID)} onChange={this.onChoosePassz} /> {Call.PASSZ} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.SZAZ40_ID)} disabled={this.isCheckBoxDisable(Call.SZAZ40_ID)} onChange={this.onChoose40100} /> {Call.SZAZ40} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.ULTI_ID)} disabled={this.isCheckBoxDisable(Call.ULTI_ID)} onChange={this.onChooseUlti} /> {Call.ULTI} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.BETLI_ID)} disabled={this.isCheckBoxDisable(Call.BETLI_ID)} onChange={this.onChooseBetli} /> {Call.BETLI} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINES_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINES_ID)} onChange={this.onChooseDuri} /> {Call.DURI_SZINES} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINTELEN_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_ID)} onChange={this.onChooseSzDuri} /> {Call.DURI_SZINTELEN} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.SZAZ20_ID)} disabled={this.isCheckBoxDisable(Call.SZAZ20_ID)} onChange={this.onChoose20100} /> {Call.SZAZ20} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.BETLI_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.BETLI_TERITETT_ID)} onChange={this.onChooseTBetli} /> {Call.BETLI_TERITETT} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINES_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINES_TERITETT_ID)} onChange={this.onChooseTDuri} /> {Call.DURI_SZINES_TERITETT} </td></tr>
-                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINTELEN_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_TERITETT_ID)} onChange={this.onChooseTSzDuri} /> {Call.DURI_SZINTELEN_TERITETT} </td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.PASSZ_ID)} disabled={this.isCheckBoxDisable(Call.PASSZ_ID)} onChange={this.onChoosePassz} /> {Call.PASSZ} </td><td>{this.state.colorId * Call.PASSZ_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.SZAZ40_ID)} disabled={this.isCheckBoxDisable(Call.SZAZ40_ID)} onChange={this.onChoose40100} /> {Call.SZAZ40} </td><td>{this.state.colorId * Call.SZAZ40_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.ULTI_ID)} disabled={this.isCheckBoxDisable(Call.ULTI_ID)} onChange={this.onChooseUlti} /> {Call.ULTI} </td><td>{this.state.colorId * Call.ULTI_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.BETLI_ID)} disabled={this.isCheckBoxDisable(Call.BETLI_ID)} onChange={this.onChooseBetli} /> {Call.BETLI} </td><td>{this.state.colorId * Call.BETLI_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINES_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINES_ID)} onChange={this.onChooseDuri} /> {Call.DURI_SZINES} </td><td>{this.state.colorId * Call.DURI_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINTELEN_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_ID)} onChange={this.onChooseSzDuri} /> {Call.DURI_SZINTELEN} </td><td>{this.state.colorId * Call.DURI_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.SZAZ20_ID)} disabled={this.isCheckBoxDisable(Call.SZAZ20_ID)} onChange={this.onChoose20100} /> {Call.SZAZ20} </td><td>{this.state.colorId * Call.SZAZ20_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.BETLI_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.BETLI_TERITETT_ID)} onChange={this.onChooseTBetli} /> {Call.BETLI_TERITETT} </td><td>{this.state.colorId * Call.BETLI_TERITETT_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINES_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINES_TERITETT_ID)} onChange={this.onChooseTDuri} /> {Call.DURI_SZINES_TERITETT} </td><td>{this.state.colorId * Call.DURI_TERITETT_VALUE}</td></tr>
+                                <tr><td><input type="checkbox" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINTELEN_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_TERITETT_ID)} onChange={this.onChooseTSzDuri} /> {Call.DURI_SZINTELEN_TERITETT} </td><td>{this.state.colorId * Call.DURI_TERITETT_VALUE}</td></tr>
                             </tbody>
                         </table>
                         <div className={"align-center"}><Button className={"button-ok"} onClick={this.call}>ok</Button></div>

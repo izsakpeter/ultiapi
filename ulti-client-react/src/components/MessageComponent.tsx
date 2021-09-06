@@ -2,7 +2,7 @@ import React = require("react");
 import { Call, getCallName } from "../model/call";
 import { Game } from "../model/game";
 
-export class MessageComponent extends React.Component<{ game: Game }, {id: number, activePlayerId: number, lastCallerId: number, callList: Array<number> }> {
+export class MessageComponent extends React.Component<{ game: Game, gotCards: boolean, isLoggedIn: boolean }, { id: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean }> {
 
     constructor(props) {
         super(props)
@@ -11,16 +11,20 @@ export class MessageComponent extends React.Component<{ game: Game }, {id: numbe
             id: 0,
             activePlayerId: 0,
             lastCallerId: 0,
-            callList: []
+            callList: [],
+            gotCards: true, 
+            isLoggedIn: false
         }
     }
 
-    static getDerivedStateFromProps(props: { game: Game }, state: {id: number, activePlayerId: number, lastCallerId: number, callList: Array<number> }) {
+    static getDerivedStateFromProps(props: {game: Game, gotCards: boolean, isLoggedIn: boolean} , state: { id: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean }) {
         if (props.game != null) {
             state.id = props.game.player.id;
             state.activePlayerId = props.game.activePlayer;
             state.lastCallerId = props.game.lastCallerId;
             state.callList = props.game.previousCall;
+            state.gotCards = props.gotCards;
+            state.isLoggedIn = props.isLoggedIn;
         }
 
         return state;
@@ -28,9 +32,15 @@ export class MessageComponent extends React.Component<{ game: Game }, {id: numbe
 
     render() {
 
-        if (this.state.activePlayerId != this.state.id) {
+        if (!this.state.gotCards && this.state.isLoggedIn){
             return (
-                <div>
+                <div className={"border"}>
+                    A leosztás még nem történt meg!
+                </div>
+            )
+        } else if (this.state.activePlayerId != this.state.id) {
+            return (
+                <div className={"border"}>
                     <div>Aktiv játékos: {this.state.activePlayerId}</div>
                     <div>Előző mondás {getCallName(this.state.callList)} {this.state.lastCallerId} által.</div>
                 </div>

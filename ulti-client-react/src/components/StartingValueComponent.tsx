@@ -31,10 +31,10 @@ export class StartingValue extends React.Component<{ game: Game, postReq: (reqOb
         return (
             <div className={"border"}>
                 <div className={"margin"} >
-                    <Radio name="cv" label="MAKK" value={Call.MAKK_ID} onClick={this.onChangeValue} defaultChecked={true} />
-                    <Radio name="cv" label="ZOLD" value={Call.ZOLD_ID} onClick={this.onChangeValue} />
-                    <Radio name="cv" label="TOK" value={Call.TOK_ID} onClick={this.onChangeValue} />
-                    <Radio name="cv" label="PIROS" value={Call.PIROS_ID} onClick={this.onChangeValue} />
+                    <Radio name="sv" label={Call.MAKK} value={Call.MAKK_ID} onClick={this.onChangeValue} defaultChecked={true} />
+                    <Radio name="sv" label={Call.ZOLD} value={Call.ZOLD_ID} onClick={this.onChangeValue} />
+                    <Radio name="sv" label={Call.TOK} value={Call.TOK_ID} onClick={this.onChangeValue} />
+                    <Radio name="sv" label={Call.PIROS} value={Call.PIROS_ID} onClick={this.onChangeValue} />
                 </div>
                 <div><Button className={"button-ok"} onClick={this.setStartingValue}>ok</Button></div>
             </div>

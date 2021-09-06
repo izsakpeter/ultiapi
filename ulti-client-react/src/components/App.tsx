@@ -6,6 +6,7 @@ import { PostRequest, StatusPostRequest } from '../helper/request';
 import { LoginComponent } from './LoginComponent';
 import { ErrorComponent } from './ErrorComponent';
 import { RequestModel } from '../model/requestModel';
+import { MessageComponent } from './MessageComponent';
 
 export default class App extends React.Component<{}, { gotCards: boolean, game: Game, isWrongLogin: boolean, isLoggedIn: boolean, lastTimeStamp: number}> {
 
@@ -26,12 +27,13 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
             <div>
                 <div className={"align-left"}><ErrorComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} /></div>
                 <div className={"align-right"}><LoginComponent postReq={this.postRequest}/></div>
+                <div className={"align-center"}><MessageComponent game={this.state.game}/></div>
                 <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest}/></div>
             </div>
         );
     }
 
-    async keepAlive(id: number){
+    async status(id: number){
         const res = await StatusPostRequest(id, this.state.lastTimeStamp);
 
         if (res != null) {
@@ -48,7 +50,7 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
             this.setState({ gotCards: false, isWrongLogin: true, isLoggedIn: true });
         }
 
-        await this.keepAlive(id);
+        await this.status(id);
     }
 
     postRequest = (reqObj: RequestModel): Promise<void> => {
@@ -59,6 +61,6 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
         await PostRequest(reqObj);
 
         if (reqObj.dest === "start")
-            this.keepAlive(reqObj.id);
+            this.status(reqObj.id);
     }
 }

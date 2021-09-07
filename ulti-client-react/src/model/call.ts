@@ -41,7 +41,6 @@ export class Call {
 	public static SZAZ20_VALUE: number = 8;
 	public static BETLI_TERITETT_VALUE: number = 10;
 	public static DURI_TERITETT_VALUE: number = 12;
-
 }
 
 export function getCallList(colorNum: number, list: Array<number>): Array<number> {
@@ -135,9 +134,9 @@ export function getCallValueSum(list: Array<number>): number {
 	else
 		colorId = 4;
 
-	list.forEach(element => {
-		res += getCallValue(element);
-	});
+	for (let index = 0; index < list.length; index++) {
+		res += getCallValue(list[index] - ((colorId - 1) * 10));
+	}
 
 	return (res * colorId);
 }
@@ -167,4 +166,3 @@ export function getCallValue(callId: number): number {
 			return Call.DURI_TERITETT_VALUE;
 	}
 }
-

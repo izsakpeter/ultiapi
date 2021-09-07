@@ -121,3 +121,50 @@ export function getCallName(callList: Array<number>): string {
 	return call;
 }
 
+
+export function getCallValueSum(list: Array<number>): number {
+	let res = 0;
+	let colorId: number = 0;
+
+	if (list[0] < 10)
+		colorId = 1;
+	else if (list[0] > 9 && list[0] < 20)
+		colorId = 2;
+	else if (list[0] > 19 && list[0] < 30)
+		colorId = 3;
+	else
+		colorId = 4;
+
+	list.forEach(element => {
+		res += getCallValue(element);
+	});
+
+	return (res * colorId);
+}
+
+export function getCallValue(callId: number): number {
+
+	switch (callId) {
+		case Call.PASSZ_ID:
+			return Call.PASSZ_VALUE;
+		case Call.SZAZ40_ID:
+			return Call.SZAZ40_VALUE;
+		case Call.ULTI_ID:
+			return Call.ULTI_VALUE;
+		case Call.BETLI_ID:
+			return Call.BETLI_VALUE;
+		case Call.DURI_SZINES_ID:
+			return Call.DURI_VALUE;
+		case Call.DURI_SZINTELEN_ID:
+			return Call.DURI_VALUE;
+		case Call.SZAZ20_ID:
+			return Call.SZAZ20_VALUE;
+		case Call.BETLI_TERITETT_ID:
+			return Call.BETLI_TERITETT_VALUE;
+		case Call.DURI_SZINES_TERITETT_ID:
+			return Call.DURI_TERITETT_VALUE;
+		case Call.DURI_SZINTELEN_TERITETT_ID:
+			return Call.DURI_TERITETT_VALUE;
+	}
+}
+

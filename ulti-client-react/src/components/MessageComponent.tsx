@@ -1,5 +1,5 @@
 import React = require("react");
-import { Call, getCallName } from "../model/call";
+import { Call, getCallName, getCallValue, getCallValueSum } from "../model/call";
 import { Game } from "../model/game";
 
 export class MessageComponent extends React.Component<{ game: Game, gotCards: boolean, isLoggedIn: boolean }, { id: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean }> {
@@ -12,12 +12,12 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
             activePlayerId: 0,
             lastCallerId: 0,
             callList: [],
-            gotCards: true, 
+            gotCards: true,
             isLoggedIn: false
         }
     }
 
-    static getDerivedStateFromProps(props: {game: Game, gotCards: boolean, isLoggedIn: boolean} , state: { id: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean }) {
+    static getDerivedStateFromProps(props: { game: Game, gotCards: boolean, isLoggedIn: boolean }, state: { id: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean }) {
         if (props.game != null) {
             state.id = props.game.player.id;
             state.activePlayerId = props.game.activePlayer;
@@ -32,19 +32,27 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
 
     render() {
 
-        if (!this.state.gotCards && this.state.isLoggedIn){
+        if (!this.state.gotCards && this.state.isLoggedIn) {
             return (
                 <div className={"border"}>
                     A leosztás még nem történt meg!
                 </div>
             )
         } else if (this.state.activePlayerId != this.state.id) {
-            return (
-                <div className={"border"}>
-                    <div>Aktiv játékos: {this.state.activePlayerId}</div>
-                    <div>Előző mondás {getCallName(this.state.callList)} {this.state.lastCallerId} által.</div>
-                </div>
-            )
+            if (this.state.callList.length === 0) {
+                return (
+                    <div className={"border"}>
+                        <div>Aktiv játékos: {this.state.activePlayerId}</div>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className={"border"}>
+                        <div>Aktiv játékos: {this.state.activePlayerId}</div>
+                        <div>Előző mondás: {getCallName(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
+                    </div>
+                )
+            }
         } else {
             return (
                 <></>

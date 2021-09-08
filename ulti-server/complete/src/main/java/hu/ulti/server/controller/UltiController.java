@@ -14,7 +14,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import hu.ulti.server.CallHandler;
 import hu.ulti.server.Helper;
-import hu.ulti.server.StrikeHandler;
+import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Request;
@@ -271,32 +271,128 @@ public class UltiController {
 
 		if (game.isPlayReadyToStart() && request.getId() == game.getActivePlayer()) {
 			if (request.getId() == player1.getId()) {
-				game.getRound().addCardToStrike(request.getCardid());
+				game.getRound().addCardToStrike(request.getCardid(), player1.getId());
 				player1.setHand(Card.removeCardbyId(player1, request.getCardid()));
 				game.setActivePlayer(player2.getId());
 			} else if (request.getId() == player2.getId()) {
-				game.getRound().addCardToStrike(request.getCardid());
+				game.getRound().addCardToStrike(request.getCardid(), player2.getId());
 				player2.setHand(Card.removeCardbyId(player2, request.getCardid()));
 				game.setActivePlayer(player3.getId());
 
 			} else if (request.getId() == player3.getId()) {
-				game.getRound().addCardToStrike(request.getCardid());
+				game.getRound().addCardToStrike(request.getCardid(), player3.getId());
 				player3.setHand(Card.removeCardbyId(player3, request.getCardid()));
 				game.setActivePlayer(player1.getId());
 			}
-			
+
 			if (game.getRound().getCard1Id() != -1 && game.getRound().getCard2Id() != -1 && game.getRound().getCard3Id() != -1) {
 				
-				//StrikeHandler.strikeHandler(game);
+				//strikehandler
+				int card1 = game.getRound().getCard1Id();
+				int card2 = game.getRound().getCard2Id();
+				int card3 = game.getRound().getCard3Id();
+				int card1ColorId = getColor(card1);
+				int card2ColorId = getColor(card2);
+				int card3ColorId = getColor(card3);
+				boolean isBetli = isBetli(game);
+				boolean isSzintelenDuri = isSzintelenDuri(game);
+				boolean isSzintelen = isBetli || isSzintelenDuri;				
 				
-				if (true) {
+				if (isSzintelen) {
+					if (card1ColorId != card2ColorId && card1ColorId != card3ColorId) {
+						szintelenStrikeHandler(game.getRound().getCard1PlayerId());
+					} else if (card1ColorId == card2ColorId && card1ColorId == card3ColorId) {
+						if (card1 > card2 && card1 > card3) {
+							szintelenStrikeHandler(game.getRound().getCard1PlayerId());
+						} else if (card2 > card1 && card2 > card3) {
+							szintelenStrikeHandler(game.getRound().getCard2PlayerId());
+						} else if (card3 > card1 && card3 > card2) {
+							szintelenStrikeHandler(game.getRound().getCard3PlayerId());
+						}
+					} else if (card1ColorId == card2ColorId && card1ColorId != card3ColorId) {
+						if (card1 > card2) {
+							szintelenStrikeHandler(game.getRound().getCard1PlayerId());
+						} else if (card2 > card1){
+							szintelenStrikeHandler(game.getRound().getCard2PlayerId());
+						}
+					} else 	if (card1ColorId == card3ColorId && card1ColorId != card2ColorId) {
+						if (card1 > card3){
+							szintelenStrikeHandler(game.getRound().getCard1PlayerId());
+						} else if (card3 > card1){
+							szintelenStrikeHandler(game.getRound().getCard3PlayerId());
+						}
+					}
 					
-					player1.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
-					
-					game.getRound().clearStrike();
-				}
+					if (isBetli) {
+						game.setGameOver(isBetliOver());
+					} else if (isSzintelenDuri) {
+						game.setGameOver(false);
+					}
+				} /*else {
+
+					final int ADU = getAdu(game.getPreviousCall().get(0));
+
+					if (ADU == card1ColorId && ADU != card2ColorId && ADU != card3ColorId)
+						game.setLastStrikeId(1);
+
+					if (ADU != card1ColorId && ADU == card2ColorId && ADU != card3ColorId)
+						game.setLastStrikeId(2);
+
+					if (ADU != card1ColorId && ADU != card2ColorId && ADU == card3ColorId)
+						game.setLastStrikeId(3);
+
+					if (ADU == card1ColorId && ADU == card2ColorId && ADU == card3ColorId) {
+
+						if (card1 > card2 && card1 > card3)
+							game.setLastStrikeId(1);
+
+						if (card2 > card1 && card2 > card3)
+							game.setLastStrikeId(2);
+
+						if (card3 > card1 && card3 > card2)
+							game.setLastStrikeId(2);
+					}
+
+					if (ADU != card1ColorId && ADU != card2ColorId && ADU != card3ColorId) {
+
+						if (card1ColorId != card2ColorId && card1ColorId != card3ColorId)
+							game.setLastStrikeId(1);
+
+						if (card1ColorId == card2ColorId && card1ColorId == card3ColorId) {
+
+							if (card1 > card2 && card1 > card3)
+								game.setLastStrikeId(1);
+
+							if (card2 > card1 && card2 > card3)
+								game.setLastStrikeId(2);
+
+							if (card3 > card1 && card3 > card2)
+								game.setLastStrikeId(3);
+						}
+
+						if (card1ColorId == card2ColorId && card1ColorId != card3ColorId) {
+
+							if (card1 > card2)
+								game.setLastStrikeId(1);
+
+							if (card2 > card1)
+								game.setLastStrikeId(2);
+						}
+
+						if (card1ColorId == card3ColorId && card1ColorId != card2ColorId) {
+							if (card1 > card3)
+								game.setLastStrikeId(1);
+
+							if (card3 > card1)
+								game.setLastStrikeId(3);
+						}
+					}
+				}*/
+
+				game.getRound().clearStrike();
+
 			}
-			
+
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return "ok";
 		}
@@ -318,4 +414,92 @@ public class UltiController {
 
 		return player;
 	}
+	
+	private static int getColor(int id) {
+		if (id <= 7)
+			return Call.MAKK_COLOR_ID;
+		else if (id > 7 && id <= 15)
+			return Call.ZOLD_COLOR_ID;
+		else if (id > 15 && id <= 23)
+			return Call.TOK_COLOR_ID;
+		else
+			return Call.PIROS_COLOR_ID;
+	}
+	
+	private static boolean isBetli(Game game) {
+		List<Integer> betliIds = new ArrayList<Integer>();
+		betliIds.add(3);
+		betliIds.add(7);
+		betliIds.add(13);
+		betliIds.add(17);
+		betliIds.add(23);
+		betliIds.add(27);
+		betliIds.add(33);
+		betliIds.add(37);
+		
+		for (Integer id : betliIds) {
+			for (Integer call : game.getPreviousCall()) {
+				if (id == call)
+					return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private static boolean isSzintelenDuri(Game game) {
+		List<Integer> duriIds = new ArrayList<Integer>();
+		duriIds.add(5);
+		duriIds.add(9);
+		duriIds.add(15);
+		duriIds.add(19);
+		duriIds.add(25);
+		duriIds.add(29);
+		duriIds.add(35);
+		duriIds.add(39);
+		
+		for (Integer id : duriIds) {
+			for (Integer call : game.getPreviousCall()) {
+				if (id == call)
+					return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private void szintelenStrikeHandler(int id) {
+		if (id == player1.getId()) {
+			player1.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
+			game.setActivePlayer(player1.getId());
+		} else if (id == player2.getId()) {
+			player2.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
+			game.setActivePlayer(player2.getId());
+		} else if (id == player2.getId()) {
+			player3.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
+			game.setActivePlayer(player3.getId());
+		}
+	}
+	
+	private boolean isBetliOver() {
+		Player player = getPlayerById(game.getLastCallerId());
+		return player.getStrikes().size() > 0;
+	}
+	
+	
+/*
+	private static int getAdu(int id) {
+
+		switch (id) {
+		case 0:
+			return Call.MAKK_COLOR_ID;
+		case 10:
+			return Call.ZOLD_COLOR_ID;
+		case 20:
+			return Call.TOK_COLOR_ID;
+		case 30:
+			return Call.PIROS_COLOR_ID;
+		}
+		return 0;
+	}*/
 }

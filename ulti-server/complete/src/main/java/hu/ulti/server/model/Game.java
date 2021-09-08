@@ -15,11 +15,8 @@ public class Game {
 	private List<Integer> call = new ArrayList<Integer>();
 	private List<Integer> previousCall = new ArrayList<Integer>();
 	private String errorMessage = "";
-
-	private int lastStrikeId = 0;
-	private Strike lastStrike;
-
 	private long lastModificationTimeStamp = 0;
+	private boolean isGameOver = false;
 
 	public Game() {
 		this.startingValue = 0;
@@ -27,7 +24,7 @@ public class Game {
 
 	public Game(int startingValue, Player player, boolean isRoundStarted, boolean isPlayReadyToStart, int lastCallerId,
 			int activePlayer, Strike round, List<Integer> call, List<Integer> previousCall, String errorMessage,
-			int lastStrikeId, Strike lastStrike, long lastModificationTimeStamp) {
+			long lastModificationTimeStamp, boolean isGameOver) {
 		this.startingValue = startingValue;
 		this.player = player;
 		this.isRoundStarted = isRoundStarted;
@@ -38,9 +35,8 @@ public class Game {
 		this.call = call;
 		this.previousCall = previousCall;
 		this.errorMessage = errorMessage;
-		this.lastStrikeId = lastStrikeId;
-		this.lastStrike = lastStrike;
 		this.lastModificationTimeStamp = lastModificationTimeStamp;
+		this.isGameOver = isGameOver;
 	}
 
 	public Player getPlayer() {
@@ -99,22 +95,6 @@ public class Game {
 		this.round = round;
 	}
 
-	public int getLastStrikeId() {
-		return lastStrikeId;
-	}
-
-	public void setLastStrikeId(int lastStrikeId) {
-		this.lastStrikeId = lastStrikeId;
-	}
-
-	public Strike getLastStrike() {
-		return lastStrike;
-	}
-
-	public void setLastStrike(Strike lastStrike) {
-		this.lastStrike = lastStrike;
-	}
-
 	public boolean isPlayReadyToStart() {
 		return isPlayReadyToStart;
 	}
@@ -147,6 +127,14 @@ public class Game {
 		this.lastModificationTimeStamp = lastModificationTimeStamp;
 	}
 
+	public boolean isGameOver() {
+		return isGameOver;
+	}
+
+	public void setGameOver(boolean isGameOver) {
+		this.isGameOver = isGameOver;
+	}
+
 	@Override
 	public Game clone() {
 		try {
@@ -154,7 +142,7 @@ public class Game {
 		} catch (Exception e) {
 			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart,
 					this.lastCallerId, this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage,
-					this.lastStrikeId, this.lastStrike, this.lastModificationTimeStamp);
+					this.lastModificationTimeStamp, this.isGameOver);
 		}
 
 	}

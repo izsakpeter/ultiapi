@@ -10,7 +10,7 @@ public class Card {
 	private int id;
 	private int colorId;
 
-	public Card(int id,  int colorId) {
+	public Card(int id, int colorId) {
 		this.id = id;
 		this.colorId = colorId;
 	}

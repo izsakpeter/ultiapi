@@ -11,9 +11,7 @@ export class Game {
 	public lastCallerId: number;
 	public activePlayer: number;
 	public round: Strike;
-	public lastStrikeId: number = 0;
-	public lastStrike: Strike;
-
 	public previousCall: Array<number>;
 	public call: Array<number>;
+	public gameover: boolean = false;
 }

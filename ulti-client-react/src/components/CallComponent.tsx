@@ -1,6 +1,6 @@
 import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
-import { Call, getCallList, getCallValue } from "../model/call";
+import { Call, getCallList, getCallName, getCallValue, getCallValueSum } from "../model/call";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { PassOrJoin } from "./PassOrJoinComponent";
@@ -18,10 +18,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         }
 
         this.call = this.call.bind(this);
-        this.onChooseColorMakk = this.onChooseColorMakk.bind(this);
-        this.onChooseColorZold = this.onChooseColorZold.bind(this);
-        this.onChooseColorTok = this.onChooseColorTok.bind(this);
-        this.onChooseColorPiros = this.onChooseColorPiros.bind(this);
+        this.onChooseColor = this.onChooseColor.bind(this);
         this.onChoosePassz = this.onChoosePassz.bind(this);
         this.onChoose40100 = this.onChoose40100.bind(this);
         this.onChooseUlti = this.onChooseUlti.bind(this);
@@ -54,27 +51,28 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
             return (
                 <div>
+                    <div>Előző mondás: {getCallName(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>
                     <div><WronCallComponent game={this.props.game} /></div>
                     <div className={"call-table-border"}>
                         <div>
-                            <Radio name="cv" label={Call.MAKK} value={Call.MAKK_ID} onClick={this.onChooseColorMakk} defaultChecked={this.isRadioButtonChecked(Call.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.MAKK_ID, this.props.game)} />
-                            <Radio name="cv" label={Call.ZOLD} value={Call.ZOLD_ID} onClick={this.onChooseColorZold} defaultChecked={this.isRadioButtonChecked(Call.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.ZOLD_ID, this.props.game)} />
-                            <Radio name="cv" label={Call.TOK} value={Call.TOK_ID} onClick={this.onChooseColorTok} defaultChecked={this.isRadioButtonChecked(Call.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.TOK_ID, this.props.game)} />
-                            <Radio name="cv" label={Call.PIROS} value={Call.PIROS_ID} onClick={this.onChooseColorPiros} defaultChecked={this.isRadioButtonChecked(Call.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.PIROS_ID, this.props.game)} />
+                            <Radio name="cv" label={Call.MAKK} value={Call.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.MAKK_ID, this.props.game)} />
+                            <Radio name="cv" label={Call.ZOLD} value={Call.ZOLD_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.ZOLD_ID, this.props.game)} />
+                            <Radio name="cv" label={Call.TOK} value={Call.TOK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.TOK_ID, this.props.game)} />
+                            <Radio name="cv" label={Call.PIROS} value={Call.PIROS_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.PIROS_ID, this.props.game)} />
                         </div>
                         <div>
                             <table>
                                 <tbody>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.PASSZ_ID)} disabled={this.isCheckBoxDisable(Call.PASSZ_ID)} onChange={this.onChoosePassz} /> {Call.PASSZ} </td><td>{this.state.colorId * Call.PASSZ_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.SZAZ40_ID)} disabled={this.isCheckBoxDisable(Call.SZAZ40_ID)} onChange={this.onChoose40100} /> {Call.SZAZ40} </td><td>{this.state.colorId * Call.SZAZ40_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.ULTI_ID)} disabled={this.isCheckBoxDisable(Call.ULTI_ID)} onChange={this.onChooseUlti} /> {Call.ULTI} </td><td>{this.state.colorId * Call.ULTI_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.BETLI_ID)} disabled={this.isCheckBoxDisable(Call.BETLI_ID)} onChange={this.onChooseBetli} /> {Call.BETLI} </td><td>{this.state.colorId * Call.BETLI_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINES_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINES_ID)} onChange={this.onChooseDuri} /> {Call.DURI_SZINES} </td><td>{this.state.colorId * Call.DURI_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINTELEN_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_ID)} onChange={this.onChooseSzDuri} /> {Call.DURI_SZINTELEN} </td><td>{this.state.colorId * Call.DURI_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.SZAZ20_ID)} disabled={this.isCheckBoxDisable(Call.SZAZ20_ID)} onChange={this.onChoose20100} /> {Call.SZAZ20} </td><td>{this.state.colorId * Call.SZAZ20_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.BETLI_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.BETLI_TERITETT_ID)} onChange={this.onChooseTBetli} /> {Call.BETLI_TERITETT} </td><td>{this.state.colorId * Call.BETLI_TERITETT_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINES_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINES_TERITETT_ID)} onChange={this.onChooseTDuri} /> {Call.DURI_SZINES_TERITETT} </td><td>{this.state.colorId * Call.DURI_TERITETT_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="valueCB" defaultChecked={this.isCheckboxCheck(Call.DURI_SZINTELEN_TERITETT_ID)} disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_TERITETT_ID)} onChange={this.onChooseTSzDuri} /> {Call.DURI_SZINTELEN_TERITETT} </td><td>{this.state.colorId * Call.DURI_TERITETT_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="passzCB" disabled={this.isCheckBoxDisable(Call.PASSZ_ID)} onChange={this.onChoosePassz} /> {Call.PASSZ} </td><td>{this.state.colorId * Call.PASSZ_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="szaz40CB" disabled={this.isCheckBoxDisable(Call.SZAZ40_ID)} onChange={this.onChoose40100} /> {Call.SZAZ40} </td><td>{this.state.colorId * Call.SZAZ40_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="ultiCB" disabled={this.isCheckBoxDisable(Call.ULTI_ID)} onChange={this.onChooseUlti} /> {Call.ULTI} </td><td>{this.state.colorId * Call.ULTI_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="betliCB" disabled={this.isCheckBoxDisable(Call.BETLI_ID)} onChange={this.onChooseBetli} /> {Call.BETLI} </td><td>{this.state.colorId * Call.BETLI_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="durCB" disabled={this.isCheckBoxDisable(Call.DURI_SZINES_ID)} onChange={this.onChooseDuri} /> {Call.DURI_SZINES} </td><td>{this.state.colorId * Call.DURI_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="durSzinCB" disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_ID)} onChange={this.onChooseSzDuri} /> {Call.DURI_SZINTELEN} </td><td>{this.state.colorId * Call.DURI_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="szaz20CB" disabled={this.isCheckBoxDisable(Call.SZAZ20_ID)} onChange={this.onChoose20100} /> {Call.SZAZ20} </td><td>{this.state.colorId * Call.SZAZ20_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="betliTerCB" disabled={this.isCheckBoxDisable(Call.BETLI_TERITETT_ID)} onChange={this.onChooseTBetli} /> {Call.BETLI_TERITETT} </td><td>{this.state.colorId * Call.BETLI_TERITETT_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="durTerCB" disabled={this.isCheckBoxDisable(Call.DURI_SZINES_TERITETT_ID)} onChange={this.onChooseTDuri} /> {Call.DURI_SZINES_TERITETT} </td><td>{this.state.colorId * Call.DURI_TERITETT_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name="durSzinTerCB" disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_TERITETT_ID)} onChange={this.onChooseTSzDuri} /> {Call.DURI_SZINTELEN_TERITETT} </td><td>{this.state.colorId * Call.DURI_TERITETT_VALUE}</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -117,7 +115,6 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
             const tmpArray = this.state.callList;
             this.setState({ callList: tmpArray });
         }
-
     }
 
     isRadioButtonDisabled(radioId: number, game: Game): boolean {
@@ -221,15 +218,6 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         return false;
     }
 
-    isCheckboxCheck(id: number): boolean {
-        return this.state.callList.includes(id);
-    }
-
-    resetValue() {
-        let empty: Array<number> = [];
-        this.setState({ callList: empty });
-    }
-
     getCallValueSum(): number {
         let res = 0;
 
@@ -240,46 +228,58 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         return (res * this.state.colorId);
     }
 
-    UnSelectAll() {
-        let items = document.getElementsByName('valueCB');
-        
-        for (let i = 0; i < items.length; i++) {
-            (items[i] as HTMLInputElement).checked = false;
-        }
+    onChooseColor(event) {
+        this.UnSelectAllCheckbox();
+        this.resetValue();
+        this.setState({ colorId: event.target.value });
+    }
+
+    resetValue() {
+        let empty: Array<number> = [];
+        this.setState({ callList: empty });
+    }
+
+    UnSelectAllCheckbox() {
+
+        let items = document.getElementsByName('passzCB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('szaz40CB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('ultiCB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('betliCB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('durCB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('durSzinCB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('szaz20CB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('betliTerCB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('durTerCB');
+        (items[0] as HTMLInputElement).checked = false;
+
+        items = document.getElementsByName('durSzinTerCB');
+        (items[0] as HTMLInputElement).checked = false;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    onChooseColorMakk(event) {
-        this.UnSelectAll();
-        this.resetValue();
-        this.setState({ colorId: Call.MAKK_ID });
-    }
-
-    onChooseColorZold(event) {
-        this.UnSelectAll();
-        this.resetValue();
-        this.setState({ colorId: Call.ZOLD_ID });
-    }
-
-    onChooseColorTok(event) {
-        this.UnSelectAll();
-        this.resetValue();
-        this.setState({ colorId: Call.TOK_ID });
-    }
-
-    onChooseColorPiros(event) {
-        this.UnSelectAll();
-        this.resetValue();
-        this.setState({ colorId: Call.PIROS_ID });
-    }
 
     onChoosePassz(event) {
         this.callListHandler(Call.PASSZ_ID, event.target.checked, Call.PASSZ_VALUE);
     }
 
     onChoose40100(event) {
+        this.checkAndRemove(Call.PASSZ_ID, 'passzCB');
         this.callListHandler(Call.SZAZ40_ID, event.target.checked, Call.SZAZ40_VALUE);
     }
 
@@ -292,6 +292,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
     }
 
     onChooseDuri(event) {
+        this.checkAndRemove(Call.PASSZ_ID, 'passzCB');
         this.callListHandler(Call.DURI_SZINES_ID, event.target.checked, Call.DURI_VALUE);
     }
 
@@ -300,18 +301,35 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
     }
 
     onChoose20100(event) {
+        this.checkAndRemove(Call.PASSZ_ID, 'passzCB');
         this.callListHandler(Call.SZAZ20_ID, event.target.checked, Call.SZAZ20_VALUE);
     }
 
     onChooseTBetli(event) {
+        this.checkAndRemove(Call.BETLI_ID, 'betliCB');
         this.callListHandler(Call.BETLI_TERITETT_ID, event.target.checked, Call.BETLI_TERITETT_VALUE);
     }
 
     onChooseTDuri(event) {
+        this.checkAndRemove(Call.DURI_SZINES_ID, 'durCB');
         this.callListHandler(Call.DURI_SZINES_TERITETT_ID, event.target.checked, Call.DURI_TERITETT_VALUE);
     }
 
     onChooseTSzDuri(event) {
+        this.checkAndRemove(Call.DURI_SZINTELEN_ID, 'durSzinCB');
         this.callListHandler(Call.DURI_SZINTELEN_TERITETT_ID, event.target.checked, Call.DURI_TERITETT_VALUE);
+    }
+
+    checkAndRemove(valueId: number, cbValue: string) {
+
+        if (this.state.callList.includes(valueId)) {
+            let items = document.getElementsByName(cbValue);
+            (items[0] as HTMLInputElement).checked = false;
+
+            let tmpList: Array<number> = this.state.callList;
+            const index = tmpList.indexOf(valueId);
+            tmpList.splice(index, 1);
+            this.setState({ callList: tmpList });
+        }
     }
 }

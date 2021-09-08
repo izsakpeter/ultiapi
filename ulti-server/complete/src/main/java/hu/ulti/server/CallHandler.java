@@ -24,7 +24,6 @@ public class CallHandler {
 			int prevCallValue = getCallValue(game.getPreviousCall());
 			int callValue = getCallValue(game.getCall());
 
-			System.out.println(prevCallValue + " prev ---------- call " + callValue);
 			if (prevCallValue > callValue)
 				return false;
 

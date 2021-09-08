@@ -13,5 +13,5 @@ export class Game {
 	public round: Strike;
 	public previousCall: Array<number>;
 	public call: Array<number>;
-	public gameover: boolean = false;
+	public gameOver: boolean = false;
 }

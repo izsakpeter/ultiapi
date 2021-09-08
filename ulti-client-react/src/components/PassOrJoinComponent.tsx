@@ -1,6 +1,6 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
-import { getCallName, getCallValueSum } from "../model/call";
+import { getCallName, getCallValueSum } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 

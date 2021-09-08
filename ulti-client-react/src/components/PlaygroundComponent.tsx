@@ -24,8 +24,5 @@ export class PlaygroundComponent extends React.Component<{ game: Game }, {}> {
                 </div>
             )
         }
-
-
     }
-
 }

@@ -1,6 +1,7 @@
 import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
-import { Call, getCallList, getCallName, getCallValue, getCallValueSum } from "../model/call";
+import { Constants } from "../helper/constants";
+import { getCallList, getCallName, getCallValue, getCallValueSum } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { PassOrJoin } from "./PassOrJoinComponent";
@@ -55,24 +56,24 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
                     <div><WronCallComponent game={this.props.game} /></div>
                     <div className={"call-table-border"}>
                         <div>
-                            <Radio name="cv" label={Call.MAKK} value={Call.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.MAKK_ID, this.props.game)} />
-                            <Radio name="cv" label={Call.ZOLD} value={Call.ZOLD_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.ZOLD_ID, this.props.game)} />
-                            <Radio name="cv" label={Call.TOK} value={Call.TOK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.TOK_ID, this.props.game)} />
-                            <Radio name="cv" label={Call.PIROS} value={Call.PIROS_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Call.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Call.PIROS_ID, this.props.game)} />
+                            <Radio name="cv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.MAKK_ID, this.props.game)} />
+                            <Radio name="cv" label={Constants.ZOLD} value={Constants.ZOLD_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.ZOLD_ID, this.props.game)} />
+                            <Radio name="cv" label={Constants.TOK} value={Constants.TOK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.TOK_ID, this.props.game)} />
+                            <Radio name="cv" label={Constants.PIROS} value={Constants.PIROS_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.PIROS_ID, this.props.game)} />
                         </div>
                         <div>
                             <table>
                                 <tbody>
-                                    <tr><td><input type="checkbox" name="passzCB" disabled={this.isCheckBoxDisable(Call.PASSZ_ID)} onChange={this.onChoosePassz} /> {Call.PASSZ} </td><td>{this.state.colorId * Call.PASSZ_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="szaz40CB" disabled={this.isCheckBoxDisable(Call.SZAZ40_ID)} onChange={this.onChoose40100} /> {Call.SZAZ40} </td><td>{this.state.colorId * Call.SZAZ40_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="ultiCB" disabled={this.isCheckBoxDisable(Call.ULTI_ID)} onChange={this.onChooseUlti} /> {Call.ULTI} </td><td>{this.state.colorId * Call.ULTI_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="betliCB" disabled={this.isCheckBoxDisable(Call.BETLI_ID)} onChange={this.onChooseBetli} /> {Call.BETLI} </td><td>{this.state.colorId * Call.BETLI_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="durCB" disabled={this.isCheckBoxDisable(Call.DURI_SZINES_ID)} onChange={this.onChooseDuri} /> {Call.DURI_SZINES} </td><td>{this.state.colorId * Call.DURI_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="durSzinCB" disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_ID)} onChange={this.onChooseSzDuri} /> {Call.DURI_SZINTELEN} </td><td>{this.state.colorId * Call.DURI_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="szaz20CB" disabled={this.isCheckBoxDisable(Call.SZAZ20_ID)} onChange={this.onChoose20100} /> {Call.SZAZ20} </td><td>{this.state.colorId * Call.SZAZ20_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="betliTerCB" disabled={this.isCheckBoxDisable(Call.BETLI_TERITETT_ID)} onChange={this.onChooseTBetli} /> {Call.BETLI_TERITETT} </td><td>{this.state.colorId * Call.BETLI_TERITETT_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="durTerCB" disabled={this.isCheckBoxDisable(Call.DURI_SZINES_TERITETT_ID)} onChange={this.onChooseTDuri} /> {Call.DURI_SZINES_TERITETT} </td><td>{this.state.colorId * Call.DURI_TERITETT_VALUE}</td></tr>
-                                    <tr><td><input type="checkbox" name="durSzinTerCB" disabled={this.isCheckBoxDisable(Call.DURI_SZINTELEN_TERITETT_ID)} onChange={this.onChooseTSzDuri} /> {Call.DURI_SZINTELEN_TERITETT} </td><td>{this.state.colorId * Call.DURI_TERITETT_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.PASSZ_CB} disabled={this.isCheckBoxDisable(Constants.PASSZ_ID)} onChange={this.onChoosePassz} /> {Constants.PASSZ} </td><td>{this.state.colorId * Constants.PASSZ_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.SZAZ40_CB} disabled={this.isCheckBoxDisable(Constants.SZAZ40_ID)} onChange={this.onChoose40100} /> {Constants.SZAZ40} </td><td>{this.state.colorId * Constants.SZAZ40_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.ULTI_CB} disabled={this.isCheckBoxDisable(Constants.ULTI_ID)} onChange={this.onChooseUlti} /> {Constants.ULTI} </td><td>{this.state.colorId * Constants.ULTI_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.BETLI_CB} disabled={this.isCheckBoxDisable(Constants.BETLI_ID)} onChange={this.onChooseBetli} /> {Constants.BETLI} </td><td>{this.state.colorId * Constants.BETLI_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.DURI_CB} disabled={this.isCheckBoxDisable(Constants.DURI_SZINES_ID)} onChange={this.onChooseDuri} /> {Constants.DURI_SZINES} </td><td>{this.state.colorId * Constants.DURI_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.DURI_SZINTELEN_CB} disabled={this.isCheckBoxDisable(Constants.DURI_SZINTELEN_ID)} onChange={this.onChooseSzDuri} /> {Constants.DURI_SZINTELEN} </td><td>{this.state.colorId * Constants.DURI_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.SZAZ20_CB} disabled={this.isCheckBoxDisable(Constants.SZAZ20_ID)} onChange={this.onChoose20100} /> {Constants.SZAZ20} </td><td>{this.state.colorId * Constants.SZAZ20_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.BETLI_TERITETT_CB} disabled={this.isCheckBoxDisable(Constants.BETLI_TERITETT_ID)} onChange={this.onChooseTBetli} /> {Constants.BETLI_TERITETT} </td><td>{this.state.colorId * Constants.BETLI_TERITETT_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.DURI_TERITETT_CB} disabled={this.isCheckBoxDisable(Constants.DURI_SZINES_TERITETT_ID)} onChange={this.onChooseTDuri} /> {Constants.DURI_SZINES_TERITETT} </td><td>{this.state.colorId * Constants.DURI_TERITETT_VALUE}</td></tr>
+                                    <tr><td><input type="checkbox" name={Constants.DURI_SZINTELEN_TERITETT_CB} disabled={this.isCheckBoxDisable(Constants.DURI_SZINTELEN_TERITETT_ID)} onChange={this.onChooseTSzDuri} /> {Constants.DURI_SZINTELEN_TERITETT} </td><td>{this.state.colorId * Constants.DURI_TERITETT_VALUE}</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -138,78 +139,78 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
     isCheckBoxDisable(id: number): boolean {
         switch (id) {
-            case Call.PASSZ_ID:
-                if (this.state.callList.includes(Call.SZAZ40_ID) || this.state.callList.includes(Call.ULTI_ID) || this.state.callList.includes(Call.BETLI_ID)
-                    || this.state.callList.includes(Call.DURI_SZINES_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_ID)
-                    || this.state.callList.includes(Call.SZAZ20_ID) || this.state.callList.includes(Call.BETLI_TERITETT_ID)
-                    || this.state.callList.includes(Call.DURI_SZINES_TERITETT_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.PASSZ_ID:
+                if (this.state.callList.includes(Constants.SZAZ40_ID) || this.state.callList.includes(Constants.ULTI_ID) || this.state.callList.includes(Constants.BETLI_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINES_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_ID)
+                    || this.state.callList.includes(Constants.SZAZ20_ID) || this.state.callList.includes(Constants.BETLI_TERITETT_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINES_TERITETT_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.SZAZ40_ID:
-                if (this.state.callList.includes(Call.BETLI_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_ID)
-                    || this.state.callList.includes(Call.SZAZ20_ID) || this.state.callList.includes(Call.BETLI_TERITETT_ID)
-                    || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.SZAZ40_ID:
+                if (this.state.callList.includes(Constants.BETLI_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_ID)
+                    || this.state.callList.includes(Constants.SZAZ20_ID) || this.state.callList.includes(Constants.BETLI_TERITETT_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.ULTI_ID:
-                if (this.state.callList.includes(Call.BETLI_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_ID)
-                    || this.state.callList.includes(Call.BETLI_TERITETT_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.ULTI_ID:
+                if (this.state.callList.includes(Constants.BETLI_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_ID)
+                    || this.state.callList.includes(Constants.BETLI_TERITETT_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.BETLI_ID:
-                if (this.state.callList.includes(Call.PASSZ_ID) || this.state.callList.includes(Call.SZAZ40_ID)
-                    || this.state.callList.includes(Call.ULTI_ID) || this.state.callList.includes(Call.DURI_SZINES_ID)
-                    || this.state.callList.includes(Call.DURI_SZINTELEN_ID) || this.state.callList.includes(Call.SZAZ20_ID)
-                    || this.state.callList.includes(Call.BETLI_TERITETT_ID) || this.state.callList.includes(Call.DURI_SZINES_TERITETT_ID)
-                    || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.BETLI_ID:
+                if (this.state.callList.includes(Constants.PASSZ_ID) || this.state.callList.includes(Constants.SZAZ40_ID)
+                    || this.state.callList.includes(Constants.ULTI_ID) || this.state.callList.includes(Constants.DURI_SZINES_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINTELEN_ID) || this.state.callList.includes(Constants.SZAZ20_ID)
+                    || this.state.callList.includes(Constants.BETLI_TERITETT_ID) || this.state.callList.includes(Constants.DURI_SZINES_TERITETT_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.DURI_SZINES_ID:
-                if (this.state.callList.includes(Call.BETLI_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_ID)
-                    || this.state.callList.includes(Call.BETLI_TERITETT_ID) || this.state.callList.includes(Call.DURI_SZINES_TERITETT_ID)
-                    || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.DURI_SZINES_ID:
+                if (this.state.callList.includes(Constants.BETLI_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_ID)
+                    || this.state.callList.includes(Constants.BETLI_TERITETT_ID) || this.state.callList.includes(Constants.DURI_SZINES_TERITETT_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.DURI_SZINTELEN_ID:
-                if (this.state.callList.includes(Call.PASSZ_ID) || this.state.callList.includes(Call.SZAZ40_ID)
-                    || this.state.callList.includes(Call.ULTI_ID) || this.state.callList.includes(Call.BETLI_ID)
-                    || this.state.callList.includes(Call.DURI_SZINES_ID) || this.state.callList.includes(Call.SZAZ20_ID)
-                    || this.state.callList.includes(Call.BETLI_TERITETT_ID) || this.state.callList.includes(Call.DURI_SZINES_TERITETT_ID)
-                    || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.DURI_SZINTELEN_ID:
+                if (this.state.callList.includes(Constants.PASSZ_ID) || this.state.callList.includes(Constants.SZAZ40_ID)
+                    || this.state.callList.includes(Constants.ULTI_ID) || this.state.callList.includes(Constants.BETLI_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINES_ID) || this.state.callList.includes(Constants.SZAZ20_ID)
+                    || this.state.callList.includes(Constants.BETLI_TERITETT_ID) || this.state.callList.includes(Constants.DURI_SZINES_TERITETT_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.SZAZ20_ID:
-                if (this.state.callList.includes(Call.SZAZ40_ID) || this.state.callList.includes(Call.BETLI_ID)
-                    || this.state.callList.includes(Call.DURI_SZINTELEN_ID) || this.state.callList.includes(Call.BETLI_TERITETT_ID)
-                    || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.SZAZ20_ID:
+                if (this.state.callList.includes(Constants.SZAZ40_ID) || this.state.callList.includes(Constants.BETLI_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINTELEN_ID) || this.state.callList.includes(Constants.BETLI_TERITETT_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.BETLI_TERITETT_ID:
-                if (this.state.callList.includes(Call.PASSZ_ID) || this.state.callList.includes(Call.SZAZ40_ID)
-                    || this.state.callList.includes(Call.ULTI_ID) || this.state.callList.includes(Call.DURI_SZINES_ID)
-                    || this.state.callList.includes(Call.DURI_SZINTELEN_ID) || this.state.callList.includes(Call.SZAZ20_ID)
-                    || this.state.callList.includes(Call.DURI_SZINES_TERITETT_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.BETLI_TERITETT_ID:
+                if (this.state.callList.includes(Constants.PASSZ_ID) || this.state.callList.includes(Constants.SZAZ40_ID)
+                    || this.state.callList.includes(Constants.ULTI_ID) || this.state.callList.includes(Constants.DURI_SZINES_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINTELEN_ID) || this.state.callList.includes(Constants.SZAZ20_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINES_TERITETT_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.DURI_SZINES_TERITETT_ID:
-                if (this.state.callList.includes(Call.BETLI_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_ID)
-                    || this.state.callList.includes(Call.BETLI_TERITETT_ID) || this.state.callList.includes(Call.DURI_SZINTELEN_TERITETT_ID))
+            case Constants.DURI_SZINES_TERITETT_ID:
+                if (this.state.callList.includes(Constants.BETLI_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_ID)
+                    || this.state.callList.includes(Constants.BETLI_TERITETT_ID) || this.state.callList.includes(Constants.DURI_SZINTELEN_TERITETT_ID))
                     return true;
                 else
                     return false;
-            case Call.DURI_SZINTELEN_TERITETT_ID:
-                if (this.state.callList.includes(Call.PASSZ_ID) || this.state.callList.includes(Call.SZAZ40_ID)
-                    || this.state.callList.includes(Call.ULTI_ID) || this.state.callList.includes(Call.BETLI_ID)
-                    || this.state.callList.includes(Call.DURI_SZINES_ID) || this.state.callList.includes(Call.SZAZ20_ID)
-                    || this.state.callList.includes(Call.BETLI_TERITETT_ID) || this.state.callList.includes(Call.DURI_SZINES_TERITETT_ID))
+            case Constants.DURI_SZINTELEN_TERITETT_ID:
+                if (this.state.callList.includes(Constants.PASSZ_ID) || this.state.callList.includes(Constants.SZAZ40_ID)
+                    || this.state.callList.includes(Constants.ULTI_ID) || this.state.callList.includes(Constants.BETLI_ID)
+                    || this.state.callList.includes(Constants.DURI_SZINES_ID) || this.state.callList.includes(Constants.SZAZ20_ID)
+                    || this.state.callList.includes(Constants.BETLI_TERITETT_ID) || this.state.callList.includes(Constants.DURI_SZINES_TERITETT_ID))
                     return true;
                 else
                     return false;
@@ -241,83 +242,106 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
     UnSelectAllCheckbox() {
 
-        let items = document.getElementsByName('passzCB');
+        let items = document.getElementsByName(Constants.PASSZ_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('szaz40CB');
+        items = document.getElementsByName(Constants.SZAZ40_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('ultiCB');
+        items = document.getElementsByName(Constants.ULTI_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('betliCB');
+        items = document.getElementsByName(Constants.BETLI_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('durCB');
+        items = document.getElementsByName(Constants.DURI_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('durSzinCB');
+        items = document.getElementsByName(Constants.DURI_SZINTELEN_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('szaz20CB');
+        items = document.getElementsByName(Constants.SZAZ20_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('betliTerCB');
+        items = document.getElementsByName(Constants.BETLI_TERITETT_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('durTerCB');
+        items = document.getElementsByName(Constants.DURI_TERITETT_CB);
         (items[0] as HTMLInputElement).checked = false;
 
-        items = document.getElementsByName('durSzinTerCB');
+        items = document.getElementsByName(Constants.DURI_SZINTELEN_TERITETT_CB);
         (items[0] as HTMLInputElement).checked = false;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     onChoosePassz(event) {
-        this.callListHandler(Call.PASSZ_ID, event.target.checked, Call.PASSZ_VALUE);
+        this.callListHandler(Constants.PASSZ_ID, event.target.checked, Constants.PASSZ_VALUE);
     }
 
     onChoose40100(event) {
-        this.checkAndRemove(Call.PASSZ_ID, 'passzCB');
-        this.callListHandler(Call.SZAZ40_ID, event.target.checked, Call.SZAZ40_VALUE);
+        this.checkAndRemove(Constants.PASSZ_ID, Constants.PASSZ_CB);
+        this.ultiCheckAddPasz(event.target.checked);
+        this.callListHandler(Constants.SZAZ40_ID, event.target.checked, Constants.SZAZ40_VALUE);
     }
 
     onChooseUlti(event) {
-        this.callListHandler(Call.ULTI_ID, event.target.checked, Call.ULTI_VALUE);
+
+        if (this.state.callList.length === 0) {
+            let items = document.getElementsByName(Constants.PASSZ_CB);
+            (items[0] as HTMLInputElement).checked = true;
+
+            let tmpList: Array<number> = this.state.callList;
+            tmpList.push(Constants.PASSZ_ID);
+            this.setState({ callList: tmpList });
+        }
+
+        if (!event.target.checked && this.state.callList.length === 2 && this.state.callList.includes(Constants.PASSZ_ID)) {
+            let items = document.getElementsByName(Constants.PASSZ_CB);
+            (items[0] as HTMLInputElement).checked = false;
+
+            let tmpList: Array<number> = this.state.callList;
+            const index = tmpList.indexOf(Constants.PASSZ_ID);
+            tmpList.splice(index, 1);
+            this.setState({ callList: tmpList });
+        }
+
+        this.callListHandler(Constants.ULTI_ID, event.target.checked, Constants.ULTI_VALUE);
     }
 
     onChooseBetli(event) {
-        this.callListHandler(Call.BETLI_ID, event.target.checked, Call.BETLI_VALUE);
+        this.callListHandler(Constants.BETLI_ID, event.target.checked, Constants.BETLI_VALUE);
     }
 
     onChooseDuri(event) {
-        this.checkAndRemove(Call.PASSZ_ID, 'passzCB');
-        this.callListHandler(Call.DURI_SZINES_ID, event.target.checked, Call.DURI_VALUE);
+        this.checkAndRemove(Constants.PASSZ_ID, Constants.PASSZ_CB);
+        this.ultiCheckAddPasz(event.target.checked);
+        this.callListHandler(Constants.DURI_SZINES_ID, event.target.checked, Constants.DURI_VALUE);
     }
 
     onChooseSzDuri(event) {
-        this.callListHandler(Call.DURI_SZINTELEN_ID, event.target.checked, Call.DURI_VALUE);
+        this.callListHandler(Constants.DURI_SZINTELEN_ID, event.target.checked, Constants.DURI_VALUE);
     }
 
     onChoose20100(event) {
-        this.checkAndRemove(Call.PASSZ_ID, 'passzCB');
-        this.callListHandler(Call.SZAZ20_ID, event.target.checked, Call.SZAZ20_VALUE);
+        this.checkAndRemove(Constants.PASSZ_ID, Constants.PASSZ_CB);
+        this.ultiCheckAddPasz(event.target.checked);
+        this.callListHandler(Constants.SZAZ20_ID, event.target.checked, Constants.SZAZ20_VALUE);
     }
 
     onChooseTBetli(event) {
-        this.checkAndRemove(Call.BETLI_ID, 'betliCB');
-        this.callListHandler(Call.BETLI_TERITETT_ID, event.target.checked, Call.BETLI_TERITETT_VALUE);
+        this.checkAndRemove(Constants.BETLI_ID, Constants.BETLI_CB);
+        this.callListHandler(Constants.BETLI_TERITETT_ID, event.target.checked, Constants.BETLI_TERITETT_VALUE);
     }
 
     onChooseTDuri(event) {
-        this.checkAndRemove(Call.DURI_SZINES_ID, 'durCB');
-        this.callListHandler(Call.DURI_SZINES_TERITETT_ID, event.target.checked, Call.DURI_TERITETT_VALUE);
+        this.checkAndRemove(Constants.PASSZ_ID, Constants.PASSZ_CB);
+        this.checkAndRemove(Constants.DURI_SZINES_ID, Constants.DURI_CB);
+        this.ultiCheckAddPasz(event.target.checked);
+        this.callListHandler(Constants.DURI_SZINES_TERITETT_ID, event.target.checked, Constants.DURI_TERITETT_VALUE);
     }
 
     onChooseTSzDuri(event) {
-        this.checkAndRemove(Call.DURI_SZINTELEN_ID, 'durSzinCB');
-        this.callListHandler(Call.DURI_SZINTELEN_TERITETT_ID, event.target.checked, Call.DURI_TERITETT_VALUE);
+        this.checkAndRemove(Constants.DURI_SZINTELEN_ID, Constants.DURI_SZINTELEN_CB);
+        this.callListHandler(Constants.DURI_SZINTELEN_TERITETT_ID, event.target.checked, Constants.DURI_TERITETT_VALUE);
     }
 
     checkAndRemove(valueId: number, cbValue: string) {
@@ -329,6 +353,18 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
             let tmpList: Array<number> = this.state.callList;
             const index = tmpList.indexOf(valueId);
             tmpList.splice(index, 1);
+            this.setState({ callList: tmpList });
+        }
+    }
+
+    ultiCheckAddPasz(checked: boolean) {
+        if (!checked && this.state.callList.length === 2 && this.state.callList.includes(Constants.ULTI_ID)) {
+
+            let items = document.getElementsByName(Constants.PASSZ_CB);
+            (items[0] as HTMLInputElement).checked = true;
+
+            let tmpList: Array<number> = this.state.callList;
+            tmpList.push(Constants.PASSZ_ID);
             this.setState({ callList: tmpList });
         }
     }

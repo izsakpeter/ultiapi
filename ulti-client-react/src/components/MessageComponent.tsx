@@ -1,5 +1,5 @@
 import React = require("react");
-import { Call, getCallName, getCallValue, getCallValueSum } from "../model/call";
+import { getCallName, getCallValue, getCallValueSum } from "../helper/callHandler";
 import { Game } from "../model/game";
 
 export class MessageComponent extends React.Component<{ game: Game, gotCards: boolean, isLoggedIn: boolean }, { id: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean }> {

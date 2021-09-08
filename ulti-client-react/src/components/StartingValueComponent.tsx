@@ -1,6 +1,6 @@
 import { Button, Radio } from "@blueprintjs/core";
 import React = require("react");
-import { Call } from "../model/call";
+import { Constants } from "../helper/constants";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
@@ -31,10 +31,10 @@ export class StartingValue extends React.Component<{ game: Game, postReq: (reqOb
         return (
             <div className={"border"}>
                 <div className={"margin"} >
-                    <Radio name="sv" label={Call.MAKK} value={Call.MAKK_ID} onClick={this.onChangeValue} defaultChecked={true} />
-                    <Radio name="sv" label={Call.ZOLD} value={Call.ZOLD_ID} onClick={this.onChangeValue} />
-                    <Radio name="sv" label={Call.TOK} value={Call.TOK_ID} onClick={this.onChangeValue} />
-                    <Radio name="sv" label={Call.PIROS} value={Call.PIROS_ID} onClick={this.onChangeValue} />
+                    <Radio name="sv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChangeValue} defaultChecked={true} />
+                    <Radio name="sv" label={Constants.ZOLD} value={Constants.ZOLD_ID} onClick={this.onChangeValue} />
+                    <Radio name="sv" label={Constants.TOK} value={Constants.TOK_ID} onClick={this.onChangeValue} />
+                    <Radio name="sv" label={Constants.PIROS} value={Constants.PIROS_ID} onClick={this.onChangeValue} />
                 </div>
                 <div><Button className={"button-ok"} onClick={this.setStartingValue}>ok</Button></div>
             </div>

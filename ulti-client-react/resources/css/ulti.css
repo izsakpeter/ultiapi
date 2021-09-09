@@ -3,6 +3,8 @@
 @import "appComponent.css";
 @import "startingValueComponent.css";
 @import "passOrJoinComponent.css";
+@import "messageComponent.css";
+@import "strikeComponent.css";
 .align-center {
     text-align: center;
 }

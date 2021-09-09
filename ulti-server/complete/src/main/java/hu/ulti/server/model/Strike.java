@@ -1,11 +1,11 @@
 package hu.ulti.server.model;
 
 public class Strike {
-
+	
+	private int id;
 	private int card1Id = -1;
 	private int card2Id = -1;
 	private int card3Id = -1;
-
 	private int card1PlayerId = 0;
 	private int card2PlayerId = 0;
 	private int card3PlayerId = 0;
@@ -13,10 +13,19 @@ public class Strike {
 	public Strike() {
 	}
 
-	public Strike(int card1Id, int card2Id, int card3Id) {
+	public Strike(int id, int card1Id, int card2Id, int card3Id) {
+		this.id = id;
 		this.card1Id = card1Id;
 		this.card2Id = card2Id;
 		this.card3Id = card3Id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getCard1Id() {

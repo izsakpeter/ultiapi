@@ -25,6 +25,7 @@ export function getRequestJson(model: RequestModel): any {
 
     switch (model.dest) {
         case "start":
+        case "newgame":
             return {
                 id: model.id
             };

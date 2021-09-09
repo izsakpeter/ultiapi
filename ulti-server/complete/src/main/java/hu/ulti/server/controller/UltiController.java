@@ -37,6 +37,8 @@ public class UltiController {
 
 	private final static Long LONG_POLLING_TIMEOUT = 60000L;
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
+	
+	private static int roundCounter = 0;
 
 	@PostMapping("status")
 	public DeferredResult<Game> keepAlive(@RequestBody Request request) {
@@ -323,10 +325,32 @@ public class UltiController {
 						}
 					}
 					
+					roundCounter++;
+					
 					if (isBetli) {
 						game.setGameOver(isBetliOver());
 					} else if (isSzintelenDuri) {
-						game.setGameOver(false);
+						game.setGameOver(isSzintelenDuriOver());
+					}
+					
+					if (game.isGameOver()) {
+						player1.setReady(false);
+						player2.setReady(false);
+						player3.setReady(false);
+						hands = null;
+						player1.setHand(null);
+						player2.setHand(null);
+						player3.setHand(null);
+						player1.setStrikes(new ArrayList<Strike>());
+						player2.setStrikes(new ArrayList<Strike>());
+						player3.setStrikes(new ArrayList<Strike>());
+						talon = null;
+						game.setRoundStarted(false);
+						game.setPlayReadyToStart(false);
+						game.setStartingValue(0);
+						game.setLastCallerId(0);
+						game.setPreviousCall(new ArrayList<Integer>());
+						
 					}
 				} /*else {
 
@@ -400,6 +424,58 @@ public class UltiController {
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return "bad";
 	}
+	
+	@PostMapping("newgame")
+	public String newGame(@RequestBody Request request) {
+
+		int id = request.getId();
+		
+		if (id == player1.getId())
+			player1.setReady(true);
+		else if (id == player2.getId())
+			player2.setReady(true);
+		else if (id == player3.getId())
+			player3.setReady(true);
+		
+		if (!player1.isReady() || !player2.isReady() || !player3.isReady()) {
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
+			return "waiting";
+		}
+		
+		if (game.isRoundStarted()) {
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
+			return "Round started";
+		} else {
+			game.setGameOver(false);
+			
+			dealer = Helper.dealerHandler(dealer);
+			hands = Helper.getHands(dealer);
+			
+			if (dealer == 1) {
+				player2.setColorForced(true);
+				game.setActivePlayer(player2.getId());
+			} else if (dealer == 2) {
+				player3.setColorForced(true);
+				game.setActivePlayer(player3.getId());
+			} else if (dealer == 3) {
+				player1.setColorForced(true);
+				game.setActivePlayer(player1.getId());
+			}
+			
+			player1.setHand(hands.get(0));
+			player1.getHand().sort(Comparator.comparing(Card::getId));
+			player2.setHand(hands.get(1));
+			player2.getHand().sort(Comparator.comparing(Card::getId));
+			player3.setHand(hands.get(2));
+			player3.getHand().sort(Comparator.comparing(Card::getId));
+			talon = hands.get(3);
+
+			game.setRoundStarted(true);
+			game.setLastModificationTimeStamp(System.currentTimeMillis());
+			
+			return "ok";
+		}
+	}
 
 	private Player getPlayerById(int id) {
 
@@ -470,13 +546,13 @@ public class UltiController {
 	
 	private void szintelenStrikeHandler(int id) {
 		if (id == player1.getId()) {
-			player1.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
+			player1.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
 			game.setActivePlayer(player1.getId());
 		} else if (id == player2.getId()) {
-			player2.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
+			player2.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
 			game.setActivePlayer(player2.getId());
-		} else if (id == player2.getId()) {
-			player3.addStrike(new Strike(game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
+		} else if (id == player3.getId()) {
+			player3.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(), game.getRound().getCard3Id()));
 			game.setActivePlayer(player3.getId());
 		}
 	}
@@ -486,6 +562,10 @@ public class UltiController {
 		return player.getStrikes().size() > 0;
 	}
 	
+	private boolean isSzintelenDuriOver() {
+		Player player = getPlayerById(game.getLastCallerId());
+		return player.getStrikes().size() != roundCounter;
+	}
 	
 /*
 	private static int getAdu(int id) {

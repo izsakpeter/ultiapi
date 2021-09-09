@@ -144,6 +144,5 @@ public class Game {
 					this.lastCallerId, this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage,
 					this.lastModificationTimeStamp, this.isGameOver);
 		}
-
 	}
 }

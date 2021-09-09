@@ -22,11 +22,12 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
     }
    
     render() {
+
         return (
             <div>
                 <div className={"align-right"}><LoginComponent postReq={this.postRequest}/></div>
-                <div className={"align-center"}><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn}/></div>
-                <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest}/></div>
+                <div className={"align-center"}><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} postReq={this.postRequest} /></div>
+                { this.state.game?.gameOver === false ? <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest}/></div> : null }
             </div>
         );
     }

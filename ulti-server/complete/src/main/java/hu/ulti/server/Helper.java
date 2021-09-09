@@ -113,4 +113,16 @@ public class Helper {
 		hand.sort(Comparator.comparing(Card::getId));
 		return hand;
 	}
+	
+	public static int dealerHandler(int number) {
+		
+		if (number == 1)
+			return 2;
+		else if (number == 2)
+			return 3;
+		else if (number == 3)
+			return 1;
+		
+		return 1;
+	}
 }

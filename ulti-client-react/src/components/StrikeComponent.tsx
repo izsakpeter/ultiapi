@@ -26,7 +26,8 @@ export class StrikeComponent extends React.Component<{ game: Game }, { strikes: 
 
             return (
                 <div>
-                    <Button onClick={() => this.clickHandler(this.state.showStrikes, this.state.strikes)} text="ütések" />
+                    <div><Button onClick={() => this.clickHandler(this.state.showStrikes, this.state.strikes)} text="ütések" /></div>
+                    <div>{StrikeList(this.state.strikes, this.state.showStrikes)}</div>
                 </div>
             )
         } else {
@@ -38,22 +39,18 @@ export class StrikeComponent extends React.Component<{ game: Game }, { strikes: 
 
     clickHandler(showStrikes: boolean, strikes: Array<Strike>) {
         this.setState({ showStrikes: !showStrikes });
-
-        if (showStrikes) {
-
-            let strikeArray = [];
-            for (let i = 0; i < strikes.length; i++) {
-                strikeArray.push(<div key={strikes[i].id}>kör: {strikes[i].id} <img src={GetCardSource(strikes[i].card1Id)} className={"strike-button-card"} /><img src={GetCardSource(strikes[i].card2Id)} className={"strike-button-card"} /><img src={GetCardSource(strikes[i].card3Id)} className={"strike-button-card"} /></div>);
-            }
-
-            console.log(strikeArray.length + " anrfgjsdfpogspdiougpiosdhfgiushdfguihsdfiuosduiofguisdfhguiosdfhgiousdfhg");
-
-            return (
-                <div>
-                    {strikeArray}
-                </div>
-            )
-        }
     }
 }
 
+function StrikeList(strikes: Array<Strike>, showStrikes: boolean) {
+
+    if (showStrikes) {
+        const strikeList = strikes.map((strike) => <div key={strike.id}>kör:{strike.id}<img src={GetCardSource(strike.card1Id)} className="strike-button-card" /><img src={GetCardSource(strike.card2Id)} className="strike-button-card" /><img src={GetCardSource(strike.card3Id)} className="strike-button-card" /></div>)
+
+        return (
+            <div>
+                {strikeList}
+            </div>
+        )
+    }
+}

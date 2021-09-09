@@ -332,26 +332,6 @@ public class UltiController {
 					} else if (isSzintelenDuri) {
 						game.setGameOver(isSzintelenDuriOver());
 					}
-					
-					if (game.isGameOver()) {
-						player1.setReady(false);
-						player2.setReady(false);
-						player3.setReady(false);
-						hands = null;
-						player1.setHand(null);
-						player2.setHand(null);
-						player3.setHand(null);
-						player1.setStrikes(new ArrayList<Strike>());
-						player2.setStrikes(new ArrayList<Strike>());
-						player3.setStrikes(new ArrayList<Strike>());
-						talon = null;
-						game.setRoundStarted(false);
-						game.setPlayReadyToStart(false);
-						game.setStartingValue(0);
-						game.setLastCallerId(0);
-						game.setPreviousCall(new ArrayList<Integer>());
-						
-					}
 				} /*else {
 
 					final int ADU = getAdu(game.getPreviousCall().get(0));
@@ -414,7 +394,25 @@ public class UltiController {
 				}*/
 
 				game.getRound().clearStrike();
-
+				
+				if (game.isGameOver()) {
+					player1.setReady(false);
+					player2.setReady(false);
+					player3.setReady(false);
+					hands = null;
+					player1.setHand(null);
+					player2.setHand(null);
+					player3.setHand(null);
+					player1.setStrikes(new ArrayList<Strike>());
+					player2.setStrikes(new ArrayList<Strike>());
+					player3.setStrikes(new ArrayList<Strike>());
+					talon = null;
+					game.setRoundStarted(false);
+					game.setPlayReadyToStart(false);
+					game.setStartingValue(0);
+					game.setLastCallerId(0);
+					game.setPreviousCall(new ArrayList<Integer>());
+				}
 			}
 
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -566,8 +564,7 @@ public class UltiController {
 		Player player = getPlayerById(game.getLastCallerId());
 		return player.getStrikes().size() != roundCounter;
 	}
-	
-/*
+
 	private static int getAdu(int id) {
 
 		switch (id) {
@@ -581,5 +578,5 @@ public class UltiController {
 			return Call.PIROS_COLOR_ID;
 		}
 		return 0;
-	}*/
+	}
 }

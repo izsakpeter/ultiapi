@@ -1,3 +1,4 @@
+import { Hand } from "./hand";
 import { Player } from "./player";
 import { Strike } from "./strike";
 
@@ -14,4 +15,7 @@ export class Game {
 	public previousCall: Array<number>;
 	public call: Array<number>;
 	public gameOver: boolean = false;
+	public player1Hand: Hand;
+	public player2Hand: Hand;
+	public player3Hand: Hand;
 }

@@ -17,6 +17,7 @@ import hu.ulti.server.Helper;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
+import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Request;
 import hu.ulti.server.model.Strike;
 import hu.ulti.server.model.Player;
@@ -35,7 +36,7 @@ public class UltiController {
 
 	Game game = new Game();
 
-	private final static Long LONG_POLLING_TIMEOUT = 60000L;
+	private final static Long LONG_POLLING_TIMEOUT = 600000L;
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
 
 	private static int roundCounter = 1;
@@ -50,7 +51,7 @@ public class UltiController {
 				int i = 0;
 
 				try {
-					while (i < 600) {
+					while (i < 6000) {
 						if (game.getLastModificationTimeStamp() > request.getLastTimeStamp()) {
 							Player player = getPlayerById(request.getId());
 							Game clone = game.clone();
@@ -118,6 +119,10 @@ public class UltiController {
 			player3.setHand(hands.get(2));
 			player3.getHand().sort(Comparator.comparing(Card::getId));
 			talon = hands.get(3);
+			
+			game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
+			game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
+			game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
 
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -145,12 +150,16 @@ public class UltiController {
 
 		if (request.getId() == game.getActivePlayer() && request.getValue() > 0) {
 
-			if (request.getId() == player1.getId())
+			if (request.getId() == player1.getId()) {
 				player1.setHand(Card.addTalon(player1, talon));
-			else if (request.getId() == player2.getId())
+				game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
+			} else if (request.getId() == player2.getId()) {
 				player2.setHand(Card.addTalon(player2, talon));
-			else if (request.getId() == player3.getId())
+				game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
+			} else if (request.getId() == player3.getId()) {
 				player3.setHand(Card.addTalon(player3, talon));
+				game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
+			}
 
 			game.setStartingValue(request.getValue());
 
@@ -179,6 +188,7 @@ public class UltiController {
 					player1.setCallOk(true);
 					talon = Card.getTalonById(request.getTalonid());
 					player1.setHand(Card.removeTalon(player1, talon));
+					game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
 					game.setLastCallerId(request.getId());
 					game.setPreviousCall(game.getCall());
 					game.setCall(new ArrayList<>());
@@ -195,6 +205,7 @@ public class UltiController {
 					player2.setCallOk(true);
 					talon = Card.getTalonById(request.getTalonid());
 					player2.setHand(Card.removeTalon(player2, talon));
+					game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
 					game.setLastCallerId(request.getId());
 					game.setPreviousCall(game.getCall());
 					game.setCall(new ArrayList<>());
@@ -211,6 +222,7 @@ public class UltiController {
 					player3.setCallOk(true);
 					talon = Card.getTalonById(request.getTalonid());
 					player3.setHand(Card.removeTalon(player3, talon));
+					game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
 					game.setLastCallerId(request.getId());
 					game.setPreviousCall(game.getCall());
 					game.setCall(new ArrayList<>());
@@ -252,12 +264,16 @@ public class UltiController {
 				return "passz";
 
 			} else {
-				if (request.getId() == player1.getId())
+				if (request.getId() == player1.getId()) {
 					player1.setHand(Card.addTalon(player1, talon));
-				else if (request.getId() == player2.getId())
+					game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
+				} else if (request.getId() == player2.getId()) {
 					player2.setHand(Card.addTalon(player2, talon));
-				else if (request.getId() == player3.getId())
+					game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
+				} else if (request.getId() == player3.getId()) {
 					player3.setHand(Card.addTalon(player3, talon));
+					game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
+				}
 
 				game.setLastModificationTimeStamp(System.currentTimeMillis());
 
@@ -275,15 +291,18 @@ public class UltiController {
 			if (request.getId() == player1.getId()) {
 				game.getRound().addCardToStrike(request.getCardid(), player1.getId());
 				player1.setHand(Card.removeCardbyId(player1, request.getCardid()));
+				game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
 				game.setActivePlayer(player2.getId());
 			} else if (request.getId() == player2.getId()) {
 				game.getRound().addCardToStrike(request.getCardid(), player2.getId());
 				player2.setHand(Card.removeCardbyId(player2, request.getCardid()));
+				game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
 				game.setActivePlayer(player3.getId());
 
 			} else if (request.getId() == player3.getId()) {
 				game.getRound().addCardToStrike(request.getCardid(), player3.getId());
 				player3.setHand(Card.removeCardbyId(player3, request.getCardid()));
+				game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
 				game.setActivePlayer(player1.getId());
 			}
 
@@ -481,6 +500,10 @@ public class UltiController {
 			player3.setHand(hands.get(2));
 			player3.getHand().sort(Comparator.comparing(Card::getId));
 			talon = hands.get(3);
+			
+			game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
+			game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
+			game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
 
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());

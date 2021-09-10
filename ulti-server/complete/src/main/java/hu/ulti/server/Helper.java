@@ -8,7 +8,7 @@ import java.util.Random;
 import hu.ulti.server.model.Card;
 
 public class Helper {
-	
+
 	public static List<List<Card>> getHands(int dealer) {
 
 		List<Card> cards = Card.getAllCards();
@@ -45,35 +45,35 @@ public class Helper {
 		}
 
 		switch (dealer) {
-			case 1:
-				for (int i = 0; i < 2; i++) {
-	
-					Random rand = new Random();
-					int random = rand.nextInt(cards.size());
-					talon.add(cards.get(random));
-					cards.remove(random);
-				}
-				break;
-			case 2:
-				for (int i = 0; i < 2; i++) {
-	
-					Random rand = new Random();
-					int random = rand.nextInt(cards.size());
-					talon.add(cards.get(random));
-					cards.remove(random);
-				}
-				break;
-			case 3:
-				for (int i = 0; i < 2; i++) {
-	
-					Random rand = new Random();
-					int random = rand.nextInt(cards.size());
-					talon.add(cards.get(random));
-					cards.remove(random);
-				}
-				break;
+		case 1:
+			for (int i = 0; i < 2; i++) {
+
+				Random rand = new Random();
+				int random = rand.nextInt(cards.size());
+				talon.add(cards.get(random));
+				cards.remove(random);
+			}
+			break;
+		case 2:
+			for (int i = 0; i < 2; i++) {
+
+				Random rand = new Random();
+				int random = rand.nextInt(cards.size());
+				talon.add(cards.get(random));
+				cards.remove(random);
+			}
+			break;
+		case 3:
+			for (int i = 0; i < 2; i++) {
+
+				Random rand = new Random();
+				int random = rand.nextInt(cards.size());
+				talon.add(cards.get(random));
+				cards.remove(random);
+			}
+			break;
 		}
-		
+
 		for (int i = 0; i < 5; i++) {
 
 			Random rand = new Random();
@@ -100,7 +100,7 @@ public class Helper {
 			hand3.add(cards.get(random));
 			cards.remove(random);
 		}
-		
+
 		List<List<Card>> hands = new ArrayList<List<Card>>();
 		hands.add(0, hand1);
 		hands.add(1, hand2);
@@ -108,21 +108,21 @@ public class Helper {
 		hands.add(3, talon);
 		return hands;
 	}
-	
+
 	public static List<Card> orderHand(List<Card> hand) {
 		hand.sort(Comparator.comparing(Card::getId));
 		return hand;
 	}
-	
+
 	public static int dealerHandler(int number) {
-		
+
 		if (number == 1)
 			return 2;
 		else if (number == 2)
 			return 3;
 		else if (number == 3)
 			return 1;
-		
+
 		return 1;
 	}
 }

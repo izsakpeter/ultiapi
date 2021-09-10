@@ -35,9 +35,9 @@ export function GetCardSource(id: number): string {
 		case 29: return "/resources/img/cards/pfel.png";
 		case 30: return "/resources/img/cards/pk.png";
 		case 31: return "/resources/img/cards/pasz.png";
-		default: return "";
 	}
-	return null;
+
+	return "/resources/img/cards/hatlap.png";
 }
 
 export function GetOrderedHand(cards: Array<number>, isColorOrder: boolean): Array<number> {

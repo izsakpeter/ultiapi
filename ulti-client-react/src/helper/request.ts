@@ -5,7 +5,7 @@ import { getRequestJson, RequestModel } from "../model/requestModel";
 const baseURL: string = "http://localhost:8888/";
 
 let configuration: AxiosRequestConfig = {
-    timeout: 60000
+    timeout: 600000
 };
 
 export async function StatusPostRequest(id: number, lastTimeStamp: number): Promise<Game> {

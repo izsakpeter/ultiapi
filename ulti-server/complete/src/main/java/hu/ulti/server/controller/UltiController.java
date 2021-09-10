@@ -38,7 +38,7 @@ public class UltiController {
 	private final static Long LONG_POLLING_TIMEOUT = 60000L;
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
 
-	private static int roundCounter = 0;
+	private static int roundCounter = 1;
 
 	@PostMapping("status")
 	public DeferredResult<Game> keepAlive(@RequestBody Request request) {
@@ -395,8 +395,6 @@ public class UltiController {
 					}
 				}
 				
-				roundCounter++;
-				
 				if (isBetli) {
 					game.setGameOver(isBetliOver());
 				} else if (isSzintelenDuri) {
@@ -417,9 +415,6 @@ public class UltiController {
 					player1.setHand(null);
 					player2.setHand(null);
 					player3.setHand(null);
-					player1.setStrikes(new ArrayList<Strike>());
-					player2.setStrikes(new ArrayList<Strike>());
-					player3.setStrikes(new ArrayList<Strike>());
 					talon = null;
 					game.setRoundStarted(false);
 					game.setPlayReadyToStart(false);
@@ -427,6 +422,8 @@ public class UltiController {
 					game.setLastCallerId(0);
 					game.setPreviousCall(new ArrayList<Integer>());
 				}
+				
+				roundCounter++;
 			}
 
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -458,6 +455,9 @@ public class UltiController {
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return "Round started";
 		} else {
+			player1.setStrikes(new ArrayList<Strike>());
+			player2.setStrikes(new ArrayList<Strike>());
+			player3.setStrikes(new ArrayList<Strike>());
 			game.setGameOver(false);
 
 			dealer = Helper.dealerHandler(dealer);
@@ -636,6 +636,6 @@ public class UltiController {
 			break;
 		}
 
-		return 0;
+		return cardId;
 	}
 }

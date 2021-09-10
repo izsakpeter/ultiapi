@@ -52,5 +52,9 @@ function StrikeList(strikes: Array<Strike>, showStrikes: boolean) {
                 {strikeList}
             </div>
         )
+    } else {
+        return (
+            <></>
+        )
     }
 }

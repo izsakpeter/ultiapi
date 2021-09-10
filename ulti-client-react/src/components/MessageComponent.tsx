@@ -1,10 +1,11 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
+import { isThisTypeNode } from "typescript";
 import { getCallName, getCallValue, getCallValueSum } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
-export class MessageComponent extends React.Component<{ game: Game, gotCards: boolean, isLoggedIn: boolean, postReq: (reqObj: RequestModel) => void }, { playerId: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean, isGameOver: boolean }> {
+export class MessageComponent extends React.Component<{ game: Game, gotCards: boolean, isLoggedIn: boolean, postReq: (reqObj: RequestModel) => void }, { playerId: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean, isGameOver: boolean, isRoundRun: boolean, isPlayRun: boolean }> {
 
     constructor(props) {
         super(props)
@@ -16,11 +17,13 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
             callList: [],
             gotCards: true,
             isLoggedIn: false,
-            isGameOver: false
+            isGameOver: false,
+            isRoundRun: false,
+            isPlayRun: false
         }
     }
 
-    static getDerivedStateFromProps(props: { game: Game, gotCards: boolean, isLoggedIn: boolean }, state: { playerId: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean, isGameOver: boolean}) {
+    static getDerivedStateFromProps(props: { game: Game, gotCards: boolean, isLoggedIn: boolean }, state: { playerId: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean, isGameOver: boolean, isRoundRun: boolean, isPlayRun: boolean }) {
         if (props.game != null) {
             state.playerId = props.game.player.id;
             state.activePlayerId = props.game.activePlayer;
@@ -29,6 +32,8 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
             state.gotCards = props.gotCards;
             state.isLoggedIn = props.isLoggedIn;
             state.isGameOver = props.game.gameOver;
+            state.isRoundRun = props.game.roundStarted;
+            state.isPlayRun = props.game.playReadyToStart;
         }
 
         return state;
@@ -36,45 +41,54 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
 
     render() {
 
-        if (this.state.isGameOver){
+        if (this.state.isGameOver) {
             return (
                 <div className={"msg-border"}>
                     <div>Gameover</div>
-                    <div><Button text="kész a következő játékra" onClick={() => this.readyButtonAction((this.state.playerId))}/></div>
+                    <div><Button text="kész a következő játékra" onClick={() => this.readyButtonAction((this.state.playerId))} /></div>
                 </div>
             )
         } else {
-            if (!this.state.gotCards && this.state.isLoggedIn) {
-                return (
-                    <div className={"msg-border"}>
-                        A leosztás még nem történt meg!
-                    </div>
-                )
-            } else if (this.state.activePlayerId != this.state.playerId) {
-                if (this.state.callList.length === 0) {
+            if (this.state.isRoundRun) {
+                if (this.state.isPlayRun) {
                     return (
                         <div className={"msg-border"}>
                             <div>Aktiv játékos: {this.state.activePlayerId}</div>
+                            <div>Mondás: {getCallName(this.state.callList)} {this.state.lastCallerId} által.</div>
+                        </div>
+                    )
+                } else {
+                    if (this.state.activePlayerId != this.state.playerId) {
+                        return (
+                            <div className={"msg-border"}>
+                                <div>Aktiv játékos: {this.state.activePlayerId}</div>
+                                <div>Előző mondás: {getCallName(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <></>
+                        )
+                    }
+                }
+            } else {
+                if (!this.state.gotCards && this.state.isLoggedIn) {
+                    return (
+                        <div className={"msg-border"}>
+                            A leosztás még nem történt meg!
                         </div>
                     )
                 } else {
                     return (
-                        <div className={"msg-border"}>
-                            <div>Aktiv játékos: {this.state.activePlayerId}</div>
-                            <div>Előző mondás: {getCallName(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
-                        </div>
+                        <></>
                     )
                 }
-            } else {
-                return (
-                    <></>
-                )
             }
         }
     }
 
-    readyButtonAction(playerId: number){
-         let reqObj: RequestModel = {
+    readyButtonAction(playerId: number) {
+        let reqObj: RequestModel = {
             dest: "newgame",
             id: playerId
         }

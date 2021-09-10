@@ -22,7 +22,6 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
     }
    
     render() {
-
         return (
             <div>
                 <div className={"align-right"}><LoginComponent postReq={this.postRequest}/></div>

@@ -6,7 +6,7 @@ export class Game {
 
     public startingValue: number;
 	public player: Player;
-	public isRoundStarted: boolean = false;
+	public roundStarted: boolean = false;
 	public playReadyToStart: boolean = false;
 	public lastCallerId: number;
 	public activePlayer: number;

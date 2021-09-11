@@ -14,6 +14,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import hu.ulti.server.CallHandler;
 import hu.ulti.server.Helper;
+import hu.ulti.server.Resulthandler;
 import hu.ulti.server.StrikeHandler;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
@@ -316,15 +317,14 @@ public class UltiController {
 				player2 = strikeHandler.getPlayer2();
 				player3 = strikeHandler.getPlayer3();
 				
-				if (roundCounter == 10) {
-					game.setGameOver(true);
-				}
-
 				if (roundCounter == 1 && Call.isTeritett(game.getPreviousCall())) {
 					game.setPlayer1Hand(Hand.setHandWithCardes(player1));
 					game.setPlayer2Hand(Hand.setHandWithCardes(player2));
 					game.setPlayer3Hand(Hand.setHandWithCardes(player3));
 				}
+
+				Resulthandler resultHandler = new Resulthandler(game, roundCounter);
+				game =resultHandler.getGame();
 
 				if (game.isGameOver()) {
 					player1.setReady(false);

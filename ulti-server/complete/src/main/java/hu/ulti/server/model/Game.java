@@ -20,6 +20,7 @@ public class Game {
 	private Hand player1Hand = new Hand();
 	private Hand player2Hand = new Hand();
 	private Hand player3Hand = new Hand();
+	private List<Result> resultList = new ArrayList<Result>();
 
 	public Game() {
 		this.startingValue = 0;
@@ -27,7 +28,8 @@ public class Game {
 
 	public Game(int startingValue, Player player, boolean isRoundStarted, boolean isPlayReadyToStart, int lastCallerId,
 			int activePlayer, Strike round, List<Integer> call, List<Integer> previousCall, String errorMessage,
-			long lastModificationTimeStamp, boolean isGameOver, Hand player1Hand, Hand player2Hand, Hand player3Hand) {
+			long lastModificationTimeStamp, boolean isGameOver, Hand player1Hand, Hand player2Hand, Hand player3Hand,
+			List<Result> resultList) {
 		this.startingValue = startingValue;
 		this.player = player;
 		this.isRoundStarted = isRoundStarted;
@@ -43,7 +45,10 @@ public class Game {
 		this.player1Hand = player1Hand;
 		this.player2Hand = player2Hand;
 		this.player3Hand = player3Hand;
+		this.resultList = resultList;
 	}
+
+
 
 	public Player getPlayer() {
 		return player;
@@ -165,6 +170,14 @@ public class Game {
 		this.player3Hand = player3Hand;
 	}
 
+	public List<Result> getResultList() {
+		return resultList;
+	}
+
+	public void setResultList(List<Result> resultList) {
+		this.resultList = resultList;
+	}
+
 	@Override
 	public Game clone() {
 		try {
@@ -173,7 +186,7 @@ public class Game {
 			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart,
 					this.lastCallerId, this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage,
 					this.lastModificationTimeStamp, this.isGameOver, this.player1Hand, this.player2Hand,
-					this.player3Hand);
+					this.player3Hand, this.resultList);
 		}
 	}
 }

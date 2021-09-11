@@ -1,9 +1,5 @@
 package hu.ulti.server;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import hu.ulti.server.controller.UltiController;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
@@ -30,8 +26,8 @@ public class StrikeHandler {
 		int card1ColorId = getColor(card1);
 		int card2ColorId = getColor(card2);
 		int card3ColorId = getColor(card3);
-		boolean isBetli = isBetli(game);
-		boolean isSzintelenDuri = isSzintelenDuri(game);
+		boolean isBetli = Helper.isBetli(game);
+		boolean isSzintelenDuri = Helper.isSzintelenDuri(game);
 		boolean isSzintelen = isBetli || isSzintelenDuri;
 
 		if (isSzintelen) {
@@ -128,12 +124,6 @@ public class StrikeHandler {
 			}
 		}
 
-		if (isBetli) {
-			game.setGameOver(isBetliOver());
-		} else if (isSzintelenDuri) {
-			game.setGameOver(isSzintelenDuriOver());
-		}
-
 		game.getRound().clearStrike();
 	}
 
@@ -146,48 +136,6 @@ public class StrikeHandler {
 			return Call.TOK_COLOR_ID;
 		else
 			return Call.PIROS_COLOR_ID;
-	}
-
-	private static boolean isBetli(Game game) {
-		List<Integer> betliIds = new ArrayList<Integer>();
-		betliIds.add(3);
-		betliIds.add(7);
-		betliIds.add(13);
-		betliIds.add(17);
-		betliIds.add(23);
-		betliIds.add(27);
-		betliIds.add(33);
-		betliIds.add(37);
-
-		for (Integer id : betliIds) {
-			for (Integer call : game.getPreviousCall()) {
-				if (id == call)
-					return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static boolean isSzintelenDuri(Game game) {
-		List<Integer> duriIds = new ArrayList<Integer>();
-		duriIds.add(5);
-		duriIds.add(9);
-		duriIds.add(15);
-		duriIds.add(19);
-		duriIds.add(25);
-		duriIds.add(29);
-		duriIds.add(35);
-		duriIds.add(39);
-
-		for (Integer id : duriIds) {
-			for (Integer call : game.getPreviousCall()) {
-				if (id == call)
-					return true;
-			}
-		}
-
-		return false;
 	}
 
 	private void strikeHandler(int id) {
@@ -204,16 +152,6 @@ public class StrikeHandler {
 					game.getRound().getCard3Id()));
 			game.setActivePlayer(player3.getId());
 		}
-	}
-
-	private boolean isBetliOver() {
-		Player player = UltiController.getPlayerById(game.getLastCallerId());
-		return player.getStrikes().size() > 0;
-	}
-
-	private boolean isSzintelenDuriOver() {
-		Player player = UltiController.getPlayerById(game.getLastCallerId());
-		return player.getStrikes().size() != roundCounter;
 	}
 
 	private static int getAdu(int id) {

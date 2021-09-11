@@ -119,7 +119,7 @@ public class UltiController {
 			player3.setHand(hands.get(2));
 			player3.getHand().sort(Comparator.comparing(Card::getId));
 			talon = hands.get(3);
-			
+
 			game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
 			game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
 			game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
@@ -413,17 +413,23 @@ public class UltiController {
 						}
 					}
 				}
-				
+
 				if (isBetli) {
 					game.setGameOver(isBetliOver());
 				} else if (isSzintelenDuri) {
 					game.setGameOver(isSzintelenDuriOver());
 				}
-				
+
 				game.getRound().clearStrike();
 
 				if (roundCounter == 10) {
 					game.setGameOver(true);
+				}
+
+				if (roundCounter == 1 && Call.isTeritett(game.getPreviousCall())) {
+					game.setPlayer1Hand(Hand.setHandWithCardes(player1));
+					game.setPlayer2Hand(Hand.setHandWithCardes(player2));
+					game.setPlayer3Hand(Hand.setHandWithCardes(player3));
 				}
 
 				if (game.isGameOver()) {
@@ -441,7 +447,7 @@ public class UltiController {
 					game.setLastCallerId(0);
 					game.setPreviousCall(new ArrayList<Integer>());
 				}
-				
+
 				roundCounter++;
 			}
 
@@ -500,7 +506,7 @@ public class UltiController {
 			player3.setHand(hands.get(2));
 			player3.getHand().sort(Comparator.comparing(Card::getId));
 			talon = hands.get(3);
-			
+
 			game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
 			game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
 			game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
@@ -661,4 +667,5 @@ public class UltiController {
 
 		return cardId;
 	}
+
 }

@@ -26,19 +26,31 @@ public class Hand {
 	}
 
 	public static Hand fillHandWithMinusOne(Player player) {
-
 		Hand hand = new Hand();
 		hand.setId(player.getId());
-
 		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
 
 		for (int i = 0; i < player.getHand().size(); i++) {
 			UUID uuid = UUID.randomUUID();
 			list.add(new UuidWithCardId(uuid.toString(), -1));
 		}
-
 		hand.setList(list);
 
+		return hand;
+	}
+	
+	public static Hand setHandWithCardes(Player player) {		
+		Hand hand = new Hand();
+		hand.setId(player.getId());
+		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
+		
+		for (int i = 0; i < player.getHand().size(); i++) {
+			UUID uuid = UUID.randomUUID();
+			list.add(new UuidWithCardId(uuid.toString(), player.getHand().get(i).getId()));
+		}
+		
+		hand.setList(list);
+		
 		return hand;
 	}
 }

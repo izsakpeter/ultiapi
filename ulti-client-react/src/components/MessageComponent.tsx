@@ -1,9 +1,10 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
 import { isThisTypeNode } from "typescript";
-import { getCallName, getCallValue, getCallValueSum } from "../helper/callHandler";
+import { getCallNameList, getCallValue, getCallValueSum } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
+import { ResultComponent } from "./ResultComponent";
 
 export class MessageComponent extends React.Component<{ game: Game, gotCards: boolean, isLoggedIn: boolean, postReq: (reqObj: RequestModel) => void }, { playerId: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean, isGameOver: boolean, isRoundRun: boolean, isPlayRun: boolean }> {
 
@@ -45,6 +46,7 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
             return (
                 <div className={"msg-border"}>
                     <div>Gameover</div>
+                    <div><ResultComponent game={this.props.game} /></div>
                     <div><Button text="kész a következő játékra" onClick={() => this.readyButtonAction((this.state.playerId))} /></div>
                 </div>
             )
@@ -54,7 +56,7 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
                     return (
                         <div className={"msg-border"}>
                             <div>Aktiv játékos: {this.state.activePlayerId}</div>
-                            <div>Mondás: {getCallName(this.state.callList)} {this.state.lastCallerId} által.</div>
+                            <div>Mondás: {getCallNameList(this.state.callList)} {this.state.lastCallerId} által.</div>
                         </div>
                     )
                 } else {
@@ -62,7 +64,7 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
                         return (
                             <div className={"msg-border"}>
                                 <div>Aktiv játékos: {this.state.activePlayerId}</div>
-                                <div>Előző mondás: {getCallName(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
+                                <div>Előző mondás: {getCallNameList(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
                             </div>
                         )
                     } else {

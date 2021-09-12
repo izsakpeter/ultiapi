@@ -1,7 +1,8 @@
 
 export class Result {
 
+	public id: string;
     public playerId: number;
 	public callId: number;
-	public succes: boolean;
+	public success: boolean;
 }

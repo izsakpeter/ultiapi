@@ -1,7 +1,7 @@
 import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
 import { Constants } from "../helper/constants";
-import { getCallList, getCallName, getCallValue, getCallValueSum } from "../helper/callHandler";
+import { getCallList, getCallNameList, getCallValue, getCallValueSum } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { PassOrJoin } from "./PassOrJoinComponent";
@@ -52,7 +52,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
             return (
                 <div>
-                    <div>Előző mondás: {getCallName(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>
+                    <div>Előző mondás: {getCallNameList(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>
                     <div><WronCallComponent game={this.props.game} /></div>
                     <div className={"call-table-border"}>
                         <div>

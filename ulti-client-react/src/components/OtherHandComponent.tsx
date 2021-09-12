@@ -5,7 +5,6 @@ import { Game } from "../model/game";
 export default class OtherHandComponent extends React.Component<{ game: Game }, {}> {
 
     render() {
-
         if (this.props.game.player.id === this.props.game.player1Hand.id) {
             let player2HandImg = [];
             let player3HandImg = [];

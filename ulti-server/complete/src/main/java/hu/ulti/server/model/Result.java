@@ -2,9 +2,18 @@ package hu.ulti.server.model;
 
 public class Result {
 
+	private String id;
 	private int playerId;
 	private int callId;
-	private boolean isSucces;
+	private boolean isSuccess;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public int getPlayerId() {
 		return playerId;
@@ -22,11 +31,11 @@ public class Result {
 		this.callId = callId;
 	}
 
-	public boolean isSucces() {
-		return isSucces;
+	public boolean isSuccess() {
+		return isSuccess;
 	}
 
-	public void setSucces(boolean isSucces) {
-		this.isSucces = isSucces;
+	public void setSuccess(boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 }

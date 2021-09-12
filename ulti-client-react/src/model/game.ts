@@ -1,5 +1,6 @@
 import { Hand } from "./hand";
 import { Player } from "./player";
+import { Result } from "./result";
 import { Strike } from "./strike";
 
 
@@ -18,4 +19,5 @@ export class Game {
 	public player1Hand: Hand;
 	public player2Hand: Hand;
 	public player3Hand: Hand;
+	public resultList: Array<Result>;
 }

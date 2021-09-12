@@ -19,63 +19,88 @@ export function getCallList(colorNum: number, list: Array<number>): Array<number
 	return res;
 }
 
-export function getCallName(callList: Array<number>): string {
+export function getCallNameList(callList: Array<number>): string {
 
 	let max: number = Math.max(...callList);
-	let color: number = 0;
 	let call: string = "";
 
 	if (max < 10) {
 		call = Constants.MAKK
-		color = 0;
 	} else if (max < 20) {
 		call = Constants.ZOLD;
-		color = 10
 	} else if (max < 30) {
 		call = Constants.TOK;
-		color = 20
 	} else {
 		call = Constants.PIROS;
-		color = 30
 	}
 
 	for (let i = 0; i < callList.length; i++) {
-		switch (callList[i] - color) {
-			case Constants.PASSZ_ID:
-				call += " " + Constants.PASSZ;
-				break;
-			case Constants.SZAZ40_ID:
-				call += " " + Constants.SZAZ40;
-				break;
-			case Constants.ULTI_ID:
-				call += " " + Constants.ULTI;
-				break;
-			case Constants.BETLI_ID:
-				call += " " + Constants.BETLI;
-				break;
-			case Constants.DURI_SZINES_ID:
-				call += " " + Constants.DURI_SZINES;
-				break;
-			case Constants.DURI_SZINTELEN_ID:
-				call += " " + Constants.DURI_SZINTELEN;
-				break;
-			case Constants.SZAZ20_ID:
-				call += " " + Constants.SZAZ20;
-				break;
-			case Constants.BETLI_TERITETT_ID:
-				call += " " + Constants.BETLI_TERITETT;
-				break;
-			case Constants.DURI_SZINES_TERITETT_ID:
-				call += " " + Constants.DURI_SZINES_TERITETT;
-				break;
-			case Constants.DURI_SZINTELEN_TERITETT_ID:
-				call += " " + Constants.DURI_SZINTELEN_TERITETT;
-				break;
-		}
+		call += " " + getCallName(callList[i], false);
 	}
 
 	return call;
 }
+
+export function getCallName(callId: number, inclColor: boolean): string {
+
+	let call: string = "";
+	let color: number = 0;
+
+	if (callId < 10) {
+		if (inclColor)
+			call = Constants.MAKK
+		color = 0;
+	} else if (callId < 20) {
+		if (inclColor)
+			call = Constants.ZOLD;
+		color = 10
+	} else if (callId < 30) {
+		if (inclColor)
+			call = Constants.TOK;
+		color = 20
+	} else {
+		if (inclColor)
+			call = Constants.PIROS;
+		color = 30
+	}
+
+	switch (callId - color) {
+		case Constants.PASSZ_ID:
+			call += " " + Constants.PASSZ;
+			break;
+		case Constants.SZAZ40_ID:
+			call += " " + Constants.SZAZ40;
+			break;
+		case Constants.ULTI_ID:
+			call += " " + Constants.ULTI;
+			break;
+		case Constants.BETLI_ID:
+			call += " " + Constants.BETLI;
+			break;
+		case Constants.DURI_SZINES_ID:
+			call += " " + Constants.DURI_SZINES;
+			break;
+		case Constants.DURI_SZINTELEN_ID:
+			call += " " + Constants.DURI_SZINTELEN;
+			break;
+		case Constants.SZAZ20_ID:
+			call += " " + Constants.SZAZ20;
+			break;
+		case Constants.BETLI_TERITETT_ID:
+			call += " " + Constants.BETLI_TERITETT;
+			break;
+		case Constants.DURI_SZINES_TERITETT_ID:
+			call += " " + Constants.DURI_SZINES_TERITETT;
+			break;
+		case Constants.DURI_SZINTELEN_TERITETT_ID:
+			call += " " + Constants.DURI_SZINTELEN_TERITETT;
+			break;
+	}
+
+	return call;
+}
+
+
 
 export function getCallValueSum(list: Array<number>): number {
 	let res = 0;

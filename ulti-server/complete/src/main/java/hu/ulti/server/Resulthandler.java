@@ -37,15 +37,19 @@ public class Resulthandler {
 			if (isBetli() && !isBetliSuccess()) {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listBetli)));
+				game.setResultList(resultList);
 			} else if (isTeritettBetli() && !isBetliSuccess()) {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listTerBetli)));
+				game.setResultList(resultList);
 			} else if (isSzintelenDuri() && isSzintelenDuriSuccess()) {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listSzDuri)));
+				game.setResultList(resultList);
 			} else if (isTeritettSzintelenDuri() && isSzintelenDuriSuccess()) {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listTerSzDuri)));
+				game.setResultList(resultList);
 			}
 
 		} else {
@@ -183,8 +187,10 @@ public class Resulthandler {
 	private boolean isInList(List<Integer> list) {
 
 		for (int i = 0; i < list.size(); i++) {
-			if (game.getPreviousCall().get(i) == list.get(i))
-				return true;
+			for (int j = 0; j < game.getPreviousCall().size(); j++) {
+				if (game.getPreviousCall().get(j) == list.get(i))
+					return true;
+			}
 		}
 
 		return false;
@@ -287,7 +293,8 @@ public class Resulthandler {
 
 	private boolean isUltiSuccess() {
 		boolean isSuccess = false;
-		// Player player = UltiController.getPlayerById(game.getLastCallerId());
+		//Player player = UltiController.getPlayerById(game.getLastCallerId());
+		
 
 		return isSuccess;
 	}

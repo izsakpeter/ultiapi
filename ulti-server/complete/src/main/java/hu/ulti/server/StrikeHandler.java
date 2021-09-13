@@ -56,7 +56,7 @@ public class StrikeHandler {
 			}
 		} else {
 
-			final int ADU = getAdu(game.getPreviousCall().get(0));
+			int ADU = getAdu(game.getPreviousCall().get(0));
 
 			card1 = fixCardOrder(card1);
 			card2 = fixCardOrder(card2);
@@ -127,7 +127,7 @@ public class StrikeHandler {
 		game.getRound().clearStrike();
 	}
 
-	private static int getColor(int id) {
+	public static int getColor(int id) {
 		if (id <= 7)
 			return Call.MAKK_COLOR_ID;
 		else if (id > 7 && id <= 15)

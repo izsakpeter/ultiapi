@@ -14,7 +14,6 @@ public class Resulthandler {
 
 	private Game game;
 	private int roundCounter;
-
 	private List<Result> resultList = new ArrayList<Result>();
 
 	private List<Integer> listPassz = Arrays.asList(0, 10, 20, 30);
@@ -33,7 +32,7 @@ public class Resulthandler {
 		this.roundCounter = roundCounter;
 
 		if (roundCounter != 10) {
-			
+
 			if (isBetli() && !isBetliSuccess()) {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listBetli)));
@@ -275,7 +274,7 @@ public class Resulthandler {
 
 		resultList.add(addResult(player.getStrikes().size() == 10, getRespCallId(listDuri)));
 	}
-	
+
 	private void proccessTerDuri() {
 		Player player = UltiController.getPlayerById(game.getLastCallerId());
 
@@ -293,9 +292,50 @@ public class Resulthandler {
 
 	private boolean isUltiSuccess() {
 		boolean isSuccess = false;
-		//Player player = UltiController.getPlayerById(game.getLastCallerId());
-		
+		Player player = UltiController.getPlayerById(game.getLastCallerId());
+
+		for (int i = 0; i < player.getStrikes().size(); i++) {
+			if (player.getStrikes().get(i).getId() == 10) {
+
+				int card1 = -1;
+				int card2 = -1;
+				int card3 = -1;
+
+				if (player.getId() == player.getStrikes().get(i).getCard1PlayerId()) {
+					card1 = player.getStrikes().get(i).getCard1Id();
+					card2 = player.getStrikes().get(i).getCard2Id();
+					card3 = player.getStrikes().get(i).getCard3Id();
+				} else if (player.getId() == player.getStrikes().get(i).getCard2PlayerId()) {
+					card1 = player.getStrikes().get(i).getCard2Id();
+					card2 = player.getStrikes().get(i).getCard3Id();
+					card3 = player.getStrikes().get(i).getCard1Id();
+				} else if (player.getId() == player.getStrikes().get(i).getCard3PlayerId()) {
+					card1 = player.getStrikes().get(i).getCard3Id();
+					card2 = player.getStrikes().get(i).getCard1Id();
+					card3 = player.getStrikes().get(i).getCard2Id();
+				}
+
+				if (hasAdu7(card1)) {
+
+				}
+			}
+		}
 
 		return isSuccess;
+	}
+
+	private boolean hasAdu7(int card) {
+
+		int color = StrikeHandler.getColor(card);
+		int adu = StrikeHandler.getColor(game.getPreviousCall().get(0));
+		List<Integer> list7 = Arrays.asList(0, 8, 16, 24);
+
+		for (int i = 0; i < list7.size(); i++) {
+			if (card == list7.get(i) && color == adu) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

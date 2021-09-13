@@ -6,6 +6,7 @@ public class Result {
 	private int playerId;
 	private int callId;
 	private boolean isSuccess;
+	private String comment = "";
 
 	public String getId() {
 		return id;
@@ -37,5 +38,13 @@ public class Result {
 
 	public void setSuccess(boolean isSuccess) {
 		this.isSuccess = isSuccess;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }

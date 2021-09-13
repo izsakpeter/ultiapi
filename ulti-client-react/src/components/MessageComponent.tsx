@@ -47,7 +47,7 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
                 <div className={"msg-border"}>
                     <div>Gameover</div>
                     <div><ResultComponent game={this.props.game} /></div>
-                    <div><Button text="kész a következő játékra" onClick={() => this.readyButtonAction((this.state.playerId))} /></div>
+                    <div><Button text="kész" onClick={() => this.readyButtonAction((this.state.playerId))} /></div>
                 </div>
             )
         } else {
@@ -64,7 +64,7 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
                         return (
                             <div className={"msg-border"}>
                                 <div>Aktiv játékos: {this.state.activePlayerId}</div>
-                                <div>Előző mondás: {getCallNameList(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
+                                {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameList(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>}
                             </div>
                         )
                     } else {

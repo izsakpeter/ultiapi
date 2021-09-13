@@ -52,10 +52,10 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
 
             return (
                 <div>
-                    <div>Előző mondás: {getCallNameList(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>
-                    <div><WronCallComponent game={this.props.game} /></div>
                     <div className={"call-table-border"}>
                         <div>
+                            {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameList(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>}
+                            <div><WronCallComponent game={this.props.game} /></div>
                             <Radio name="cv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.MAKK_ID, this.props.game)} />
                             <Radio name="cv" label={Constants.ZOLD} value={Constants.ZOLD_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.ZOLD_ID, this.props.game)} />
                             <Radio name="cv" label={Constants.TOK} value={Constants.TOK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.TOK_ID, this.props.game)} />

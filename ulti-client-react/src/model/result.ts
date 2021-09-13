@@ -5,4 +5,5 @@ export class Result {
     public playerId: number;
 	public callId: number;
 	public success: boolean;
+	public comment: string;
 }

@@ -8,6 +8,7 @@ import { RequestModel } from "../model/requestModel";
 import { PlaygroundComponent } from "./PlaygroundComponent";
 import { StrikeComponent } from "./StrikeComponent";
 import OtherHandComponent from "./OtherHandComponent";
+import { SayComponent } from "./SayComponent";
 
 export class Table extends React.Component<{ gotCards: boolean, game: Game, postReq: (reqObj: RequestModel) => void }, { talon: number[], hand: number[] }> {
 
@@ -65,6 +66,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, post
                 <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>
                 <div><StrikeComponent game={this.props.game}/></div>
                 <div><OtherHandComponent game={this.props.game}/></div>
+                <div className={"saycomp"}><SayComponent game={this.props.game}/></div>
             </div>
         )
     }

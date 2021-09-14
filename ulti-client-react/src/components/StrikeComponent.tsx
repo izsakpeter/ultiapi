@@ -26,7 +26,7 @@ export class StrikeComponent extends React.Component<{ game: Game }, { strikes: 
 
             return (
                 <div>
-                    <div><Button onClick={() => this.clickHandler(this.state.showStrikes, this.state.strikes)} text="ütések" /></div>
+                    <div><Button onClick={() => this.clickHandler(this.state.showStrikes)} text="ütések" /></div>
                     <div>{StrikeList(this.state.strikes, this.state.showStrikes)}</div>
                 </div>
             )
@@ -37,7 +37,7 @@ export class StrikeComponent extends React.Component<{ game: Game }, { strikes: 
         }
     }
 
-    clickHandler(showStrikes: boolean, strikes: Array<Strike>) {
+    clickHandler(showStrikes: boolean) {
         this.setState({ showStrikes: !showStrikes });
     }
 }

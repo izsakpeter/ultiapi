@@ -26,7 +26,7 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
             <div>
                 <div className={"align-right"}><LoginComponent postReq={this.postRequest}/></div>
                 <div className={"align-center"}><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} postReq={this.postRequest} /></div>
-                { this.state.game?.gameOver === false ? <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest}/></div> : null }
+                <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest}/></div>
             </div>
         );
     }
@@ -38,7 +38,7 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
 
             let gotCardsState = true;
 
-            if (res.player.hand === null || res.player.hand.length === 0)
+            if (res.player.hand === null || res.player.hand.length === 0 && res.playReadyToStart)
                 gotCardsState = false;
 
             this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true });

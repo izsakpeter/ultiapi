@@ -1,7 +1,7 @@
 package hu.ulti.server.model;
 
 public class Strike {
-	
+
 	private int id;
 	private int card1Id = -1;
 	private int card2Id = -1;
@@ -97,5 +97,8 @@ public class Strike {
 		this.setCard1Id(-1);
 		this.setCard2Id(-1);
 		this.setCard3Id(-1);
+		this.setCard1PlayerId(-1);
+		this.setCard2PlayerId(-1);
+		this.setCard3PlayerId(-1);
 	}
 }

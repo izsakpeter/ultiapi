@@ -26,7 +26,13 @@
 .playground {
     position: absolute;
     top: 50%;
-    left: 40%;
+    left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+
+.saycomp {
+    position: absolute;
+    top: 20%;
+    left: 20%;
 }

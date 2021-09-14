@@ -12,7 +12,6 @@ public class Player {
 	private boolean isCallOk = true;
 	private boolean isColorForced = false;
 	private List<Strike> strikes = new ArrayList<Strike>();
-	
 	private boolean isBluff4020 = false;
 
 	public Player() {

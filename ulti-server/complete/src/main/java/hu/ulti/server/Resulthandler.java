@@ -248,8 +248,10 @@ public class Resulthandler {
 	}
 
 	private void proccess40100() {
+		Player player = UltiController.getPlayerById(game.getLastCallerId());
 		int caller10Value = get10Value();
-		boolean validCall = false;
+		
+		boolean validCall = !player.isBluff4020();
 
 		if (validCall) {
 			caller10Value += 40;
@@ -259,8 +261,10 @@ public class Resulthandler {
 	}
 
 	private void proccess20100() {
+		Player player = UltiController.getPlayerById(game.getLastCallerId());
 		int caller10Value = get10Value();
-		boolean validCall = false;
+		
+		boolean validCall = !player.isBluff4020();
 
 		if (validCall) {
 			caller10Value += 20;

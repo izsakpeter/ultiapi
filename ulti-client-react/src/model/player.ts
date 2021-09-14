@@ -10,4 +10,5 @@ export class Player {
 	public callOk: boolean;
 	public strikes: Array<Strike>;
 	public isColorForced: boolean = false;
+	public bluff4020: boolean;
 }

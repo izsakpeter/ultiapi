@@ -1,7 +1,7 @@
 import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
 import { Constants } from "../helper/constants";
-import { getCallList, getCallNameList, getCallValue, getCallValueSum } from "../helper/callHandler";
+import { getCallList, getCallNameList, getCallValue, getCallValueSum, isBluff4020 } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { PassOrJoin } from "./PassOrJoinComponent";
@@ -95,7 +95,8 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
                 dest: "call",
                 id: this.props.game.player.id,
                 call: finalCallList,
-                talonid: this.props.talon
+                talonid: this.props.talon,
+                bluff4020: isBluff4020(finalCallList, this.state.colorId, this.props.game)
             }
 
             this.props.postReq(reqObj);

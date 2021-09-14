@@ -188,6 +188,7 @@ public class UltiController {
 						player1.setColorForced(false);
 
 					player1.setCallOk(true);
+					player1.setBluff4020(request.isBluff4020());
 					talon = Card.getTalonById(request.getTalonid());
 					player1.setHand(Card.removeTalon(player1, talon));
 					game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
@@ -205,6 +206,7 @@ public class UltiController {
 						player2.setColorForced(false);
 
 					player2.setCallOk(true);
+					player1.setBluff4020(request.isBluff4020());
 					talon = Card.getTalonById(request.getTalonid());
 					player2.setHand(Card.removeTalon(player2, talon));
 					game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
@@ -222,6 +224,7 @@ public class UltiController {
 						player3.setColorForced(false);
 
 					player3.setCallOk(true);
+					player1.setBluff4020(request.isBluff4020());
 					talon = Card.getTalonById(request.getTalonid());
 					player3.setHand(Card.removeTalon(player3, talon));
 					game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));

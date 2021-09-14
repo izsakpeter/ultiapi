@@ -1,3 +1,4 @@
+import { Game } from "../model/game";
 import { Constants } from "./constants";
 
 export function getCallList(colorNum: number, list: Array<number>): Array<number> {
@@ -146,4 +147,130 @@ export function getCallValue(callId: number): number {
 		case Constants.DURI_SZINTELEN_TERITETT_ID:
 			return Constants.DURI_TERITETT_VALUE;
 	}
+}
+
+export function isBluff4020(callList: Array<number>, colorId: number, game: Game): boolean {
+
+	let call40Id: number;
+	let call20Id: number;
+
+	if (colorId == 1) {
+		call40Id = 1;
+		call20Id = 6;
+	} else if (colorId == 2) {
+		call40Id = 11;
+		call20Id = 16;
+	} else if (colorId == 3) {
+		call40Id = 21;
+		call20Id = 26;
+	} else if (colorId == 4) {
+		call40Id = 31;
+		call20Id = 36;
+	}
+
+	if (callList.includes(call40Id)) {
+
+		let aduFelsoId: number;
+		let aduKiralyId: number;
+
+		if (colorId == 1) {
+			aduFelsoId = 5;
+			aduKiralyId = 6;
+		} else if (colorId == 2) {
+			aduFelsoId = 13;
+			aduKiralyId = 14;
+		} else if (colorId == 3) {
+			aduFelsoId = 21;
+			aduKiralyId = 22;
+		} else if (colorId == 4) {
+			aduFelsoId = 29;
+			aduKiralyId = 30;
+		}
+
+		let haveFelso: boolean = false;
+		let haveKiraly: boolean = false;
+
+		for (let i = 0; i < game.player.hand.length; i++) {
+			if (game.player.hand[i].id === aduFelsoId)
+				haveFelso = true;
+			else if (game.player.hand[i].id === aduKiralyId)
+				haveKiraly = true;
+		}
+
+		if (haveFelso && haveKiraly)
+			return false;
+
+		return true
+
+	} else if (callList.includes(call20Id)) {
+		let fel1: number;
+		let kir1: number;
+		let fel2: number;
+		let kir2: number;
+		let fel3: number;
+		let kir3: number;
+
+		if (colorId == 1) {
+			fel1 = 13;
+			kir1 = 14;
+			fel2 = 21;
+			kir2 = 22;
+			fel3 = 29;
+			kir3 = 30;
+		} else if (colorId == 2) {
+			fel1 = 5;
+			kir1 = 6;
+			fel2 = 21;
+			kir2 = 22;
+			fel3 = 29;
+			kir3 = 30;
+		} else if (colorId == 3) {
+			fel1 = 5;
+			kir1 = 6;
+			fel2 = 13;
+			kir2 = 14;
+			fel3 = 29;
+			kir3 = 30;
+		} else if (colorId == 4) {
+			fel1 = 5;
+			kir1 = 6;
+			fel2 = 13;
+			kir2 = 14;
+			fel3 = 21;
+			kir3 = 22;
+		}
+
+		let haveFel1: boolean = false;
+		let haveKir1: boolean = false;
+		let haveFel2: boolean = false;
+		let haveKir2: boolean = false;
+		let haveFel3: boolean = false;
+		let haveKir3: boolean = false;
+
+		console.log(game.player.hand.length + " gsdfgsdfgsdfgsdfgsdfgsdfgsdfg");
+
+		for (let i = 0; i < game.player.hand.length; i++) {
+			if (game.player.hand[i].id === fel1)
+				haveFel1 = true;
+			else if (game.player.hand[i].id === kir1)
+				haveKir1 = true;
+			else if (game.player.hand[i].id === fel2)
+				haveFel2 = true;
+			else if (game.player.hand[i].id === kir2)
+				haveKir2 = true;
+			else if (game.player.hand[i].id === fel3)
+				haveFel3 = true;
+			else if (game.player.hand[i].id === kir3)
+				haveKir3 = true;
+		}
+
+		if (haveFel1 && haveKir1)
+			return false;
+		else if (haveFel2 && haveKir2)
+			return false;
+		else if (haveFel3 && haveKir3)
+			return false;
+	}
+
+	return false;
 }

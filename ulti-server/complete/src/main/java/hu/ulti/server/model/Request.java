@@ -12,6 +12,7 @@ public class Request {
 	private List<Integer> talonid;
 	private boolean isjoin;
 	private int cardid;
+	private boolean bluff4020;
 
 	public Request() {
 	}
@@ -78,5 +79,13 @@ public class Request {
 
 	public void setCardid(int cardid) {
 		this.cardid = cardid;
+	}
+
+	public boolean isBluff4020() {
+		return bluff4020;
+	}
+
+	public void setBluff4020(boolean bluff4020) {
+		this.bluff4020 = bluff4020;
 	}
 }

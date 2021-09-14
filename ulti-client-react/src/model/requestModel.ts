@@ -13,6 +13,7 @@ export class RequestModel {
     //call
     public call?: Array<number>;
     public talonid?: Array<number>;
+    public bluff4020?: boolean;
 
     //passz/join
     public isjoin?: boolean;
@@ -43,7 +44,8 @@ export function getRequestJson(model: RequestModel): any {
             return {
                 id: model.id,
                 call: model.call,
-                talonid: model.talonid
+                talonid: model.talonid,
+                bluff4020: model.bluff4020
             };
         case "join":
             return {

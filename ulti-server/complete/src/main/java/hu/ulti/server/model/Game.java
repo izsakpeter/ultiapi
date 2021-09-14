@@ -48,8 +48,6 @@ public class Game {
 		this.resultList = resultList;
 	}
 
-
-
 	public Player getPlayer() {
 		return player;
 	}

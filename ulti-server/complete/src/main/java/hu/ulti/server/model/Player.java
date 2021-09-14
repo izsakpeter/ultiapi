@@ -12,6 +12,8 @@ public class Player {
 	private boolean isCallOk = true;
 	private boolean isColorForced = false;
 	private List<Strike> strikes = new ArrayList<Strike>();
+	
+	private boolean isBluff4020 = false;
 
 	public Player() {
 	}
@@ -83,5 +85,13 @@ public class Player {
 
 	public void setColorForced(boolean isColorForced) {
 		this.isColorForced = isColorForced;
+	}
+
+	public boolean isBluff4020() {
+		return isBluff4020;
+	}
+
+	public void setBluff4020(boolean isBluff4020) {
+		this.isBluff4020 = isBluff4020;
 	}
 }

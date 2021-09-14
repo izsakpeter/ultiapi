@@ -291,18 +291,18 @@ public class UltiController {
 
 		if (game.isPlayReadyToStart() && request.getId() == game.getActivePlayer()) {
 			if (request.getId() == player1.getId()) {
-				game.getRound().addCardToStrike(request.getCardid(), player1.getId());
+				game.getRound().addCardToStrike(request.getCardid(), request.getId());
 				player1.setHand(Card.removeCardbyId(player1, request.getCardid()));
 				game.setPlayer1Hand(Hand.fillHandWithMinusOne(player1));
 				game.setActivePlayer(player2.getId());
 			} else if (request.getId() == player2.getId()) {
-				game.getRound().addCardToStrike(request.getCardid(), player2.getId());
+				game.getRound().addCardToStrike(request.getCardid(), request.getId());
 				player2.setHand(Card.removeCardbyId(player2, request.getCardid()));
 				game.setPlayer2Hand(Hand.fillHandWithMinusOne(player2));
 				game.setActivePlayer(player3.getId());
 
 			} else if (request.getId() == player3.getId()) {
-				game.getRound().addCardToStrike(request.getCardid(), player3.getId());
+				game.getRound().addCardToStrike(request.getCardid(), request.getId());
 				player3.setHand(Card.removeCardbyId(player3, request.getCardid()));
 				game.setPlayer3Hand(Hand.fillHandWithMinusOne(player3));
 				game.setActivePlayer(player1.getId());
@@ -316,7 +316,7 @@ public class UltiController {
 				player1 = strikeHandler.getPlayer1();
 				player2 = strikeHandler.getPlayer2();
 				player3 = strikeHandler.getPlayer3();
-				
+
 				if (roundCounter == 1 && Call.isTeritett(game.getPreviousCall())) {
 					game.setPlayer1Hand(Hand.setHandWithCardes(player1));
 					game.setPlayer2Hand(Hand.setHandWithCardes(player2));
@@ -324,7 +324,7 @@ public class UltiController {
 				}
 
 				Resulthandler resultHandler = new Resulthandler(game, roundCounter);
-				game =resultHandler.getGame();
+				game = resultHandler.getGame();
 
 				if (game.isGameOver()) {
 					player1.setReady(false);

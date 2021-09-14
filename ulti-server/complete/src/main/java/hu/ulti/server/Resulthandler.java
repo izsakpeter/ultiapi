@@ -316,7 +316,14 @@ public class Resulthandler {
 				}
 
 				if (hasAdu7(card1)) {
+					int card2Color = StrikeHandler.getColor(card2);
+					int card3Color = StrikeHandler.getColor(card3);
+					int adu = StrikeHandler.getColor(game.getPreviousCall().get(0));
 
+					if (adu == card2Color || adu == card3Color)
+						return false;
+
+					return true;
 				}
 			}
 		}
@@ -335,7 +342,7 @@ public class Resulthandler {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }

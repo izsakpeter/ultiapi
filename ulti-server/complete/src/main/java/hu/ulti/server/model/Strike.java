@@ -13,11 +13,15 @@ public class Strike {
 	public Strike() {
 	}
 
-	public Strike(int id, int card1Id, int card2Id, int card3Id) {
+	public Strike(int id, int card1Id, int card2Id, int card3Id, int card1PlayerId, int card2PlayerId,
+			int card3PlayerId) {
 		this.id = id;
 		this.card1Id = card1Id;
 		this.card2Id = card2Id;
 		this.card3Id = card3Id;
+		this.card1PlayerId = card1PlayerId;
+		this.card2PlayerId = card2PlayerId;
+		this.card3PlayerId = card3PlayerId;
 	}
 
 	public int getId() {

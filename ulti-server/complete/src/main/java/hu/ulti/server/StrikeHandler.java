@@ -141,15 +141,18 @@ public class StrikeHandler {
 	private void strikeHandler(int id) {
 		if (id == player1.getId()) {
 			player1.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id()));
+					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(), game.getRound().getCard2PlayerId(),
+					game.getRound().getCard3PlayerId()));
 			game.setActivePlayer(player1.getId());
 		} else if (id == player2.getId()) {
 			player2.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id()));
+					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(), game.getRound().getCard2PlayerId(),
+					game.getRound().getCard3PlayerId()));
 			game.setActivePlayer(player2.getId());
 		} else if (id == player3.getId()) {
 			player3.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id()));
+					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(), game.getRound().getCard2PlayerId(),
+					game.getRound().getCard3PlayerId()));
 			game.setActivePlayer(player3.getId());
 		}
 	}

@@ -1,4 +1,4 @@
-public async makeRequest<Req extends ClientRequest, Resp extends ClientResponseBase>(
+/*public async makeRequest<Req extends ClientRequest, Resp extends ClientResponseBase>(
         endpoint: string, request?: ClientRequestWithoutBaseProperties<Req>, requestConfig?: AxiosRequestConfig
     ): Promise<ServerResponse<Resp>> {
         let configuration: AxiosRequestConfig = {
@@ -55,4 +55,4 @@ public async makeRequest<Req extends ClientRequest, Resp extends ClientResponseB
             request,
             requestSettings
         );
-    }
+    }*/

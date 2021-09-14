@@ -20,4 +20,5 @@ export class Game {
 	public player2Hand: Hand;
 	public player3Hand: Hand;
 	public resultList: Array<Result>;
+	public firstTurn: boolean;
 }

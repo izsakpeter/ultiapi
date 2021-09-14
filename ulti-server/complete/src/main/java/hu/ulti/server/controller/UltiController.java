@@ -253,6 +253,7 @@ public class UltiController {
 
 				if (game.getLastCallerId() == game.getActivePlayer()) {
 					game.setPlayReadyToStart(true);
+					game.setFirstTurn(true);
 					game.setLastModificationTimeStamp(System.currentTimeMillis());
 					return "kezdődik a játék";
 				}
@@ -314,6 +315,7 @@ public class UltiController {
 			if (game.getRound().getCard1Id() != -1 && game.getRound().getCard2Id() != -1
 					&& game.getRound().getCard3Id() != -1) {
 
+				game.setFirstTurn(false);
 				StrikeHandler strikeHandler = new StrikeHandler(roundCounter, game, player1, player2, player3);
 				game = strikeHandler.getGame();
 				player1 = strikeHandler.getPlayer1();

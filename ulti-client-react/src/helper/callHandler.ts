@@ -1,6 +1,17 @@
 import { Game } from "../model/game";
 import { Constants } from "./constants";
 
+export function getColorByCallList(list: Array<number>): number {
+	if (list[0] < 10)
+		return Constants.MAKK_ID;
+	else if (list[0] < 20)
+		return Constants.ZOLD_ID;
+	else if (list[0] < 30)
+		return Constants.TOK_ID;
+	else
+		return Constants.PIROS_ID;
+}
+
 export function getCallList(colorNum: number, list: Array<number>): Array<number> {
 
 	let colorValue: number = 0;
@@ -21,19 +32,7 @@ export function getCallList(colorNum: number, list: Array<number>): Array<number
 }
 
 export function getCallNameList(callList: Array<number>): string {
-
-	let max: number = Math.max(...callList);
-	let call: string = "";
-
-	if (max < 10) {
-		call = Constants.MAKK
-	} else if (max < 20) {
-		call = Constants.ZOLD;
-	} else if (max < 30) {
-		call = Constants.TOK;
-	} else {
-		call = Constants.PIROS;
-	}
+	let call: string = getColorByCallList(callList).toString();
 
 	for (let i = 0; i < callList.length; i++) {
 		call += " " + getCallName(callList[i], false);
@@ -105,16 +104,7 @@ export function getCallName(callId: number, inclColor: boolean): string {
 
 export function getCallValueSum(list: Array<number>): number {
 	let res = 0;
-	let colorId: number = 0;
-
-	if (list[0] < 10)
-		colorId = 1;
-	else if (list[0] > 9 && list[0] < 20)
-		colorId = 2;
-	else if (list[0] > 19 && list[0] < 30)
-		colorId = 3;
-	else
-		colorId = 4;
+	let colorId: number = getColorByCallList(list);
 
 	for (let index = 0; index < list.length; index++) {
 		res += getCallValue(list[index] - ((colorId - 1) * 10));
@@ -169,108 +159,117 @@ export function isBluff4020(callList: Array<number>, colorId: number, game: Game
 	}
 
 	if (callList.includes(call40Id)) {
-
-		let aduFelsoId: number;
-		let aduKiralyId: number;
-
-		if (colorId == 1) {
-			aduFelsoId = 5;
-			aduKiralyId = 6;
-		} else if (colorId == 2) {
-			aduFelsoId = 13;
-			aduKiralyId = 14;
-		} else if (colorId == 3) {
-			aduFelsoId = 21;
-			aduKiralyId = 22;
-		} else if (colorId == 4) {
-			aduFelsoId = 29;
-			aduKiralyId = 30;
-		}
-
-		let haveFelso: boolean = false;
-		let haveKiraly: boolean = false;
-
-		for (let i = 0; i < game.player.hand.length; i++) {
-			if (game.player.hand[i].id === aduFelsoId)
-				haveFelso = true;
-			else if (game.player.hand[i].id === aduKiralyId)
-				haveKiraly = true;
-		}
-
-		if (haveFelso && haveKiraly)
-			return false;
-
-		return true
-
+		return have40(colorId, game);
 	} else if (callList.includes(call20Id)) {
-		let fel1: number;
-		let kir1: number;
-		let fel2: number;
-		let kir2: number;
-		let fel3: number;
-		let kir3: number;
-
-		if (colorId == 1) {
-			fel1 = 13;
-			kir1 = 14;
-			fel2 = 21;
-			kir2 = 22;
-			fel3 = 29;
-			kir3 = 30;
-		} else if (colorId == 2) {
-			fel1 = 5;
-			kir1 = 6;
-			fel2 = 21;
-			kir2 = 22;
-			fel3 = 29;
-			kir3 = 30;
-		} else if (colorId == 3) {
-			fel1 = 5;
-			kir1 = 6;
-			fel2 = 13;
-			kir2 = 14;
-			fel3 = 29;
-			kir3 = 30;
-		} else if (colorId == 4) {
-			fel1 = 5;
-			kir1 = 6;
-			fel2 = 13;
-			kir2 = 14;
-			fel3 = 21;
-			kir3 = 22;
-		}
-
-		let haveFel1: boolean = false;
-		let haveKir1: boolean = false;
-		let haveFel2: boolean = false;
-		let haveKir2: boolean = false;
-		let haveFel3: boolean = false;
-		let haveKir3: boolean = false;
-
-		console.log(game.player.hand.length + " gsdfgsdfgsdfgsdfgsdfgsdfgsdfg");
-
-		for (let i = 0; i < game.player.hand.length; i++) {
-			if (game.player.hand[i].id === fel1)
-				haveFel1 = true;
-			else if (game.player.hand[i].id === kir1)
-				haveKir1 = true;
-			else if (game.player.hand[i].id === fel2)
-				haveFel2 = true;
-			else if (game.player.hand[i].id === kir2)
-				haveKir2 = true;
-			else if (game.player.hand[i].id === fel3)
-				haveFel3 = true;
-			else if (game.player.hand[i].id === kir3)
-				haveKir3 = true;
-		}
-
-		if (haveFel1 && haveKir1)
-			return false;
-		else if (haveFel2 && haveKir2)
-			return false;
-		else if (haveFel3 && haveKir3)
-			return false;
+		return (have20(colorId, game) > 0);
 	}
 
 	return false;
+}
+
+export function have40(colorId: number, game: Game): boolean {
+	let aduFelsoId: number;
+	let aduKiralyId: number;
+
+	if (colorId == 1) {
+		aduFelsoId = 5;
+		aduKiralyId = 6;
+	} else if (colorId == 2) {
+		aduFelsoId = 13;
+		aduKiralyId = 14;
+	} else if (colorId == 3) {
+		aduFelsoId = 21;
+		aduKiralyId = 22;
+	} else if (colorId == 4) {
+		aduFelsoId = 29;
+		aduKiralyId = 30;
+	}
+
+	let haveFelso: boolean = false;
+	let haveKiraly: boolean = false;
+
+	for (let i = 0; i < game.player.hand.length; i++) {
+		if (game.player.hand[i].id === aduFelsoId)
+			haveFelso = true;
+		else if (game.player.hand[i].id === aduKiralyId)
+			haveKiraly = true;
+	}
+
+	if (haveFelso && haveKiraly)
+		return false;
+
+	return true
+}
+
+export function have20(colorId: number, game: Game): number {
+
+	let result = 0;
+
+	let fel1: number;
+	let kir1: number;
+	let fel2: number;
+	let kir2: number;
+	let fel3: number;
+	let kir3: number;
+
+	if (colorId == 1) {
+		fel1 = 13;
+		kir1 = 14;
+		fel2 = 21;
+		kir2 = 22;
+		fel3 = 29;
+		kir3 = 30;
+	} else if (colorId == 2) {
+		fel1 = 5;
+		kir1 = 6;
+		fel2 = 21;
+		kir2 = 22;
+		fel3 = 29;
+		kir3 = 30;
+	} else if (colorId == 3) {
+		fel1 = 5;
+		kir1 = 6;
+		fel2 = 13;
+		kir2 = 14;
+		fel3 = 29;
+		kir3 = 30;
+	} else if (colorId == 4) {
+		fel1 = 5;
+		kir1 = 6;
+		fel2 = 13;
+		kir2 = 14;
+		fel3 = 21;
+		kir3 = 22;
+	}
+
+	let haveFel1: boolean = false;
+	let haveKir1: boolean = false;
+	let haveFel2: boolean = false;
+	let haveKir2: boolean = false;
+	let haveFel3: boolean = false;
+	let haveKir3: boolean = false;
+
+	for (let i = 0; i < game.player.hand.length; i++) {
+		if (game.player.hand[i].id === fel1)
+			haveFel1 = true;
+		else if (game.player.hand[i].id === kir1)
+			haveKir1 = true;
+		else if (game.player.hand[i].id === fel2)
+			haveFel2 = true;
+		else if (game.player.hand[i].id === kir2)
+			haveKir2 = true;
+		else if (game.player.hand[i].id === fel3)
+			haveFel3 = true;
+		else if (game.player.hand[i].id === kir3)
+			haveKir3 = true;
+	}
+
+	if (haveFel1 && haveKir1)
+		result += 1;
+	else if (haveFel2 && haveKir2)
+		result += 1;
+	else if (haveFel3 && haveKir3)
+		result += 1;
+
+	return result;
 }

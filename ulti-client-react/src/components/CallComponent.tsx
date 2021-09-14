@@ -88,22 +88,24 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
     async call(event) {
 
         if (this.props.talon.length == 2) {
+            if (this.state.callList.length > 0) {
+                let finalCallList = getCallList(this.state.colorId, this.state.callList);
 
-            let finalCallList = getCallList(this.state.colorId, this.state.callList);
+                let reqObj: RequestModel = {
+                    dest: "call",
+                    id: this.props.game.player.id,
+                    call: finalCallList,
+                    talonid: this.props.talon,
+                    bluff4020: isBluff4020(finalCallList, this.state.colorId, this.props.game)
+                }
 
-            let reqObj: RequestModel = {
-                dest: "call",
-                id: this.props.game.player.id,
-                call: finalCallList,
-                talonid: this.props.talon,
-                bluff4020: isBluff4020(finalCallList, this.state.colorId, this.props.game)
+                this.props.postReq(reqObj);
+                this.props.clearTalon();
+            } else {
+                console.log("Nincs HÍVÁS!");
             }
-
-            this.props.postReq(reqObj);
-            this.props.clearTalon();
-
         } else {
-            console.log("Nincs TALON!");
+
         }
     }
 

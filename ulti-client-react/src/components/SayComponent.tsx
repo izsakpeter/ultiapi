@@ -1,6 +1,6 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
-import { getColorByCallList, have20, have40 } from "../helper/callHandler";
+import { getColorIdByCallItem, have20, have40 } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
@@ -16,7 +16,7 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
             is120Checked: false,
             is220Checked: false,
             is320Checked: false,
-            colorId: getColorByCallList(this.props.game.previousCall),
+            colorId: getColorIdByCallItem(this.props.game.previousCall[0]),
             isFirstTurn: false
         }
 

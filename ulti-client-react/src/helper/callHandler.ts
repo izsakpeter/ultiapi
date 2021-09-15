@@ -1,16 +1,129 @@
+import { Call } from "../model/call";
+import { Card } from "../model/card";
 import { Game } from "../model/game";
 import { Constants } from "./constants";
 
-export function getColorByCallList(list: Array<number>): number {
-	if (list[0] < 10)
-		return Constants.MAKK_ID;
-	else if (list[0] < 20)
-		return Constants.ZOLD_ID;
-	else if (list[0] < 30)
-		return Constants.TOK_ID;
-	else
-		return Constants.PIROS_ID;
+export function getAllCall(): Array<Call> {
+
+	let calls: Array<Call>;
+
+	calls.push(new Call(0, Constants.PASSZ_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(1, Constants.CSENDES_SZAZ_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(2, Constants.CSENDES_ULTI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(3, Constants.SZAZ40_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(4, Constants.ULTI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(5, Constants.BETLI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(6, Constants.DURI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(7, Constants.DURI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(8, Constants.SZAZ20_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(9, Constants.BETLI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(10, Constants.DURI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(11, Constants.DURI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+
+	calls.push(new Call(12, Constants.PASSZ_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(13, Constants.CSENDES_SZAZ_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(14, Constants.CSENDES_ULTI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(15, Constants.SZAZ40_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(16, Constants.ULTI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(17, Constants.BETLI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(18, Constants.DURI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(19, Constants.DURI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(20, Constants.SZAZ20_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(21, Constants.BETLI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(22, Constants.DURI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(23, Constants.DURI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+
+	calls.push(new Call(24, Constants.PASSZ_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(25, Constants.CSENDES_SZAZ_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(26, Constants.CSENDES_ULTI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(27, Constants.SZAZ40_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(28, Constants.ULTI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(29, Constants.BETLI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(30, Constants.DURI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(31, Constants.DURI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(32, Constants.SZAZ20_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(33, Constants.BETLI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(34, Constants.DURI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(35, Constants.DURI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+
+	calls.push(new Call(36, Constants.PASSZ_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(37, Constants.CSENDES_SZAZ_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(38, Constants.CSENDES_ULTI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(39, Constants.SZAZ40_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(40, Constants.ULTI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(41, Constants.BETLI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(42, Constants.DURI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(43, Constants.DURI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(44, Constants.SZAZ20_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(45, Constants.BETLI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(46, Constants.DURI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(47, Constants.DURI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+
+	return calls;
 }
+
+export function getCallValueSum(callList: Array<number>): number {
+	let sum = 0;
+	let allCalls: Array<Call> = getAllCall();
+
+	for (let i = 0; i < allCalls.length; i++) {
+		for (let j = 0; j < callList.length; j++) {
+			if (getAllCall[i].id === callList[i])
+				sum += getAllCall[i].value;
+		}
+	}
+
+	return sum;
+}
+
+export function getCallNameString(callList: Array<number>): string {
+	let call: string = getColorByCallItem(callList[0]);
+	/*
+		for (let i = 0; i < callList.length; i++) {
+			call += " " + getCallName(callList[i], false);
+		}*/
+
+	return call;
+}
+
+
+export function getColorByCallItem(item: number): string {
+	let color = "";
+	let colorId: number = getColorIdByCallItem(item);
+
+	if (colorId === Constants.MAKK_ID)
+		return Constants.MAKK;
+	else if (colorId === Constants.ZOLD_ID)
+		return Constants.ZOLD;
+	else if (colorId === Constants.TOK_ID)
+		return Constants.TOK;
+	else if (colorId === Constants.PIROS_ID)
+		return Constants.PIROS;
+
+	return color;
+}
+
+export function getColorIdByCallItem(item: number): number {
+	let colorId: number = 0;
+	let allCalls: Array<Call> = getAllCall();
+
+	for (let i = 0; i < allCalls.length; i++) {
+		if (allCalls[i].id === item) {
+			return allCalls[i].color;
+		}
+	}
+
+	return colorId;
+}
+
+
+
+
+
+/*import { Game } from "../model/game";
+import { Constants } from "./constants";
+
+
 
 export function getCallList(colorNum: number, list: Array<number>): Array<number> {
 
@@ -31,15 +144,7 @@ export function getCallList(colorNum: number, list: Array<number>): Array<number
 	return res;
 }
 
-export function getCallNameList(callList: Array<number>): string {
-	let call: string = getColorByCallList(callList).toString();
 
-	for (let i = 0; i < callList.length; i++) {
-		call += " " + getCallName(callList[i], false);
-	}
-
-	return call;
-}
 
 export function getCallName(callId: number, inclColor: boolean): string {
 
@@ -100,18 +205,9 @@ export function getCallName(callId: number, inclColor: boolean): string {
 	return call;
 }
 
+*/
 
 
-export function getCallValueSum(list: Array<number>): number {
-	let res = 0;
-	let colorId: number = getColorByCallList(list);
-
-	for (let index = 0; index < list.length; index++) {
-		res += getCallValue(list[index] - ((colorId - 1) * 10));
-	}
-
-	return (res * colorId);
-}
 
 export function getCallValue(callId: number): number {
 

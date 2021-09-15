@@ -22,6 +22,7 @@ public class Game {
 	private Hand player3Hand = new Hand();
 	private List<Result> resultList = new ArrayList<Result>();
 	private boolean isFirstTurn = false;
+	private List<Say> says = new ArrayList<Say>();
 
 	public Game() {
 		this.startingValue = 0;
@@ -30,7 +31,7 @@ public class Game {
 	public Game(int startingValue, Player player, boolean isRoundStarted, boolean isPlayReadyToStart, int lastCallerId,
 			int activePlayer, Strike round, List<Integer> call, List<Integer> previousCall, String errorMessage,
 			long lastModificationTimeStamp, boolean isGameOver, Hand player1Hand, Hand player2Hand, Hand player3Hand,
-			List<Result> resultList, boolean isFirstTurn) {
+			List<Result> resultList, boolean isFirstTurn, List<Say> says) {
 		this.startingValue = startingValue;
 		this.player = player;
 		this.isRoundStarted = isRoundStarted;
@@ -48,6 +49,7 @@ public class Game {
 		this.player3Hand = player3Hand;
 		this.resultList = resultList;
 		this.isFirstTurn = isFirstTurn;
+		this.says = says;
 	}
 
 	public Player getPlayer() {
@@ -186,6 +188,14 @@ public class Game {
 		this.isFirstTurn = isFirstTurn;
 	}
 
+	public List<Say> getSays() {
+		return says;
+	}
+
+	public void setSays(List<Say> says) {
+		this.says = says;
+	}
+
 	@Override
 	public Game clone() {
 		try {
@@ -194,7 +204,11 @@ public class Game {
 			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart,
 					this.lastCallerId, this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage,
 					this.lastModificationTimeStamp, this.isGameOver, this.player1Hand, this.player2Hand,
-					this.player3Hand, this.resultList, this.isFirstTurn);
+					this.player3Hand, this.resultList, this.isFirstTurn, this.says);
 		}
+	}
+	
+	public void addSayToList(Say say) {
+		this.says.add(say);
 	}
 }

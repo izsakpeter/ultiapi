@@ -20,6 +20,12 @@ export class RequestModel {
 
     //play
     public cardid?: number;
+
+    //say
+    public have40?: boolean;
+    public have120?: boolean;
+    public have220?: boolean;
+    public have320?: boolean;
 }
 
 export function getRequestJson(model: RequestModel): any {
@@ -58,6 +64,14 @@ export function getRequestJson(model: RequestModel): any {
                 cardid: model.cardid
             };
 
+        case "say":
+            return {
+                id: model.id,
+                have40: model.have40,
+                have120: model.have120,
+                have220: model.have220,
+                have320: model.have320
+            };
         default:
             break;
     }

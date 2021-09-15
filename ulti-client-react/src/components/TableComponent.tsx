@@ -66,7 +66,7 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, post
                 <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>
                 <div><StrikeComponent game={this.props.game}/></div>
                 <div><OtherHandComponent game={this.props.game}/></div>
-                <div className={"saycomp"}><SayComponent game={this.props.game}/></div>
+                <div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq}/></div>
             </div>
         )
     }

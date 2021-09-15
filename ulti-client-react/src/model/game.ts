@@ -1,6 +1,7 @@
 import { Hand } from "./hand";
 import { Player } from "./player";
 import { Result } from "./result";
+import { Say } from "./say";
 import { Strike } from "./strike";
 
 
@@ -21,4 +22,5 @@ export class Game {
 	public player3Hand: Hand;
 	public resultList: Array<Result>;
 	public firstTurn: boolean;
+	public says: Array<Say>;
 }

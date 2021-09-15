@@ -14,6 +14,10 @@ public class Resulthandler {
 
 	private Game game;
 	private int roundCounter;
+	private Player player1 = new Player();
+	private Player player2 = new Player();
+	private Player player3 = new Player();
+
 	private List<Result> resultList = new ArrayList<Result>();
 
 	private List<Integer> listPassz = Arrays.asList(0, 10, 20, 30);
@@ -27,9 +31,14 @@ public class Resulthandler {
 	private List<Integer> listTerDuri = Arrays.asList(8, 18, 28, 38);
 	private List<Integer> listTerSzDuri = Arrays.asList(9, 19, 29, 39);
 
-	public Resulthandler(Game game, int roundCounter) {
+	private List<Integer> list10s = Arrays.asList(7, 15, 23, 31, 3, 11, 19, 27);
+
+	public Resulthandler(Game game, int roundCounter, Player player1, Player player2, Player player3) {
 		this.game = game;
 		this.roundCounter = roundCounter;
+		this.player1 = player1;
+		this.player2 = player2;
+		this.player3 = player3;
 
 		if (roundCounter != 10) {
 
@@ -205,10 +214,7 @@ public class Resulthandler {
 		return player.getStrikes().size() == roundCounter;
 	}
 
-	private int get10Value() {
-		List<Integer> list10s = Arrays.asList(7, 15, 23, 31, 3, 11, 19, 27);
-		Player player = UltiController.getPlayerById(game.getLastCallerId());
-
+	private int get10Value(Player player) {
 		int value = 0;
 
 		for (int i = 0; i < player.getStrikes().size(); i++) {
@@ -241,16 +247,71 @@ public class Resulthandler {
 	}
 
 	private void proccessPassz() {
-		int caller10Value = get10Value();
+		int player110s = get10Value(player1);
+		int player210s = get10Value(player2);
+		int player310s = get10Value(player3);
+		int talon10s = 0;
+		
+		if ((player110s + player210s + player110s) != 90)
+			talon10s = 90 - (player110s + player210s + player110s);
 
-		resultList.add(addResult(caller10Value > (90 - caller10Value), getRespCallId(listPassz),
-				caller10Value + " - " + (90 - caller10Value)));
+		for (int i = 0; i < game.getSays().size(); i++) {
+			if (game.getSays().get(i).getPlayerId() == player1.getId()) {
+				System.out.println();
+				if (game.getSays().get(i).isHave40()) {
+					player110s += 40;
+				} else if (game.getSays().get(i).isHave120()) {
+					player110s += 20;
+				} else if (game.getSays().get(i).isHave220()) {
+					player110s += 40;
+				} else if (game.getSays().get(i).isHave320()) {
+					player110s += 60;
+				}
+			} else if (game.getSays().get(i).getPlayerId() == player2.getId()) {
+				if (game.getSays().get(i).isHave40()) {
+					player210s += 40;
+				} else if (game.getSays().get(i).isHave120()) {
+					player210s += 20;
+				} else if (game.getSays().get(i).isHave220()) {
+					player210s += 40;
+				} else if (game.getSays().get(i).isHave320()) {
+					player210s += 60;
+				}
+			} else if (game.getSays().get(i).getPlayerId() == player3.getId()) {
+				if (game.getSays().get(i).isHave40()) {
+					player310s += 40;
+				} else if (game.getSays().get(i).isHave120()) {
+					player310s += 20;
+				} else if (game.getSays().get(i).isHave220()) {
+					player310s += 40;
+				} else if (game.getSays().get(i).isHave320()) {
+					player310s += 60;
+				}
+			}
+		}
+
+		int caller10s = 0;
+		int others10s = 0;
+
+		if (game.getLastCallerId() == player1.getId()) {
+			caller10s = player110s;
+			others10s = player210s + player310s + talon10s;
+		} else if (game.getLastCallerId() == player2.getId()) {
+			caller10s = player210s;
+			others10s = player110s + player310s + talon10s;
+		} else if (game.getLastCallerId() == player3.getId()) {
+			caller10s = player310s;
+			others10s = player110s + player210s + talon10s;
+		}
+
+		resultList.add(addResult(caller10s > others10s, getRespCallId(listPassz),
+				caller10s + " - " + others10s));
 	}
 
 	private void proccess40100() {
 		Player player = UltiController.getPlayerById(game.getLastCallerId());
-		int caller10Value = get10Value();
-		
+		int caller10Value = get10Value(player);
+
 		boolean validCall = !player.isBluff4020();
 
 		if (validCall) {
@@ -262,8 +323,8 @@ public class Resulthandler {
 
 	private void proccess20100() {
 		Player player = UltiController.getPlayerById(game.getLastCallerId());
-		int caller10Value = get10Value();
-		
+		int caller10Value = get10Value(player);
+
 		boolean validCall = !player.isBluff4020();
 
 		if (validCall) {

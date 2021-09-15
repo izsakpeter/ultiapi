@@ -266,9 +266,11 @@ export function have20(colorId: number, game: Game): number {
 
 	if (haveFel1 && haveKir1)
 		result += 1;
-	else if (haveFel2 && haveKir2)
+
+	if (haveFel2 && haveKir2)
 		result += 1;
-	else if (haveFel3 && haveKir3)
+
+	if (haveFel3 && haveKir3)
 		result += 1;
 
 	return result;

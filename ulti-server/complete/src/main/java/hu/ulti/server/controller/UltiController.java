@@ -21,6 +21,7 @@ import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Request;
+import hu.ulti.server.model.Say;
 import hu.ulti.server.model.Strike;
 import hu.ulti.server.model.Player;
 
@@ -290,6 +291,24 @@ public class UltiController {
 		return "bad";
 	}
 
+	@PostMapping("say")
+	public String say(@RequestBody Request request) {
+		Say someSay = new Say(request.getId(), request.isHave40(), request.isHave120(), request.isHave220(),
+				request.isHave320());
+
+		boolean haveSay = false;
+
+		for (int i = 0; i < game.getSays().size(); i++) {
+			if (game.getSays().get(i).getPlayerId() == someSay.getPlayerId())
+				haveSay = true;
+		}
+
+		if (!haveSay)
+			game.addSayToList(someSay);
+
+		return "someSay";
+	}
+
 	@PostMapping("play")
 	public String play(@RequestBody Request request) {
 
@@ -328,7 +347,7 @@ public class UltiController {
 					game.setPlayer3Hand(Hand.setHandWithCardes(player3));
 				}
 
-				Resulthandler resultHandler = new Resulthandler(game, roundCounter);
+				Resulthandler resultHandler = new Resulthandler(game, roundCounter, player1, player2, player3);
 				game = resultHandler.getGame();
 
 				if (game.isGameOver()) {

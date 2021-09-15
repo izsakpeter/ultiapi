@@ -2,12 +2,29 @@ package hu.ulti.server.model;
 
 public class Say {
 
-	private boolean have40;
-	private boolean have20;
-	private boolean have2x20;
-	private boolean have3x20;
+	private int playerId;
+	private boolean have40 = false;
+	private boolean have120 = false;
+	private boolean have220 = false;
+	private boolean have320 = false;
 
 	public Say() {
+	}
+
+	public Say(int playerId, boolean have40, boolean have120, boolean have220, boolean have320) {
+		this.playerId = playerId;
+		this.have40 = have40;
+		this.have120 = have120;
+		this.have220 = have220;
+		this.have320 = have320;
+	}
+
+	public int getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
 	}
 
 	public boolean isHave40() {
@@ -18,27 +35,27 @@ public class Say {
 		this.have40 = have40;
 	}
 
-	public boolean isHave20() {
-		return have20;
+	public boolean isHave120() {
+		return have120;
 	}
 
-	public void setHave20(boolean have20) {
-		this.have20 = have20;
+	public void setHave120(boolean have120) {
+		this.have120 = have120;
 	}
 
-	public boolean isHave2x20() {
-		return have2x20;
+	public boolean isHave220() {
+		return have220;
 	}
 
-	public void setHave2x20(boolean have2x20) {
-		this.have2x20 = have2x20;
+	public void setHave220(boolean have220) {
+		this.have220 = have220;
 	}
 
-	public boolean isHave3x20() {
-		return have3x20;
+	public boolean isHave320() {
+		return have320;
 	}
 
-	public void setHave3x20(boolean have3x20) {
-		this.have3x20 = have3x20;
+	public void setHave320(boolean have320) {
+		this.have320 = have320;
 	}
 }

@@ -11,7 +11,7 @@ export class Constants {
 	public static PIROS_ID: number = 4;
 
 	public static PASSZ: string = "passz";
-	public static CSENDES_SZAZ: string = "csendes 40-100";
+	public static CSENDES_SZAZ: string = "csendes 100";
 	public static CSENDES_ULTI: string = "csendes ulti";
 	public static SZAZ40: string = "40-100";
 	public static ULTI: string = "ulti";

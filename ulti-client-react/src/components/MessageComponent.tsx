@@ -1,7 +1,6 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
-import { isThisTypeNode } from "typescript";
-import { getCallNameList, getCallValue, getCallValueSum } from "../helper/callHandler";
+import { getCallNameListString, getCallValueSum } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { ResultComponent } from "./ResultComponent";
@@ -56,7 +55,7 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
                     return (
                         <div className={"msg-border"}>
                             <div>Aktiv játékos: {this.state.activePlayerId}</div>
-                            <div>Mondás: {getCallNameList(this.state.callList)} {this.state.lastCallerId} által.</div>
+                            <div>Mondás: {getCallNameListString(this.state.callList)} {this.state.lastCallerId} által.</div>
                         </div>
                     )
                 } else {
@@ -64,7 +63,7 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
                         return (
                             <div className={"msg-border"}>
                                 <div>Aktiv játékos: {this.state.activePlayerId}</div>
-                                {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameList(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>}
+                                {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>}
                             </div>
                         )
                     } else {

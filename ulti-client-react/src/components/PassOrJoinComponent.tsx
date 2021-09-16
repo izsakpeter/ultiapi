@@ -1,6 +1,6 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
-import { getCallNameList, getCallValueSum } from "../helper/callHandler";
+import { getCallNameListString, getCallValueSum } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
@@ -28,7 +28,7 @@ export class PassOrJoin extends React.Component<{ game: Game, postReq: (reqObj: 
     render() {
         return (
             <div className={"p-o-j-frame"}>
-                <div>Előző mondás: {getCallNameList(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
+                <div>Előző mondás: {getCallNameListString(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
                 <Button className={"p-o-j-button"} onClick={this.onPass}>passz</Button>
                 <Button className={"p-o-j-button"} onClick={this.onJoin}>felvesz</Button>
             </div>

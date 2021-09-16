@@ -5,59 +5,59 @@ import { Constants } from "./constants";
 
 export function getAllCall(): Array<Call> {
 
-	let calls: Array<Call>;
+	let calls: Array<Call> = [];
 
-	calls.push(new Call(0, Constants.PASSZ_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(1, Constants.CSENDES_SZAZ_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(2, Constants.CSENDES_ULTI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(3, Constants.SZAZ40_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(4, Constants.ULTI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(5, Constants.BETLI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(6, Constants.DURI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(7, Constants.DURI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(8, Constants.SZAZ20_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(9, Constants.BETLI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(10, Constants.DURI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
-	calls.push(new Call(11, Constants.DURI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID));
+	calls.push(new Call(0, Constants.PASSZ_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.PASSZ));
+	calls.push(new Call(1, Constants.CSENDES_SZAZ_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.CSENDES_SZAZ));
+	calls.push(new Call(2, Constants.CSENDES_ULTI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.CSENDES_ULTI));
+	calls.push(new Call(3, Constants.SZAZ40_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.SZAZ40));
+	calls.push(new Call(4, Constants.ULTI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.ULTI));
+	calls.push(new Call(5, Constants.BETLI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.BETLI));
+	calls.push(new Call(6, Constants.DURI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.DURI_SZINES));
+	calls.push(new Call(7, Constants.DURI_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.DURI_SZINTELEN));
+	calls.push(new Call(8, Constants.SZAZ20_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.SZAZ20));
+	calls.push(new Call(9, Constants.BETLI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.BETLI_TERITETT));
+	calls.push(new Call(10, Constants.DURI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.DURI_SZINES_TERITETT));
+	calls.push(new Call(11, Constants.DURI_TERITETT_VALUE * Constants.MAKK_ID, Constants.MAKK_ID, Constants.DURI_SZINTELEN_TERITETT));
 
-	calls.push(new Call(12, Constants.PASSZ_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(13, Constants.CSENDES_SZAZ_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(14, Constants.CSENDES_ULTI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(15, Constants.SZAZ40_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(16, Constants.ULTI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(17, Constants.BETLI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(18, Constants.DURI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(19, Constants.DURI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(20, Constants.SZAZ20_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(21, Constants.BETLI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(22, Constants.DURI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
-	calls.push(new Call(23, Constants.DURI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID));
+	calls.push(new Call(12, Constants.PASSZ_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.PASSZ));
+	calls.push(new Call(13, Constants.CSENDES_SZAZ_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.CSENDES_SZAZ));
+	calls.push(new Call(14, Constants.CSENDES_ULTI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.CSENDES_ULTI));
+	calls.push(new Call(15, Constants.SZAZ40_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.SZAZ40));
+	calls.push(new Call(16, Constants.ULTI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.ULTI));
+	calls.push(new Call(17, Constants.BETLI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.BETLI));
+	calls.push(new Call(18, Constants.DURI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.DURI_SZINES));
+	calls.push(new Call(19, Constants.DURI_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.DURI_SZINTELEN));
+	calls.push(new Call(20, Constants.SZAZ20_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.SZAZ20));
+	calls.push(new Call(21, Constants.BETLI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.BETLI_TERITETT));
+	calls.push(new Call(22, Constants.DURI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.DURI_SZINES_TERITETT));
+	calls.push(new Call(23, Constants.DURI_TERITETT_VALUE * Constants.ZOLD_ID, Constants.ZOLD_ID, Constants.DURI_SZINTELEN_TERITETT));
 
-	calls.push(new Call(24, Constants.PASSZ_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(25, Constants.CSENDES_SZAZ_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(26, Constants.CSENDES_ULTI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(27, Constants.SZAZ40_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(28, Constants.ULTI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(29, Constants.BETLI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(30, Constants.DURI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(31, Constants.DURI_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(32, Constants.SZAZ20_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(33, Constants.BETLI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(34, Constants.DURI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID));
-	calls.push(new Call(35, Constants.DURI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID));
+	calls.push(new Call(24, Constants.PASSZ_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.PASSZ));
+	calls.push(new Call(25, Constants.CSENDES_SZAZ_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.CSENDES_SZAZ));
+	calls.push(new Call(26, Constants.CSENDES_ULTI_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.CSENDES_ULTI));
+	calls.push(new Call(27, Constants.SZAZ40_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.SZAZ40));
+	calls.push(new Call(28, Constants.ULTI_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.ULTI));
+	calls.push(new Call(29, Constants.BETLI_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.BETLI));
+	calls.push(new Call(30, Constants.DURI_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.DURI_SZINES));
+	calls.push(new Call(31, Constants.DURI_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.DURI_SZINTELEN));
+	calls.push(new Call(32, Constants.SZAZ20_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.SZAZ20));
+	calls.push(new Call(33, Constants.BETLI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.BETLI_TERITETT));
+	calls.push(new Call(34, Constants.DURI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.DURI_SZINES_TERITETT));
+	calls.push(new Call(35, Constants.DURI_TERITETT_VALUE * Constants.TOK_ID, Constants.TOK_ID, Constants.DURI_SZINTELEN_TERITETT));
 
-	calls.push(new Call(36, Constants.PASSZ_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(37, Constants.CSENDES_SZAZ_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(38, Constants.CSENDES_ULTI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(39, Constants.SZAZ40_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(40, Constants.ULTI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(41, Constants.BETLI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(42, Constants.DURI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(43, Constants.DURI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(44, Constants.SZAZ20_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(45, Constants.BETLI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(46, Constants.DURI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
-	calls.push(new Call(47, Constants.DURI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID));
+	calls.push(new Call(36, Constants.PASSZ_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.PASSZ));
+	calls.push(new Call(37, Constants.CSENDES_SZAZ_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.CSENDES_SZAZ));
+	calls.push(new Call(38, Constants.CSENDES_ULTI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.CSENDES_ULTI));
+	calls.push(new Call(39, Constants.SZAZ40_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.SZAZ40));
+	calls.push(new Call(40, Constants.ULTI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.ULTI));
+	calls.push(new Call(41, Constants.BETLI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.BETLI));
+	calls.push(new Call(42, Constants.DURI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.DURI_SZINES));
+	calls.push(new Call(43, Constants.DURI_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.DURI_SZINTELEN));
+	calls.push(new Call(44, Constants.SZAZ20_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.SZAZ20));
+	calls.push(new Call(45, Constants.BETLI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.BETLI_TERITETT));
+	calls.push(new Call(46, Constants.DURI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.DURI_SZINES_TERITETT));
+	calls.push(new Call(47, Constants.DURI_TERITETT_VALUE * Constants.PIROS_ID, Constants.PIROS_ID, Constants.DURI_SZINTELEN_TERITETT));
 
 	return calls;
 }
@@ -68,24 +68,28 @@ export function getCallValueSum(callList: Array<number>): number {
 
 	for (let i = 0; i < allCalls.length; i++) {
 		for (let j = 0; j < callList.length; j++) {
-			if (getAllCall[i].id === callList[i])
-				sum += getAllCall[i].value;
+			if (allCalls[i].id === callList[j])
+				sum += allCalls[i].value;
 		}
 	}
 
 	return sum;
 }
 
-export function getCallNameString(callList: Array<number>): string {
+export function getCallNameListString(callList: Array<number>): string {
 	let call: string = getColorByCallItem(callList[0]);
-	/*
-		for (let i = 0; i < callList.length; i++) {
-			call += " " + getCallName(callList[i], false);
-		}*/
+
+	let allCalls: Array<Call> = getAllCall();
+
+	for (let i = 0; i < allCalls.length; i++) {
+		for (let j = 0; j < callList.length; j++) {
+			if (allCalls[i].id === callList[j])
+				call += " " + allCalls[i].name;
+		}
+	}
 
 	return call;
 }
-
 
 export function getColorByCallItem(item: number): string {
 	let color = "";
@@ -116,14 +120,17 @@ export function getColorIdByCallItem(item: number): number {
 	return colorId;
 }
 
+export function getCallName(callId: number): string {
+	let allCalls: Array<Call> = getAllCall();
 
+	for (let i = 0; i < allCalls.length; i++) {
+		if (allCalls[i].id === callId) {
+			return allCalls[i].color + " " + allCalls[i].name;
+		}
+	}
 
-
-
-/*import { Game } from "../model/game";
-import { Constants } from "./constants";
-
-
+	return "";
+}
 
 export function getCallList(colorNum: number, list: Array<number>): Array<number> {
 
@@ -131,11 +138,11 @@ export function getCallList(colorNum: number, list: Array<number>): Array<number
 	let res: Array<number> = [];
 
 	if (colorNum == Constants.ZOLD_ID)
-		colorValue = 10;
+		colorValue = 12;
 	else if (colorNum == Constants.TOK_ID)
-		colorValue = 20;
+		colorValue = 24;
 	else if (colorNum == Constants.PIROS_ID)
-		colorValue = 30;
+		colorValue = 36;
 
 	for (let i = 0; i < list.length; i++) {
 		res.push(list[i] + colorValue);
@@ -143,71 +150,6 @@ export function getCallList(colorNum: number, list: Array<number>): Array<number
 
 	return res;
 }
-
-
-
-export function getCallName(callId: number, inclColor: boolean): string {
-
-	let call: string = "";
-	let color: number = 0;
-
-	if (callId < 10) {
-		if (inclColor)
-			call = Constants.MAKK
-		color = 0;
-	} else if (callId < 20) {
-		if (inclColor)
-			call = Constants.ZOLD;
-		color = 10
-	} else if (callId < 30) {
-		if (inclColor)
-			call = Constants.TOK;
-		color = 20
-	} else {
-		if (inclColor)
-			call = Constants.PIROS;
-		color = 30
-	}
-
-	switch (callId - color) {
-		case Constants.PASSZ_ID:
-			call += " " + Constants.PASSZ;
-			break;
-		case Constants.SZAZ40_ID:
-			call += " " + Constants.SZAZ40;
-			break;
-		case Constants.ULTI_ID:
-			call += " " + Constants.ULTI;
-			break;
-		case Constants.BETLI_ID:
-			call += " " + Constants.BETLI;
-			break;
-		case Constants.DURI_SZINES_ID:
-			call += " " + Constants.DURI_SZINES;
-			break;
-		case Constants.DURI_SZINTELEN_ID:
-			call += " " + Constants.DURI_SZINTELEN;
-			break;
-		case Constants.SZAZ20_ID:
-			call += " " + Constants.SZAZ20;
-			break;
-		case Constants.BETLI_TERITETT_ID:
-			call += " " + Constants.BETLI_TERITETT;
-			break;
-		case Constants.DURI_SZINES_TERITETT_ID:
-			call += " " + Constants.DURI_SZINES_TERITETT;
-			break;
-		case Constants.DURI_SZINTELEN_TERITETT_ID:
-			call += " " + Constants.DURI_SZINTELEN_TERITETT;
-			break;
-	}
-
-	return call;
-}
-
-*/
-
-
 
 export function getCallValue(callId: number): number {
 

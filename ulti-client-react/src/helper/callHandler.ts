@@ -92,19 +92,9 @@ export function getCallNameListString(callList: Array<number>): string {
 }
 
 export function getColorByCallItem(item: number): string {
-	let color = "";
 	let colorId: number = getColorIdByCallItem(item);
+	return getColorName(colorId);
 
-	if (colorId === Constants.MAKK_ID)
-		return Constants.MAKK;
-	else if (colorId === Constants.ZOLD_ID)
-		return Constants.ZOLD;
-	else if (colorId === Constants.TOK_ID)
-		return Constants.TOK;
-	else if (colorId === Constants.PIROS_ID)
-		return Constants.PIROS;
-
-	return color;
 }
 
 export function getColorIdByCallItem(item: number): number {
@@ -120,12 +110,25 @@ export function getColorIdByCallItem(item: number): number {
 	return colorId;
 }
 
+export function getColorName(colorId: number) {
+	if (colorId === Constants.MAKK_ID)
+		return Constants.MAKK;
+	else if (colorId === Constants.ZOLD_ID)
+		return Constants.ZOLD;
+	else if (colorId === Constants.TOK_ID)
+		return Constants.TOK;
+	else if (colorId === Constants.PIROS_ID)
+		return Constants.PIROS;
+
+	return "";
+}
+
 export function getCallName(callId: number): string {
 	let allCalls: Array<Call> = getAllCall();
 
 	for (let i = 0; i < allCalls.length; i++) {
 		if (allCalls[i].id === callId) {
-			return allCalls[i].color + " " + allCalls[i].name;
+			return getColorName(allCalls[i].color) + " " + allCalls[i].name;
 		}
 	}
 

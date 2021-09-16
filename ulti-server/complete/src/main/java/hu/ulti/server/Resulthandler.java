@@ -269,12 +269,12 @@ public class Resulthandler {
 		int player310s = get10Value(player3);
 		int talon10s = 0;
 
-		if ((player110s + player210s + player110s) != 90)
-			talon10s = 90 - (player110s + player210s + player110s);
+		if ((player110s + player210s + player310s) != 90)
+			talon10s = 90 - (player110s + player210s + player310s);
 
 		for (int i = 0; i < game.getSays().size(); i++) {
 			if (game.getSays().get(i).getPlayerId() == player1.getId()) {
-				System.out.println();
+
 				if (game.getSays().get(i).isHave40()) {
 					player110s += 40;
 				} else if (game.getSays().get(i).isHave120()) {
@@ -524,17 +524,21 @@ public class Resulthandler {
 			int card1 = lastStrike.getCard1Id();
 			int card2 = lastStrike.getCard2Id();
 			int card3 = lastStrike.getCard3Id();
-
 			int card1Color = StrikeHandler.getColor(card1);
 			int card2Color = StrikeHandler.getColor(card2);
 			int card3Color = StrikeHandler.getColor(card3);
+			int aduCounter = 0;
+			int adu = StrikeHandler.getColor(game.getPreviousCall().get(0));
 
-			int aduCounter = card1Color + card2Color + card3Color;
+			if (card1Color == adu)
+				aduCounter++;
+			if (card2Color == adu)
+				aduCounter++;
+			if (card3Color == adu)
+				aduCounter++;
 
 			if (aduCounter == 1) {
-
 				int playerId = getPlayer7(lastStrike);
-
 				if (player1.getId() == playerId)
 					resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + player1.getId()));
 				else if (player2.getId() == playerId)
@@ -543,7 +547,13 @@ public class Resulthandler {
 					resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + player3.getId()));
 
 			} else {
-				resultList.add(addResult(true, getCsendesUltiId(), "bukta: "));
+				int playerId = getPlayer7(lastStrike);
+				if (player1.getId() == playerId)
+					resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + player1.getId()));
+				else if (player2.getId() == playerId)
+					resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + player2.getId()));
+				else if (player2.getId() == playerId)
+					resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + player3.getId()));
 			}
 		}
 	}

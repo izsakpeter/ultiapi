@@ -66,8 +66,6 @@ public class Resulthandler {
 			}
 
 		} else {
-			game.setGameOver(true);
-
 			if (isTeritettDuri() && is20100() && isUlti()) {
 				proccessTerDuri();
 				proccess20100();
@@ -142,6 +140,7 @@ public class Resulthandler {
 				checkCsendesUlti();
 			}
 
+			game.setGameOver(true);
 			game.setResultList(resultList);
 		}
 	}

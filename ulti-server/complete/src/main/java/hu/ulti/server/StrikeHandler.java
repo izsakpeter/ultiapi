@@ -55,9 +55,7 @@ public class StrikeHandler {
 					strikeHandler(game.getRound().getCard3PlayerId());
 			}
 		} else {
-
 			int ADU = getAdu(game.getPreviousCall().get(0));
-
 			card1 = fixCardOrder(card1);
 			card2 = fixCardOrder(card2);
 			card3 = fixCardOrder(card3);
@@ -70,16 +68,13 @@ public class StrikeHandler {
 				else if (card3 > card1 && card3 > card2)
 					strikeHandler(game.getRound().getCard3PlayerId());
 
-			} else if (ADU == card1ColorId && ADU != card2ColorId && ADU != card3ColorId)
+			} else if (ADU == card1ColorId && ADU != card2ColorId && ADU != card3ColorId) {
 				strikeHandler(game.getRound().getCard1PlayerId());
-
-			else if (ADU != card1ColorId && ADU == card2ColorId && ADU != card3ColorId)
+			} else if (ADU != card1ColorId && ADU == card2ColorId && ADU != card3ColorId) {
 				strikeHandler(game.getRound().getCard2PlayerId());
-
-			else if (ADU != card1ColorId && ADU != card2ColorId && ADU == card3ColorId)
+			} else if (ADU != card1ColorId && ADU != card2ColorId && ADU == card3ColorId) {
 				strikeHandler(game.getRound().getCard3PlayerId());
-
-			else if (ADU == card1ColorId && ADU == card2ColorId && ADU != card3ColorId) {
+			} else if (ADU == card1ColorId && ADU == card2ColorId && ADU != card3ColorId) {
 				if (card1 > card2)
 					strikeHandler(game.getRound().getCard1PlayerId());
 				else if (card2 > card1)
@@ -127,48 +122,48 @@ public class StrikeHandler {
 		game.getRound().clearStrike();
 	}
 
+	
 	public static int getColor(int id) {
 		if (id <= 7)
-			return Call.MAKK_COLOR_ID;
-		else if (id > 7 && id <= 15)
-			return Call.ZOLD_COLOR_ID;
-		else if (id > 15 && id <= 23)
-			return Call.TOK_COLOR_ID;
+			return Call.MAKK_ID;
+		else if (id <= 15)
+			return Call.ZOLD_ID;
+		else if (id <= 23)
+			return Call.TOK_ID;
 		else
-			return Call.PIROS_COLOR_ID;
+			return Call.PIROS_ID;
 	}
 
 	private void strikeHandler(int id) {
 		if (id == player1.getId()) {
 			player1.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(), game.getRound().getCard2PlayerId(),
-					game.getRound().getCard3PlayerId()));
+					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(),
+					game.getRound().getCard2PlayerId(), game.getRound().getCard3PlayerId()));
 			game.setActivePlayer(player1.getId());
 		} else if (id == player2.getId()) {
 			player2.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(), game.getRound().getCard2PlayerId(),
-					game.getRound().getCard3PlayerId()));
+					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(),
+					game.getRound().getCard2PlayerId(), game.getRound().getCard3PlayerId()));
 			game.setActivePlayer(player2.getId());
 		} else if (id == player3.getId()) {
 			player3.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(), game.getRound().getCard2PlayerId(),
-					game.getRound().getCard3PlayerId()));
+					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(),
+					game.getRound().getCard2PlayerId(), game.getRound().getCard3PlayerId()));
 			game.setActivePlayer(player3.getId());
 		}
 	}
 
-	private static int getAdu(int id) {
+	public static int getAdu(int id) {
 
-		switch (id) {
-		case 0:
-			return Call.MAKK_COLOR_ID;
-		case 10:
-			return Call.ZOLD_COLOR_ID;
-		case 20:
-			return Call.TOK_COLOR_ID;
-		case 30:
-			return Call.PIROS_COLOR_ID;
-		}
+		if (id < 12)
+			return Call.MAKK_ID;
+		else if (id < 24)
+			return Call.ZOLD_ID;
+		else if (id < 36)
+			return Call.TOK_ID;
+		else if (id < 48)
+			return Call.PIROS_ID;
+
 		return 0;
 	}
 

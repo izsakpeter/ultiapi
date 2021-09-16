@@ -59,21 +59,21 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
 
             if (game.lastCallerId === game.activePlayer) {
                 return (
-                    <div>
-                        <div><input type="checkbox" name="40" disabled={have40(this.state.colorId, this.props.game)} onChange={this.onChoose40}/> 40 </div>
-                        <div><input type="checkbox" name="120" disabled={this.disable20(1)} onChange={this.onChoose120}/> 20 </div>
-                        <div><input type="checkbox" name="220" disabled={this.disable20(2)} onChange={this.onChoose220}/> 2x20</div>
-                        <div><input type="checkbox" name="320" disabled={this.disable20(3)} onChange={this.onChoose320}/> 3x20</div>
+                    <div className={"say-border"}>
+                        <div><input type="checkbox" name="40" disabled={have40(this.state.colorId, this.props.game)} onChange={this.onChoose40} /> 40 </div>
+                        <div><input type="checkbox" name="120" disabled={this.disable20(1)} onChange={this.onChoose120} /> 20 </div>
+                        <div><input type="checkbox" name="220" disabled={this.disable20(2)} onChange={this.onChoose220} /> 2x20</div>
+                        <div><input type="checkbox" name="320" disabled={this.disable20(3)} onChange={this.onChoose320} /> 3x20</div>
                         <div><Button text="ok" onClick={this.okButtonHandler} /></div>
                     </div>
                 )
             } else {
                 return (
-                    <div>
-                       <div><input type="checkbox" name="40" disabled={have40(this.state.colorId, this.props.game)} onChange={this.onChoose40}/> 40 </div>
-                        <div><input type="checkbox" name="120" disabled={this.disable20(1)} onChange={this.onChoose120}/> 20 </div>
-                        <div><input type="checkbox" name="220" disabled={this.disable20(2)} onChange={this.onChoose220}/> 2x20</div>
-                        <div><input type="checkbox" name="320" disabled={this.disable20(3)} onChange={this.onChoose320}/> 3x20</div>
+                    <div className={"say-border"}>
+                        <div><input type="checkbox" name="40" disabled={have40(this.state.colorId, this.props.game)} onChange={this.onChoose40} /> 40 </div>
+                        <div><input type="checkbox" name="120" disabled={this.disable20(1)} onChange={this.onChoose120} /> 20 </div>
+                        <div><input type="checkbox" name="220" disabled={this.disable20(2)} onChange={this.onChoose220} /> 2x20</div>
+                        <div><input type="checkbox" name="320" disabled={this.disable20(3)} onChange={this.onChoose320} /> 3x20</div>
                         <div><Button text="ok" onClick={this.okButtonHandler} /></div>
                     </div>
                 )
@@ -91,7 +91,7 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
 
     okButtonHandler(event) {
         if (this.state.is40Checked || this.state.is120Checked || this.state.is220Checked || this.state.is320Checked) {
-            
+
             let reqObj: RequestModel = {
                 dest: "say",
                 id: this.props.game.player.id,

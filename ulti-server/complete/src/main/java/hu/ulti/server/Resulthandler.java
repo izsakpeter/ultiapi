@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 import hu.ulti.server.controller.UltiController;
+import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.Result;
+import hu.ulti.server.model.Strike;
 
 public class Resulthandler {
 
@@ -20,17 +22,20 @@ public class Resulthandler {
 
 	private List<Result> resultList = new ArrayList<Result>();
 
-	private List<Integer> listPassz = Arrays.asList(0, 10, 20, 30);
-	private List<Integer> list40100 = Arrays.asList(1, 11, 21, 31);
-	private List<Integer> listUlti = Arrays.asList(2, 12, 22, 32);
-	private List<Integer> listBetli = Arrays.asList(3, 13, 23, 33);
-	private List<Integer> listDuri = Arrays.asList(4, 14, 24, 34);
-	private List<Integer> listSzDuri = Arrays.asList(5, 15, 25, 35);
-	private List<Integer> list20100 = Arrays.asList(6, 16, 26, 36);
-	private List<Integer> listTerBetli = Arrays.asList(7, 17, 27, 37);
-	private List<Integer> listTerDuri = Arrays.asList(8, 18, 28, 38);
-	private List<Integer> listTerSzDuri = Arrays.asList(9, 19, 29, 39);
+	private List<Integer> listPassz = Arrays.asList(0, 12, 24, 36);
+	private List<Integer> listCsendesSzaz = Arrays.asList(1, 13, 25, 37);
+	private List<Integer> listCsendesUlti = Arrays.asList(2, 14, 26, 38);
+	private List<Integer> list40100 = Arrays.asList(3, 15, 27, 39);
+	private List<Integer> listUlti = Arrays.asList(4, 16, 28, 40);
+	private List<Integer> listBetli = Arrays.asList(5, 17, 29, 41);
+	private List<Integer> listDuri = Arrays.asList(6, 18, 30, 42);
+	private List<Integer> listSzDuri = Arrays.asList(7, 19, 31, 43);
+	private List<Integer> list20100 = Arrays.asList(8, 20, 32, 44);
+	private List<Integer> listTerBetli = Arrays.asList(9, 21, 33, 45);
+	private List<Integer> listTerDuri = Arrays.asList(10, 22, 34, 46);
+	private List<Integer> listTerSzDuri = Arrays.asList(11, 23, 35, 47);
 
+	private List<Integer> list7s = Arrays.asList(0, 8, 16, 24);
 	private List<Integer> list10s = Arrays.asList(7, 15, 23, 31, 3, 11, 19, 27);
 
 	public Resulthandler(Game game, int roundCounter, Player player1, Player player2, Player player3) {
@@ -82,21 +87,26 @@ public class Resulthandler {
 			} else if (isTeritettDuri() && is20100()) {
 				proccessTerDuri();
 				proccess20100();
+				checkCsendesUlti();
 			} else if (isTeritettDuri() && is40100()) {
 				proccessTerDuri();
 				proccess40100();
 			} else if (isTeritettDuri() && isUlti()) {
 				proccessTerDuri();
 				proccessUlti();
+				checkCsendes100();
 			} else if (isDuri() && is20100()) {
 				proccessDuri();
 				proccess20100();
+				checkCsendesUlti();
 			} else if (isDuri() && is40100()) {
 				proccessDuri();
 				proccess40100();
+				checkCsendesUlti();
 			} else if (isDuri() && isUlti()) {
 				proccessDuri();
 				proccessUlti();
+				checkCsendes100();
 			} else if (is20100() && isUlti()) {
 				proccess20100();
 				proccessUlti();
@@ -107,22 +117,29 @@ public class Resulthandler {
 				resultList.add(addResult(isSzintelenDuriSuccess(), getRespCallId(listTerSzDuri)));
 			} else if (isTeritettDuri()) {
 				proccessTerDuri();
+				checkCsendes100();
+				checkCsendesUlti();
 			} else if (isTeritettBetli()) {
 				resultList.add(addResult(isBetliSuccess(), getRespCallId(listTerBetli)));
 			} else if (is20100()) {
 				proccess20100();
+				checkCsendesUlti();
 			} else if (isSzintelenDuri()) {
 				resultList.add(addResult(isSzintelenDuriSuccess(), getRespCallId(listSzDuri)));
 			} else if (isDuri()) {
 				proccessDuri();
+				checkCsendes100();
+				checkCsendesUlti();
 			} else if (isBetli()) {
 				resultList.add(addResult(isBetliSuccess(), getRespCallId(listBetli)));
 			} else if (isUlti()) {
 				proccessUlti();
 			} else if (is40100()) {
 				proccess40100();
+				checkCsendesUlti();
 			} else if (isPassz()) {
 				proccessPassz();
+				checkCsendesUlti();
 			}
 
 			game.setResultList(resultList);
@@ -251,7 +268,7 @@ public class Resulthandler {
 		int player210s = get10Value(player2);
 		int player310s = get10Value(player3);
 		int talon10s = 0;
-		
+
 		if ((player110s + player210s + player110s) != 90)
 			talon10s = 90 - (player110s + player210s + player110s);
 
@@ -304,8 +321,11 @@ public class Resulthandler {
 			others10s = player110s + player210s + talon10s;
 		}
 
-		resultList.add(addResult(caller10s > others10s, getRespCallId(listPassz),
-				caller10s + " - " + others10s));
+		if (caller10s >= 100 || others10s >= 100) {
+			resultList.add(addResult(caller10s > others10s, getCsendesSzazId(), caller10s + " - " + others10s));
+		} else {
+			resultList.add(addResult(caller10s > others10s, getRespCallId(listPassz), caller10s + " - " + others10s));
+		}
 	}
 
 	private void proccess40100() {
@@ -400,14 +420,173 @@ public class Resulthandler {
 
 		int color = StrikeHandler.getColor(card);
 		int adu = StrikeHandler.getColor(game.getPreviousCall().get(0));
-		List<Integer> list7 = Arrays.asList(0, 8, 16, 24);
 
-		for (int i = 0; i < list7.size(); i++) {
-			if (card == list7.get(i) && color == adu) {
+		for (int i = 0; i < list7s.size(); i++) {
+			if (card == list7s.get(i) && color == adu) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	private void checkCsendes100() {
+		int player110s = get10Value(player1);
+		int player210s = get10Value(player2);
+		int player310s = get10Value(player3);
+		int talon10s = 0;
+
+		if ((player110s + player210s + player110s) != 90)
+			talon10s = 90 - (player110s + player210s + player110s);
+
+		for (int i = 0; i < game.getSays().size(); i++) {
+			if (game.getSays().get(i).getPlayerId() == player1.getId()) {
+				System.out.println();
+				if (game.getSays().get(i).isHave40()) {
+					player110s += 40;
+				} else if (game.getSays().get(i).isHave120()) {
+					player110s += 20;
+				} else if (game.getSays().get(i).isHave220()) {
+					player110s += 40;
+				} else if (game.getSays().get(i).isHave320()) {
+					player110s += 60;
+				}
+			} else if (game.getSays().get(i).getPlayerId() == player2.getId()) {
+				if (game.getSays().get(i).isHave40()) {
+					player210s += 40;
+				} else if (game.getSays().get(i).isHave120()) {
+					player210s += 20;
+				} else if (game.getSays().get(i).isHave220()) {
+					player210s += 40;
+				} else if (game.getSays().get(i).isHave320()) {
+					player210s += 60;
+				}
+			} else if (game.getSays().get(i).getPlayerId() == player3.getId()) {
+				if (game.getSays().get(i).isHave40()) {
+					player310s += 40;
+				} else if (game.getSays().get(i).isHave120()) {
+					player310s += 20;
+				} else if (game.getSays().get(i).isHave220()) {
+					player310s += 40;
+				} else if (game.getSays().get(i).isHave320()) {
+					player310s += 60;
+				}
+			}
+		}
+
+		int caller10s = 0;
+		int others10s = 0;
+
+		if (game.getLastCallerId() == player1.getId()) {
+			caller10s = player110s;
+			others10s = player210s + player310s + talon10s;
+		} else if (game.getLastCallerId() == player2.getId()) {
+			caller10s = player210s;
+			others10s = player110s + player310s + talon10s;
+		} else if (game.getLastCallerId() == player3.getId()) {
+			caller10s = player310s;
+			others10s = player110s + player210s + talon10s;
+		}
+
+		if (caller10s >= 100 || others10s >= 100) {
+			resultList.add(addResult(caller10s > others10s, getCsendesSzazId(), caller10s + " - " + others10s));
+		}
+	}
+
+	private void checkCsendesUlti() {
+
+		Strike lastStrike = null;
+
+		for (int i = 0; i < player1.getStrikes().size(); i++) {
+			if (player1.getStrikes().get(i).getId() == 10) {
+				lastStrike = player1.getStrikes().get(i);
+			}
+		}
+
+		if (lastStrike == null) {
+			for (int i = 0; i < player2.getStrikes().size(); i++) {
+				if (player2.getStrikes().get(i).getId() == 10) {
+					lastStrike = player2.getStrikes().get(i);
+				}
+			}
+		}
+
+		if (lastStrike == null) {
+			for (int i = 0; i < player3.getStrikes().size(); i++) {
+				if (player3.getStrikes().get(i).getId() == 10) {
+					lastStrike = player3.getStrikes().get(i);
+				}
+			}
+		}
+
+		if (hasAdu7(lastStrike.getCard1Id()) || hasAdu7(lastStrike.getCard2Id()) || hasAdu7(lastStrike.getCard3Id())) {
+
+			int card1 = lastStrike.getCard1Id();
+			int card2 = lastStrike.getCard2Id();
+			int card3 = lastStrike.getCard3Id();
+
+			int card1Color = StrikeHandler.getColor(card1);
+			int card2Color = StrikeHandler.getColor(card2);
+			int card3Color = StrikeHandler.getColor(card3);
+
+			int aduCounter = card1Color + card2Color + card3Color;
+
+			if (aduCounter == 1) {
+
+				int playerId = getPlayer7(lastStrike);
+
+				if (player1.getId() == playerId)
+					resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + player1.getId()));
+				else if (player2.getId() == playerId)
+					resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + player2.getId()));
+				else if (player2.getId() == playerId)
+					resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + player3.getId()));
+
+			} else {
+				resultList.add(addResult(true, getCsendesUltiId(), "bukta: "));
+			}
+		}
+	}
+
+	private int getPlayer7(Strike lastStrike) {
+
+		if (list7s.contains(lastStrike.getCard1Id()))
+			return lastStrike.getCard1PlayerId();
+		else if (list7s.contains(lastStrike.getCard2Id()))
+			return lastStrike.getCard2PlayerId();
+		else if (list7s.contains(lastStrike.getCard3Id()))
+			return lastStrike.getCard3PlayerId();
+
+		return 0;
+	}
+
+	private int getCsendesSzazId() {
+		int color = StrikeHandler.getAdu(game.getPreviousCall().get(0));
+
+		if (color == Call.MAKK_ID)
+			return listCsendesSzaz.get(0);
+		else if (color == Call.ZOLD_ID)
+			return listCsendesSzaz.get(1);
+		else if (color == Call.TOK_ID)
+			return listCsendesSzaz.get(2);
+		else if (color == Call.PIROS_ID)
+			return listCsendesSzaz.get(3);
+
+		return 0;
+	}
+
+	private int getCsendesUltiId() {
+		int color = StrikeHandler.getAdu(game.getPreviousCall().get(0));
+
+		if (color == Call.MAKK_ID)
+			return listCsendesUlti.get(0);
+		else if (color == Call.ZOLD_ID)
+			return listCsendesUlti.get(1);
+		else if (color == Call.TOK_ID)
+			return listCsendesUlti.get(2);
+		else if (color == Call.PIROS_ID)
+			return listCsendesUlti.get(3);
+
+		return 0;
 	}
 }

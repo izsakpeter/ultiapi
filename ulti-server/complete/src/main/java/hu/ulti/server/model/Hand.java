@@ -39,7 +39,7 @@ public class Hand {
 		return hand;
 	}
 	
-	public static Hand setHandWithCardes(Player player) {		
+	public static Hand setHandWithCards(Player player) {		
 		Hand hand = new Hand();
 		hand.setId(player.getId());
 		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();

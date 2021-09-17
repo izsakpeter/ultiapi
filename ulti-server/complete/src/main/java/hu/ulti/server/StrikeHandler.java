@@ -1,5 +1,7 @@
 package hu.ulti.server;
 
+import java.util.List;
+
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
@@ -13,12 +15,12 @@ public class StrikeHandler {
 	private Player player2 = new Player();
 	private Player player3 = new Player();
 
-	public StrikeHandler(int roundCounter, Game game, Player player1, Player player2, Player player3) {
+	public StrikeHandler(int roundCounter, Game game, List<Player> players) {
 		this.roundCounter = roundCounter;
 		this.game = game;
-		this.player1 = player1;
-		this.player2 = player2;
-		this.player3 = player3;
+		this.player1 = players.get(0);
+		this.player2 = players.get(1);
+		this.player3 = players.get(2);
 
 		int card1 = game.getRound().getCard1Id();
 		int card2 = game.getRound().getCard2Id();

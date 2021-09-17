@@ -17,12 +17,10 @@ public class Game {
 	private String errorMessage = "";
 	private long lastModificationTimeStamp = 0;
 	private boolean isGameOver = false;
-	private Hand player1Hand = new Hand();
-	private Hand player2Hand = new Hand();
-	private Hand player3Hand = new Hand();
 	private List<Result> resultList = new ArrayList<Result>();
 	private boolean isFirstTurn = false;
 	private List<Say> says = new ArrayList<Say>();
+	private List<Hand> hands = new ArrayList<Hand>();
 
 	public Game() {
 		this.startingValue = 0;
@@ -30,8 +28,8 @@ public class Game {
 
 	public Game(int startingValue, Player player, boolean isRoundStarted, boolean isPlayReadyToStart, int lastCallerId,
 			int activePlayer, Strike round, List<Integer> call, List<Integer> previousCall, String errorMessage,
-			long lastModificationTimeStamp, boolean isGameOver, Hand player1Hand, Hand player2Hand, Hand player3Hand,
-			List<Result> resultList, boolean isFirstTurn, List<Say> says) {
+			long lastModificationTimeStamp, boolean isGameOver, List<Result> resultList, boolean isFirstTurn,
+			List<Say> says, List<Hand> hands) {
 		this.startingValue = startingValue;
 		this.player = player;
 		this.isRoundStarted = isRoundStarted;
@@ -44,12 +42,10 @@ public class Game {
 		this.errorMessage = errorMessage;
 		this.lastModificationTimeStamp = lastModificationTimeStamp;
 		this.isGameOver = isGameOver;
-		this.player1Hand = player1Hand;
-		this.player2Hand = player2Hand;
-		this.player3Hand = player3Hand;
 		this.resultList = resultList;
 		this.isFirstTurn = isFirstTurn;
 		this.says = says;
+		this.hands = hands;
 	}
 
 	public Player getPlayer() {
@@ -148,30 +144,6 @@ public class Game {
 		this.isGameOver = isGameOver;
 	}
 
-	public Hand getPlayer1Hand() {
-		return player1Hand;
-	}
-
-	public void setPlayer1Hand(Hand player1Hand) {
-		this.player1Hand = player1Hand;
-	}
-
-	public Hand getPlayer2Hand() {
-		return player2Hand;
-	}
-
-	public void setPlayer2Hand(Hand player2Hand) {
-		this.player2Hand = player2Hand;
-	}
-
-	public Hand getPlayer3Hand() {
-		return player3Hand;
-	}
-
-	public void setPlayer3Hand(Hand player3Hand) {
-		this.player3Hand = player3Hand;
-	}
-
 	public List<Result> getResultList() {
 		return resultList;
 	}
@@ -196,6 +168,14 @@ public class Game {
 		this.says = says;
 	}
 
+	public List<Hand> getHands() {
+		return hands;
+	}
+
+	public void setHands(List<Hand> hands) {
+		this.hands = hands;
+	}
+
 	@Override
 	public Game clone() {
 		try {
@@ -203,8 +183,7 @@ public class Game {
 		} catch (Exception e) {
 			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart,
 					this.lastCallerId, this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage,
-					this.lastModificationTimeStamp, this.isGameOver, this.player1Hand, this.player2Hand,
-					this.player3Hand, this.resultList, this.isFirstTurn, this.says);
+					this.lastModificationTimeStamp, this.isGameOver, this.resultList, this.isFirstTurn, this.says, this.hands);
 		}
 	}
 	

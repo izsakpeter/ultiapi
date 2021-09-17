@@ -38,12 +38,12 @@ public class Resulthandler {
 	private List<Integer> list7s = Arrays.asList(0, 8, 16, 24);
 	private List<Integer> list10s = Arrays.asList(7, 15, 23, 31, 3, 11, 19, 27);
 
-	public Resulthandler(Game game, int roundCounter, Player player1, Player player2, Player player3) {
+	public Resulthandler(Game game, int roundCounter, List<Player> players) {
 		this.game = game;
 		this.roundCounter = roundCounter;
-		this.player1 = player1;
-		this.player2 = player2;
-		this.player3 = player3;
+		this.player1 = players.get(0);
+		this.player2 = players.get(1);
+		this.player3 = players.get(2);
 
 		if (roundCounter != 10) {
 

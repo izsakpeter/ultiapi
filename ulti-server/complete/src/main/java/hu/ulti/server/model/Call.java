@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Call {
-	
+
 	public static final int MAKK_ID = 1;
 	public static final int ZOLD_ID = 2;
 	public static final int TOK_ID = 3;
@@ -86,7 +86,7 @@ public class Call {
 
 		return calls;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -101,29 +101,5 @@ public class Call {
 
 	public void setValue(int value) {
 		this.value = value;
-	}
-	
-	public static boolean isTeritett(List<Integer> previousCall) {
-		List<Integer> teritettIds = new ArrayList<>();
-		teritettIds.add(7);
-		teritettIds.add(8);
-		teritettIds.add(9);
-		teritettIds.add(17);
-		teritettIds.add(18);
-		teritettIds.add(19);
-		teritettIds.add(27);
-		teritettIds.add(28);
-		teritettIds.add(29);
-		teritettIds.add(37);
-		teritettIds.add(38);
-		teritettIds.add(39);
-		
-		for (Integer call : previousCall) {
-			for (Integer teritettId : teritettIds) {
-				if (call == teritettId)
-					return true;
-			}
-		}
-		return false;
 	}
 }

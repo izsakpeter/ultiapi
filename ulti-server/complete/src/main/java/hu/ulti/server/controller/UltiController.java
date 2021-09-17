@@ -16,7 +16,6 @@ import hu.ulti.server.CallHandler;
 import hu.ulti.server.Helper;
 import hu.ulti.server.Resulthandler;
 import hu.ulti.server.StrikeHandler;
-import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
@@ -80,7 +79,7 @@ public class UltiController {
 	public String shuffle(@RequestBody Request request) {
 
 		int id = request.getId();
-		
+
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getId() == 0) {
 				players.get(i).setId(id);
@@ -96,17 +95,17 @@ public class UltiController {
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return "Round started";
 		} else {
-			hands = Helper.getHands(dealer);
+			hands = Helper.getHands();
 			setStarterPlayer();
 
 			for (int i = 0; i < players.size(); i++) {
 				players.get(i).setHand(hands.get(i));
 				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
-				
+
 				handList.add(i, new Hand());
 				handList.set(i, Hand.fillHandWithMinusOne(players.get(i)));
 			}
-			
+
 			talon = hands.get(3);
 
 			game.setHands(handList);
@@ -134,14 +133,13 @@ public class UltiController {
 
 		if (request.getId() == game.getActivePlayer() && request.getValue() > 0) {
 
-			
 			for (int i = 0; i < players.size(); i++) {
 				if (request.getId() == players.get(i).getId()) {
 					players.get(i).setHand(Card.addTalon(players.get(i), talon));
 					handList.set(i, Hand.fillHandWithMinusOne(players.get(i)));
 				}
 			}
-			
+
 			game.setHands(handList);
 			game.setStartingValue(request.getValue());
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -159,7 +157,7 @@ public class UltiController {
 		if (request.getId() == game.getActivePlayer()) {
 
 			game.setCall(request.getCall());
-			
+
 			for (int i = 0; i < players.size(); i++) {
 				if (request.getId() == players.get(i).getId()) {
 					if (CallHandler.callChecker(game, players.get(i).isColorForced())) {
@@ -252,7 +250,7 @@ public class UltiController {
 	public String play(@RequestBody Request request) {
 
 		if (game.isPlayReadyToStart() && request.getId() == game.getActivePlayer()) {
-			
+
 			for (int i = 0; i < players.size(); i++) {
 				if (request.getId() == players.get(i).getId()) {
 					game.getRound().addCardToStrike(request.getCardid(), request.getId());
@@ -273,7 +271,7 @@ public class UltiController {
 				players.set(1, strikeHandler.getPlayer2());
 				players.set(2, strikeHandler.getPlayer3());
 
-				if (Call.isTeritett(game.getPreviousCall())) {
+				if (Helper.isTeritett(game.getPreviousCall())) {
 					for (int i = 0; i < players.size(); i++) {
 						handList.set(i, Hand.setHandWithCards(players.get(i)));
 						game.setHands(handList);
@@ -288,7 +286,7 @@ public class UltiController {
 						players.get(i).setReady(false);
 						players.get(i).setHand(null);
 					}
-					hands = null;					
+					hands = null;
 					talon = null;
 					game.setRoundStarted(false);
 					game.setPlayReadyToStart(false);
@@ -310,7 +308,7 @@ public class UltiController {
 
 	@PostMapping("newgame")
 	public String newGame(@RequestBody Request request) {
-		
+
 		int id = request.getId();
 
 		for (int i = 0; i < players.size(); i++) {
@@ -330,22 +328,22 @@ public class UltiController {
 		} else {
 			for (int i = 0; i < players.size(); i++) {
 				players.get(i).setStrikes(new ArrayList<Strike>());
-			}			
+			}
 			game.setGameOver(false);
 
 			dealer = Helper.dealerHandler(dealer);
-			hands = Helper.getHands(dealer);
+			hands = Helper.getHands();
 
 			setStarterPlayer();
 
 			for (int i = 0; i < players.size(); i++) {
 				players.get(i).setHand(hands.get(i));
 				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
-				
+
 				handList.add(i, new Hand());
 				handList.set(i, Hand.fillHandWithMinusOne(players.get(i)));
 			}
-			
+
 			talon = hands.get(3);
 
 			game.setHands(handList);
@@ -357,7 +355,7 @@ public class UltiController {
 	}
 
 	public static Player getPlayerById(int id) {
-		
+
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getId() == id)
 				return players.get(i);
@@ -365,19 +363,19 @@ public class UltiController {
 
 		return null;
 	}
-	
-	private  int getIncreasedPlayerId(int index) {
-		
+
+	private int getIncreasedPlayerId(int index) {
+
 		for (int i = 0; i < players.size(); i++) {
 			if (index == i) {
 				int indexPl = i + 1 > players.size() ? 0 : i + 1;
 				return players.get(indexPl).getId();
 			}
 		}
-		
+
 		return 0;
 	}
-	
+
 	private void setStarterPlayer() {
 		for (int i = 0; i < players.size(); i++) {
 			if (dealer == i) {

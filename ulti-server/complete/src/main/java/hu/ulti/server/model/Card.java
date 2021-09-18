@@ -3,8 +3,6 @@ package hu.ulti.server.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.ulti.server.Helper;
-
 public class Card {
 
 	private int id;
@@ -55,64 +53,6 @@ public class Card {
 		allCards.add(new Card(31, 4));
 
 		return allCards;
-	}
-
-	public static List<Card> addTalon(Player player, List<Card> talon) {
-
-		player.getHand().add(talon.get(0));
-		player.getHand().add(talon.get(1));
-
-		Helper.orderHand(player.getHand());
-
-		return player.getHand();
-	}
-
-	public static List<Card> getTalonById(List<Integer> talonid) {
-
-		List<Card> talon = new ArrayList<Card>();
-		List<Card> allCards = getAllCards();
-
-		for (Card card : allCards) {
-			if (card.getId() == talonid.get(0) || card.getId() == talonid.get(1))
-				talon.add(card);
-		}
-
-		return talon;
-	}
-
-	public static List<Card> removeTalon(Player player, List<Card> talon) {
-
-		for (Card card : player.getHand()) {
-			if (card.getId() == talon.get(0).getId()) {
-				player.getHand().remove(card);
-				break;
-			}
-		}
-
-		for (Card card : player.getHand()) {
-			if (card.getId() == talon.get(1).getId()) {
-				player.getHand().remove(card);
-				break;
-			}
-		}
-
-		Helper.orderHand(player.getHand());
-
-		return player.getHand();
-	}
-
-	public static List<Card> removeCardbyId(Player player, int cardId) {
-
-		for (Card card : player.getHand()) {
-			if (card.getId() == cardId) {
-				player.getHand().remove(card);
-				break;
-			}
-		}
-
-		Helper.orderHand(player.getHand());
-
-		return player.getHand();
 	}
 
 	public int getId() {

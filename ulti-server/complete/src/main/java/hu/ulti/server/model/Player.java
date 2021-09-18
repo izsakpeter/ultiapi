@@ -93,15 +93,4 @@ public class Player {
 	public void setBluff4020(boolean isBluff4020) {
 		this.isBluff4020 = isBluff4020;
 	}
-	
-	public static  List<Player> getPlayerList(){
-		List<Player> players = new ArrayList<Player>();
-		Player player1 = new Player();
-		players.add(0, player1);
-		Player player2 = new Player();
-		players.add(1, player2);
-		Player player3 = new Player();
-		players.add(2, player3);
-		return players;
-	}
 }

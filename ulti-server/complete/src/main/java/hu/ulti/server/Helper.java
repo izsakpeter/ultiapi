@@ -5,9 +5,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
+import hu.ulti.server.model.Hand;
+import hu.ulti.server.model.Player;
+import hu.ulti.server.model.UuidWithCardId;
 
 public class Helper {
 
@@ -93,5 +97,103 @@ public class Helper {
 			}
 		}
 		return false;
+	}
+
+	public static List<Player> getPlayerList() {
+		List<Player> players = new ArrayList<Player>();
+		Player player1 = new Player();
+		players.add(0, player1);
+		Player player2 = new Player();
+		players.add(1, player2);
+		Player player3 = new Player();
+		players.add(2, player3);
+		return players;
+	}
+
+	public static Hand fillHandWithMinusOne(Player player) {
+		Hand hand = new Hand();
+		hand.setId(player.getId());
+		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
+
+		for (int i = 0; i < player.getHand().size(); i++) {
+			UUID uuid = UUID.randomUUID();
+			list.add(new UuidWithCardId(uuid.toString(), -1));
+		}
+		hand.setList(list);
+
+		return hand;
+	}
+
+	public static Hand setHandWithCards(Player player) {
+		Hand hand = new Hand();
+		hand.setId(player.getId());
+		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
+
+		for (int i = 0; i < player.getHand().size(); i++) {
+			UUID uuid = UUID.randomUUID();
+			list.add(new UuidWithCardId(uuid.toString(), player.getHand().get(i).getId()));
+		}
+
+		hand.setList(list);
+
+		return hand;
+	}
+
+	public static List<Card> addTalon(Player player, List<Card> talon) {
+
+		player.getHand().add(talon.get(0));
+		player.getHand().add(talon.get(1));
+
+		Helper.orderHand(player.getHand());
+
+		return player.getHand();
+	}
+
+	public static List<Card> getTalonById(List<Integer> talonid) {
+
+		List<Card> talon = new ArrayList<Card>();
+		List<Card> allCards = Card.getAllCards();
+
+		for (Card card : allCards) {
+			if (card.getId() == talonid.get(0) || card.getId() == talonid.get(1))
+				talon.add(card);
+		}
+
+		return talon;
+	}
+
+	public static List<Card> removeTalon(Player player, List<Card> talon) {
+
+		for (Card card : player.getHand()) {
+			if (card.getId() == talon.get(0).getId()) {
+				player.getHand().remove(card);
+				break;
+			}
+		}
+
+		for (Card card : player.getHand()) {
+			if (card.getId() == talon.get(1).getId()) {
+				player.getHand().remove(card);
+				break;
+			}
+		}
+
+		Helper.orderHand(player.getHand());
+
+		return player.getHand();
+	}
+
+	public static List<Card> removeCardbyId(Player player, int cardId) {
+
+		for (Card card : player.getHand()) {
+			if (card.getId() == cardId) {
+				player.getHand().remove(card);
+				break;
+			}
+		}
+
+		Helper.orderHand(player.getHand());
+
+		return player.getHand();
 	}
 }

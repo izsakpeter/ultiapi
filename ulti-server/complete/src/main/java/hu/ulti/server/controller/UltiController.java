@@ -267,9 +267,10 @@ public class UltiController {
 				game.setFirstTurn(false);
 				StrikeHandler strikeHandler = new StrikeHandler(roundCounter, game, players);
 				game = strikeHandler.getGame();
-				players.set(0, strikeHandler.getPlayer1());
-				players.set(1, strikeHandler.getPlayer2());
-				players.set(2, strikeHandler.getPlayer3());
+				
+				for (int i = 0; i < players.size(); i++) {
+					players.set(i, strikeHandler.getPlayers().get(i));
+				}
 
 				if (Helper.isTeritett(game.getPreviousCall())) {
 					for (int i = 0; i < players.size(); i++) {

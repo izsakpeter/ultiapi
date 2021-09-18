@@ -16,9 +16,7 @@ public class Resulthandler {
 
 	private Game game;
 	private int roundCounter;
-	private Player player1 = new Player();
-	private Player player2 = new Player();
-	private Player player3 = new Player();
+	private List<Player> players = new ArrayList<Player>();
 
 	private List<Result> resultList = new ArrayList<Result>();
 
@@ -41,9 +39,7 @@ public class Resulthandler {
 	public Resulthandler(Game game, int roundCounter, List<Player> players) {
 		this.game = game;
 		this.roundCounter = roundCounter;
-		this.player1 = players.get(0);
-		this.player2 = players.get(1);
-		this.player3 = players.get(2);
+		this.players = players;
 
 		if (roundCounter != 10) {
 
@@ -496,24 +492,10 @@ public class Resulthandler {
 
 		Strike lastStrike = null;
 
-		for (int i = 0; i < player1.getStrikes().size(); i++) {
-			if (player1.getStrikes().get(i).getId() == 10) {
-				lastStrike = player1.getStrikes().get(i);
-			}
-		}
-
-		if (lastStrike == null) {
-			for (int i = 0; i < player2.getStrikes().size(); i++) {
-				if (player2.getStrikes().get(i).getId() == 10) {
-					lastStrike = player2.getStrikes().get(i);
-				}
-			}
-		}
-
-		if (lastStrike == null) {
-			for (int i = 0; i < player3.getStrikes().size(); i++) {
-				if (player3.getStrikes().get(i).getId() == 10) {
-					lastStrike = player3.getStrikes().get(i);
+		for (int j = 0; j < players.size(); j++) {
+			for (int i = 0; i < players.get(j).getStrikes().size(); i++) {
+				if (players.get(j).getStrikes().get(i).getId() == 10) {
+					lastStrike = players.get(j).getStrikes().get(i);
 				}
 			}
 		}
@@ -538,21 +520,18 @@ public class Resulthandler {
 
 			if (aduCounter == 1) {
 				int playerId = getPlayer7(lastStrike);
-				if (player1.getId() == playerId)
-					resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + player1.getId()));
-				else if (player2.getId() == playerId)
-					resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + player2.getId()));
-				else if (player2.getId() == playerId)
-					resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + player3.getId()));
-
+				
+				for (int i = 0; i < players.size(); i++) {
+					if (players.get(i).getId() == playerId)
+						resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + players.get(i).getId()));
+				}
 			} else {
 				int playerId = getPlayer7(lastStrike);
-				if (player1.getId() == playerId)
-					resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + player1.getId()));
-				else if (player2.getId() == playerId)
-					resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + player2.getId()));
-				else if (player2.getId() == playerId)
-					resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + player3.getId()));
+				
+				for (int i = 0; i < players.size(); i++) {
+					if (players.get(i).getId() == playerId)
+						resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + players.get(i).getId()));
+				}
 			}
 		}
 	}

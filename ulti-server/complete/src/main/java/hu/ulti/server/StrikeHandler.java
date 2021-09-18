@@ -1,5 +1,7 @@
 package hu.ulti.server;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import hu.ulti.server.model.Call;
@@ -11,16 +13,12 @@ public class StrikeHandler {
 
 	private int roundCounter;
 	private Game game;
-	private Player player1 = new Player();
-	private Player player2 = new Player();
-	private Player player3 = new Player();
+	private List<Player> players = new ArrayList<Player>();
 
 	public StrikeHandler(int roundCounter, Game game, List<Player> players) {
 		this.roundCounter = roundCounter;
 		this.game = game;
-		this.player1 = players.get(0);
-		this.player2 = players.get(1);
-		this.player3 = players.get(2);
+		this.players = players;
 
 		int card1 = game.getRound().getCard1Id();
 		int card2 = game.getRound().getCard2Id();
@@ -124,7 +122,6 @@ public class StrikeHandler {
 		game.getRound().clearStrike();
 	}
 
-	
 	public static int getColor(int id) {
 		if (id <= 7)
 			return Call.MAKK_ID;
@@ -137,21 +134,14 @@ public class StrikeHandler {
 	}
 
 	private void strikeHandler(int id) {
-		if (id == player1.getId()) {
-			player1.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(),
-					game.getRound().getCard2PlayerId(), game.getRound().getCard3PlayerId()));
-			game.setActivePlayer(player1.getId());
-		} else if (id == player2.getId()) {
-			player2.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(),
-					game.getRound().getCard2PlayerId(), game.getRound().getCard3PlayerId()));
-			game.setActivePlayer(player2.getId());
-		} else if (id == player3.getId()) {
-			player3.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
-					game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(),
-					game.getRound().getCard2PlayerId(), game.getRound().getCard3PlayerId()));
-			game.setActivePlayer(player3.getId());
+		for (int i = 0; i < players.size(); i++) {
+			if (id == players.get(i).getId()) {
+				players.get(i)
+						.addStrike(new Strike(roundCounter, game.getRound().getCard1Id(), game.getRound().getCard2Id(),
+								game.getRound().getCard3Id(), game.getRound().getCard1PlayerId(),
+								game.getRound().getCard2PlayerId(), game.getRound().getCard3PlayerId()));
+				game.setActivePlayer(players.get(i).getId());
+			}
 		}
 	}
 
@@ -171,42 +161,14 @@ public class StrikeHandler {
 
 	private int fixCardOrder(int cardId) {
 
-		switch (cardId) {
-		case 3:
-			return 6;
-		case 4:
-			return 3;
-		case 5:
-			return 4;
-		case 6:
-			return 5;
-		case 11:
-			return 14;
-		case 12:
-			return 11;
-		case 13:
-			return 12;
-		case 14:
-			return 13;
-		case 19:
-			return 22;
-		case 20:
-			return 19;
-		case 21:
-			return 20;
-		case 22:
-			return 21;
-		case 27:
-			return 30;
-		case 28:
-			return 27;
-		case 29:
-			return 28;
-		case 30:
-			return 29;
-		default:
-			break;
-		}
+		List<Integer> list10s = Arrays.asList(3, 11, 19, 27);
+		List<Integer> others = Arrays.asList(4, 5, 6, 12, 13, 14, 20, 21, 22, 28, 29, 30);
+
+		if (list10s.contains(cardId))
+			return cardId + 3;
+
+		if (others.contains(cardId))
+			return cardId - 1;
 
 		return cardId;
 	}
@@ -215,15 +177,12 @@ public class StrikeHandler {
 		return game;
 	}
 
-	public Player getPlayer1() {
-		return player1;
+	public List<Player> getPlayers() {
+		return players;
 	}
 
-	public Player getPlayer2() {
-		return player2;
+	public void setPlayers(List<Player> players) {
+		this.players = players;
 	}
 
-	public Player getPlayer3() {
-		return player3;
-	}
 }

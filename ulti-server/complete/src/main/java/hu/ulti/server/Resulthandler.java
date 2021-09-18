@@ -259,45 +259,34 @@ public class Resulthandler {
 	}
 
 	private void proccessPassz() {
-		int player110s = get10Value(player1);
-		int player210s = get10Value(player2);
-		int player310s = get10Value(player3);
+
+		List<Integer> s10 = Arrays.asList(0, 0, 0);
+		for (int i = 0; i < players.size(); i++) {
+			s10.set(i, get10Value(players.get(i)));
+		}
+
 		int talon10s = 0;
 
-		if ((player110s + player210s + player310s) != 90)
-			talon10s = 90 - (player110s + player210s + player310s);
+		int sum = 0;
+
+		for (int i = 0; i < s10.size(); i++) {
+			sum += s10.get(i);
+		}
+
+		if (sum != 90)
+			talon10s = 90 - sum;
 
 		for (int i = 0; i < game.getSays().size(); i++) {
-			if (game.getSays().get(i).getPlayerId() == player1.getId()) {
+			for (int j = 0; j < players.size(); j++) {
+				if (game.getSays().get(i).getPlayerId() == players.get(i).getId()) {
 
-				if (game.getSays().get(i).isHave40()) {
-					player110s += 40;
-				} else if (game.getSays().get(i).isHave120()) {
-					player110s += 20;
-				} else if (game.getSays().get(i).isHave220()) {
-					player110s += 40;
-				} else if (game.getSays().get(i).isHave320()) {
-					player110s += 60;
-				}
-			} else if (game.getSays().get(i).getPlayerId() == player2.getId()) {
-				if (game.getSays().get(i).isHave40()) {
-					player210s += 40;
-				} else if (game.getSays().get(i).isHave120()) {
-					player210s += 20;
-				} else if (game.getSays().get(i).isHave220()) {
-					player210s += 40;
-				} else if (game.getSays().get(i).isHave320()) {
-					player210s += 60;
-				}
-			} else if (game.getSays().get(i).getPlayerId() == player3.getId()) {
-				if (game.getSays().get(i).isHave40()) {
-					player310s += 40;
-				} else if (game.getSays().get(i).isHave120()) {
-					player310s += 20;
-				} else if (game.getSays().get(i).isHave220()) {
-					player310s += 40;
-				} else if (game.getSays().get(i).isHave320()) {
-					player310s += 60;
+					if (game.getSays().get(i).isHave40() || game.getSays().get(i).isHave220()) {
+						s10.set(j, s10.get(1) + 40);
+					} else if (game.getSays().get(i).isHave120()) {
+						s10.set(j, s10.get(1) + 20);
+					} else if (game.getSays().get(i).isHave320()) {
+						s10.set(j, s10.get(1) + 60);
+					}
 				}
 			}
 		}
@@ -426,45 +415,33 @@ public class Resulthandler {
 	}
 
 	private void checkCsendes100() {
-		int player110s = get10Value(player1);
-		int player210s = get10Value(player2);
-		int player310s = get10Value(player3);
+		List<Integer> s10 = Arrays.asList(0, 0, 0);
+		for (int i = 0; i < players.size(); i++) {
+			s10.set(i, get10Value(players.get(i)));
+		}
+
 		int talon10s = 0;
 
-		if ((player110s + player210s + player110s) != 90)
-			talon10s = 90 - (player110s + player210s + player110s);
+		int sum = 0;
+
+		for (int i = 0; i < s10.size(); i++) {
+			sum += s10.get(i);
+		}
+
+		if (sum != 90)
+			talon10s = 90 - sum;
 
 		for (int i = 0; i < game.getSays().size(); i++) {
-			if (game.getSays().get(i).getPlayerId() == player1.getId()) {
-				System.out.println();
-				if (game.getSays().get(i).isHave40()) {
-					player110s += 40;
-				} else if (game.getSays().get(i).isHave120()) {
-					player110s += 20;
-				} else if (game.getSays().get(i).isHave220()) {
-					player110s += 40;
-				} else if (game.getSays().get(i).isHave320()) {
-					player110s += 60;
-				}
-			} else if (game.getSays().get(i).getPlayerId() == player2.getId()) {
-				if (game.getSays().get(i).isHave40()) {
-					player210s += 40;
-				} else if (game.getSays().get(i).isHave120()) {
-					player210s += 20;
-				} else if (game.getSays().get(i).isHave220()) {
-					player210s += 40;
-				} else if (game.getSays().get(i).isHave320()) {
-					player210s += 60;
-				}
-			} else if (game.getSays().get(i).getPlayerId() == player3.getId()) {
-				if (game.getSays().get(i).isHave40()) {
-					player310s += 40;
-				} else if (game.getSays().get(i).isHave120()) {
-					player310s += 20;
-				} else if (game.getSays().get(i).isHave220()) {
-					player310s += 40;
-				} else if (game.getSays().get(i).isHave320()) {
-					player310s += 60;
+			for (int j = 0; j < players.size(); j++) {
+				if (game.getSays().get(i).getPlayerId() == players.get(i).getId()) {
+
+					if (game.getSays().get(i).isHave40() || game.getSays().get(i).isHave220()) {
+						s10.set(j, s10.get(1) + 40);
+					} else if (game.getSays().get(i).isHave120()) {
+						s10.set(j, s10.get(1) + 20);
+					} else if (game.getSays().get(i).isHave320()) {
+						s10.set(j, s10.get(1) + 60);
+					}
 				}
 			}
 		}
@@ -520,14 +497,14 @@ public class Resulthandler {
 
 			if (aduCounter == 1) {
 				int playerId = getPlayer7(lastStrike);
-				
+
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i).getId() == playerId)
 						resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + players.get(i).getId()));
 				}
 			} else {
 				int playerId = getPlayer7(lastStrike);
-				
+
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i).getId() == playerId)
 						resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + players.get(i).getId()));

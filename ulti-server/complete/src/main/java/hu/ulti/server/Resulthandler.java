@@ -294,15 +294,11 @@ public class Resulthandler {
 		int caller10s = 0;
 		int others10s = 0;
 
-		if (game.getLastCallerId() == player1.getId()) {
-			caller10s = player110s;
-			others10s = player210s + player310s + talon10s;
-		} else if (game.getLastCallerId() == player2.getId()) {
-			caller10s = player210s;
-			others10s = player110s + player310s + talon10s;
-		} else if (game.getLastCallerId() == player3.getId()) {
-			caller10s = player310s;
-			others10s = player110s + player210s + talon10s;
+		for (int j = 0; j < players.size(); j++) {
+			if (game.getLastCallerId() == players.get(j).getId()) {
+				caller10s = s10.get(j);
+				others10s = s10.get(getIncreasedId(j + 1)) + s10.get(getIncreasedId(j + 2)) + talon10s;
+			}
 		}
 
 		if (caller10s >= 100 || others10s >= 100) {
@@ -449,15 +445,11 @@ public class Resulthandler {
 		int caller10s = 0;
 		int others10s = 0;
 
-		if (game.getLastCallerId() == player1.getId()) {
-			caller10s = player110s;
-			others10s = player210s + player310s + talon10s;
-		} else if (game.getLastCallerId() == player2.getId()) {
-			caller10s = player210s;
-			others10s = player110s + player310s + talon10s;
-		} else if (game.getLastCallerId() == player3.getId()) {
-			caller10s = player310s;
-			others10s = player110s + player210s + talon10s;
+		for (int j = 0; j < players.size(); j++) {
+			if (game.getLastCallerId() == players.get(j).getId()) {
+				caller10s = s10.get(j);
+				others10s = s10.get(getIncreasedId(j + 1)) + s10.get(getIncreasedId(j + 2)) + talon10s;
+			}
 		}
 
 		if (caller10s >= 100 || others10s >= 100) {
@@ -553,5 +545,16 @@ public class Resulthandler {
 			return listCsendesUlti.get(3);
 
 		return 0;
+	}
+
+	private int getIncreasedId(int id) {
+		if (id == 0)
+			return 1;
+		else if (id == 1)
+			return 2;
+		else if (id == 2)
+			return 0;
+
+		return -1;
 	}
 }

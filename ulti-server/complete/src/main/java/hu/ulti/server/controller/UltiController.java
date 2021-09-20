@@ -314,12 +314,11 @@ public class UltiController {
 
 	@PostMapping("newgame")
 	public String newGame(@RequestBody Request request) {
-
 		int id = request.getId();
 
 		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).getId() == 0) {
-				players.get(i).setId(id);
+			if (players.get(i).getId() == id) {
+				players.get(i).setReady(true);
 			}
 		}
 
@@ -339,7 +338,6 @@ public class UltiController {
 
 			dealer = Helper.dealerHandler(dealer);
 			hands = Helper.getHands();
-
 			setStarterPlayer();
 
 			for (int i = 0; i < players.size(); i++) {

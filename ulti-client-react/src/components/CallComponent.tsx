@@ -105,7 +105,7 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
                 console.log("Nincs HÍVÁS!");
             }
         } else {
-
+            console.log("Nincs TALON!");
         }
     }
 

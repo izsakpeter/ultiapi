@@ -14,10 +14,10 @@ public class CallHandler {
 			int forcedColorId = game.getStartingValue();
 
 			for (Integer callId : game.getCall()) {
-				if ((forcedColorId == Call.MAKK_ID && callId > 9)
-						|| (forcedColorId == Call.ZOLD_ID && (callId > 19 || callId < 10))
-						|| (forcedColorId == Call.TOK_ID && (callId > 29 || callId < 20))
-						|| (forcedColorId == Call.PIROS_ID && callId < 30))
+				if ((forcedColorId == Call.MAKK_ID && callId > 11)
+						|| (forcedColorId == Call.ZOLD_ID && (callId > 23 || callId <= 12))
+						|| (forcedColorId == Call.TOK_ID && (callId > 35 || callId <= 23))
+						|| (forcedColorId == Call.PIROS_ID && callId <= 35))
 					res = false;
 			}
 		} else {

@@ -42,7 +42,6 @@ public class Resulthandler {
 		this.players = players;
 
 		if (roundCounter != 10) {
-
 			if (isBetli() && !isBetliSuccess()) {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listBetli)));
@@ -51,11 +50,11 @@ public class Resulthandler {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listTerBetli)));
 				game.setResultList(resultList);
-			} else if (isSzintelenDuri() && isSzintelenDuriSuccess()) {
+			} else if (isSzintelenDuri() && !isSzintelenDuriSuccess()) {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listSzDuri)));
 				game.setResultList(resultList);
-			} else if (isTeritettSzintelenDuri() && isSzintelenDuriSuccess()) {
+			} else if (isTeritettSzintelenDuri() && !isSzintelenDuriSuccess()) {
 				game.setGameOver(true);
 				resultList.add(addResult(false, getRespCallId(listTerSzDuri)));
 				game.setResultList(resultList);
@@ -280,15 +279,12 @@ public class Resulthandler {
 			for (int j = 0; j < players.size(); j++) {
 				if (game.getSays().get(i).getPlayerId() == players.get(i).getId()) {
 					if (game.getSays().get(i).isHave40() || game.getSays().get(i).isHave220()) {
-						System.out.println("444444444440000000000000000000000000000000");
 						s10.set(j, s10.get(1) + 40);
 					}
 					if (game.getSays().get(i).isHave120()) {
-						System.out.println("22222222222222222220000000000000000000000000");
 						s10.set(j, s10.get(1) + 20);
 					}
 					if (game.getSays().get(i).isHave320()) {
-						System.out.println("666666666666600000000000000000000000000");
 						s10.set(j, s10.get(1) + 60);
 					}
 				}

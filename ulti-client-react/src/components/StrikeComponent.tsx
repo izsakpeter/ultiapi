@@ -45,7 +45,7 @@ export class StrikeComponent extends React.Component<{ game: Game }, { strikes: 
 function StrikeList(strikes: Array<Strike>, showStrikes: boolean) {
 
     if (showStrikes) {
-        const strikeList = strikes.map((strike) => <div key={strike.id}>kör:{strike.id}<img src={GetCardSource(strike.card1Id)} className="strike-button-card" /><img src={GetCardSource(strike.card2Id)} className="strike-button-card" /><img src={GetCardSource(strike.card3Id)} className="strike-button-card" /></div>)
+        const strikeList = strikes.map((strike) => <div key={strike.round}>kör:{strike.round}<img src={GetCardSource(strike.card1Id)} className="strike-button-card" /><img src={GetCardSource(strike.card2Id)} className="strike-button-card" /><img src={GetCardSource(strike.card3Id)} className="strike-button-card" /></div>)
 
         return (
             <div>

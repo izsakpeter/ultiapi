@@ -2,7 +2,7 @@ package hu.ulti.server.model;
 
 public class Strike {
 
-	private int id;
+	private int round;
 	private int card1Id = -1;
 	private int card2Id = -1;
 	private int card3Id = -1;
@@ -13,9 +13,9 @@ public class Strike {
 	public Strike() {
 	}
 
-	public Strike(int id, int card1Id, int card2Id, int card3Id, int card1PlayerId, int card2PlayerId,
+	public Strike(int round, int card1Id, int card2Id, int card3Id, int card1PlayerId, int card2PlayerId,
 			int card3PlayerId) {
-		this.id = id;
+		this.round = round;
 		this.card1Id = card1Id;
 		this.card2Id = card2Id;
 		this.card3Id = card3Id;
@@ -24,12 +24,12 @@ public class Strike {
 		this.card3PlayerId = card3PlayerId;
 	}
 
-	public int getId() {
-		return id;
+	public int getRound() {
+		return round;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setRound(int round) {
+		this.round = round;
 	}
 
 	public int getCard1Id() {

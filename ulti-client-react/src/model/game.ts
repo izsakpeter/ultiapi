@@ -3,6 +3,7 @@ import { Player } from "./player";
 import { Result } from "./result";
 import { Say } from "./say";
 import { Strike } from "./strike";
+import { StrikeList } from "./strikeList";
 
 
 export class Game {
@@ -21,6 +22,7 @@ export class Game {
 	public firstTurn: boolean;
 	public says: Array<Say>;
 	public hands: Array<Hand>;
+	public strikeList: Array<StrikeList>
 
 	public errorMessage: string ;
 }

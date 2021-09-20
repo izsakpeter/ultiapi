@@ -11,6 +11,7 @@ import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.Result;
 import hu.ulti.server.model.Strike;
+import hu.ulti.server.model.StrikeList;
 
 public class Resulthandler {
 
@@ -137,6 +138,18 @@ public class Resulthandler {
 
 			game.setGameOver(true);
 			game.setResultList(resultList);
+
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i).getId() == game.getLastCallerId()) {
+					List<StrikeList> strikeList = new ArrayList<StrikeList>();
+
+					strikeList.add(0, new StrikeList(players.get(i).getId(), players.get(i).getStrikes()));
+					strikeList.add(1, new StrikeList(players.get(getIncreasedId(i + 1)).getId(), players.get(getIncreasedId(i + 1)).getStrikes()));
+					strikeList.add(2, new StrikeList(players.get(getIncreasedId(i + 2)).getId(), players.get(getIncreasedId(i + 2)).getStrikes()));
+
+					game.setStrikeList(strikeList);
+				}
+			}
 		}
 	}
 
@@ -238,7 +251,7 @@ public class Resulthandler {
 					value += 10;
 			}
 
-			if (player.getStrikes().get(i).getId() == 10)
+			if (player.getStrikes().get(i).getRound() == 10)
 				value += 10;
 		}
 
@@ -368,7 +381,7 @@ public class Resulthandler {
 		Player player = UltiController.getPlayerById(game.getLastCallerId());
 
 		for (int i = 0; i < player.getStrikes().size(); i++) {
-			if (player.getStrikes().get(i).getId() == 10) {
+			if (player.getStrikes().get(i).getRound() == 10) {
 
 				int card1 = -1;
 				int card2 = -1;
@@ -424,7 +437,7 @@ public class Resulthandler {
 
 		for (int j = 0; j < players.size(); j++) {
 			for (int i = 0; i < players.get(j).getStrikes().size(); i++) {
-				if (players.get(j).getStrikes().get(i).getId() == 10) {
+				if (players.get(j).getStrikes().get(i).getRound() == 10) {
 					lastStrike = players.get(j).getStrikes().get(i);
 				}
 			}

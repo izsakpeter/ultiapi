@@ -15,6 +15,9 @@ public class StrikeHandler {
 	private Game game;
 	private List<Player> players = new ArrayList<Player>();
 
+	private List<Integer> betliIds = Arrays.asList(5, 9, 17, 21, 29, 33, 41, 45);
+	private List<Integer> duriIds = Arrays.asList(7, 11, 19, 23, 31, 35, 43, 47);
+
 	public StrikeHandler(int roundCounter, Game game, List<Player> players) {
 		this.roundCounter = roundCounter;
 		this.game = game;
@@ -26,8 +29,8 @@ public class StrikeHandler {
 		int card1ColorId = getColor(card1);
 		int card2ColorId = getColor(card2);
 		int card3ColorId = getColor(card3);
-		boolean isBetli = Helper.isBetli(game);
-		boolean isSzintelenDuri = Helper.isSzintelenDuri(game);
+		boolean isBetli = isBetli(game);
+		boolean isSzintelenDuri = isSzintelenDuri(game);
 		boolean isSzintelen = isBetli || isSzintelenDuri;
 
 		if (isSzintelen) {
@@ -56,6 +59,7 @@ public class StrikeHandler {
 			}
 		} else {
 			int ADU = getAdu(game.getPreviousCall().get(0));
+
 			card1 = fixCardOrder(card1);
 			card2 = fixCardOrder(card2);
 			card3 = fixCardOrder(card3);
@@ -183,6 +187,30 @@ public class StrikeHandler {
 
 	public void setPlayers(List<Player> players) {
 		this.players = players;
+	}
+
+	private boolean isBetli(Game game) {
+
+		for (Integer id : betliIds) {
+			for (Integer call : game.getPreviousCall()) {
+				if (id == call)
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isSzintelenDuri(Game game) {
+
+		for (Integer id : duriIds) {
+			for (Integer call : game.getPreviousCall()) {
+				if (id == call)
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 }

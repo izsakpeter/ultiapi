@@ -17,10 +17,10 @@ export class Game {
 	public previousCall: Array<number>;
 	public call: Array<number>;
 	public gameOver: boolean = false;
-	public player1Hand: Hand;
-	public player2Hand: Hand;
-	public player3Hand: Hand;
 	public resultList: Array<Result>;
 	public firstTurn: boolean;
 	public says: Array<Say>;
+	public hands: Array<Hand>;
+
+	public errorMessage: string ;
 }

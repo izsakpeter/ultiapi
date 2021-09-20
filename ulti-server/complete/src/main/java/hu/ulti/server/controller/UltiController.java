@@ -29,15 +29,14 @@ import hu.ulti.server.model.Player;
 public class UltiController {
 	private static List<Player> players = Helper.getPlayerList();
 	private static List<Hand> handList = new ArrayList<Hand>();
-	private int dealer = 3;
+	private int dealer = 2;
 	private List<List<Card>> hands = null;
 	private List<Card> talon = new ArrayList<Card>();
 	private Game game = new Game();
+	private static int roundCounter = 1;
 
 	private final static Long LONG_POLLING_TIMEOUT = 600000L;
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
-
-	private static int roundCounter = 1;
 
 	@PostMapping("status")
 	public DeferredResult<Game> keepAlive(@RequestBody Request request) {
@@ -82,13 +81,16 @@ public class UltiController {
 
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getId() == 0) {
-				players.get(i).setId(id);
+				players.set(i, new Player(id));
+				break;
 			}
 		}
 
 		for (int i = 0; i < players.size(); i++) {
-			if (!players.get(i).isReady())
+			if (!players.get(i).isReady()) {
+				game.setLastModificationTimeStamp(System.currentTimeMillis());
 				return "waiting";
+			}
 		}
 
 		if (game.isRoundStarted()) {
@@ -202,7 +204,10 @@ public class UltiController {
 				}
 
 				for (int i = 0; i < players.size(); i++) {
-					game.setActivePlayer(getIncreasedPlayerId(i));
+					if (players.get(i).getId() == game.getActivePlayer()) {
+						game.setActivePlayer(getIncreasedPlayerId(i));
+						break;
+					}
 				}
 
 				game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -267,7 +272,7 @@ public class UltiController {
 				game.setFirstTurn(false);
 				StrikeHandler strikeHandler = new StrikeHandler(roundCounter, game, players);
 				game = strikeHandler.getGame();
-				
+
 				for (int i = 0; i < players.size(); i++) {
 					players.set(i, strikeHandler.getPlayers().get(i));
 				}
@@ -366,23 +371,17 @@ public class UltiController {
 	}
 
 	private int getIncreasedPlayerId(int index) {
-
-		for (int i = 0; i < players.size(); i++) {
-			if (index == i) {
-				int indexPl = i + 1 > players.size() ? 0 : i + 1;
-				return players.get(indexPl).getId();
-			}
-		}
-
-		return 0;
+		int indexPl = index + 1 >= players.size() ? 0 : index + 1;
+		return players.get(indexPl).getId();
 	}
 
 	private void setStarterPlayer() {
 		for (int i = 0; i < players.size(); i++) {
 			if (dealer == i) {
-				int indexPl = i + 1 > players.size() ? 0 : i + 1;
-				players.get(indexPl).setColorForced(true);
-				game.setActivePlayer(getIncreasedPlayerId(i));
+				int nextPl = i + 1 >= players.size() ? 0 : i + 1;
+				players.get(nextPl).setColorForced(true);
+				game.setActivePlayer(players.get(nextPl).getId());
+				break;
 			}
 		}
 	}

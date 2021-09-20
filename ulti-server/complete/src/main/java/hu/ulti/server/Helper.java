@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import hu.ulti.server.model.Card;
-import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.UuidWithCardId;
@@ -59,32 +58,6 @@ public class Helper {
 			return 1;
 
 		return 1;
-	}
-
-	public static boolean isBetli(Game game) {
-		List<Integer> betliIds = Arrays.asList(4, 9, 16, 21, 28, 33, 40, 45);
-
-		for (Integer id : betliIds) {
-			for (Integer call : game.getPreviousCall()) {
-				if (id == call)
-					return true;
-			}
-		}
-
-		return false;
-	}
-
-	public static boolean isSzintelenDuri(Game game) {
-		List<Integer> duriIds = Arrays.asList(7, 11, 19, 23, 31, 35, 43, 47);
-
-		for (Integer id : duriIds) {
-			for (Integer call : game.getPreviousCall()) {
-				if (id == call)
-					return true;
-			}
-		}
-
-		return false;
 	}
 
 	public static boolean isTeritett(List<Integer> previousCall) {

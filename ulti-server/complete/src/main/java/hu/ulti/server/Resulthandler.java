@@ -88,7 +88,7 @@ public class Resulthandler {
 			} else if (isTeritettDuri() && isUlti()) {
 				proccessTerDuri();
 				proccessUlti();
-				checkCsendes100();
+				proccessPassz(false);
 			} else if (isDuri() && is20100()) {
 				proccessDuri();
 				proccess20100();
@@ -100,7 +100,7 @@ public class Resulthandler {
 			} else if (isDuri() && isUlti()) {
 				proccessDuri();
 				proccessUlti();
-				checkCsendes100();
+				proccessPassz(false);
 			} else if (is20100() && isUlti()) {
 				proccess20100();
 				proccessUlti();
@@ -111,7 +111,7 @@ public class Resulthandler {
 				resultList.add(addResult(isSzintelenDuriSuccess(), getRespCallId(listTerSzDuri)));
 			} else if (isTeritettDuri()) {
 				proccessTerDuri();
-				checkCsendes100();
+				proccessPassz(false);
 				checkCsendesUlti();
 			} else if (isTeritettBetli()) {
 				resultList.add(addResult(isBetliSuccess(), getRespCallId(listTerBetli)));
@@ -122,7 +122,7 @@ public class Resulthandler {
 				resultList.add(addResult(isSzintelenDuriSuccess(), getRespCallId(listSzDuri)));
 			} else if (isDuri()) {
 				proccessDuri();
-				checkCsendes100();
+				proccessPassz(false);
 				checkCsendesUlti();
 			} else if (isBetli()) {
 				resultList.add(addResult(isBetliSuccess(), getRespCallId(listBetli)));
@@ -132,7 +132,7 @@ public class Resulthandler {
 				proccess40100();
 				checkCsendesUlti();
 			} else if (isPassz()) {
-				proccessPassz();
+				proccessPassz(true);
 				checkCsendesUlti();
 			}
 
@@ -258,7 +258,7 @@ public class Resulthandler {
 		return 0;
 	}
 
-	private void proccessPassz() {
+	private void proccessPassz(boolean isPassz) {
 
 		List<Integer> s10 = Arrays.asList(0, 0, 0);
 		for (int i = 0; i < players.size(); i++) {
@@ -279,12 +279,16 @@ public class Resulthandler {
 		for (int i = 0; i < game.getSays().size(); i++) {
 			for (int j = 0; j < players.size(); j++) {
 				if (game.getSays().get(i).getPlayerId() == players.get(i).getId()) {
-
 					if (game.getSays().get(i).isHave40() || game.getSays().get(i).isHave220()) {
+						System.out.println("444444444440000000000000000000000000000000");
 						s10.set(j, s10.get(1) + 40);
-					} else if (game.getSays().get(i).isHave120()) {
+					}
+					if (game.getSays().get(i).isHave120()) {
+						System.out.println("22222222222222222220000000000000000000000000");
 						s10.set(j, s10.get(1) + 20);
-					} else if (game.getSays().get(i).isHave320()) {
+					}
+					if (game.getSays().get(i).isHave320()) {
+						System.out.println("666666666666600000000000000000000000000");
 						s10.set(j, s10.get(1) + 60);
 					}
 				}
@@ -298,13 +302,21 @@ public class Resulthandler {
 			if (game.getLastCallerId() == players.get(j).getId()) {
 				caller10s = s10.get(j);
 				others10s = s10.get(getIncreasedId(j + 1)) + s10.get(getIncreasedId(j + 2)) + talon10s;
+				break;
 			}
 		}
 
-		if (caller10s >= 100 || others10s >= 100) {
-			resultList.add(addResult(caller10s > others10s, getCsendesSzazId(), caller10s + " - " + others10s));
+		if (isPassz) {
+			if (caller10s >= 100 || others10s >= 100) {
+				resultList.add(addResult(caller10s > others10s, getCsendesSzazId(), caller10s + " - " + others10s));
+			} else {
+				resultList
+						.add(addResult(caller10s > others10s, getRespCallId(listPassz), caller10s + " - " + others10s));
+			}
 		} else {
-			resultList.add(addResult(caller10s > others10s, getRespCallId(listPassz), caller10s + " - " + others10s));
+			if (caller10s >= 100 || others10s >= 100) {
+				resultList.add(addResult(caller10s > others10s, getCsendesSzazId(), caller10s + " - " + others10s));
+			}
 		}
 	}
 
@@ -349,7 +361,7 @@ public class Resulthandler {
 	private void proccessUlti() {
 
 		if (isPassz()) {
-			proccessPassz();
+			proccessPassz(true);
 		}
 
 		resultList.add(addResult(isUltiSuccess(), getRespCallId(listUlti)));
@@ -408,53 +420,6 @@ public class Resulthandler {
 		}
 
 		return false;
-	}
-
-	private void checkCsendes100() {
-		List<Integer> s10 = Arrays.asList(0, 0, 0);
-		for (int i = 0; i < players.size(); i++) {
-			s10.set(i, get10Value(players.get(i)));
-		}
-
-		int talon10s = 0;
-
-		int sum = 0;
-
-		for (int i = 0; i < s10.size(); i++) {
-			sum += s10.get(i);
-		}
-
-		if (sum != 90)
-			talon10s = 90 - sum;
-
-		for (int i = 0; i < game.getSays().size(); i++) {
-			for (int j = 0; j < players.size(); j++) {
-				if (game.getSays().get(i).getPlayerId() == players.get(i).getId()) {
-
-					if (game.getSays().get(i).isHave40() || game.getSays().get(i).isHave220()) {
-						s10.set(j, s10.get(1) + 40);
-					} else if (game.getSays().get(i).isHave120()) {
-						s10.set(j, s10.get(1) + 20);
-					} else if (game.getSays().get(i).isHave320()) {
-						s10.set(j, s10.get(1) + 60);
-					}
-				}
-			}
-		}
-
-		int caller10s = 0;
-		int others10s = 0;
-
-		for (int j = 0; j < players.size(); j++) {
-			if (game.getLastCallerId() == players.get(j).getId()) {
-				caller10s = s10.get(j);
-				others10s = s10.get(getIncreasedId(j + 1)) + s10.get(getIncreasedId(j + 2)) + talon10s;
-			}
-		}
-
-		if (caller10s >= 100 || others10s >= 100) {
-			resultList.add(addResult(caller10s > others10s, getCsendesSzazId(), caller10s + " - " + others10s));
-		}
 	}
 
 	private void checkCsendesUlti() {
@@ -548,13 +513,11 @@ public class Resulthandler {
 	}
 
 	private int getIncreasedId(int id) {
-		if (id == 0)
-			return 1;
-		else if (id == 1)
-			return 2;
-		else if (id == 2)
+		if (id == 3)
 			return 0;
+		else if (id == 4)
+			return 1;
 
-		return -1;
+		return id;
 	}
 }

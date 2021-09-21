@@ -110,6 +110,7 @@ public class UltiController {
 
 			talon = hands.get(3);
 
+			game.setTalon(Helper.fillTalonWithMinusOne());
 			game.setHands(handList);
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -293,6 +294,7 @@ public class UltiController {
 						players.get(i).setHand(null);
 					}
 					hands = null;
+					game.setTalon(talon);
 					talon = null;
 					game.setRoundStarted(false);
 					game.setPlayReadyToStart(false);

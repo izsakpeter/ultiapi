@@ -1,3 +1,4 @@
+import { Card } from "./card";
 import { Hand } from "./hand";
 import { Player } from "./player";
 import { Result } from "./result";
@@ -22,7 +23,8 @@ export class Game {
 	public firstTurn: boolean;
 	public says: Array<Say>;
 	public hands: Array<Hand>;
-	public strikeList: Array<StrikeList>
+	public strikeList: Array<StrikeList>;
+	public talon: Array<Card>;
 
 	public errorMessage: string ;
 }

@@ -112,6 +112,14 @@ public class Helper {
 		return hand;
 	}
 
+	public static List<Card> fillTalonWithMinusOne() {
+		List<Card> talon = new ArrayList<Card>();
+		talon.add(new Card(-1, -1));
+		talon.add(new Card(-1, -1));
+
+		return talon;
+	}
+
 	public static List<Card> addTalon(Player player, List<Card> talon) {
 
 		player.getHand().add(talon.get(0));

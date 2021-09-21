@@ -11,4 +11,5 @@ export class Player {
 	public strikes: Array<Strike>;
 	public isColorForced: boolean = false;
 	public bluff4020: boolean;
+	public said: boolean;
 }

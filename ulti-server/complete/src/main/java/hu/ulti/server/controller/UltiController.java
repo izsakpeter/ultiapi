@@ -238,17 +238,17 @@ public class UltiController {
 	public String say(@RequestBody Request request) {
 		Say someSay = new Say(request.getId(), request.isHave40(), request.isHave120(), request.isHave220(),
 				request.isHave320());
-
-		boolean haveSay = false;
-
-		for (int i = 0; i < game.getSays().size(); i++) {
-			if (game.getSays().get(i).getPlayerId() == someSay.getPlayerId())
-				haveSay = true;
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (someSay.getPlayerId() == players.get(i).getId()) {
+				players.get(i).setSaid(true);
+				game.addSayToList(someSay);
+				break;
+			}
 		}
-
-		if (!haveSay)
-			game.addSayToList(someSay);
-
+		
+		game.setLastModificationTimeStamp(System.currentTimeMillis());
+		
 		return "someSay";
 	}
 

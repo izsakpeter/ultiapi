@@ -16,7 +16,8 @@ interface iState {
     is220Checked: boolean,
     is320Checked: boolean,
     colorId: number,
-    isFirstTurn: boolean
+    isFirstTurn: boolean,
+    isSaid: boolean
 }
 
 export class SayComponent extends React.Component<iProps, iState>{
@@ -31,7 +32,8 @@ export class SayComponent extends React.Component<iProps, iState>{
             is220Checked: false,
             is320Checked: false,
             colorId: 0,
-            isFirstTurn: false
+            isFirstTurn: false,
+            isSaid: true
         }
 
         this.onChoose40 = this.onChoose40.bind(this);
@@ -46,7 +48,8 @@ export class SayComponent extends React.Component<iProps, iState>{
             state = {
                 ...state,
                 isFirstTurn: props.game.firstTurn,
-                colorId: getColorIdByCallItem(props.game.previousCall[0])
+                colorId: getColorIdByCallItem(props.game.previousCall[0]),
+                isSaid: props.game.player.said
             };
         }
 
@@ -54,7 +57,7 @@ export class SayComponent extends React.Component<iProps, iState>{
     }
 
     render() {
-        if (this.state.isFirstTurn && this.props.game.player.hand.length === 10 && this.props.game.activePlayer == this.props.game.player.id) {
+        if (this.state.isFirstTurn && this.props.game.player.hand.length === 10 && this.props.game.activePlayer == this.props.game.player.id  && !this.state.isSaid) {
             return (
                 <div>
                     <div><Button text="mondás" onClick={() => this.clickHandler(this.state.showPanel)} /></div>

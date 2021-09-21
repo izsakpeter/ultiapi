@@ -5,7 +5,17 @@ import { Constants } from "../helper/constants";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
-export class StartingValue extends React.Component<{ game: Game, postReq: (reqObj: RequestModel) => void }, { value: number, id: number }> {
+interface iProps {
+    game: Game,
+    postReq: (reqObj: RequestModel) => void
+}
+
+interface iState {
+    value: number,
+    id: number
+}
+
+export class StartingValue extends React.Component<iProps, iState> {
 
     constructor(props) {
         super(props);
@@ -19,8 +29,13 @@ export class StartingValue extends React.Component<{ game: Game, postReq: (reqOb
         this.setStartingValue = this.setStartingValue.bind(this);
     }
 
-    static getDerivedStateFromProps(props: { game: Game }, state: { id: number }) {
-        state.id = props.game.player.id;
+    static getDerivedStateFromProps(props: iProps, state: iState) {
+
+        state = {
+            ...state,
+            id: props.game.player.id
+        };
+        
         return state;
     }
 

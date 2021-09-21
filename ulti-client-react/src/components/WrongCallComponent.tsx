@@ -1,7 +1,14 @@
 import React = require("react");
 import { Game } from "../model/game";
 
-export class WronCallComponent extends React.Component<{ game: Game }, {}> {
+interface iProps {
+    game: Game
+}
+
+interface iState {
+}
+
+export class WronCallComponent extends React.Component<iProps, iState> {
 
     constructor(props) {
         super(props)

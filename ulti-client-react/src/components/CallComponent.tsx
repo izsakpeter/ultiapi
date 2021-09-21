@@ -7,7 +7,21 @@ import { RequestModel } from "../model/requestModel";
 import { PassOrJoin } from "./PassOrJoinComponent";
 import { WronCallComponent } from "./WrongCallComponent";
 
-export class CallComponent extends React.Component<{ talon: Array<number>, game: Game, hand: Array<number>, postReq: (reqObj: RequestModel) => void, clearTalon: () => void }, { colorId: number, callList: Array<number>, game: Game }>{
+interface iProps {
+    talon: Array<number>,
+    game: Game,
+    hand: Array<number>,
+    postReq: (reqObj: RequestModel) => void,
+    clearTalon: () => void
+}
+
+interface iState {
+    colorId: number,
+    callList: Array<number>,
+    game: Game
+}
+
+export class CallComponent extends React.Component<iProps, iState>{
 
     constructor(props) {
         super(props);
@@ -32,10 +46,14 @@ export class CallComponent extends React.Component<{ talon: Array<number>, game:
         this.onChooseTSzDuri = this.onChooseTSzDuri.bind(this);
     }
 
-    static getDerivedStateFromProps(props: { game: Game }, state: { colorId: number }) {
+    static getDerivedStateFromProps(props: iProps, state: iState) {
 
         if (props.game.previousCall.length === 0) {
-            state.colorId = props.game.startingValue;
+
+            state = {
+                ...state,
+                colorId: props.game.startingValue
+            };
         }
 
         return state;

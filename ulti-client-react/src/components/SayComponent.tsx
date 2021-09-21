@@ -4,8 +4,22 @@ import { getColorIdByCallItem, have20, have40 } from "../helper/callHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
+interface iProps {
+    game: Game,
+    postReq: (reqObj: RequestModel) => void
+}
 
-export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj: RequestModel) => void }, { showPanel: boolean, is40Checked: boolean, is120Checked: boolean, is220Checked: boolean, is320Checked: boolean, colorId: number, isFirstTurn: boolean }>{
+interface iState {
+    showPanel: boolean,
+    is40Checked: boolean,
+    is120Checked: boolean,
+    is220Checked: boolean,
+    is320Checked: boolean,
+    colorId: number,
+    isFirstTurn: boolean
+}
+
+export class SayComponent extends React.Component<iProps, iState>{
 
     constructor(props) {
         super(props);
@@ -27,7 +41,7 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
         this.okButtonHandler = this.okButtonHandler.bind(this);
     }
 
-    static getDerivedStateFromProps(props: { game: Game, }, state: { showPanel: boolean, is40Checked: boolean, is120Checked: boolean, is220Checked: boolean, is320Checked: boolean, colorId: number, isFirstTurn: boolean  }) {
+    static getDerivedStateFromProps(props: iProps, state: iState) {
         if (props.game != null) {
             state = {
                 ...state,
@@ -89,7 +103,7 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
         }
     }
 
-    disable40() : boolean {
+    disable40(): boolean {
         return have40(this.state.colorId, this.props.game)
     }
 

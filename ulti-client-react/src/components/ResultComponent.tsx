@@ -5,7 +5,18 @@ import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
-export class ResultComponent extends React.Component<{ game: Game, postReq: (reqObj: RequestModel) => void }, { playerId: number }> {
+interface iProps {
+    game: Game,
+    postReq: (reqObj: RequestModel) => void
+}
+
+interface iState {
+    playerId: number
+}
+
+
+
+export class ResultComponent extends React.Component<iProps, iState> {
 
     constructor(props) {
         super(props)
@@ -15,10 +26,8 @@ export class ResultComponent extends React.Component<{ game: Game, postReq: (req
         }
     }
 
-    static getDerivedStateFromProps(props: { game: Game }, state: { playerId: number }) {
-
+    static getDerivedStateFromProps(props: iProps, state: iState) {
         state.playerId = props.game.player.id;
-
 
         return state;
     }

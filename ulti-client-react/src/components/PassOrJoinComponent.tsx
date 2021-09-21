@@ -5,7 +5,17 @@ import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
-export class PassOrJoin extends React.Component<{ game: Game, postReq: (reqObj: RequestModel) => void }, { lastCallerId: number, callList: Array<number> }> {
+interface iProps {
+    game: Game,
+     postReq: (reqObj: RequestModel) => void
+}
+
+interface iState {
+    lastCallerId: number,
+     callList: Array<number>
+}
+
+export class PassOrJoin extends React.Component<iProps, iState> {
 
     constructor(props) {
         super(props)
@@ -19,7 +29,7 @@ export class PassOrJoin extends React.Component<{ game: Game, postReq: (reqObj: 
         this.onJoin = this.onJoin.bind(this);
     }
 
-    static getDerivedStateFromProps(props: { game: Game }, state: { lastCallerId: number, callList: Array<number> }) {
+    static getDerivedStateFromProps(props: iProps, state: iState) {
         state.lastCallerId = props.game.lastCallerId;
         state.callList = props.game.previousCall;
 

@@ -4,8 +4,16 @@ import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
 import { Strike } from "../model/strike";
 
+interface iProps {
+    game: Game
+}
 
-export class StrikeComponent extends React.Component<{ game: Game }, { strikes: Array<Strike>, showStrikes: boolean }> {
+interface iState {
+    strikes: Array<Strike>,
+    showStrikes: boolean
+}
+
+export class StrikeComponent extends React.Component<iProps, iState> {
 
     constructor(props) {
         super(props);
@@ -16,8 +24,13 @@ export class StrikeComponent extends React.Component<{ game: Game }, { strikes: 
         }
     }
 
-    static getDerivedStateFromProps(props: { game: Game }, state: { strikes: Array<Strike> }) {
-        state.strikes = props.game.player.strikes;
+    static getDerivedStateFromProps(props: iProps, state: iState) {
+
+        state = {
+            ...state,
+            strikes: props.game.player.strikes
+        };
+        
         return state;
     }
 

@@ -7,7 +7,15 @@ import { LoginComponent } from './LoginComponent';
 import { RequestModel } from '../model/requestModel';
 import { MessageComponent } from './MessageComponent';
 
-export default class App extends React.Component<{}, { gotCards: boolean, game: Game, isWrongLogin: boolean, isLoggedIn: boolean, lastTimeStamp: number}> {
+interface iState {
+    gotCards: boolean,
+    game: Game,
+    isWrongLogin: boolean,
+    isLoggedIn: boolean,
+    lastTimeStamp: number
+}
+
+export default class App extends React.Component<{}, iState> {
 
     constructor(props) {
         super(props);
@@ -20,18 +28,18 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
             lastTimeStamp: 0
         }
     }
-   
+
     render() {
         return (
             <div>
-                <div className={"align-right"}><LoginComponent postReq={this.postRequest}/></div>
+                <div className={"align-right"}><LoginComponent postReq={this.postRequest} /></div>
                 <div className={"align-center"}><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} postReq={this.postRequest} /></div>
-                <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest}/></div>
+                <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest} /></div>
             </div>
         );
     }
 
-    async status(id: number){
+    async status(id: number) {
         const res = await StatusPostRequest(id, this.state.lastTimeStamp);
 
         if (res != null) {
@@ -42,7 +50,7 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
                 gotCardsState = false;
 
             this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true });
-            this.setState({lastTimeStamp: Date.now()});
+            this.setState({ lastTimeStamp: Date.now() });
 
         } else {
             this.setState({ gotCards: false, isWrongLogin: true, isLoggedIn: true });
@@ -55,7 +63,7 @@ export default class App extends React.Component<{}, { gotCards: boolean, game: 
         return this.postRequestImpl(reqObj);
     }
 
-    async postRequestImpl(reqObj: RequestModel){
+    async postRequestImpl(reqObj: RequestModel) {
         await PostRequest(reqObj);
 
         if (reqObj.dest === "start")

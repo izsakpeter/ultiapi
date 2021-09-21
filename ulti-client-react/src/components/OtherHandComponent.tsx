@@ -2,7 +2,14 @@ import React = require("react");
 import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
 
-export default class OtherHandComponent extends React.Component<{ game: Game }, {}> {
+interface iProps {
+    game: Game
+}
+
+interface iState {
+}
+
+export default class OtherHandComponent extends React.Component<iProps, iState> {
 
     render() {
 

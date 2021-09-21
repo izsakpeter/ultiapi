@@ -2,8 +2,15 @@ import React = require("react");
 import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
 
+interface iProps {
+    game: Game
+}
 
-export class PlaygroundComponent extends React.Component<{ game: Game }, {}> {
+interface iState {
+}
+
+
+export class PlaygroundComponent extends React.Component<iProps, iState> {
 
     constructor(props) {
         super(props);

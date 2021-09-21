@@ -10,7 +10,18 @@ import { StrikeComponent } from "./StrikeComponent";
 import OtherHandComponent from "./OtherHandComponent";
 import { SayComponent } from "./SayComponent";
 
-export class Table extends React.Component<{ gotCards: boolean, game: Game, postReq: (reqObj: RequestModel) => void }, { talon: number[], hand: number[] }> {
+interface iProps {
+    gotCards: boolean,
+     game: Game,
+      postReq: (reqObj: RequestModel) => void
+}
+
+interface iState {
+    talon: number[],
+     hand: number[]
+}
+
+export class Table extends React.Component<iProps, iState> {
 
     cards: number[] = [];
 
@@ -28,14 +39,17 @@ export class Table extends React.Component<{ gotCards: boolean, game: Game, post
         this.clearTalon = this.clearTalon.bind(this);
     }
 
-    static getDerivedStateFromProps(props: { gotCards: boolean, game: Game }, state: { talon: number[], hand: number[] }) {
+    static getDerivedStateFromProps(props: iProps, state: iState) {
         let cards: number[] = [];
         if (props.gotCards === true && props.game.player && state.talon.length == 0) {
             for (let i = 0; i < props.game.player.hand.length; i++) {
                 cards.push(props.game.player.hand[i].id);
             }
 
-            state.hand = cards;
+            state = {
+                ...state,
+                hand: cards
+            };
         }
         return state;
     }

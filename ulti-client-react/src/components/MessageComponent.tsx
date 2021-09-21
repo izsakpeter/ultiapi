@@ -5,7 +5,26 @@ import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { ResultComponent } from "./ResultComponent";
 
-export class MessageComponent extends React.Component<{ game: Game, gotCards: boolean, isLoggedIn: boolean, postReq: (reqObj: RequestModel) => void }, { playerId: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean, isGameOver: boolean, isRoundRun: boolean, isPlayRun: boolean }> {
+interface iProps {
+    game: Game,
+    gotCards: boolean,
+    isLoggedIn: boolean,
+    postReq: (reqObj: RequestModel) => void
+}
+
+interface iState {
+    playerId: number,
+    activePlayerId: number,
+    lastCallerId: number,
+    callList: Array<number>,
+    gotCards: boolean,
+    isLoggedIn: boolean,
+    isGameOver: boolean,
+    isRoundRun: boolean,
+    isPlayRun: boolean
+}
+
+export class MessageComponent extends React.Component<iProps, iState> {
 
     constructor(props) {
         super(props)
@@ -23,7 +42,7 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
         }
     }
 
-    static getDerivedStateFromProps(props: { game: Game, gotCards: boolean, isLoggedIn: boolean }, state: { playerId: number, activePlayerId: number, lastCallerId: number, callList: Array<number>, gotCards: boolean, isLoggedIn: boolean, isGameOver: boolean, isRoundRun: boolean, isPlayRun: boolean }) {
+    static getDerivedStateFromProps(props: iProps, state: iState) {
         if (props.game != null) {
             state.playerId = props.game.player.id;
             state.activePlayerId = props.game.activePlayer;

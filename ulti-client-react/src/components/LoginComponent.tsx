@@ -1,9 +1,9 @@
 import React = require("react");
 import { RequestModel } from "../model/requestModel";
 
-export class LoginComponent extends React.Component <{postReq: (reqObj: RequestModel) => void},{username: string}> {
+export class LoginComponent extends React.Component<{ postReq: (reqObj: RequestModel) => void }, { username: string }> {
 
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {

@@ -239,7 +239,7 @@ export function have40(colorId: number, game: Game): boolean {
 	if (haveFelso && haveKiraly)
 		return false;
 
-	return true
+	return true;
 }
 
 export function have20(colorId: number, game: Game): number {

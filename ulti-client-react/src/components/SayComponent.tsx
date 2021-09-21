@@ -16,7 +16,7 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
             is120Checked: false,
             is220Checked: false,
             is320Checked: false,
-            colorId: getColorIdByCallItem(this.props.game.previousCall[0]),
+            colorId: 0,
             isFirstTurn: false
         }
 
@@ -27,9 +27,13 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
         this.okButtonHandler = this.okButtonHandler.bind(this);
     }
 
-    static getDerivedStateFromProps(props: { game: Game, }, state: { isFirstTurn: boolean }) {
+    static getDerivedStateFromProps(props: { game: Game, }, state: { showPanel: boolean, is40Checked: boolean, is120Checked: boolean, is220Checked: boolean, is320Checked: boolean, colorId: number, isFirstTurn: boolean  }) {
         if (props.game != null) {
-            state.isFirstTurn = props.game.firstTurn;
+            state = {
+                ...state,
+                isFirstTurn: props.game.firstTurn,
+                colorId: getColorIdByCallItem(props.game.previousCall[0])
+            };
         }
 
         return state;
@@ -60,7 +64,7 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
             if (game.lastCallerId === game.activePlayer) {
                 return (
                     <div className={"say-border"}>
-                        <div><input type="checkbox" name="40" disabled={have40(this.state.colorId, this.props.game)} onChange={this.onChoose40} /> 40 </div>
+                        <div><input type="checkbox" name="40" disabled={this.disable40()} onChange={this.onChoose40} /> 40 </div>
                         <div><input type="checkbox" name="120" disabled={this.disable20(1)} onChange={this.onChoose120} /> 20 </div>
                         <div><input type="checkbox" name="220" disabled={this.disable20(2)} onChange={this.onChoose220} /> 2x20</div>
                         <div><input type="checkbox" name="320" disabled={this.disable20(3)} onChange={this.onChoose320} /> 3x20</div>
@@ -70,7 +74,7 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
             } else {
                 return (
                     <div className={"say-border"}>
-                        <div><input type="checkbox" name="40" disabled={have40(this.state.colorId, this.props.game)} onChange={this.onChoose40} /> 40 </div>
+                        <div><input type="checkbox" name="40" disabled={this.disable40()} onChange={this.onChoose40} /> 40 </div>
                         <div><input type="checkbox" name="120" disabled={this.disable20(1)} onChange={this.onChoose120} /> 20 </div>
                         <div><input type="checkbox" name="220" disabled={this.disable20(2)} onChange={this.onChoose220} /> 2x20</div>
                         <div><input type="checkbox" name="320" disabled={this.disable20(3)} onChange={this.onChoose320} /> 3x20</div>
@@ -83,6 +87,10 @@ export class SayComponent extends React.Component<{ game: Game, postReq: (reqObj
                 <></>
             )
         }
+    }
+
+    disable40() : boolean {
+        return have40(this.state.colorId, this.props.game)
     }
 
     disable20(counter: number): boolean {

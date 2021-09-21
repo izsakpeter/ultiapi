@@ -131,7 +131,7 @@ export class SayComponent extends React.Component<iProps, iState>{
     }
 
     onChoose40(event) {
-        this.setState({ is40Checked: !event.target.checked });
+        this.setState({ is40Checked: event.target.checked });
     }
 
     onChoose120(event) {

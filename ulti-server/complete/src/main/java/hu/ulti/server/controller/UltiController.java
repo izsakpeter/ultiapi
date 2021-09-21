@@ -103,7 +103,6 @@ public class UltiController {
 			for (int i = 0; i < players.size(); i++) {
 				players.get(i).setHand(hands.get(i));
 				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
-
 				handList.add(i, new Hand());
 				handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
 			}
@@ -238,7 +237,7 @@ public class UltiController {
 	public String say(@RequestBody Request request) {
 		Say someSay = new Say(request.getId(), request.isHave40(), request.isHave120(), request.isHave220(),
 				request.isHave320());
-		
+
 		for (int i = 0; i < players.size(); i++) {
 			if (someSay.getPlayerId() == players.get(i).getId()) {
 				players.get(i).setSaid(true);
@@ -246,9 +245,9 @@ public class UltiController {
 				break;
 			}
 		}
-		
+
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
-		
+
 		return "someSay";
 	}
 
@@ -345,13 +344,13 @@ public class UltiController {
 			for (int i = 0; i < players.size(); i++) {
 				players.get(i).setHand(hands.get(i));
 				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
-
 				handList.add(i, new Hand());
 				handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
 			}
 
 			talon = hands.get(3);
 
+			game.setTalon(Helper.fillTalonWithMinusOne());
 			game.setHands(handList);
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());

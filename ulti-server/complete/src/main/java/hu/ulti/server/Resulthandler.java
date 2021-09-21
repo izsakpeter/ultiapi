@@ -144,8 +144,10 @@ public class Resulthandler {
 					List<StrikeList> strikeList = new ArrayList<StrikeList>();
 
 					strikeList.add(0, new StrikeList(players.get(i).getId(), players.get(i).getStrikes()));
-					strikeList.add(1, new StrikeList(players.get(getIncreasedId(i + 1)).getId(), players.get(getIncreasedId(i + 1)).getStrikes()));
-					strikeList.add(2, new StrikeList(players.get(getIncreasedId(i + 2)).getId(), players.get(getIncreasedId(i + 2)).getStrikes()));
+					strikeList.add(1, new StrikeList(players.get(getIncreasedId(i + 1)).getId(),
+							players.get(getIncreasedId(i + 1)).getStrikes()));
+					strikeList.add(2, new StrikeList(players.get(getIncreasedId(i + 2)).getId(),
+							players.get(getIncreasedId(i + 2)).getStrikes()));
 
 					game.setStrikeList(strikeList);
 				}
@@ -290,15 +292,21 @@ public class Resulthandler {
 
 		for (int i = 0; i < game.getSays().size(); i++) {
 			for (int j = 0; j < players.size(); j++) {
-				if (game.getSays().get(i).getPlayerId() == players.get(i).getId()) {
-					if (game.getSays().get(i).isHave40() || game.getSays().get(i).isHave220()) {
-						s10.set(j, s10.get(1) + 40);
+				if (game.getSays().get(i).getPlayerId() == players.get(j).getId()) {
+					if (game.getSays().get(i).isHave40()) {
+						s10.set(j, s10.get(j) + 40);
 					}
+
 					if (game.getSays().get(i).isHave120()) {
-						s10.set(j, s10.get(1) + 20);
+						s10.set(j, s10.get(j) + 20);
 					}
+
+					if (game.getSays().get(i).isHave220()) {
+						s10.set(j, s10.get(j) + 40);
+					}
+
 					if (game.getSays().get(i).isHave320()) {
-						s10.set(j, s10.get(1) + 60);
+						s10.set(j, s10.get(j) + 60);
 					}
 				}
 			}

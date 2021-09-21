@@ -1,5 +1,5 @@
 .result-border {
-    top: 10%;
+    top: 5%;
     left: 50%;
     border-style: solid;
     border-width: 1px;
@@ -11,22 +11,25 @@
 }
 
 .first-player-strikes {
-    text-align: left;
-    top: 20%;
+    top: 15%;
     left: 10%;
     position: absolute;
 }
 
 .second-player-strikes {
-    text-align: center;
-    top: 20%;
+    top: 15%;
     left: 50%;
     position: absolute;
 }
 
 .third-player-strikes {
-    text-align: right;
-    top: 20%;
+    top: 15%;
     left: 70%;
+    position: absolute;
+}
+
+.res-talon-poz {
+    top: 15%;
+    left: 35%;
     position: absolute;
 }

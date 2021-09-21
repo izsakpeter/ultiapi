@@ -24,3 +24,9 @@
     margin-bottom: 5px;
     margin-left: 5px;
 }
+
+.talon-poz {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+}

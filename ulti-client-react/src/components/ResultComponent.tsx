@@ -45,6 +45,8 @@ export class ResultComponent extends React.Component<{ game: Game, postReq: (req
             strikes.push(<div key={i}>{tmp}</div>);
         }
 
+        let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="strike-button-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="strike-button-card" /></div>
+
         return (
             <div>
                 <div className={"result-border"}>
@@ -52,11 +54,27 @@ export class ResultComponent extends React.Component<{ game: Game, postReq: (req
                     <div>{result}</div>
                     <div><Button text="kész" onClick={() => this.readyButtonAction((this.state.playerId))} /></div>
                 </div>
-                <div className={"first-player-strikes"}>{strikes[0]}</div>
-                <div className={"second-player-strikes"}>{strikes[1]}</div>
-                <div className={"third-player-strikes"}>{strikes[2]}</div>
-            </div>
 
+                <div className={"first-player-strikes"}>
+                    <div>{this.props.game.strikeList[0].playerId} ütése</div>
+                    <div>{strikes[0]}</div>
+                </div>
+
+                <div className={"res-talon-poz"}>
+                    <div>talon</div>
+                    <div>{talon}</div>
+                </div>
+
+                <div className={"second-player-strikes"}>
+                    <div>{this.props.game.strikeList[1].playerId} ütése</div>
+                    <div>{strikes[1]}</div>
+                </div>
+
+                <div className={"third-player-strikes"}>
+                    <div>{this.props.game.strikeList[2].playerId} ütése</div>
+                    <div>{strikes[2]}</div>
+                </div>
+            </div>
         )
     }
 

@@ -8,6 +8,7 @@
 @import "otherHandComponent.css";
 @import "playgroundComponent.css";
 @import "sayComponent.css";
+@import "resultComponent.css";
 .align-center {
     text-align: center;
 }

@@ -43,10 +43,8 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
 
         if (this.state.isGameOver) {
             return (
-                <div className={"msg-border"}>
-                    <div>Gameover</div>
-                    <div><ResultComponent game={this.props.game} /></div>
-                    <div><Button text="kész" onClick={() => this.readyButtonAction((this.state.playerId))} /></div>
+                <div>
+                    <div><ResultComponent game={this.props.game} postReq={this.props.postReq} /></div>
                 </div>
             )
         } else {
@@ -86,14 +84,5 @@ export class MessageComponent extends React.Component<{ game: Game, gotCards: bo
                 }
             }
         }
-    }
-
-    readyButtonAction(playerId: number) {
-        let reqObj: RequestModel = {
-            dest: "newgame",
-            id: playerId
-        }
-
-        this.props.postReq(reqObj);
     }
 }

@@ -26,6 +26,29 @@ export class RequestModel {
     public have120?: boolean;
     public have220?: boolean;
     public have320?: boolean;
+    public kontraPassz?: boolean;
+    public kontra40100?: boolean;
+    public kontraUlti?: boolean;
+    public kontraBetli?: boolean;
+    public kontraDuri?: boolean;
+    public kontraDuriSz?: boolean;
+    public kontra20100?: boolean;
+    public kontraBetliTer?: boolean;
+    public kontraDuriTer?: boolean;
+    public kontraDuriTerSz?: boolean;
+    public ackKontra?: boolean;
+
+    //rekontra
+    public rekontraPassz?: boolean;
+    public rekontra40100?: boolean;
+    public rekontraUlti?: boolean;
+    public rekontraBetli?: boolean;
+    public rekontraDuri?: boolean;
+    public rekontraDuriSz?: boolean;
+    public rekontra20100?: boolean;
+    public rekontraBetliTer?: boolean;
+    public rekontraDuriTer?: boolean;
+    public rekontraDuriTerSz?: boolean
 }
 
 export function getRequestJson(model: RequestModel): any {
@@ -70,7 +93,32 @@ export function getRequestJson(model: RequestModel): any {
                 have40: model.have40,
                 have120: model.have120,
                 have220: model.have220,
-                have320: model.have320
+                have320: model.have320,
+                kontraPassz: model.kontraPassz,
+                kontra40100: model.kontra40100,
+                kontraUlti: model.kontraUlti,
+                kontraBetli: model.kontraBetli,
+                kontraDuri: model.kontraDuri,
+                kontraDuriSz: model.kontraDuriSz,
+                kontra20100: model.kontra20100,
+                kontraBetliTer: model.kontraBetliTer,
+                kontraDuriTer: model.kontraDuriTer,
+                kontraDuriTerSz: model.kontraDuriTerSz,
+                ackKontra: model.ackKontra
+            };
+        case "rekontra":
+            return {
+                id: model.id,
+                rekontraPassz: model.rekontraPassz,
+                rekontra40100: model.rekontra40100,
+                rekontraUlti: model.rekontraUlti,
+                rekontraBetli: model.rekontraBetli,
+                rekontraDuri: model.rekontraDuri,
+                rekontraDuriSz: model.rekontraDuriSz,
+                rekontra20100: model.rekontra20100,
+                rekontraBetliTer: model.rekontraBetliTer,
+                rekontraDuriTer: model.rekontraDuriTer,
+                rekontraDuriTerSz: model.rekontraDuriTerSz
             };
         default:
             break;

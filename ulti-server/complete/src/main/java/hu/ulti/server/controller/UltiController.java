@@ -236,7 +236,10 @@ public class UltiController {
 	@PostMapping("say")
 	public String say(@RequestBody Request request) {
 		Say someSay = new Say(request.getId(), request.isHave40(), request.isHave120(), request.isHave220(),
-				request.isHave320());
+				request.isHave320(), request.isKontraPassz(), request.isKontra40100(), request.isKontraUlti(),
+				request.isKontraBetli(), request.isKontraDuri(), request.isKontraDuriSz(), request.isKontra20100(),
+				request.isKontraBetliTer(), request.isKontraDuriTer(), request.isKontraDuriTerSz(),
+				request.isAckKontra());
 
 		for (int i = 0; i < players.size(); i++) {
 			if (someSay.getPlayerId() == players.get(i).getId()) {
@@ -249,6 +252,25 @@ public class UltiController {
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 
 		return "someSay";
+	}
+
+	@PostMapping("rekontra")
+	public String rekontra(@RequestBody Request request) {
+
+		Say rekontraSay = new Say(request.getId(), request.isRekontraPassz(), request.isRekontra40100(),
+				request.isRekontraUlti(), request.isRekontraBetli(), request.isRekontraDuri(),
+				request.isRekontraDuriSz(), request.isRekontra20100(), request.isRekontraBetliTer(),
+				request.isRekontraDuriTer(), request.isRekontraDuriTerSz());
+
+		game.addSayToList(rekontraSay);
+
+		for (int i = 0; i < game.getSays().size(); i++) {
+			game.getSays().get(i).setAckKontra(true);
+		}
+
+		game.setLastModificationTimeStamp(System.currentTimeMillis());
+
+		return "rekontra";
 	}
 
 	@PostMapping("play")

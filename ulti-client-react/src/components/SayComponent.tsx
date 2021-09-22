@@ -168,7 +168,7 @@ export class SayComponent extends React.Component<iProps, iState>{
                         </div>)
                 }
             }
-
+            /*
             if (game.lastCallerId != game.activePlayer) {
                 for (let i = 0; i < game.previousCall.length; i++) {
                     if (Constants.LIST_PASSZ.includes(game.previousCall[i])) {
@@ -193,7 +193,7 @@ export class SayComponent extends React.Component<iProps, iState>{
                         sayList.push(<div key={"kodtsz"}><input type="checkbox" name="kontraduritersz" onChange={this.onKontraDuriTerSz} /> Kontra {Constants.DURI_SZINTELEN_TERITETT} </div>)
                     }
                 }
-            }
+            }*/
 
             if (sayList.length > 0)
                 sayList.push(<div key={"sayokb"}><Button text="ok" onClick={this.sayOkButtonHandler} /></div>);
@@ -209,7 +209,7 @@ export class SayComponent extends React.Component<iProps, iState>{
     rekontraPanel(game: Game) {
 
         let rekontraList = [];
-
+        /*
         for (let i = 0; i < game.says.length; i++) {
             if (game.lastCallerId === game.player.id && !game.says[i].ackKontra) {
                 if (game.says[i].kontraPassz) {
@@ -256,7 +256,7 @@ export class SayComponent extends React.Component<iProps, iState>{
 
         if (rekontraList.length > 0)
             rekontraList.push(<div key={"rekokb"}><Button text="ok" onClick={this.rekontraOkButtonHandler} /></div>);
-
+*/
         return (
             <div>
                 {rekontraList}

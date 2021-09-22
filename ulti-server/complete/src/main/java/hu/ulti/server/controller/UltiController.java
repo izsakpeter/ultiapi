@@ -254,6 +254,7 @@ public class UltiController {
 		return "someSay";
 	}
 
+	/*
 	@PostMapping("rekontra")
 	public String rekontra(@RequestBody Request request) {
 
@@ -271,7 +272,7 @@ public class UltiController {
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 
 		return "rekontra";
-	}
+	}*/
 
 	@PostMapping("play")
 	public String play(@RequestBody Request request) {

@@ -15,9 +15,9 @@ public class CallHandler {
 
 			for (Integer callId : game.getCall()) {
 				if ((forcedColorId == Call.MAKK_ID && callId > 11)
-						|| (forcedColorId == Call.ZOLD_ID && (callId > 23 || callId <= 12))
-						|| (forcedColorId == Call.TOK_ID && (callId > 35 || callId <= 23))
-						|| (forcedColorId == Call.PIROS_ID && callId <= 35))
+						|| (forcedColorId == Call.ZOLD_ID && (callId > 23 || callId < 12))
+						|| (forcedColorId == Call.TOK_ID && (callId > 35 || callId < 24))
+						|| (forcedColorId == Call.PIROS_ID && callId < 36))
 					res = false;
 			}
 		} else {

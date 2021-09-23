@@ -1,15 +1,12 @@
-import { ids } from "webpack";
+import { KeyboardEventHandler } from "react";
+import { Kontra } from "./kontra";
 
 export class Call {
-    public id: number;
-    public value: number;
-    public color: number;
-    public name: string;
+    public callId: number;
+    public kontra: Kontra;
 
-    public constructor(id: number, value: number, color: number, name: string) {
-        this.id = id;
-        this.value = value;
-        this.color = color;
-        this.name = name;
+    public constructor(callId: number, kontra: Kontra) {
+        this.callId = callId;
+        this.kontra = kontra;
     }
 }

@@ -1,4 +1,5 @@
 import { ids } from "webpack";
+import { Call } from "./call";
 
 export class RequestModel {
     public dest: string;
@@ -11,7 +12,7 @@ export class RequestModel {
     public value?: number;
 
     //call
-    public call?: Array<number>;
+    public call?: Array<Call>;
     public talonid?: Array<number>;
     public bluff4020?: boolean;
 

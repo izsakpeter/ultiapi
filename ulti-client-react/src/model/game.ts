@@ -1,3 +1,4 @@
+import { Call } from "./call";
 import { Card } from "./card";
 import { Hand } from "./hand";
 import { Player } from "./player";
@@ -23,9 +24,8 @@ export class Game {
 	public hands: Array<Hand>;
 	public strikeList: Array<StrikeList>;
 	public talon: Array<Card>;
-	
-	public previousCall: Array<number>;
-	public call: Array<number>;
+	public previousCall: Array<Call>;
+	public call: Array<Call>;
 
 	public errorMessage: string ;
 }

@@ -114,7 +114,7 @@ export class CallComponent extends React.Component<iProps, iState>{
                     id: this.props.game.player.id,
                     call: finalCallList,
                     talonid: this.props.talon,
-                    bluff4020: isBluff4020(finalCallList, this.state.colorId, this.props.game)
+                    bluff4020: isBluff4020(this.state.callList, this.state.colorId, this.props.game)
                 }
 
                 this.props.postReq(reqObj);

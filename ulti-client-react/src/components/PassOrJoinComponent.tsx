@@ -2,6 +2,7 @@ import { Button } from "@blueprintjs/core";
 import React = require("react");
 import { getCallNameListString, getCallValueSum } from "../helper/callHandler";
 import { GetCardSource } from "../helper/cardHandler";
+import { Call } from "../model/call";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
@@ -12,7 +13,7 @@ interface iProps {
 
 interface iState {
     lastCallerId: number,
-     callList: Array<number>
+     callList: Array<Call>
 }
 
 export class PassOrJoin extends React.Component<iProps, iState> {

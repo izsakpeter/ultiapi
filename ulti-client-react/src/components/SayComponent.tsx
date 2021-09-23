@@ -48,7 +48,7 @@ export class SayComponent extends React.Component<iProps, iState>{
             state = {
                 ...state,
                 isFirstTurn: props.game.firstTurn,
-                colorId: getColorIdByCallItem(props.game.previousCall[0]),
+                colorId: getColorIdByCallItem(props.game.previousCall[0].callId),
                 isSaid: props.game.player.said
             };
         }

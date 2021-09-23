@@ -1,6 +1,7 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
 import { getCallNameListString, getCallValueSum } from "../helper/callHandler";
+import { Call } from "../model/call";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { ResultComponent } from "./ResultComponent";
@@ -16,7 +17,7 @@ interface iState {
     playerId: number,
     activePlayerId: number,
     lastCallerId: number,
-    callList: Array<number>,
+    callList: Array<Call>,
     gotCards: boolean,
     isLoggedIn: boolean,
     isGameOver: boolean,

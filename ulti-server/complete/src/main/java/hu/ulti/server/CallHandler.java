@@ -68,12 +68,15 @@ public class CallHandler {
 		List<Call> finalCall = new ArrayList<Call>();
 
 		for (int i = 0; i < game.getPreviousCall().size(); i++) {
+			List<Kontra> kontraList = new ArrayList<Kontra>();
 			for (int j = 0; j < players.size(); j++) {
 				if (game.getLastCallerId() != players.get(j).getId()) {
-					finalCall.add(new Call(game.getPreviousCall().get(i).getCallId(), new Kontra(players.get(j).getId(),
-							new KontraAck(), new KontraAck(), new KontraAck(), new KontraAck(), new KontraAck())));
+					kontraList.add(new Kontra(players.get(j).getId(), new KontraAck(), new KontraAck(), new KontraAck(),
+							new KontraAck(), new KontraAck()));
 				}
 			}
+
+			finalCall.add(new Call(game.getPreviousCall().get(i).getCallId(), kontraList));
 		}
 
 		return finalCall;

@@ -44,7 +44,7 @@ export class SayComponent extends React.Component<iProps, iState>{
     }
 
     static getDerivedStateFromProps(props: iProps, state: iState) {
-        if (props.game != null) {
+        if (props.game != null && props.game.playReadyToStart) {
             state = {
                 ...state,
                 isFirstTurn: props.game.firstTurn,

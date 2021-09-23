@@ -1,11 +1,16 @@
 package hu.ulti.server.model;
 
+import java.util.List;
+
 public class Call {
 
 	private int callId;
-	private Kontra kontra;
+	private List<Kontra> kontra;
+	
+	public Call() {
+	}
 
-	public Call(int callId, Kontra kontra) {
+	public Call(int callId, List<Kontra> kontra) {
 		this.callId = callId;
 		this.kontra = kontra;
 	}
@@ -18,11 +23,11 @@ public class Call {
 		this.callId = callId;
 	}
 
-	public Kontra getKontra() {
+	public List<Kontra> getKontra() {
 		return kontra;
 	}
 
-	public void setKontra(Kontra kontra) {
+	public void setKontra(List<Kontra> kontra) {
 		this.kontra = kontra;
 	}
 }

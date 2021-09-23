@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import hu.ulti.server.controller.UltiController;
-import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.Result;
@@ -502,13 +501,13 @@ public class Resulthandler {
 	private int getCsendesSzazId() {
 		int color = StrikeHandler.getAdu(game.getPreviousCall().get(0));
 
-		if (color == Call.MAKK_ID)
+		if (color == Constants.MAKK_ID)
 			return listCsendesSzaz.get(0);
-		else if (color == Call.ZOLD_ID)
+		else if (color == Constants.ZOLD_ID)
 			return listCsendesSzaz.get(1);
-		else if (color == Call.TOK_ID)
+		else if (color == Constants.TOK_ID)
 			return listCsendesSzaz.get(2);
-		else if (color == Call.PIROS_ID)
+		else if (color == Constants.PIROS_ID)
 			return listCsendesSzaz.get(3);
 
 		return 0;
@@ -517,13 +516,13 @@ public class Resulthandler {
 	private int getCsendesUltiId() {
 		int color = StrikeHandler.getAdu(game.getPreviousCall().get(0));
 
-		if (color == Call.MAKK_ID)
+		if (color == Constants.MAKK_ID)
 			return listCsendesUlti.get(0);
-		else if (color == Call.ZOLD_ID)
+		else if (color == Constants.ZOLD_ID)
 			return listCsendesUlti.get(1);
-		else if (color == Call.TOK_ID)
+		else if (color == Constants.TOK_ID)
 			return listCsendesUlti.get(2);
-		else if (color == Call.PIROS_ID)
+		else if (color == Constants.PIROS_ID)
 			return listCsendesUlti.get(3);
 
 		return 0;

@@ -16,8 +16,6 @@ export class Game {
 	public lastCallerId: number;
 	public activePlayer: number;
 	public round: Strike;
-	public previousCall: Array<number>;
-	public call: Array<number>;
 	public gameOver: boolean = false;
 	public resultList: Array<Result>;
 	public firstTurn: boolean;
@@ -25,6 +23,9 @@ export class Game {
 	public hands: Array<Hand>;
 	public strikeList: Array<StrikeList>;
 	public talon: Array<Card>;
+	
+	public previousCall: Array<number>;
+	public call: Array<number>;
 
 	public errorMessage: string ;
 }

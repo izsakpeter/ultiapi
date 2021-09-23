@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.Strike;
@@ -128,13 +127,13 @@ public class StrikeHandler {
 
 	public static int getColor(int id) {
 		if (id <= 7)
-			return Call.MAKK_ID;
+			return Constants.MAKK_ID;
 		else if (id <= 15)
-			return Call.ZOLD_ID;
+			return Constants.ZOLD_ID;
 		else if (id <= 23)
-			return Call.TOK_ID;
+			return Constants.TOK_ID;
 		else
-			return Call.PIROS_ID;
+			return Constants.PIROS_ID;
 	}
 
 	private void strikeHandler(int id) {
@@ -152,13 +151,13 @@ public class StrikeHandler {
 	public static int getAdu(int id) {
 
 		if (id < 12)
-			return Call.MAKK_ID;
+			return Constants.MAKK_ID;
 		else if (id < 24)
-			return Call.ZOLD_ID;
+			return Constants.ZOLD_ID;
 		else if (id < 36)
-			return Call.TOK_ID;
+			return Constants.TOK_ID;
 		else if (id < 48)
-			return Call.PIROS_ID;
+			return Constants.PIROS_ID;
 
 		return 0;
 	}

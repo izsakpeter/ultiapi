@@ -2,7 +2,7 @@ package hu.ulti.server;
 
 import java.util.List;
 
-import hu.ulti.server.model.Call;
+import hu.ulti.server.model.CallWithValue;
 import hu.ulti.server.model.Game;
 
 public class CallHandler {
@@ -14,10 +14,10 @@ public class CallHandler {
 			int forcedColorId = game.getStartingValue();
 
 			for (Integer callId : game.getCall()) {
-				if ((forcedColorId == Call.MAKK_ID && callId > 11)
-						|| (forcedColorId == Call.ZOLD_ID && (callId > 23 || callId < 12))
-						|| (forcedColorId == Call.TOK_ID && (callId > 35 || callId < 24))
-						|| (forcedColorId == Call.PIROS_ID && callId < 36))
+				if ((forcedColorId == Constants.MAKK_ID && callId > 11)
+						|| (forcedColorId == Constants.ZOLD_ID && (callId > 23 || callId < 12))
+						|| (forcedColorId == Constants.TOK_ID && (callId > 35 || callId < 24))
+						|| (forcedColorId == Constants.PIROS_ID && callId < 36))
 					res = false;
 			}
 		} else {
@@ -45,10 +45,10 @@ public class CallHandler {
 
 		int szum = 0;
 
-		List<Call> allCalls = Call.getAllCalls();
+		List<CallWithValue> allCalls = CallWithValue.getAllCalls();
 
 		for (Integer callId : call) {
-			for (Call allCall : allCalls) {
+			for (CallWithValue allCall : allCalls) {
 				if (allCall.getId() == callId)
 					szum += allCall.getValue();
 			}

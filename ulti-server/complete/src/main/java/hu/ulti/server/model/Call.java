@@ -5,6 +5,11 @@ public class Call {
 	private int callId;
 	private Kontra kontra;
 
+	public Call(int callId, Kontra kontra) {
+		this.callId = callId;
+		this.kontra = kontra;
+	}
+
 	public int getCallId() {
 		return callId;
 	}

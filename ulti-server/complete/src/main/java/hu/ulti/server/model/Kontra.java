@@ -9,6 +9,17 @@ public class Kontra {
 	private KontraAck szupRekontra;
 	private KontraAck maxKontra;
 
+	public Kontra(int playerId, KontraAck kontra, KontraAck rekontra, KontraAck szupKontra, KontraAck szupRekontra,
+			KontraAck maxKontra) {
+		super();
+		this.playerId = playerId;
+		this.kontra = kontra;
+		this.rekontra = rekontra;
+		this.szupKontra = szupKontra;
+		this.szupRekontra = szupRekontra;
+		this.maxKontra = maxKontra;
+	}
+
 	public int getPlayerId() {
 		return playerId;
 	}

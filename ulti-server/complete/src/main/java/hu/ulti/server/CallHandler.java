@@ -1,10 +1,14 @@
 package hu.ulti.server;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.CallWithValue;
 import hu.ulti.server.model.Game;
+import hu.ulti.server.model.Kontra;
+import hu.ulti.server.model.KontraAck;
+import hu.ulti.server.model.Player;
 
 public class CallHandler {
 
@@ -16,8 +20,10 @@ public class CallHandler {
 
 			for (int i = 0; i < game.getCall().size(); i++) {
 				if ((forcedColorId == Constants.MAKK_ID && game.getCall().get(i).getCallId() > 11)
-						|| (forcedColorId == Constants.ZOLD_ID && (game.getCall().get(i).getCallId() > 23 || game.getCall().get(i).getCallId() < 12))
-						|| (forcedColorId == Constants.TOK_ID && (game.getCall().get(i).getCallId() > 35 || game.getCall().get(i).getCallId() < 24))
+						|| (forcedColorId == Constants.ZOLD_ID
+								&& (game.getCall().get(i).getCallId() > 23 || game.getCall().get(i).getCallId() < 12))
+						|| (forcedColorId == Constants.TOK_ID
+								&& (game.getCall().get(i).getCallId() > 35 || game.getCall().get(i).getCallId() < 24))
 						|| (forcedColorId == Constants.PIROS_ID && game.getCall().get(i).getCallId() < 36))
 					res = false;
 			}
@@ -56,5 +62,20 @@ public class CallHandler {
 		}
 
 		return szum;
+	}
+
+	public static List<Call> getFinalCall(Game game, List<Player> players) {
+		List<Call> finalCall = new ArrayList<Call>();
+
+		for (int i = 0; i < game.getPreviousCall().size(); i++) {
+			for (int j = 0; j < players.size(); j++) {
+				if (game.getLastCallerId() != players.get(j).getId()) {
+					finalCall.add(new Call(game.getPreviousCall().get(i).getCallId(), new Kontra(players.get(j).getId(),
+							new KontraAck(), new KontraAck(), new KontraAck(), new KontraAck(), new KontraAck())));
+				}
+			}
+		}
+
+		return finalCall;
 	}
 }

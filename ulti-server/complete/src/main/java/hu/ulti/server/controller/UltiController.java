@@ -201,6 +201,7 @@ public class UltiController {
 					game.setPlayReadyToStart(true);
 					game.setFirstTurn(true);
 					game.setLastModificationTimeStamp(System.currentTimeMillis());
+					game.setPreviousCall(CallHandler.getFinalCall(game, players));
 					return "kezdődik a játék";
 				}
 

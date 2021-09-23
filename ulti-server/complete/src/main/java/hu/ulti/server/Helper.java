@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Player;
@@ -60,15 +61,16 @@ public class Helper {
 		return 1;
 	}
 
-	public static boolean isTeritett(List<Integer> previousCall) {
+	public static boolean isTeritett(List<Call> previousCall) {
 		List<Integer> teritettIds = Arrays.asList(9, 10, 11, 21, 22, 23, 33, 34, 35, 45, 46, 47);
 
-		for (Integer call : previousCall) {
+		for (int i = 0; i < previousCall.size(); i++) {
 			for (Integer teritettId : teritettIds) {
-				if (call == teritettId)
+				if (previousCall.get(i).getCallId() == teritettId)
 					return true;
 			}
 		}
+
 		return false;
 	}
 

@@ -8,7 +8,7 @@ public class Request {
 	private Long lastTimeStamp;
 	private boolean colorOrder;
 	private int value;
-	private List<Integer> call;
+	private List<Call> call;
 	private List<Integer> talonid;
 	private boolean isjoin;
 	private int cardid;
@@ -53,11 +53,11 @@ public class Request {
 		this.value = value;
 	}
 
-	public List<Integer> getCall() {
+	public List<Call> getCall() {
 		return call;
 	}
 
-	public void setCall(List<Integer> call) {
+	public void setCall(List<Call> call) {
 		this.call = call;
 	}
 

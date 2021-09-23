@@ -16,6 +16,7 @@ import hu.ulti.server.CallHandler;
 import hu.ulti.server.Helper;
 import hu.ulti.server.Resulthandler;
 import hu.ulti.server.StrikeHandler;
+import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
@@ -299,7 +300,7 @@ public class UltiController {
 					game.setPlayReadyToStart(false);
 					game.setStartingValue(0);
 					game.setLastCallerId(0);
-					game.setPreviousCall(new ArrayList<Integer>());
+					game.setPreviousCall(new ArrayList<Call>());
 				}
 
 				roundCounter++;

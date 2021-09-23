@@ -221,7 +221,7 @@ public class Resulthandler {
 
 		for (int i = 0; i < list.size(); i++) {
 			for (int j = 0; j < game.getPreviousCall().size(); j++) {
-				if (game.getPreviousCall().get(j) == list.get(i))
+				if (game.getPreviousCall().get(j).getCallId() == list.get(i))
 					return true;
 			}
 		}
@@ -263,7 +263,7 @@ public class Resulthandler {
 
 		for (int i = 0; i < list.size(); i++) {
 			for (int j = 0; j < game.getPreviousCall().size(); j++) {
-				if (list.get(i) == game.getPreviousCall().get(j))
+				if (list.get(i) == game.getPreviousCall().get(j).getCallId())
 					return list.get(i);
 			}
 		}
@@ -411,7 +411,7 @@ public class Resulthandler {
 				if (hasAdu7(card1)) {
 					int card2Color = StrikeHandler.getColor(card2);
 					int card3Color = StrikeHandler.getColor(card3);
-					int adu = StrikeHandler.getColor(game.getPreviousCall().get(0));
+					int adu = StrikeHandler.getColor(game.getPreviousCall().get(0).getCallId());
 
 					if (adu == card2Color || adu == card3Color)
 						return false;
@@ -427,7 +427,7 @@ public class Resulthandler {
 	private boolean hasAdu7(int card) {
 
 		int color = StrikeHandler.getColor(card);
-		int adu = StrikeHandler.getColor(game.getPreviousCall().get(0));
+		int adu = StrikeHandler.getColor(game.getPreviousCall().get(0).getCallId());
 
 		for (int i = 0; i < list7s.size(); i++) {
 			if (card == list7s.get(i) && color == adu) {
@@ -459,7 +459,7 @@ public class Resulthandler {
 			int card2Color = StrikeHandler.getColor(card2);
 			int card3Color = StrikeHandler.getColor(card3);
 			int aduCounter = 0;
-			int adu = StrikeHandler.getColor(game.getPreviousCall().get(0));
+			int adu = StrikeHandler.getColor(game.getPreviousCall().get(0).getCallId());
 
 			if (card1Color == adu)
 				aduCounter++;
@@ -499,7 +499,7 @@ public class Resulthandler {
 	}
 
 	private int getCsendesSzazId() {
-		int color = StrikeHandler.getAdu(game.getPreviousCall().get(0));
+		int color = StrikeHandler.getAdu(game.getPreviousCall().get(0).getCallId());
 
 		if (color == Constants.MAKK_ID)
 			return listCsendesSzaz.get(0);
@@ -514,7 +514,7 @@ public class Resulthandler {
 	}
 
 	private int getCsendesUltiId() {
-		int color = StrikeHandler.getAdu(game.getPreviousCall().get(0));
+		int color = StrikeHandler.getAdu(game.getPreviousCall().get(0).getCallId());
 
 		if (color == Constants.MAKK_ID)
 			return listCsendesUlti.get(0);

@@ -12,8 +12,8 @@ public class Game {
 	private int lastCallerId;
 	private int activePlayer;
 	private Strike round = new Strike();
-	private List<Integer> call = new ArrayList<Integer>();
-	private List<Integer> previousCall = new ArrayList<Integer>();
+	private List<Call> call = new ArrayList<Call>();
+	private List<Call> previousCall = new ArrayList<Call>();
 	private String errorMessage = "";
 	private long lastModificationTimeStamp = 0;
 	private boolean isGameOver = false;
@@ -29,7 +29,7 @@ public class Game {
 	}
 
 	public Game(int startingValue, Player player, boolean isRoundStarted, boolean isPlayReadyToStart, int lastCallerId,
-			int activePlayer, Strike round, List<Integer> call, List<Integer> previousCall, String errorMessage,
+			int activePlayer, Strike round, List<Call> call, List<Call> previousCall, String errorMessage,
 			long lastModificationTimeStamp, boolean isGameOver, List<Result> resultList, boolean isFirstTurn,
 			List<Say> says, List<Hand> hands, List<StrikeList> strikeList, List<Card> talon) {
 		this.startingValue = startingValue;
@@ -68,11 +68,11 @@ public class Game {
 		this.startingValue = startingValue;
 	}
 
-	public List<Integer> getPreviousCall() {
+	public List<Call> getPreviousCall() {
 		return previousCall;
 	}
 
-	public void setPreviousCall(List<Integer> previousCall) {
+	public void setPreviousCall(List<Call> previousCall) {
 		this.previousCall = previousCall;
 	}
 
@@ -116,11 +116,11 @@ public class Game {
 		this.isPlayReadyToStart = isPlayReadyToStart;
 	}
 
-	public List<Integer> getCall() {
+	public List<Call> getCall() {
 		return call;
 	}
 
-	public void setCall(List<Integer> call) {
+	public void setCall(List<Call> call) {
 		this.call = call;
 	}
 

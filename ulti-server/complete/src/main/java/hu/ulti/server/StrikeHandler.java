@@ -57,7 +57,7 @@ public class StrikeHandler {
 					strikeHandler(game.getRound().getCard3PlayerId());
 			}
 		} else {
-			int ADU = getAdu(game.getPreviousCall().get(0));
+			int ADU = getAdu(game.getPreviousCall().get(0).getCallId());
 
 			card1 = fixCardOrder(card1);
 			card2 = fixCardOrder(card2);
@@ -191,8 +191,8 @@ public class StrikeHandler {
 	private boolean isBetli(Game game) {
 
 		for (Integer id : betliIds) {
-			for (Integer call : game.getPreviousCall()) {
-				if (id == call)
+			for (int i = 0; i < game.getPreviousCall().size(); i++) {
+				if (id == game.getPreviousCall().get(i).getCallId())
 					return true;
 			}
 		}
@@ -203,8 +203,8 @@ public class StrikeHandler {
 	private boolean isSzintelenDuri(Game game) {
 
 		for (Integer id : duriIds) {
-			for (Integer call : game.getPreviousCall()) {
-				if (id == call)
+			for (int i = 0; i < game.getPreviousCall().size(); i++) {
+				if (id == game.getPreviousCall().get(i).getCallId())
 					return true;
 			}
 		}

@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import hu.ulti.server.CallHandler;
 import hu.ulti.server.Helper;
-import hu.ulti.server.Resulthandler;
-import hu.ulti.server.StrikeHandler;
+import hu.ulti.server.handler.CallHandler;
+import hu.ulti.server.handler.KontraHandler;
+import hu.ulti.server.handler.Resulthandler;
+import hu.ulti.server.handler.StrikeHandler;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
@@ -235,8 +236,8 @@ public class UltiController {
 		return "bad";
 	}
 
-	@PostMapping("say")
-	public String say(@RequestBody Request request) {
+	@PostMapping("sayparti")
+	public String sayParti(@RequestBody Request request) {
 		Say someSay = new Say(request.getId(), request.isHave40(), request.isHave120(), request.isHave220(),
 				request.isHave320());
 
@@ -250,7 +251,20 @@ public class UltiController {
 
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 
-		return "someSay";
+		return "someSayParti";
+	}
+	
+	@PostMapping("saykontra")
+	public String saykontra(@RequestBody Request request) {
+		
+		Say someSay = new Say(request.getId(), request.isKontraPassz(), request.isKontra40100(), request.isKontraUlti(),
+				request.isKontraBetli(), request.isKontraDuri(), request.isKontraDuriSz(), request.isKontra20100(), request.isKontraBetliTer(),
+				request.isKontraDuriTer(), request.isKontraDuriTerSz());
+		
+		game.setPreviousCall(KontraHandler.kontraHandler(someSay, game));
+		
+		game.setLastModificationTimeStamp(System.currentTimeMillis());
+		return "someSayKontra";
 	}
 
 	@PostMapping("play")

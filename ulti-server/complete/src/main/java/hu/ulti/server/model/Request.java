@@ -17,6 +17,16 @@ public class Request {
 	private boolean have120;
 	private boolean have220;
 	private boolean have320;
+	private boolean kontraPassz = false;
+	private boolean kontra40100 = false;
+	private boolean kontraUlti = false;
+	private boolean kontraBetli = false;
+	private boolean kontraDuri = false;
+	private boolean kontraDuriSz = false;
+	private boolean kontra20100 = false;
+	private boolean kontraBetliTer = false;
+	private boolean kontraDuriTer = false;
+	private boolean kontraDuriTerSz = false;
 
 	public Request() {
 	}
@@ -123,5 +133,85 @@ public class Request {
 
 	public void setHave320(boolean have320) {
 		this.have320 = have320;
+	}
+
+	public boolean isKontraPassz() {
+		return kontraPassz;
+	}
+
+	public void setKontraPassz(boolean kontraPassz) {
+		this.kontraPassz = kontraPassz;
+	}
+
+	public boolean isKontra40100() {
+		return kontra40100;
+	}
+
+	public void setKontra40100(boolean kontra40100) {
+		this.kontra40100 = kontra40100;
+	}
+
+	public boolean isKontraUlti() {
+		return kontraUlti;
+	}
+
+	public void setKontraUlti(boolean kontraUlti) {
+		this.kontraUlti = kontraUlti;
+	}
+
+	public boolean isKontraBetli() {
+		return kontraBetli;
+	}
+
+	public void setKontraBetli(boolean kontraBetli) {
+		this.kontraBetli = kontraBetli;
+	}
+
+	public boolean isKontraDuri() {
+		return kontraDuri;
+	}
+
+	public void setKontraDuri(boolean kontraDuri) {
+		this.kontraDuri = kontraDuri;
+	}
+
+	public boolean isKontraDuriSz() {
+		return kontraDuriSz;
+	}
+
+	public void setKontraDuriSz(boolean kontraDuriSz) {
+		this.kontraDuriSz = kontraDuriSz;
+	}
+
+	public boolean isKontra20100() {
+		return kontra20100;
+	}
+
+	public void setKontra20100(boolean kontra20100) {
+		this.kontra20100 = kontra20100;
+	}
+
+	public boolean isKontraBetliTer() {
+		return kontraBetliTer;
+	}
+
+	public void setKontraBetliTer(boolean kontraBetliTer) {
+		this.kontraBetliTer = kontraBetliTer;
+	}
+
+	public boolean isKontraDuriTer() {
+		return kontraDuriTer;
+	}
+
+	public void setKontraDuriTer(boolean kontraDuriTer) {
+		this.kontraDuriTer = kontraDuriTer;
+	}
+
+	public boolean isKontraDuriTerSz() {
+		return kontraDuriTerSz;
+	}
+
+	public void setKontraDuriTerSz(boolean kontraDuriTerSz) {
+		this.kontraDuriTerSz = kontraDuriTerSz;
 	}
 }

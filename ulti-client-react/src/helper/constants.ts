@@ -57,4 +57,15 @@ export class Constants {
 	public static BETLI_TERITETT_CB = "betliTerCB";
 	public static DURI_TERITETT_CB = "durTerCB";
 	public static DURI_SZINTELEN_TERITETT_CB = "durSzinTerCB";
+
+	public static LIST_PASSZ: Array<number> = [0, 12, 24, 36];
+	public static LIST_40100: Array<number> = [3, 15, 27, 39];
+	public static LIST_ULTI: Array<number> = [4, 16, 28, 40];
+	public static LIST_BETLI: Array<number> = [5, 17, 29, 41];
+	public static LIST_DURI: Array<number> = [6, 18, 30, 42];
+	public static LIST_SZ_DURI: Array<number> = [7, 19, 31, 43];
+	public static LIST_20100: Array<number> = [8, 20, 32, 44];
+	public static LIST_TER_BETLI: Array<number> = [9, 21, 33, 45];
+	public static LIST_TER_DURI: Array<number> = [10, 22, 34, 46];
+	public static LIST_TER_SZ_DURI: Array<number> = [11, 23, 35, 47];
 }

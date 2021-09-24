@@ -1,8 +1,9 @@
-package hu.ulti.server;
+package hu.ulti.server.handler;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.ulti.server.Constants;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.CallWithValue;
 import hu.ulti.server.model.Game;

@@ -1,10 +1,11 @@
-package hu.ulti.server;
+package hu.ulti.server.handler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import hu.ulti.server.Constants;
 import hu.ulti.server.controller.UltiController;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;

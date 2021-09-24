@@ -22,11 +22,25 @@ export class RequestModel {
     //play
     public cardid?: number;
 
-    //say
+    //sayparti
     public have40?: boolean;
     public have120?: boolean;
     public have220?: boolean;
     public have320?: boolean;
+
+    //saykontra
+    public kontraPassz?: boolean;
+    public kontra40100?: boolean;
+    public kontraUlti?: boolean;
+    public kontraBetli?: boolean;
+    public kontraDuri?: boolean;
+    public kontraDuriSz?: boolean;
+    public kontra20100?: boolean;
+    public kontraBetliTer?: boolean;
+    public kontraDuriTer?: boolean;
+    public kontraDuriTerSz?: boolean;
+
+
 }
 
 export function getRequestJson(model: RequestModel): any {
@@ -65,13 +79,27 @@ export function getRequestJson(model: RequestModel): any {
                 cardid: model.cardid
             };
 
-        case "say":
+        case "sayparti":
             return {
                 id: model.id,
                 have40: model.have40,
                 have120: model.have120,
                 have220: model.have220,
                 have320: model.have320
+            };
+        case "saykontra":
+            return {
+                id: model.id,
+                kontraPassz: model.kontraPassz,
+                kontra40100: model.kontra40100,
+                kontraUlti: model.kontraUlti,
+                kontraBetli: model.kontraBetli,
+                kontraDuri: model.kontraDuri,
+                kontraDuriSz: model.kontraDuriSz,
+                kontra20100: model.kontra20100,
+                kontraBetliTer: model.kontraBetliTer,
+                kontraDuriTer: model.kontraDuriTer,
+                kontraDuriTerSz: model.kontraDuriTerSz
             };
         default:
             break;

@@ -49,8 +49,7 @@ export default class App extends React.Component<{}, iState> {
             if (res.player.hand === null || res.player.hand.length === 0 && res.playReadyToStart)
                 gotCardsState = false;
 
-            this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true });
-            this.setState({ lastTimeStamp: Date.now() });
+            this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true, lastTimeStamp: Date.now()});
 
         } else {
             this.setState({ gotCards: false, isWrongLogin: true, isLoggedIn: true });

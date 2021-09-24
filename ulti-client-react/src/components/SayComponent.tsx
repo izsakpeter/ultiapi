@@ -72,6 +72,7 @@ export class SayComponent extends React.Component<iProps, iState>{
         this.onKontraDuriTer = this.onKontraDuriTer.bind(this);
         this.onKontraDuriTerSz = this.onKontraDuriTerSz.bind(this);
         this.sayOkButtonHandler = this.sayOkButtonHandler.bind(this);
+        this.rekontraOkButtonHandler = this.rekontraOkButtonHandler.bind(this);
     }
 
     static getDerivedStateFromProps(props: iProps, state: iState) {
@@ -92,12 +93,13 @@ export class SayComponent extends React.Component<iProps, iState>{
             return (
                 <div>
                     <div><Button text="mondás" onClick={() => this.clickHandler(this.state.showPanel)} /></div>
-                    <div>{this.sayList(this.state.showPanel, this.props.game)}</div>
+                    <div>{this.sayPanel(this.state.showPanel, this.props.game)}</div>
+
                 </div>
             )
         } else {
             return (
-                <></>
+                <div>{this.rekontraPanel(this.props.game)}</div>
             )
         }
     }
@@ -106,15 +108,15 @@ export class SayComponent extends React.Component<iProps, iState>{
         this.setState({ showPanel: !showPanel })
     }
 
-    sayList(showPanel: boolean, game: Game) {
+    sayPanel(showPanel: boolean, game: Game) {
         if (showPanel) {
 
             let sayList = [];
 
             for (let i = 0; i < game.previousCall.length; i++) {
-                
+
                 if (Constants.LIST_PASSZ.includes(game.previousCall[i].callId)) {
-                    
+
                     sayList.push(
                         <div key={"20-40"}>
                             <div><input type="checkbox" name="40" disabled={this.disable40()} onChange={this.onChoose40} /> 40 </div>
@@ -170,7 +172,7 @@ export class SayComponent extends React.Component<iProps, iState>{
     sayOkButtonHandler(event) {
         if (this.state.is40Checked || this.state.is120Checked || this.state.is220Checked || this.state.is320Checked) {
 
-            let reqObj1: RequestModel = {
+            let reqObj: RequestModel = {
                 dest: "sayparti",
                 id: this.props.game.player.id,
                 have40: this.state.is40Checked,
@@ -179,7 +181,7 @@ export class SayComponent extends React.Component<iProps, iState>{
                 have320: this.state.is320Checked
             }
 
-            this.props.postReq(reqObj1);
+            this.props.postReq(reqObj);
         }
 
         if (this.state.isKontraPasszChecked || this.state.isKontra40100Checked || this.state.isKontraUltiChecked
@@ -187,17 +189,108 @@ export class SayComponent extends React.Component<iProps, iState>{
             || this.state.isKontra20100Checked || this.state.isKontraBetliTerChecked || this.state.isKontraDuriTerChecked
             || this.state.isKontraDuriTerSzChecked) {
 
-            let reqObj1: RequestModel = {
+            let reqObj: RequestModel = {
                 dest: "saykontra",
                 id: this.props.game.player.id,
-                have40: this.state.is40Checked,
-                have120: this.state.is120Checked,
-                have220: this.state.is220Checked,
-                have320: this.state.is320Checked
+                kontraId: 1,
+                kontraPassz: this.state.isKontraPasszChecked,
+                kontra40100: this.state.isKontra40100Checked,
+                kontraUlti: this.state.isKontraUltiChecked,
+                kontraBetli: this.state.isKontraBetliChecked,
+                kontraDuri: this.state.isKontraDuriChecked,
+                kontraDuriSz: this.state.isKontraDuriSzChecked,
+                kontra20100: this.state.isKontra20100Checked,
+                kontraBetliTer: this.state.isKontraBetliTerChecked,
+                kontraDuriTer: this.state.isKontraDuriTerChecked,
+                kontraDuriTerSz: this.state.isKontraDuriTerSzChecked
             }
 
-            this.props.postReq(reqObj1);
+            this.props.postReq(reqObj);
         }
+    }
+
+    rekontraPanel(game: Game) {
+
+        let showPanel: boolean = false;
+
+        if (game.lastCallerId === game.player.id && game.previousCall[0].kontra != null) {
+            for (let i = 0; i < game.previousCall.length; i++) {
+                for (let j = 0; j < game.previousCall[i].kontra.length; j++) {
+                    if (game.previousCall[i].kontra[j].kontra.said && (game.previousCall[i].kontra[j].kontra.said)) {
+                        showPanel = true;
+                    }
+                }
+            }
+        }
+
+        if (showPanel) {
+            let rekontraList = [];
+
+            for (let i = 0; i < game.previousCall.length; i++) {
+                for (let j = 0; j < game.previousCall[i].kontra.length; j++) {
+                    if (game.previousCall[i].kontra[j].kontra.said && (game.previousCall[i].kontra[j].kontra.said)) {
+                        if (Constants.LIST_PASSZ.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rkopa"}><input type="checkbox" name="kontraparty" onChange={this.onKontraParti} /> Rekontra {Constants.PASSZ} </div>)
+                        } else if (Constants.LIST_40100.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rko40100"}><input type="checkbox" name="kontra40100" onChange={this.onKontra40100} /> Rekontra {Constants.SZAZ40} </div>)
+                        } else if (Constants.LIST_ULTI.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rkou"}><input type="checkbox" name="kontraulti" onChange={this.onKontraUlti} /> Rekontra {Constants.ULTI} </div>)
+                        } else if (Constants.LIST_BETLI.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rkob"}><input type="checkbox" name="kontrabetli" onChange={this.onKontraBetli} /> Rekontra {Constants.BETLI} </div>)
+                            break;
+                        } else if (Constants.LIST_DURI.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rkod"}><input type="checkbox" name="kontraduri" onChange={this.onKontraDuri} /> Rekontra {Constants.DURI_SZINES} </div>)
+                        } else if (Constants.LIST_SZ_DURI.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rkodsz"}><input type="checkbox" name="kontradurisz" onChange={this.onKontraDuriSz} /> Rekontra {Constants.DURI_SZINTELEN} </div>)
+                            break;
+                        } else if (Constants.LIST_20100.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rko20100"}><input type="checkbox" name="kontra20100" onChange={this.onKontra20100} /> Rekontra {Constants.SZAZ20} </div>)
+                        } else if (Constants.LIST_TER_BETLI.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rkobt"}><input type="checkbox" name="kontrabetliter" onChange={this.onKontraBetliTer} /> Rekontra {Constants.BETLI_TERITETT} </div>)
+                            break;
+                        } else if (Constants.LIST_TER_DURI.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rkodt"}><input type="checkbox" name="kontraduriter" onChange={this.onKontraDuriTer} /> Rekontra {Constants.DURI_SZINES_TERITETT} </div>)
+                        } else if (Constants.LIST_TER_SZ_DURI.includes(game.previousCall[i].callId)) {
+                            rekontraList.push(<div key={"rkodtsz"}><input type="checkbox" name="kontraduritersz" onChange={this.onKontraDuriTerSz} /> Rekontra {Constants.DURI_SZINTELEN_TERITETT} </div>)
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (rekontraList.length > 0)
+                rekontraList.push(<div key={"rekokb"}><Button text="ok" onClick={this.rekontraOkButtonHandler} /></div>);
+
+            return (
+                <div>
+                    {rekontraList}
+                </div>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+    }
+
+    rekontraOkButtonHandler(event) {
+        let reqObj: RequestModel = {
+            dest: "saykontra",
+            id: this.props.game.player.id,
+            kontraId: 2,
+            kontraPassz: this.state.isKontraPasszChecked,
+            kontra40100: this.state.isKontra40100Checked,
+            kontraUlti: this.state.isKontraUltiChecked,
+            kontraBetli: this.state.isKontraBetliChecked,
+            kontraDuri: this.state.isKontraDuriChecked,
+            kontraDuriSz: this.state.isKontraDuriSzChecked,
+            kontra20100: this.state.isKontra20100Checked,
+            kontraBetliTer: this.state.isKontraBetliTerChecked,
+            kontraDuriTer: this.state.isKontraDuriTerChecked,
+            kontraDuriTerSz: this.state.isKontraDuriTerSzChecked
+        }
+
+        this.props.postReq(reqObj);
     }
 
 

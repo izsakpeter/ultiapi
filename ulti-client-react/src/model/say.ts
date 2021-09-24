@@ -5,6 +5,7 @@ export class Say {
     have20: boolean;
     have220: boolean;
     have320: boolean;
+    kontraId: number;
     kontraPassz: boolean;
     kontra40100: boolean;
     kontraUlti: boolean;

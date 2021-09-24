@@ -68,4 +68,16 @@ export class Constants {
 	public static LIST_TER_BETLI: Array<number> = [9, 21, 33, 45];
 	public static LIST_TER_DURI: Array<number> = [10, 22, 34, 46];
 	public static LIST_TER_SZ_DURI: Array<number> = [11, 23, 35, 47];
+
+	public static KONTRA_ID: number = 1;
+	public static REKONTRA_ID: number = 2;
+	public static SZUPKONTRA_ID: number = 3;
+	public static SZUPREKONTRA_ID: number = 4;
+	public static MAXKONTRA_ID: number = 5;
+
+	public static KONTRA: string = "Kontra";
+	public static REKONTRA: string = "Rekontra";
+	public static SZUPKONTRA: string = "Szupkontra";
+	public static SZUPREKONTRA: string = "Szuprekontra";
+	public static MAXKONTRA: string = "MAXkontra";
 }

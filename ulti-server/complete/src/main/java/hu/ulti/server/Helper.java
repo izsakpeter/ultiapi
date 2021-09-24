@@ -14,6 +14,9 @@ import hu.ulti.server.model.Player;
 import hu.ulti.server.model.UuidWithCardId;
 
 public class Helper {
+	
+	private static List<Integer> betliIds = Arrays.asList(5, 9, 17, 21, 29, 33, 41, 45);
+	private static List<Integer> duriIds = Arrays.asList(7, 11, 19, 23, 31, 35, 43, 47);
 
 	public static List<List<Card>> getHands() {
 
@@ -178,5 +181,29 @@ public class Helper {
 		Helper.orderHand(player.getHand());
 
 		return player.getHand();
+	}
+	
+	public static boolean isBetli(List<Call> callList) {
+
+		for (Integer id : betliIds) {
+			for (int i = 0; i < callList.size(); i++) {
+				if (id == callList.get(i).getCallId())
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isSzintelenDuri(List<Call> callList) {
+
+		for (Integer id : duriIds) {
+			for (int i = 0; i < callList.size(); i++) {
+				if (id == callList.get(i).getCallId())
+					return true;
+			}
+		}
+
+		return false;
 	}
 }

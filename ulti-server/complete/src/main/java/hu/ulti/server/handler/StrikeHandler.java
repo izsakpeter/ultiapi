@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import hu.ulti.server.Constants;
+import hu.ulti.server.Helper;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.Strike;
@@ -14,9 +15,6 @@ public class StrikeHandler {
 	private int roundCounter;
 	private Game game;
 	private List<Player> players = new ArrayList<Player>();
-
-	private List<Integer> betliIds = Arrays.asList(5, 9, 17, 21, 29, 33, 41, 45);
-	private List<Integer> duriIds = Arrays.asList(7, 11, 19, 23, 31, 35, 43, 47);
 
 	public StrikeHandler(int roundCounter, Game game, List<Player> players) {
 		this.roundCounter = roundCounter;
@@ -29,9 +27,7 @@ public class StrikeHandler {
 		int card1ColorId = getColor(card1);
 		int card2ColorId = getColor(card2);
 		int card3ColorId = getColor(card3);
-		boolean isBetli = isBetli(game);
-		boolean isSzintelenDuri = isSzintelenDuri(game);
-		boolean isSzintelen = isBetli || isSzintelenDuri;
+		boolean isSzintelen = Helper.isBetli(game.getPreviousCall()) || Helper.isSzintelenDuri(game.getPreviousCall());
 
 		if (isSzintelen) {
 			if (card1ColorId != card2ColorId && card1ColorId != card3ColorId) {
@@ -188,29 +184,4 @@ public class StrikeHandler {
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
-
-	private boolean isBetli(Game game) {
-
-		for (Integer id : betliIds) {
-			for (int i = 0; i < game.getPreviousCall().size(); i++) {
-				if (id == game.getPreviousCall().get(i).getCallId())
-					return true;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean isSzintelenDuri(Game game) {
-
-		for (Integer id : duriIds) {
-			for (int i = 0; i < game.getPreviousCall().size(); i++) {
-				if (id == game.getPreviousCall().get(i).getCallId())
-					return true;
-			}
-		}
-
-		return false;
-	}
-
 }

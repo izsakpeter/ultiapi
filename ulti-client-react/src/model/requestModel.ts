@@ -29,6 +29,7 @@ export class RequestModel {
     public have320?: boolean;
 
     //saykontra
+    public kontraId?: number;
     public kontraPassz?: boolean;
     public kontra40100?: boolean;
     public kontraUlti?: boolean;
@@ -90,6 +91,7 @@ export function getRequestJson(model: RequestModel): any {
         case "saykontra":
             return {
                 id: model.id,
+                kontraId: model.kontraId,
                 kontraPassz: model.kontraPassz,
                 kontra40100: model.kontra40100,
                 kontraUlti: model.kontraUlti,

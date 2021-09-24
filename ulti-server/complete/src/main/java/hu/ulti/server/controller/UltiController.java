@@ -253,16 +253,23 @@ public class UltiController {
 
 		return "someSayParti";
 	}
-	
+
 	@PostMapping("saykontra")
 	public String saykontra(@RequestBody Request request) {
-		
-		Say someSay = new Say(request.getId(), request.isKontraPassz(), request.isKontra40100(), request.isKontraUlti(),
-				request.isKontraBetli(), request.isKontraDuri(), request.isKontraDuriSz(), request.isKontra20100(), request.isKontraBetliTer(),
-				request.isKontraDuriTer(), request.isKontraDuriTerSz());
-		
+
+		Say someSay = new Say(request.getId(), request.getKontraId(), request.isKontraPassz(), request.isKontra40100(),
+				request.isKontraUlti(), request.isKontraBetli(), request.isKontraDuri(), request.isKontraDuriSz(),
+				request.isKontra20100(), request.isKontraBetliTer(), request.isKontraDuriTer(),
+				request.isKontraDuriTerSz());
+
+		for (int i = 0; i < players.size(); i++) {
+			if (someSay.getPlayerId() == players.get(i).getId() && someSay.getKontraId() == 1) {
+				players.get(i).setSaid(true);
+				break;
+			}
+		}
+
 		game.setPreviousCall(KontraHandler.kontraHandler(someSay, game));
-		
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return "someSayKontra";
 	}

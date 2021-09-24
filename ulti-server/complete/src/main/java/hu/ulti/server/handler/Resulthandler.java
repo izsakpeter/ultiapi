@@ -26,7 +26,7 @@ public class Resulthandler {
 	private List<Integer> listCsendesUlti = Arrays.asList(2, 14, 26, 38);
 	private List<Integer> list40100 = Arrays.asList(3, 15, 27, 39);
 	private List<Integer> listUlti = Arrays.asList(4, 16, 28, 40);
-	private List<Integer> listBetli = Arrays.asList(5, 17, 29, 41);
+	public static List<Integer> listBetli = Arrays.asList(5, 17, 29, 41);
 	private List<Integer> listDuri = Arrays.asList(6, 18, 30, 42);
 	private List<Integer> listSzDuri = Arrays.asList(7, 19, 31, 43);
 	private List<Integer> list20100 = Arrays.asList(8, 20, 32, 44);

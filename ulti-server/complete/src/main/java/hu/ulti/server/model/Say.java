@@ -7,6 +7,7 @@ public class Say {
 	private boolean have120 = false;
 	private boolean have220 = false;
 	private boolean have320 = false;
+	private int kontraId = 0;
 	private boolean kontraPassz = false;
 	private boolean kontra40100 = false;
 	private boolean kontraUlti = false;
@@ -29,11 +30,12 @@ public class Say {
 		this.have320 = have320;
 	}
 
-	public Say(int playerId, boolean kontraPassz, boolean kontra40100, boolean kontraUlti, boolean kontraBetli,
-			boolean kontraDuri, boolean kontraDuriSz, boolean kontra20100, boolean kontraBetliTer,
+	public Say(int playerId, int kontraId, boolean kontraPassz, boolean kontra40100, boolean kontraUlti,
+			boolean kontraBetli, boolean kontraDuri, boolean kontraDuriSz, boolean kontra20100, boolean kontraBetliTer,
 			boolean kontraDuriTer, boolean kontraDuriTerSz) {
 		super();
 		this.playerId = playerId;
+		this.kontraId = kontraId;
 		this.kontraPassz = kontraPassz;
 		this.kontra40100 = kontra40100;
 		this.kontraUlti = kontraUlti;
@@ -164,5 +166,13 @@ public class Say {
 
 	public void setKontraDuriTerSz(boolean kontraDuriTerSz) {
 		this.kontraDuriTerSz = kontraDuriTerSz;
+	}
+
+	public int getKontraId() {
+		return kontraId;
+	}
+
+	public void setKontraId(int kontraId) {
+		this.kontraId = kontraId;
 	}
 }

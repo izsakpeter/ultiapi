@@ -17,6 +17,7 @@ public class Request {
 	private boolean have120;
 	private boolean have220;
 	private boolean have320;
+	private int kontraId = 0;
 	private boolean kontraPassz = false;
 	private boolean kontra40100 = false;
 	private boolean kontraUlti = false;
@@ -213,5 +214,13 @@ public class Request {
 
 	public void setKontraDuriTerSz(boolean kontraDuriTerSz) {
 		this.kontraDuriTerSz = kontraDuriTerSz;
+	}
+
+	public int getKontraId() {
+		return kontraId;
+	}
+
+	public void setKontraId(int kontraId) {
+		this.kontraId = kontraId;
 	}
 }

@@ -21,18 +21,18 @@ public class Resulthandler {
 
 	private List<Result> resultList = new ArrayList<Result>();
 
-	private List<Integer> listPassz = Arrays.asList(0, 12, 24, 36);
-	private List<Integer> listCsendesSzaz = Arrays.asList(1, 13, 25, 37);
-	private List<Integer> listCsendesUlti = Arrays.asList(2, 14, 26, 38);
-	private List<Integer> list40100 = Arrays.asList(3, 15, 27, 39);
-	private List<Integer> listUlti = Arrays.asList(4, 16, 28, 40);
+	public static List<Integer> listPassz = Arrays.asList(0, 12, 24, 36);
+	public static List<Integer> listCsendesSzaz = Arrays.asList(1, 13, 25, 37);
+	public static List<Integer> listCsendesUlti = Arrays.asList(2, 14, 26, 38);
+	public static List<Integer> list40100 = Arrays.asList(3, 15, 27, 39);
+	public static List<Integer> listUlti = Arrays.asList(4, 16, 28, 40);
 	public static List<Integer> listBetli = Arrays.asList(5, 17, 29, 41);
-	private List<Integer> listDuri = Arrays.asList(6, 18, 30, 42);
-	private List<Integer> listSzDuri = Arrays.asList(7, 19, 31, 43);
-	private List<Integer> list20100 = Arrays.asList(8, 20, 32, 44);
-	private List<Integer> listTerBetli = Arrays.asList(9, 21, 33, 45);
-	private List<Integer> listTerDuri = Arrays.asList(10, 22, 34, 46);
-	private List<Integer> listTerSzDuri = Arrays.asList(11, 23, 35, 47);
+	public static List<Integer> listDuri = Arrays.asList(6, 18, 30, 42);
+	public static List<Integer> listSzDuri = Arrays.asList(7, 19, 31, 43);
+	public static List<Integer> list20100 = Arrays.asList(8, 20, 32, 44);
+	public static List<Integer> listTerBetli = Arrays.asList(9, 21, 33, 45);
+	public static List<Integer> listTerDuri = Arrays.asList(10, 22, 34, 46);
+	public static List<Integer> listTerSzDuri = Arrays.asList(11, 23, 35, 47);
 
 	private List<Integer> list7s = Arrays.asList(0, 8, 16, 24);
 	private List<Integer> list10s = Arrays.asList(7, 15, 23, 31, 3, 11, 19, 27);

@@ -18,7 +18,7 @@ public class KontraHandler {
 				if (Resulthandler.listBetli.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, true, say.isKontraBetli());
 				} else if (Resulthandler.listTerBetli.contains(game.getPreviousCall().get(i).getCallId())) {
-					processKontrazasok(game, say, i, true, say.isKontraDuriTerSz());
+					processKontrazasok(game, say, i, true, say.isKontraBetliTer());
 				} else if (Resulthandler.listSzDuri.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, true, say.isKontraDuriSz());
 				} else if (Resulthandler.listTerSzDuri.contains(game.getPreviousCall().get(i).getCallId())) {
@@ -46,46 +46,143 @@ public class KontraHandler {
 		return game.getPreviousCall();
 	}
 
-	private static Game processKontrazasok(Game game, Say say, int i, boolean isSzintelen, boolean isCallKontra) {
+	private static Game processKontrazasok(Game game, Say say, int callIndex, boolean isSzintelen, boolean isKontra) {
 
-		if (say.getKontraId() == 1 && isCallKontra) {
-			return proccessKontra(game, say, i, isSzintelen);
-
+		if (say.getKontraId() == 1) {
+			return proccessKontra(game, say.getPlayerId(), callIndex, isSzintelen);
 		} else if (say.getKontraId() == 2) {
-			return proccessRekontra(game, say, i);
+			return proccessRekontra(game, say.getPlayerId(), callIndex, isKontra);
+		} else if (say.getKontraId() == 3) {
+			return proccessSzupkontra(game, say.getPlayerId(), callIndex, isKontra, isSzintelen);
+		} else if (say.getKontraId() == 4) {
+			return proccessSzuprekontra(game, say.getPlayerId(), callIndex, isKontra, isSzintelen);
+		} else if (say.getKontraId() == 5) {
+			return proccessMaxkontra(game, say.getPlayerId(), callIndex, isKontra, isSzintelen);
 		}
 
 		return null;
 	}
 
-	private static Game proccessKontra(Game game, Say say, int i, boolean isSzintelen) {
+	private static Game proccessKontra(Game game, int playerId, int i, boolean isSzintelen) {
 		for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
 			if (isSzintelen) {
-				if (say.getPlayerId() == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
+				if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
 					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setSaid(true);
 					break;
 				}
 			} else {
 				game.getPreviousCall().get(i).getKontra().get(j).getKontra().setSaid(true);
-				break;
 			}
 		}
 
 		return game;
 	}
 
-	private static Game proccessRekontra(Game game, Say say, int i) {
-		if (say.isKontraBetli()) {
+	private static Game proccessRekontra(Game game, int playerId, int i, boolean isRekontra) {
+		if (isRekontra) {
 			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
 				if (game.getPreviousCall().get(i).getKontra().get(j).getKontra().isSaid()) {
-					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(say.getPlayerId());
+					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(playerId);
 					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setSaid(true);
 				}
 			}
 		} else {
 			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
 				if (game.getPreviousCall().get(i).getKontra().get(j).getKontra().isSaid()) {
-					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(say.getPlayerId());
+					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(playerId);
+				}
+			}
+		}
+
+		return game;
+	}
+
+	private static Game proccessSzupkontra(Game game, int playerId, int i, boolean isSzupkontra, boolean isSzintelen) {
+		if (isSzupkontra) {
+			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
+				if (isSzintelen) {
+					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
+						game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
+						game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setSaid(true);
+						break;
+					}
+				} else {
+					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
+					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setSaid(true);
+				}
+			}
+		} else {
+			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
+				if (isSzintelen) {
+					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
+						game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
+						break;
+					}
+				} else {
+					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
+				}
+			}
+		}
+
+		return game;
+	}
+
+	private static Game proccessSzuprekontra(Game game, int playerId, int i, boolean isSzuprekontra,
+			boolean isSzintelen) {
+
+		if (isSzuprekontra) {
+			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
+				if (isSzintelen) {
+					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
+						game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
+						game.getPreviousCall().get(i).getKontra().get(j).getSzupRekontra().setSaid(true);
+						break;
+					}
+				} else {
+					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
+					game.getPreviousCall().get(i).getKontra().get(j).getSzupRekontra().setSaid(true);
+				}
+			}
+		} else {
+			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
+				if (isSzintelen) {
+					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
+						game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
+						break;
+					}
+				} else {
+					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
+				}
+			}
+		}
+
+		return game;
+	}
+
+	private static Game proccessMaxkontra(Game game, int playerId, int i, boolean isMaxkontra, boolean isSzintelen) {
+
+		if (isMaxkontra) {
+			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
+				if (isSzintelen) {
+					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
+						game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
+						game.getPreviousCall().get(i).getKontra().get(j).getMaxKontra().setSaid(true);
+						break;
+					}
+				} else {
+					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
+					game.getPreviousCall().get(i).getKontra().get(j).getMaxKontra().setSaid(true);
+				}
+			}
+		} else {
+			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
+				if (isSzintelen) {
+					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
+						game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
+						break;
+					}
+				} else {
+					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
 				}
 			}
 		}

@@ -256,7 +256,6 @@ public class UltiController {
 
 	@PostMapping("saykontra")
 	public String saykontra(@RequestBody Request request) {
-
 		Say someSay = new Say(request.getId(), request.getKontraId(), request.isKontraPassz(), request.isKontra40100(),
 				request.isKontraUlti(), request.isKontraBetli(), request.isKontraDuri(), request.isKontraDuriSz(),
 				request.isKontra20100(), request.isKontraBetliTer(), request.isKontraDuriTer(),
@@ -270,6 +269,11 @@ public class UltiController {
 		}
 
 		game.setPreviousCall(KontraHandler.kontraHandler(someSay, game));
+		
+		if (game.isKontraPartFinished()) {
+			game.setActivePlayer(getActivePlayerIdAfterKontra());
+		}
+		
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return "someSayKontra";
 	}
@@ -291,41 +295,46 @@ public class UltiController {
 
 			if (game.getRound().getCard1Id() != -1 && game.getRound().getCard2Id() != -1
 					&& game.getRound().getCard3Id() != -1) {
-
 				game.setFirstTurn(false);
+
 				StrikeHandler strikeHandler = new StrikeHandler(roundCounter, game, players);
 				game = strikeHandler.getGame();
 
 				for (int i = 0; i < players.size(); i++) {
 					players.set(i, strikeHandler.getPlayers().get(i));
 				}
-
-				if (Helper.isTeritett(game.getPreviousCall())) {
-					for (int i = 0; i < players.size(); i++) {
-						handList.set(i, Helper.setHandWithCards(players.get(i)));
-						game.setHands(handList);
+				
+				if (!IsKontraPartFinished()) {
+					game.setActivePlayer(game.getLastCallerId());
+				} else {
+					
+					if (Helper.isTeritett(game.getPreviousCall())) {
+						for (int i = 0; i < players.size(); i++) {
+							handList.set(i, Helper.setHandWithCards(players.get(i)));
+							game.setHands(handList);
+						}
 					}
-				}
 
-				Resulthandler resultHandler = new Resulthandler(game, roundCounter, players);
-				game = resultHandler.getGame();
+					Resulthandler resultHandler = new Resulthandler(game, roundCounter, players);
+					game = resultHandler.getGame();
 
-				if (game.isGameOver()) {
-					for (int i = 0; i < players.size(); i++) {
-						players.get(i).setReady(false);
-						players.get(i).setHand(null);
+					if (game.isGameOver()) {
+						for (int i = 0; i < players.size(); i++) {
+							players.get(i).setReady(false);
+							players.get(i).setHand(null);
+						}
+						hands = null;
+						game.setTalon(talon);
+						talon = null;
+						game.setRoundStarted(false);
+						game.setPlayReadyToStart(false);
+						game.setStartingValue(0);
+						game.setLastCallerId(0);
+						game.setPreviousCall(new ArrayList<Call>());
 					}
-					hands = null;
-					game.setTalon(talon);
-					talon = null;
-					game.setRoundStarted(false);
-					game.setPlayReadyToStart(false);
-					game.setStartingValue(0);
-					game.setLastCallerId(0);
-					game.setPreviousCall(new ArrayList<Call>());
-				}
 
-				roundCounter++;
+					roundCounter++;
+				}
 			}
 
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -406,5 +415,26 @@ public class UltiController {
 				break;
 			}
 		}
+	}
+	
+	private boolean IsKontraPartFinished() {
+		
+		int sum = 0;
+		
+		for (int i = 0; i < players.size(); i++) {
+			sum += players.get(i).getStrikes().size();
+		}
+		
+		return (sum == 1 && game.isKontraPartFinished());
+	}
+	
+	private int getActivePlayerIdAfterKontra() {
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getStrikes().size() > 0)
+				return players.get(i).getId();
+		}
+		
+		return -1;
 	}
 }

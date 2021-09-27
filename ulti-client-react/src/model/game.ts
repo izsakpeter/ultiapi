@@ -26,6 +26,7 @@ export class Game {
 	public talon: Array<Card>;
 	public previousCall: Array<Call>;
 	public call: Array<Call>;
+	public kontraPartFinished: boolean;
 
 	public errorMessage: string ;
 }

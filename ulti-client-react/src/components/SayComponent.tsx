@@ -213,10 +213,10 @@ export class SayComponent extends React.Component<iProps, iState>{
 
         let showPanel: boolean = false;
 
-        if (game.lastCallerId === game.player.id && game.previousCall[0].kontra != null) {
+        if (game.activePlayer === game.player.id && game.lastCallerId === game.player.id && game.previousCall[0].kontra != null) {
             for (let i = 0; i < game.previousCall.length; i++) {
                 for (let j = 0; j < game.previousCall[i].kontra.length; j++) {
-                    if (game.previousCall[i].kontra[j].kontra.said && (game.previousCall[i].kontra[j].kontra.said)) {
+                    if (game.previousCall[i].kontra[j].kontra.said && (game.previousCall[i].kontra[j].kontra.ackBy === -1)) {
                         showPanel = true;
                     }
                 }
@@ -237,22 +237,18 @@ export class SayComponent extends React.Component<iProps, iState>{
                             rekontraList.push(<div key={"rkou"}><input type="checkbox" name="kontraulti" onChange={this.onKontraUlti} /> Rekontra {Constants.ULTI} </div>)
                         } else if (Constants.LIST_BETLI.includes(game.previousCall[i].callId)) {
                             rekontraList.push(<div key={"rkob"}><input type="checkbox" name="kontrabetli" onChange={this.onKontraBetli} /> Rekontra {Constants.BETLI} </div>)
-                            break;
                         } else if (Constants.LIST_DURI.includes(game.previousCall[i].callId)) {
                             rekontraList.push(<div key={"rkod"}><input type="checkbox" name="kontraduri" onChange={this.onKontraDuri} /> Rekontra {Constants.DURI_SZINES} </div>)
                         } else if (Constants.LIST_SZ_DURI.includes(game.previousCall[i].callId)) {
                             rekontraList.push(<div key={"rkodsz"}><input type="checkbox" name="kontradurisz" onChange={this.onKontraDuriSz} /> Rekontra {Constants.DURI_SZINTELEN} </div>)
-                            break;
                         } else if (Constants.LIST_20100.includes(game.previousCall[i].callId)) {
                             rekontraList.push(<div key={"rko20100"}><input type="checkbox" name="kontra20100" onChange={this.onKontra20100} /> Rekontra {Constants.SZAZ20} </div>)
                         } else if (Constants.LIST_TER_BETLI.includes(game.previousCall[i].callId)) {
                             rekontraList.push(<div key={"rkobt"}><input type="checkbox" name="kontrabetliter" onChange={this.onKontraBetliTer} /> Rekontra {Constants.BETLI_TERITETT} </div>)
-                            break;
                         } else if (Constants.LIST_TER_DURI.includes(game.previousCall[i].callId)) {
                             rekontraList.push(<div key={"rkodt"}><input type="checkbox" name="kontraduriter" onChange={this.onKontraDuriTer} /> Rekontra {Constants.DURI_SZINES_TERITETT} </div>)
                         } else if (Constants.LIST_TER_SZ_DURI.includes(game.previousCall[i].callId)) {
                             rekontraList.push(<div key={"rkodtsz"}><input type="checkbox" name="kontraduritersz" onChange={this.onKontraDuriTerSz} /> Rekontra {Constants.DURI_SZINTELEN_TERITETT} </div>)
-                            break;
                         }
                     }
                 }

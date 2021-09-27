@@ -12,13 +12,13 @@ import { SayComponent } from "./SayComponent";
 
 interface iProps {
     gotCards: boolean,
-     game: Game,
-      postReq: (reqObj: RequestModel) => void
+    game: Game,
+    postReq: (reqObj: RequestModel) => void
 }
 
 interface iState {
     talon: number[],
-     hand: number[]
+    hand: number[]
 }
 
 export class Table extends React.Component<iProps, iState> {
@@ -78,9 +78,9 @@ export class Table extends React.Component<iProps, iState> {
                 <div className={"talon"}>{talonImg} </div>
                 <div className={"align-center-bottom"}>{cardsImg}</div>
                 <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>
-                <div><StrikeComponent game={this.props.game}/></div>
-                <div><OtherHandComponent game={this.props.game}/></div>
-                <div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq}/></div>
+                <div><StrikeComponent game={this.props.game} /></div>
+                <div><OtherHandComponent game={this.props.game} /></div>
+                <div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>
             </div>
         )
     }
@@ -99,21 +99,22 @@ export class Table extends React.Component<iProps, iState> {
 
     cardAction(event) {
 
-        if (this.props.game.playReadyToStart) {
+        if (this.props.game.kontraPartFinished || this.props.game.firstTurn)
+            if (this.props.game.playReadyToStart) {
 
-            let reqObj: RequestModel = {
-                dest: "play",
-                id: this.props.game.player.id,
-                cardid: event.target.id
+                let reqObj: RequestModel = {
+                    dest: "play",
+                    id: this.props.game.player.id,
+                    cardid: event.target.id
+                }
+
+                this.props.postReq(reqObj);
+
+            } else if (this.state.hand.length + this.state.talon.length == 12 && this.state.talon.length < 2) { //<2 = 2 ????????????????????????????????????
+                const index = this.state.hand.indexOf(parseInt(event.target.id));
+                this.state.hand.splice(index, 1);
+                this.setState({ talon: [...this.state.talon, parseInt(event.target.id)] });
             }
-
-            this.props.postReq(reqObj);
-
-        } else if (this.state.hand.length + this.state.talon.length == 12 && this.state.talon.length < 2) { //<2 = 2 ????????????????????????????????????
-            const index = this.state.hand.indexOf(parseInt(event.target.id));
-            this.state.hand.splice(index, 1);
-            this.setState({ talon: [...this.state.talon, parseInt(event.target.id)] });
-        }
     }
 
     backToHand(event) {

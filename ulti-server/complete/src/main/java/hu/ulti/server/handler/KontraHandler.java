@@ -10,7 +10,7 @@ import hu.ulti.server.model.Say;
 public class KontraHandler {
 
 	public static List<Call> kontraHandler(Say say, Game game) {
-
+		game.setKontraPartFinished(false);
 		boolean isSzintelen = Helper.isBetli(game.getPreviousCall()) || Helper.isSzintelenDuri(game.getPreviousCall());
 
 		if (isSzintelen) {
@@ -90,6 +90,7 @@ public class KontraHandler {
 			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
 				if (game.getPreviousCall().get(i).getKontra().get(j).getKontra().isSaid()) {
 					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(playerId);
+					game.setKontraPartFinished(true);
 				}
 			}
 		}
@@ -109,6 +110,7 @@ public class KontraHandler {
 				} else {
 					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
 					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setSaid(true);
+					game.setKontraPartFinished(true);
 				}
 			}
 		} else {
@@ -120,6 +122,7 @@ public class KontraHandler {
 					}
 				} else {
 					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
+					game.setKontraPartFinished(true);
 				}
 			}
 		}
@@ -141,6 +144,7 @@ public class KontraHandler {
 				} else {
 					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
 					game.getPreviousCall().get(i).getKontra().get(j).getSzupRekontra().setSaid(true);
+					game.setKontraPartFinished(true);
 				}
 			}
 		} else {
@@ -152,6 +156,7 @@ public class KontraHandler {
 					}
 				} else {
 					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setAckBy(playerId);
+					game.setKontraPartFinished(true);
 				}
 			}
 		}
@@ -187,6 +192,7 @@ public class KontraHandler {
 			}
 		}
 
+		game.setKontraPartFinished(true);
 		return game;
 	}
 }

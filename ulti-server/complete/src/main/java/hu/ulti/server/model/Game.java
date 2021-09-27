@@ -24,6 +24,7 @@ public class Game {
 	private List<StrikeList> strikeList = new ArrayList<StrikeList>();
 	private List<Card> talon = new ArrayList<Card>();
 	private boolean isKontraPartFinished = true;
+	private List<SayMsg> sayMsgList = new ArrayList<SayMsg>();
 
 	public Game() {
 		this.startingValue = 0;
@@ -33,7 +34,7 @@ public class Game {
 			int activePlayer, Strike round, List<Call> call, List<Call> previousCall, String errorMessage,
 			long lastModificationTimeStamp, boolean isGameOver, List<Result> resultList, boolean isFirstTurn,
 			List<Say> says, List<Hand> hands, List<StrikeList> strikeList, List<Card> talon,
-			boolean isKontraPartFinished) {
+			boolean isKontraPartFinished, List<SayMsg> sayMsgList) {
 		this.startingValue = startingValue;
 		this.player = player;
 		this.isRoundStarted = isRoundStarted;
@@ -53,6 +54,7 @@ public class Game {
 		this.strikeList = strikeList;
 		this.talon = talon;
 		this.isKontraPartFinished = isKontraPartFinished;
+		this.sayMsgList = sayMsgList;
 	}
 
 	public Player getPlayer() {
@@ -207,6 +209,14 @@ public class Game {
 		this.isKontraPartFinished = isKontraPartFinished;
 	}
 
+	public List<SayMsg> getSayMsgList() {
+		return sayMsgList;
+	}
+
+	public void setSayMsgList(List<SayMsg> sayMsgList) {
+		this.sayMsgList = sayMsgList;
+	}
+
 	@Override
 	public Game clone() {
 		try {
@@ -215,11 +225,15 @@ public class Game {
 			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart,
 					this.lastCallerId, this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage,
 					this.lastModificationTimeStamp, this.isGameOver, this.resultList, this.isFirstTurn, this.says,
-					this.hands, this.strikeList, this.talon, this.isKontraPartFinished);
+					this.hands, this.strikeList, this.talon, this.isKontraPartFinished, this.sayMsgList);
 		}
 	}
 	
 	public void addSayToList(Say say) {
 		this.says.add(say);
+	}
+	
+	public void addSayMsgToList(SayMsg msg) {
+		this.sayMsgList.add(msg);
 	}
 }

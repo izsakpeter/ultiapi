@@ -23,6 +23,7 @@ import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Request;
 import hu.ulti.server.model.Say;
+import hu.ulti.server.model.SayMsg;
 import hu.ulti.server.model.Strike;
 import hu.ulti.server.model.Player;
 
@@ -245,6 +246,7 @@ public class UltiController {
 			if (someSay.getPlayerId() == players.get(i).getId()) {
 				players.get(i).setSaid(true);
 				game.addSayToList(someSay);
+				checkLastSay(someSay);
 				break;
 			}
 		}
@@ -269,11 +271,11 @@ public class UltiController {
 		}
 
 		game.setPreviousCall(KontraHandler.kontraHandler(someSay, game));
-		
+
 		if (game.isKontraPartFinished()) {
 			game.setActivePlayer(getActivePlayerIdAfterKontra());
 		}
-		
+
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return "someSayKontra";
 	}
@@ -303,11 +305,11 @@ public class UltiController {
 				for (int i = 0; i < players.size(); i++) {
 					players.set(i, strikeHandler.getPlayers().get(i));
 				}
-				
+
 				if (!IsKontraPartFinished()) {
 					game.setActivePlayer(game.getLastCallerId());
 				} else {
-					
+
 					if (Helper.isTeritett(game.getPreviousCall())) {
 						for (int i = 0; i < players.size(); i++) {
 							handList.set(i, Helper.setHandWithCards(players.get(i)));
@@ -416,25 +418,39 @@ public class UltiController {
 			}
 		}
 	}
-	
+
 	private boolean IsKontraPartFinished() {
-		
+
 		int sum = 0;
-		
+
 		for (int i = 0; i < players.size(); i++) {
 			sum += players.get(i).getStrikes().size();
 		}
-		
+
 		return (sum == 1 && game.isKontraPartFinished());
 	}
-	
+
 	private int getActivePlayerIdAfterKontra() {
-		
+
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getStrikes().size() > 0)
 				return players.get(i).getId();
 		}
-		
+
 		return -1;
+	}
+
+	private void checkLastSay(Say say) {
+		if (say.isHave120())
+			game.addSayMsgToList(new SayMsg(say.getPlayerId(), "20"));
+
+		if (say.isHave220())
+			game.addSayMsgToList(new SayMsg(say.getPlayerId(), "2x20"));
+
+		if (say.isHave320())
+			game.addSayMsgToList(new SayMsg(say.getPlayerId(), "3x20"));
+
+		if (say.isHave40())
+			game.addSayMsgToList(new SayMsg(say.getPlayerId(), "40"));
 	}
 }

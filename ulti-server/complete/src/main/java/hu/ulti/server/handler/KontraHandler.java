@@ -6,6 +6,7 @@ import hu.ulti.server.Helper;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Say;
+import hu.ulti.server.model.SayMsg;
 
 public class KontraHandler {
 
@@ -68,10 +69,12 @@ public class KontraHandler {
 			if (isSzintelen) {
 				if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
 					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setSaid(true);
+					game.addSayMsgToList(new SayMsg(playerId, 1, game.getPreviousCall().get(i).getCallId()));
 					break;
 				}
 			} else {
 				game.getPreviousCall().get(i).getKontra().get(j).getKontra().setSaid(true);
+				game.addSayMsgToList(new SayMsg(playerId, 1, game.getPreviousCall().get(i).getCallId()));
 			}
 		}
 
@@ -84,12 +87,14 @@ public class KontraHandler {
 				if (game.getPreviousCall().get(i).getKontra().get(j).getKontra().isSaid()) {
 					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(playerId);
 					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setSaid(true);
+					game.addSayMsgToList(new SayMsg(playerId, 2, game.getPreviousCall().get(i).getCallId()));
 				}
 			}
 		} else {
 			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
 				if (game.getPreviousCall().get(i).getKontra().get(j).getKontra().isSaid()) {
 					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(playerId);
+					game.addSayMsgToList(new SayMsg(playerId, 2, game.getPreviousCall().get(i).getCallId(), "ok"));
 					game.setKontraPartFinished(true);
 				}
 			}
@@ -105,11 +110,13 @@ public class KontraHandler {
 					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
 						game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
 						game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setSaid(true);
+						game.addSayMsgToList(new SayMsg(playerId, 3, game.getPreviousCall().get(i).getCallId()));
 						break;
 					}
 				} else {
 					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
 					game.getPreviousCall().get(i).getKontra().get(j).getSzupKontra().setSaid(true);
+					game.addSayMsgToList(new SayMsg(playerId, 3, game.getPreviousCall().get(i).getCallId()));
 					game.setKontraPartFinished(true);
 				}
 			}
@@ -118,10 +125,12 @@ public class KontraHandler {
 				if (isSzintelen) {
 					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
 						game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
+						game.addSayMsgToList(new SayMsg(playerId, 3, game.getPreviousCall().get(i).getCallId(), "ok"));
 						break;
 					}
 				} else {
 					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
+					game.addSayMsgToList(new SayMsg(playerId, 3, game.getPreviousCall().get(i).getCallId(), "ok"));
 					game.setKontraPartFinished(true);
 				}
 			}

@@ -118,8 +118,6 @@ public class StrikeHandler {
 				}
 			}
 		}
-
-		game.getRound().clearStrike();
 	}
 
 	public static int getColor(int id) {

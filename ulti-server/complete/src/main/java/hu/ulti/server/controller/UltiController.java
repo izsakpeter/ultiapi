@@ -293,6 +293,11 @@ public class UltiController {
 
 		if (game.isPlayReadyToStart() && request.getId() == game.getActivePlayer()) {
 
+			if (game.getRound().getCard1Id() != -1 && game.getRound().getCard2Id() != -1
+					&& game.getRound().getCard3Id() != -1) {
+				game.getRound().clearStrike();
+			}
+
 			for (int i = 0; i < players.size(); i++) {
 				if (request.getId() == players.get(i).getId()) {
 					game.getRound().addCardToStrike(request.getCardid(), request.getId());

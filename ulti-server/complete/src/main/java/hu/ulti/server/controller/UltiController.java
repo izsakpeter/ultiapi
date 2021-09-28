@@ -273,14 +273,14 @@ public class UltiController {
 		game.setPreviousCall(KontraHandler.kontraHandler(someSay, game));
 
 		if (game.isKontraPartFinished()) {
-			
+
 			if (Helper.isTeritett(game.getPreviousCall())) {
 				for (int i = 0; i < players.size(); i++) {
 					handList.set(i, Helper.setHandWithCards(players.get(i)));
 					game.setHands(handList);
 				}
 			}
-			
+
 			game.setActivePlayer(getActivePlayerIdAfterKontra());
 		}
 
@@ -314,7 +314,7 @@ public class UltiController {
 					players.set(i, strikeHandler.getPlayers().get(i));
 				}
 
-				if (!IsKontraPartFinished()) {
+				if (!game.isKontraPartFinished()) {
 					game.setActivePlayer(game.getLastCallerId());
 				} else {
 
@@ -327,6 +327,8 @@ public class UltiController {
 
 					Resulthandler resultHandler = new Resulthandler(game, roundCounter, players);
 					game = resultHandler.getGame();
+
+					roundCounter++;
 
 					if (game.isGameOver()) {
 						for (int i = 0; i < players.size(); i++) {
@@ -341,9 +343,10 @@ public class UltiController {
 						game.setStartingValue(0);
 						game.setLastCallerId(0);
 						game.setPreviousCall(new ArrayList<Call>());
+						game.setSayMsgList(null);
+						game.setSays(null);
+						game.setFirstTurn(true);
 					}
-
-					roundCounter++;
 				}
 			}
 
@@ -378,7 +381,7 @@ public class UltiController {
 				players.get(i).setStrikes(new ArrayList<Strike>());
 			}
 			game.setGameOver(false);
-
+			roundCounter = 1;
 			dealer = Helper.dealerHandler(dealer);
 			hands = Helper.getHands();
 			setStarterPlayer();
@@ -425,17 +428,6 @@ public class UltiController {
 				break;
 			}
 		}
-	}
-
-	private boolean IsKontraPartFinished() {
-
-		int sum = 0;
-
-		for (int i = 0; i < players.size(); i++) {
-			sum += players.get(i).getStrikes().size();
-		}
-
-		return (sum == 1 && game.isKontraPartFinished());
 	}
 
 	private int getActivePlayerIdAfterKontra() {

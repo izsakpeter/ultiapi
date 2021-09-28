@@ -70,6 +70,7 @@ public class CallHandler {
 
 		for (int i = 0; i < game.getPreviousCall().size(); i++) {
 			List<Kontra> kontraList = new ArrayList<Kontra>();
+			
 			for (int j = 0; j < players.size(); j++) {
 				if (game.getLastCallerId() != players.get(j).getId()) {
 					kontraList.add(new Kontra(players.get(j).getId(), new KontraAck(), new KontraAck(), new KontraAck(),

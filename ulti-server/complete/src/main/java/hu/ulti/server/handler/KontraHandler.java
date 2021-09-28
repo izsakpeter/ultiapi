@@ -12,7 +12,7 @@ public class KontraHandler {
 
 	public static List<Call> kontraHandler(Say say, Game game) {
 		game.setKontraPartFinished(false);
-		boolean isSzintelen = Helper.isBetli(game.getPreviousCall()) || Helper.isSzintelenDuri(game.getPreviousCall());
+		boolean isSzintelen = Helper.isSzintelen(game);
 
 		if (isSzintelen) {
 			for (int i = 0; i < game.getPreviousCall().size(); i++) {
@@ -27,6 +27,7 @@ public class KontraHandler {
 				}
 			}
 		} else {
+			
 			for (int i = 0; i < game.getPreviousCall().size(); i++) {
 				if (Resulthandler.listPassz.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, false, say.isKontraPassz());
@@ -49,7 +50,7 @@ public class KontraHandler {
 
 	private static Game processKontrazasok(Game game, Say say, int callIndex, boolean isSzintelen, boolean isKontra) {
 
-		if (say.getKontraId() == 1) {
+		if (say.getKontraId() == 1 && isKontra) {
 			return proccessKontra(game, say.getPlayerId(), callIndex, isSzintelen);
 		} else if (say.getKontraId() == 2) {
 			return proccessRekontra(game, say.getPlayerId(), callIndex, isKontra);
@@ -70,11 +71,12 @@ public class KontraHandler {
 				if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
 					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setSaid(true);
 					game.addSayMsgToList(new SayMsg(playerId, 1, game.getPreviousCall().get(i).getCallId()));
-					break;
 				}
 			} else {
-				game.getPreviousCall().get(i).getKontra().get(j).getKontra().setSaid(true);
-				game.addSayMsgToList(new SayMsg(playerId, 1, game.getPreviousCall().get(i).getCallId()));
+				if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
+					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setSaid(true);
+					game.addSayMsgToList(new SayMsg(playerId, 1, game.getPreviousCall().get(i).getCallId()));
+				}
 			}
 		}
 
@@ -82,19 +84,23 @@ public class KontraHandler {
 	}
 
 	private static Game proccessRekontra(Game game, int playerId, int i, boolean isRekontra) {
+		
 		if (isRekontra) {
 			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
 				if (game.getPreviousCall().get(i).getKontra().get(j).getKontra().isSaid()) {
 					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(playerId);
 					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setSaid(true);
+					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);// kuka lesz
 					game.addSayMsgToList(new SayMsg(playerId, 2, game.getPreviousCall().get(i).getCallId()));
+					game.addSayMsgToList(new SayMsg(playerId, 2, game.getPreviousCall().get(i).getCallId(), "ok")); // kuka lesz
+					game.setKontraPartFinished(true); // kuka lesz
 				}
 			}
 		} else {
 			for (int j = 0; j < game.getPreviousCall().get(i).getKontra().size(); j++) {
 				if (game.getPreviousCall().get(i).getKontra().get(j).getKontra().isSaid()) {
 					game.getPreviousCall().get(i).getKontra().get(j).getKontra().setAckBy(playerId);
-					game.addSayMsgToList(new SayMsg(playerId, 2, game.getPreviousCall().get(i).getCallId(), "ok"));
+					game.addSayMsgToList(new SayMsg(playerId, 1, game.getPreviousCall().get(i).getCallId(), "ok"));
 					game.setKontraPartFinished(true);
 				}
 			}
@@ -125,12 +131,12 @@ public class KontraHandler {
 				if (isSzintelen) {
 					if (playerId == game.getPreviousCall().get(i).getKontra().get(j).getPlayerId()) {
 						game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
-						game.addSayMsgToList(new SayMsg(playerId, 3, game.getPreviousCall().get(i).getCallId(), "ok"));
+						game.addSayMsgToList(new SayMsg(playerId, 2, game.getPreviousCall().get(i).getCallId(), "ok"));
 						break;
 					}
 				} else {
 					game.getPreviousCall().get(i).getKontra().get(j).getRekontra().setAckBy(playerId);
-					game.addSayMsgToList(new SayMsg(playerId, 3, game.getPreviousCall().get(i).getCallId(), "ok"));
+					game.addSayMsgToList(new SayMsg(playerId, 2, game.getPreviousCall().get(i).getCallId(), "ok"));
 					game.setKontraPartFinished(true);
 				}
 			}

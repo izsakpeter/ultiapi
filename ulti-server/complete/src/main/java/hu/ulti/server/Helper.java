@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
+import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.UuidWithCardId;
@@ -205,5 +206,14 @@ public class Helper {
 		}
 
 		return false;
+	}
+	
+	public static String getUUid() {
+		UUID uuid = UUID.randomUUID();
+		return uuid.toString();
+	}
+	
+	public static boolean isSzintelen(Game game) {
+		return Helper.isBetli(game.getPreviousCall()) || Helper.isSzintelenDuri(game.getPreviousCall());
 	}
 }

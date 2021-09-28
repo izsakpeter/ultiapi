@@ -1,20 +1,27 @@
 package hu.ulti.server.model;
 
+import hu.ulti.server.Helper;
+
 public class SayMsg {
 
+	@SuppressWarnings("unused")
+	private String id;
+	
 	private int playerId;
 	private int kontraId;
 	private int callId;
 	private String otherSay;
 
 	public SayMsg(int playerId, int kontraId, int callId) {
+		this.id = Helper.getUUid();
 		this.playerId = playerId;
 		this.kontraId = kontraId;
 		this.callId = callId;
-		this.otherSay = "";
+		this.otherSay = "-1";
 	}
 
 	public SayMsg(int playerId, String otherSay) {
+		this.id = Helper.getUUid();
 		this.playerId = playerId;
 		this.otherSay = otherSay;
 		this.kontraId = -1;
@@ -22,7 +29,7 @@ public class SayMsg {
 	}
 
 	public SayMsg(int playerId, int kontraId, int callId, String otherSay) {
-		super();
+		this.id = Helper.getUUid();
 		this.playerId = playerId;
 		this.kontraId = kontraId;
 		this.callId = callId;

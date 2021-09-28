@@ -4,6 +4,7 @@ import { Hand } from "./hand";
 import { Player } from "./player";
 import { Result } from "./result";
 import { Say } from "./say";
+import { SayMsg } from "./sayMsg";
 import { Strike } from "./strike";
 import { StrikeList } from "./strikeList";
 
@@ -27,6 +28,7 @@ export class Game {
 	public previousCall: Array<Call>;
 	public call: Array<Call>;
 	public kontraPartFinished: boolean;
+	public sayMsgList: Array<SayMsg>;
 
 	public errorMessage: string ;
 }

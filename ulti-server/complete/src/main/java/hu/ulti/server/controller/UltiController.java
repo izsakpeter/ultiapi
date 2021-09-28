@@ -273,6 +273,14 @@ public class UltiController {
 		game.setPreviousCall(KontraHandler.kontraHandler(someSay, game));
 
 		if (game.isKontraPartFinished()) {
+			
+			if (Helper.isTeritett(game.getPreviousCall())) {
+				for (int i = 0; i < players.size(); i++) {
+					handList.set(i, Helper.setHandWithCards(players.get(i)));
+					game.setHands(handList);
+				}
+			}
+			
 			game.setActivePlayer(getActivePlayerIdAfterKontra());
 		}
 

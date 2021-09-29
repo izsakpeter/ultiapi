@@ -40,6 +40,46 @@ export function GetCardSource(id: number): string {
 	return "/resources/img/cards/hatlap.png";
 }
 
+export function GetHalfCardSource(id: number): string {
+
+	switch (id) {
+		case 0: return "/resources/img/half_cards/m7.png";
+		case 1: return "/resources/img/half_cards/m8.png";
+		case 2: return "/resources/img/half_cards/m9.png";
+		case 3: return "/resources/img/half_cards/m10.png";
+		case 4: return "/resources/img/half_cards/mal.png";
+		case 5: return "/resources/img/half_cards/mfel.png";
+		case 6: return "/resources/img/half_cards/mk.png";
+		case 7: return "/resources/img/half_cards/masz.png";
+		case 8: return "/resources/img/half_cards/z7.png";
+		case 9: return "/resources/img/half_cards/z8.png";
+		case 10: return "/resources/img/half_cards/z9.png";
+		case 11: return "/resources/img/half_cards/z10.png";
+		case 12: return "/resources/img/half_cards/zal.png";
+		case 13: return "/resources/img/half_cards/zfel.png";
+		case 14: return "/resources/img/half_cards/zk.png";
+		case 15: return "/resources/img/half_cards/zasz.png";
+		case 16: return "/resources/img/half_cards/t7.png";
+		case 17: return "/resources/img/half_cards/t8.png";
+		case 18: return "/resources/img/half_cards/t9.png";
+		case 19: return "/resources/img/half_cards/t10.png";
+		case 20: return "/resources/img/half_cards/tal.png";
+		case 21: return "/resources/img/half_cards/tfel.png";
+		case 22: return "/resources/img/half_cards/tk.png";
+		case 23: return "/resources/img/half_cards/tasz.png";
+		case 24: return "/resources/img/half_cards/p7.png";
+		case 25: return "/resources/img/half_cards/p8.png";
+		case 26: return "/resources/img/half_cards/p9.png";
+		case 27: return "/resources/img/half_cards/p10.png";
+		case 28: return "/resources/img/half_cards/pal.png";
+		case 29: return "/resources/img/half_cards/pfel.png";
+		case 30: return "/resources/img/half_cards/pk.png";
+		case 31: return "/resources/img/half_cards/pasz.png";
+	}
+
+	return "/resources/img/half_cards/hatlap.png";
+}
+
 export function GetOrderedHand(cards: Array<number>, isColorOrder: boolean): Array<number> {
 
 	var orderedCards = cards;

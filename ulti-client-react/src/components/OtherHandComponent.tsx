@@ -1,5 +1,5 @@
 import React = require("react");
-import { GetCardSource } from "../helper/cardHandler";
+import { GetCardSource, GetHalfCardSource } from "../helper/cardHandler";
 import { getUsernameById } from "../helper/loginHandler";
 import { Game } from "../model/game";
 import { Hand } from "../model/hand";
@@ -77,7 +77,11 @@ function getHand(index: number, game: Game): any[] {
     for (let j = 0; j < game.hands.length; j++) {
         if (game.player.id === game.hands[j].id) {
             for (let i = 0; i < game.hands[getIncreasedIndex(j + index)].list.length; i++) {
-                hand.push(<img key={game.hands[getIncreasedIndex(j + index)].list[i].uuid} src={GetCardSource(game.hands[getIncreasedIndex(j + index)].list[i].cardId)} className="otherhand-card" />);
+
+                if (i !== game.hands[getIncreasedIndex(j + index)].list.length - 1)
+                    hand.push(<img key={game.hands[getIncreasedIndex(j + index)].list[i].uuid} src={GetHalfCardSource(game.hands[getIncreasedIndex(j + index)].list[i].cardId)} className="otherhand-halfcard" />);
+                else
+                    hand.push(<img key={game.hands[getIncreasedIndex(j + index)].list[i].uuid} src={GetCardSource(game.hands[getIncreasedIndex(j + index)].list[i].cardId)} className="otherhand-card" />);
             }
         }
     }

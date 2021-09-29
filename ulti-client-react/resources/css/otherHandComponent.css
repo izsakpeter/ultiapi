@@ -3,10 +3,15 @@
     height: 132px;
 }
 
+.otherhand-halfcard {
+    width: 45px;
+    height: 132px;
+}
+
 .rightplayer {
-    right: -300px;
+    right: -150px;
     position: absolute;
-    top: 44%;
+    top: 30%;
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
@@ -16,14 +21,14 @@
 
 .topplayer {
     top: 0%;
-    left: 25%;
+    left: 30%;
     position: absolute;
 }
 
 .leftplayer {
-    left: -300px;
+    left: -200px;
     position: absolute;
-    top: 44%;
+    top: 30%;
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);

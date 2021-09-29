@@ -125,7 +125,7 @@ export class Table extends React.Component<iProps, iState> {
         }
 
         return (
-            <div className={"align-center-bottom"}>
+            <div className={"my-card"}>
                 <div>{getUsernameById(this.props.game.player.id)}</div>
                 <div>{cardsImg}</div>
             </div>

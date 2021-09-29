@@ -30,9 +30,12 @@ import hu.ulti.server.model.Player;
 @CrossOrigin
 @RestController
 public class UltiController {
-	private static List<Player> players = Helper.getPlayerList();
+
+	private static int playersNumber = 3;
+	private static List<Player> players = Helper.getPlayerList(playersNumber);
+	private int dealer = Helper.setFirstDealer(playersNumber);
+
 	private static List<Hand> handList = new ArrayList<Hand>();
-	private int dealer = 2;
 	private List<List<Card>> hands = null;
 	private List<Card> talon = new ArrayList<Card>();
 	private Game game = new Game();
@@ -100,23 +103,14 @@ public class UltiController {
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return "Round started";
 		} else {
-			hands = Helper.getHands();
 			setStarterPlayer();
-
-			for (int i = 0; i < players.size(); i++) {
-				players.get(i).setHand(hands.get(i));
-				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
-				handList.add(i, new Hand());
-				handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
-			}
+			setHands(dealer);
 
 			talon = hands.get(3);
-
 			game.setTalon(Helper.fillTalonWithMinusOne());
 			game.setHands(handList);
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
-
 			return "ok";
 		}
 	}
@@ -387,19 +381,12 @@ public class UltiController {
 			}
 			game.setGameOver(false);
 			roundCounter = 1;
-			dealer = Helper.dealerHandler(dealer);
-			hands = Helper.getHands();
+			
+			dealer = Helper.dealerHandler(dealer, playersNumber);
 			setStarterPlayer();
-
-			for (int i = 0; i < players.size(); i++) {
-				players.get(i).setHand(hands.get(i));
-				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
-				handList.add(i, new Hand());
-				handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
-			}
+			setHands(dealer);
 
 			talon = hands.get(3);
-
 			game.setTalon(Helper.fillTalonWithMinusOne());
 			game.setHands(handList);
 			game.setRoundStarted(true);
@@ -457,5 +444,36 @@ public class UltiController {
 
 		if (say.isHave40())
 			game.addSayMsgToList(new SayMsg(say.getPlayerId(), "40"));
+	}
+
+	private void setHands(int dealer) {
+
+		hands = Helper.getHands();
+
+		if (playersNumber == 4) {
+			int handIndex = 0;
+
+			for (int i = 0; i < players.size(); i++) {
+
+				if (dealer == i + 1) {
+					players.get(i).setHand(new ArrayList<Card>());
+					handList.add(i, new Hand());
+					handList.set(i, Helper.setEmptyHand(players.get(i)));
+				} else {
+					players.get(i).setHand(hands.get(handIndex));
+					players.get(i).getHand().sort(Comparator.comparing(Card::getId));
+					handList.add(i, new Hand());
+					handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
+					handIndex++;
+				}
+			}
+		} else {
+			for (int i = 0; i < players.size(); i++) {
+				players.get(i).setHand(hands.get(i));
+				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
+				handList.add(i, new Hand());
+				handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
+			}
+		}
 	}
 }

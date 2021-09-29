@@ -15,7 +15,7 @@ import hu.ulti.server.model.Player;
 import hu.ulti.server.model.UuidWithCardId;
 
 public class Helper {
-	
+
 	private static List<Integer> betliIds = Arrays.asList(5, 9, 17, 21, 29, 33, 41, 45);
 	private static List<Integer> duriIds = Arrays.asList(7, 11, 19, 23, 31, 35, 43, 47);
 
@@ -53,15 +53,27 @@ public class Helper {
 		return hand;
 	}
 
-	public static int dealerHandler(int number) {
+	public static int setFirstDealer(int players) {
+		if (players == 4)
+			return 3;
 
+		return 2;
+	}
+
+	public static int dealerHandler(int number, int players) {
+		
 		if (number == 0)
 			return 1;
 		else if (number == 1)
 			return 2;
 		else if (number == 2)
-			return 0;
-
+			return 3;
+		
+		if (players == 4 && number == 3)
+				return 0;
+		else if (number == 3)
+				return 0;
+		
 		return 1;
 	}
 
@@ -78,15 +90,18 @@ public class Helper {
 		return false;
 	}
 
-	public static List<Player> getPlayerList() {
-		List<Player> players = new ArrayList<Player>();
-		Player player1 = new Player();
-		players.add(0, player1);
-		Player player2 = new Player();
-		players.add(1, player2);
-		Player player3 = new Player();
-		players.add(2, player3);
-		return players;
+	public static List<Player> getPlayerList(int players) {
+
+		if (players > 4 || players < 3)
+			players = 3;
+
+		List<Player> playersList = new ArrayList<Player>();
+
+		for (int i = 0; i < players; i++) {
+			playersList.add(i, new Player());
+		}
+
+		return playersList;
 	}
 
 	public static Hand fillHandWithMinusOne(Player player) {
@@ -113,6 +128,15 @@ public class Helper {
 			list.add(new UuidWithCardId(uuid.toString(), player.getHand().get(i).getId()));
 		}
 
+		hand.setList(list);
+
+		return hand;
+	}
+	
+	public static Hand setEmptyHand(Player player) {
+		Hand hand = new Hand();
+		hand.setId(player.getId());
+		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
 		hand.setList(list);
 
 		return hand;
@@ -183,7 +207,7 @@ public class Helper {
 
 		return player.getHand();
 	}
-	
+
 	public static boolean isBetli(List<Call> callList) {
 
 		for (Integer id : betliIds) {
@@ -207,12 +231,12 @@ public class Helper {
 
 		return false;
 	}
-	
+
 	public static String getUUid() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
 	}
-	
+
 	public static boolean isSzintelen(Game game) {
 		return Helper.isBetli(game.getPreviousCall()) || Helper.isSzintelenDuri(game.getPreviousCall());
 	}

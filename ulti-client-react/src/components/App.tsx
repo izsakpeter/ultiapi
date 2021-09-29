@@ -32,7 +32,7 @@ export default class App extends React.Component<{}, iState> {
     render() {
         return (
             <div>
-                <div className={"align-right"}><LoginComponent postReq={this.postRequest} /></div>
+                <div><LoginComponent postReq={this.postRequest} game={this.state.game} /></div>
                 <div className={"align-center"}><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} postReq={this.postRequest} /></div>
                 <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest} /></div>
             </div>
@@ -49,7 +49,7 @@ export default class App extends React.Component<{}, iState> {
             if (res.player.hand === null || res.player.hand.length === 0 && res.playReadyToStart)
                 gotCardsState = false;
 
-            this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true, lastTimeStamp: Date.now()});
+            this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true, lastTimeStamp: Date.now() });
 
         } else {
             this.setState({ gotCards: false, isWrongLogin: true, isLoggedIn: true });

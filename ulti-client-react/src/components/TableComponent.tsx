@@ -7,8 +7,9 @@ import { Button } from "@blueprintjs/core";
 import { RequestModel } from "../model/requestModel";
 import { PlaygroundComponent } from "./PlaygroundComponent";
 import { StrikeComponent } from "./StrikeComponent";
-import OtherHandComponent from "./OtherHandComponent";
 import { SayComponent } from "./SayComponent";
+import { getUsernameById } from "../helper/loginHandler";
+import OtherHandComponent from "./OtherHandComponent";
 
 interface iProps {
     gotCards: boolean,
@@ -59,24 +60,13 @@ export class Table extends React.Component<iProps, iState> {
         if (!this.props.gotCards)
             return <></>;
 
-        let cardsInHand = GetOrderedHand(this.state.hand.sort((a, b) => a - b), this.props.game.player.colorOrder);
-        let cardsImg = [];
-        for (let i = 0; i < cardsInHand.length; i++) {
-            cardsImg.push(<Button key={"idh" + i} ><img src={GetCardSource(cardsInHand[i])} className="button-card" onClick={this.cardAction} id={cardsInHand[i].toString()} /></Button>);
-        }
-
-        let talonImg = [];
-        for (let i = 0; i < this.state.talon.length; i++) {
-            talonImg.push(<Button key={"idt" + i}><img src={GetCardSource(this.state.talon[i])} className="button-card" onClick={this.backToHand} id={this.state.talon[i].toString()} /></Button>);
-        }
-
         return (
             <div >
                 <div className={"align-center"}><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
                 <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
                 <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
-                <div className={"talon"}>{talonImg} </div>
-                <div className={"align-center-bottom"}>{cardsImg}</div>
+                <div>{this.renderTalon()}</div>
+                <div>{this.renderMyHand()}</div>
                 <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>
                 <div><StrikeComponent game={this.props.game} /></div>
                 <div><OtherHandComponent game={this.props.game} /></div>
@@ -125,5 +115,31 @@ export class Table extends React.Component<iProps, iState> {
 
     clearTalon() {
         this.setState({ talon: [] });
+    }
+
+    renderMyHand() {
+        let cardsInHand = GetOrderedHand(this.state.hand.sort((a, b) => a - b), this.props.game.player.colorOrder);
+        let cardsImg = [];
+        for (let i = 0; i < cardsInHand.length; i++) {
+            cardsImg.push(<Button key={"idh" + i} ><img src={GetCardSource(cardsInHand[i])} className="button-card" onClick={this.cardAction} id={cardsInHand[i].toString()} /></Button>);
+        }
+
+        return (
+            <div className={"align-center-bottom"}>
+                <div>{getUsernameById(this.props.game.player.id)}</div>
+                <div>{cardsImg}</div>
+            </div>
+        )
+    }
+
+    renderTalon() {
+        let talonImg = [];
+        for (let i = 0; i < this.state.talon.length; i++) {
+            talonImg.push(<Button key={"idt" + i}><img src={GetCardSource(this.state.talon[i])} className="button-card" onClick={this.backToHand} id={this.state.talon[i].toString()} /></Button>);
+        }
+
+        return (
+            <div className={"talon"}>{talonImg} </div>
+        )
     }
 }

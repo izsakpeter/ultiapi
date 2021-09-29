@@ -9,6 +9,7 @@
 @import "playgroundComponent.css";
 @import "sayComponent.css";
 @import "resultComponent.css";
+@import "loginComponent.css";
 .align-center {
     text-align: center;
 }

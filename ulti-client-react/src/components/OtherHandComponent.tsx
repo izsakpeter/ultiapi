@@ -58,15 +58,6 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
     }
 }
 
-function getIncreasedIndex(index: number) {
-    if (index == 3)
-        return 0;
-    else if (index == 4)
-        return 1;
-
-    return index;
-}
-
 function getHand(index: number, game: Game): any[] {
 
     let hand = [];
@@ -74,14 +65,16 @@ function getHand(index: number, game: Game): any[] {
     if (index === 3 && game.hands.length === 3)
         return hand;
 
+    let handLength: number = game.hands.length;
+
     for (let j = 0; j < game.hands.length; j++) {
         if (game.player.id === game.hands[j].id) {
-            for (let i = 0; i < game.hands[getIncreasedIndex(j + index)].list.length; i++) {
+            for (let i = 0; i < game.hands[getIncreasedIndex(j + index, handLength)].list.length; i++) {
 
-                if (i !== game.hands[getIncreasedIndex(j + index)].list.length - 1)
-                    hand.push(<img key={game.hands[getIncreasedIndex(j + index)].list[i].uuid} src={GetHalfCardSource(game.hands[getIncreasedIndex(j + index)].list[i].cardId)} className="otherhand-halfcard" />);
+                if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1)
+                    hand.push(<img key={game.hands[getIncreasedIndex(j + index, handLength)].list[i].uuid} src={GetHalfCardSource(game.hands[getIncreasedIndex(j + index, handLength)].list[i].cardId)} className="otherhand-halfcard" />);
                 else
-                    hand.push(<img key={game.hands[getIncreasedIndex(j + index)].list[i].uuid} src={GetCardSource(game.hands[getIncreasedIndex(j + index)].list[i].cardId)} className="otherhand-card" />);
+                    hand.push(<img key={game.hands[getIncreasedIndex(j + index, handLength)].list[i].uuid} src={GetCardSource(game.hands[getIncreasedIndex(j + index, handLength)].list[i].cardId)} className="otherhand-card" />);
             }
         }
     }
@@ -96,11 +89,28 @@ function getPlayerName(index: number, game: Game): string {
 
     for (let j = 0; j < game.hands.length; j++) {
         if (game.player.id === game.hands[j].id) {
-
-            return getUsernameById(game.hands[getIncreasedIndex(j + index)].id);
-
+            let handLength: number = game.hands.length;
+            return getUsernameById(game.hands[getIncreasedIndex(j + index, handLength)].id);
         }
     }
 
     return "";
+}
+
+
+function getIncreasedIndex(index: number, length: number) {
+
+    if (length === 3) {
+        if (index == 3)
+            return 0;
+        else if (index == 4)
+            return 1;
+    } else if (length === 4) {
+        if (index == 4)
+            return 0;
+        else if (index == 5)
+            return 1;
+    }
+
+    return index;
 }

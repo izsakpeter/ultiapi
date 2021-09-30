@@ -31,7 +31,7 @@ import hu.ulti.server.model.Player;
 @RestController
 public class UltiController {
 
-	private static int playersNumber = 3;
+	private static int playersNumber = 4;
 	private static List<Player> players = Helper.getPlayerList(playersNumber);
 	private int dealer = Helper.setFirstDealer(playersNumber);
 
@@ -450,12 +450,12 @@ public class UltiController {
 
 		hands = Helper.getHands();
 
-		if (playersNumber == 4) {
+		if (players.size() == 4) {
 			int handIndex = 0;
 
 			for (int i = 0; i < players.size(); i++) {
 
-				if (dealer == i + 1) {
+				if (dealer == i) {
 					players.get(i).setHand(new ArrayList<Card>());
 					handList.add(i, new Hand());
 					handList.set(i, Helper.setEmptyHand(players.get(i)));

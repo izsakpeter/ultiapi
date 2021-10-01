@@ -2,6 +2,7 @@ import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React = require("react");
 import { getCallList, getCallNameListString, getCallValue, getCallValueSum, isBluff4020 } from "../helper/callHandler";
 import { Constants } from "../helper/constants";
+import { getUsernameById } from "../helper/loginHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { PassOrJoin } from "./PassOrJoinComponent";
@@ -72,7 +73,7 @@ export class CallComponent extends React.Component<iProps, iState>{
                 <div>
                     <div className={"call-table-border"}>
                         <div>
-                            {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>}
+                            {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {getUsernameById(this.props.game.lastCallerId)} által.</div>}
                             <div><WronCallComponent game={this.props.game} /></div>
                             <Radio name="cv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.MAKK_ID, this.props.game)} />
                             <Radio name="cv" label={Constants.ZOLD} value={Constants.ZOLD_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.ZOLD_ID, this.props.game)} />

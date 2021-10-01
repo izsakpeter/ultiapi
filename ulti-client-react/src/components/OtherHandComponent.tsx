@@ -69,12 +69,18 @@ function getHand(index: number, game: Game): any[] {
 
     for (let j = 0; j < game.hands.length; j++) {
         if (game.player.id === game.hands[j].id) {
+
             for (let i = 0; i < game.hands[getIncreasedIndex(j + index, handLength)].list.length; i++) {
 
-                if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1)
-                    hand.push(<img key={game.hands[getIncreasedIndex(j + index, handLength)].list[i].uuid} src={GetHalfCardSource(game.hands[getIncreasedIndex(j + index, handLength)].list[i].cardId)} className="otherhand-halfcard" />);
-                else
-                    hand.push(<img key={game.hands[getIncreasedIndex(j + index, handLength)].list[i].uuid} src={GetCardSource(game.hands[getIncreasedIndex(j + index, handLength)].list[i].cardId)} className="otherhand-card" />);
+                if (game.hands[getIncreasedIndex(j + index, handLength)].list.length > 0) {
+
+                    let listItem = game.hands[getIncreasedIndex(j + index, handLength)].list[i];
+
+                    if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1)
+                        hand.push(<img key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"}/>);
+                    else
+                        hand.push(<img key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"}/>);
+                }
             }
         }
     }
@@ -110,6 +116,8 @@ function getIncreasedIndex(index: number, length: number) {
             return 0;
         else if (index == 5)
             return 1;
+            else if (index == 6)
+            return 2;
     }
 
     return index;

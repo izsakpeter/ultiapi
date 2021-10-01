@@ -135,7 +135,7 @@ public class UltiController {
 			for (int i = 0; i < players.size(); i++) {
 				if (request.getId() == players.get(i).getId()) {
 					players.get(i).setHand(Helper.addTalon(players.get(i), talon));
-					handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
+					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 				}
 			}
 
@@ -167,7 +167,7 @@ public class UltiController {
 						players.get(i).setBluff4020(request.isBluff4020());
 						talon = Helper.getTalonById(request.getTalonid());
 						players.get(i).setHand(Helper.removeTalon(players.get(i), talon));
-						handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
+						handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 						game.setHands(handList);
 						game.setLastCallerId(request.getId());
 						game.setPreviousCall(game.getCall());
@@ -217,7 +217,7 @@ public class UltiController {
 				for (int i = 0; i < players.size(); i++) {
 					if (request.getId() == players.get(i).getId()) {
 						players.get(i).setHand(Helper.addTalon(players.get(i), talon));
-						handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
+						handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 						game.setHands(handList);
 					}
 				}
@@ -270,7 +270,7 @@ public class UltiController {
 
 			if (Helper.isTeritett(game.getPreviousCall())) {
 				for (int i = 0; i < players.size(); i++) {
-					handList.set(i, Helper.setHandWithCards(players.get(i)));
+					handList.set(i, Helper.fillHandWithUncoveredCards(players.get(i)));
 					game.setHands(handList);
 				}
 			}
@@ -296,7 +296,7 @@ public class UltiController {
 				if (request.getId() == players.get(i).getId()) {
 					game.getRound().addCardToStrike(request.getCardid(), request.getId());
 					players.get(i).setHand(Helper.removeCardbyId(players.get(i), request.getCardid()));
-					handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
+					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 					game.setHands(handList);
 					game.setActivePlayer(getIncreasedPlayerId(i));
 				}
@@ -319,7 +319,7 @@ public class UltiController {
 
 					if (Helper.isTeritett(game.getPreviousCall())) {
 						for (int i = 0; i < players.size(); i++) {
-							handList.set(i, Helper.setHandWithCards(players.get(i)));
+							handList.set(i, Helper.fillHandWithUncoveredCards(players.get(i)));
 							game.setHands(handList);
 						}
 					}
@@ -463,7 +463,7 @@ public class UltiController {
 					players.get(i).setHand(hands.get(handIndex));
 					players.get(i).getHand().sort(Comparator.comparing(Card::getId));
 					handList.add(i, new Hand());
-					handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
+					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 					handIndex++;
 				}
 			}
@@ -472,7 +472,7 @@ public class UltiController {
 				players.get(i).setHand(hands.get(i));
 				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
 				handList.add(i, new Hand());
-				handList.set(i, Helper.fillHandWithMinusOne(players.get(i)));
+				handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 			}
 		}
 	}

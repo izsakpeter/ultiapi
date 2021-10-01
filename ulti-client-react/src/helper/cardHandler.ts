@@ -3,6 +3,7 @@
 export function GetCardSource(id: number): string {
 
 	switch (id) {
+		case -1: return "/resources/img/cards/hatlap.png";
 		case 0: return "/resources/img/cards/m7.png";
 		case 1: return "/resources/img/cards/m8.png";
 		case 2: return "/resources/img/cards/m9.png";
@@ -37,12 +38,13 @@ export function GetCardSource(id: number): string {
 		case 31: return "/resources/img/cards/pasz.png";
 	}
 
-	return "/resources/img/cards/hatlap.png";
+	return "";
 }
 
 export function GetHalfCardSource(id: number): string {
 
 	switch (id) {
+		case -1: return "/resources/img/half_cards/hatlap.png";
 		case 0: return "/resources/img/half_cards/m7.png";
 		case 1: return "/resources/img/half_cards/m8.png";
 		case 2: return "/resources/img/half_cards/m9.png";
@@ -77,7 +79,7 @@ export function GetHalfCardSource(id: number): string {
 		case 31: return "/resources/img/half_cards/pasz.png";
 	}
 
-	return "/resources/img/half_cards/hatlap.png";
+	return "";
 }
 
 export function GetOrderedHand(cards: Array<number>, isColorOrder: boolean): Array<number> {

@@ -29,11 +29,11 @@ export function getUsernameById(id: number): string {
 function getAlluser(): Array<User> {
     let users = [];
 
-    users.push(new User(1, "IPéter", "8888"));
-    users.push(new User(2, "NNorbi", "6666"));
-    users.push(new User(3, "GNorbi", "0420"));
-    users.push(new User(4, "SztárLaci", "0421"));
-    users.push(new User(5, "Ándika", "4444"));
+    users.push(new User(1, "IP", "8"));
+    users.push(new User(2, "NN", "6"));
+    users.push(new User(3, "GN", "0"));
+    users.push(new User(4, "SzL", "1"));
+    users.push(new User(5, "Á", "4"));
 
     return users;
 }

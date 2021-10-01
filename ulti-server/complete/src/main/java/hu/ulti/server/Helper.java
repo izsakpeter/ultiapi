@@ -61,19 +61,19 @@ public class Helper {
 	}
 
 	public static int dealerHandler(int number, int players) {
-		
+
 		if (number == 0)
 			return 1;
 		else if (number == 1)
 			return 2;
 		else if (number == 2)
 			return 3;
-		
+
 		if (players == 4 && number == 3)
-				return 0;
+			return 0;
 		else if (number == 3)
-				return 0;
-		
+			return 0;
+
 		return 1;
 	}
 
@@ -104,21 +104,7 @@ public class Helper {
 		return playersList;
 	}
 
-	public static Hand fillHandWithMinusOne(Player player) {
-		Hand hand = new Hand();
-		hand.setId(player.getId());
-		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
-
-		for (int i = 0; i < player.getHand().size(); i++) {
-			UUID uuid = UUID.randomUUID();
-			list.add(new UuidWithCardId(uuid.toString(), -1));
-		}
-		hand.setList(list);
-
-		return hand;
-	}
-
-	public static Hand setHandWithCards(Player player) {
+	public static Hand fillHandWithUncoveredCards(Player player) {
 		Hand hand = new Hand();
 		hand.setId(player.getId());
 		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
@@ -132,11 +118,30 @@ public class Helper {
 
 		return hand;
 	}
-	
+
+	public static Hand fillHandWithCoveredCards(Player player) {
+		Hand hand = new Hand();
+		hand.setId(player.getId());
+		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
+
+		for (int i = 0; i < player.getHand().size(); i++) {
+			UUID uuid = UUID.randomUUID();
+			list.add(new UuidWithCardId(uuid.toString(), -1));
+		}
+		hand.setList(list);
+
+		return hand;
+	}
+
 	public static Hand setEmptyHand(Player player) {
 		Hand hand = new Hand();
 		hand.setId(player.getId());
 		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
+
+		for (int i = 0; i < 10; i++) {
+			UUID uuid = UUID.randomUUID();
+			list.add(new UuidWithCardId(uuid.toString(), -2));
+		}
 		hand.setList(list);
 
 		return hand;

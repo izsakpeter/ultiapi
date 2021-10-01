@@ -381,7 +381,7 @@ public class UltiController {
 			}
 			game.setGameOver(false);
 			roundCounter = 1;
-			
+
 			dealer = Helper.dealerHandler(dealer, playersNumber);
 			setStarterPlayer();
 			setHands(dealer);
@@ -406,20 +406,14 @@ public class UltiController {
 		return null;
 	}
 
-	private int getIncreasedPlayerId(int index) {
-		int indexPl = index + 1 >= players.size() ? 0 : index + 1;
-		return players.get(indexPl).getId();
-	}
+	private int getIncreasedPlayerId(int activePlayerIndex) {
 
-	private void setStarterPlayer() {
-		for (int i = 0; i < players.size(); i++) {
-			if (dealer == i) {
-				int nextPl = i + 1 >= players.size() ? 0 : i + 1;
-				players.get(nextPl).setColorForced(true);
-				game.setActivePlayer(players.get(nextPl).getId());
-				break;
-			}
-		}
+		int indexPl = activePlayerIndex + 1 >= players.size() ? 0 : activePlayerIndex + 1;
+
+		if (!players.get(indexPl).isPlaying())
+			return getIncreasedPlayerId(activePlayerIndex + 1);
+
+		return players.get(indexPl).getId();
 	}
 
 	private int getActivePlayerIdAfterKontra() {
@@ -446,6 +440,17 @@ public class UltiController {
 			game.addSayMsgToList(new SayMsg(say.getPlayerId(), "40"));
 	}
 
+	private void setStarterPlayer() {
+		for (int i = 0; i < players.size(); i++) {
+			if (dealer == i) {
+				int nextPl = i + 1 >= players.size() ? 0 : i + 1;
+				players.get(nextPl).setColorForced(true);
+				game.setActivePlayer(players.get(nextPl).getId());
+				break;
+			}
+		}
+	}
+
 	private void setHands(int dealer) {
 
 		hands = Helper.getHands();
@@ -456,10 +461,12 @@ public class UltiController {
 			for (int i = 0; i < players.size(); i++) {
 
 				if (dealer == i) {
+					players.get(i).setPlaying(false);
 					players.get(i).setHand(new ArrayList<Card>());
 					handList.add(i, new Hand());
 					handList.set(i, Helper.setEmptyHand(players.get(i)));
 				} else {
+					players.get(i).setPlaying(true);
 					players.get(i).setHand(hands.get(handIndex));
 					players.get(i).getHand().sort(Comparator.comparing(Card::getId));
 					handList.add(i, new Hand());
@@ -469,6 +476,7 @@ public class UltiController {
 			}
 		} else {
 			for (int i = 0; i < players.size(); i++) {
+				players.get(i).setPlaying(true);
 				players.get(i).setHand(hands.get(i));
 				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
 				handList.add(i, new Hand());

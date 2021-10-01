@@ -41,6 +41,8 @@ public class Resulthandler {
 		this.game = game;
 		this.roundCounter = roundCounter;
 		this.players = players;
+		
+		System.out.println(roundCounter + " qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
 
 		if (roundCounter != 10) {
 			if (isBetli() && !isBetliSuccess()) {

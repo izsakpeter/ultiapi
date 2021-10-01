@@ -14,6 +14,7 @@ public class Player {
 	private List<Strike> strikes = new ArrayList<Strike>();
 	private boolean isBluff4020 = false;
 	private boolean isSaid = false;
+	private boolean isPlaying;
 
 	public Player() {
 	}
@@ -101,5 +102,13 @@ public class Player {
 
 	public void setSaid(boolean isSaid) {
 		this.isSaid = isSaid;
+	}
+
+	public boolean isPlaying() {
+		return isPlaying;
+	}
+
+	public void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
 	}
 }

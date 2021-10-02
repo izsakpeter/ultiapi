@@ -22,6 +22,7 @@ import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Request;
+import hu.ulti.server.model.Result;
 import hu.ulti.server.model.Say;
 import hu.ulti.server.model.SayMsg;
 import hu.ulti.server.model.Strike;
@@ -379,7 +380,9 @@ public class UltiController {
 			for (int i = 0; i < players.size(); i++) {
 				players.get(i).setStrikes(new ArrayList<Strike>());
 			}
+
 			game.setGameOver(false);
+			game.setResultList(new ArrayList<Result>());
 			roundCounter = 1;
 
 			dealer = Helper.dealerHandler(dealer, playersNumber);
@@ -388,7 +391,7 @@ public class UltiController {
 
 			talon = hands.get(3);
 			game.setTalon(Helper.fillTalonWithMinusOne());
-			game.setHands(handList);
+
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 
@@ -452,7 +455,9 @@ public class UltiController {
 	}
 
 	private void setHands(int dealer) {
-
+		game.setHands(new ArrayList<Hand>());
+		game.setHands(new ArrayList<Hand>());
+		handList = new ArrayList<Hand>();
 		hands = Helper.getHands();
 
 		if (players.size() == 4) {

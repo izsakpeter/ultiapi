@@ -41,8 +41,6 @@ public class Resulthandler {
 		this.game = game;
 		this.roundCounter = roundCounter;
 		this.players = players;
-		
-		System.out.println(roundCounter + " qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
 
 		if (roundCounter != 10) {
 			if (isBetli() && !isBetliSuccess()) {
@@ -278,7 +276,8 @@ public class Resulthandler {
 
 		List<Integer> s10 = Arrays.asList(0, 0, 0);
 		for (int i = 0; i < players.size(); i++) {
-			s10.set(i, get10Value(players.get(i)));
+			if (players.get(i).isPlaying())
+				s10.set(i, get10Value(players.get(i)));
 		}
 
 		int talon10s = 0;

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +46,8 @@ public class UltiController {
 
 	private final static Long LONG_POLLING_TIMEOUT = 600000L;
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
+	
+	private static final Logger log = LoggerFactory.getLogger(UltiController.class);
 
 	@PostMapping("status")
 	public DeferredResult<Game> keepAlive(@RequestBody Request request) {
@@ -391,7 +395,7 @@ public class UltiController {
 
 			talon = hands.get(3);
 			game.setTalon(Helper.fillTalonWithMinusOne());
-
+			game.setHands(handList);
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 
@@ -411,8 +415,17 @@ public class UltiController {
 
 	private int getIncreasedPlayerId(int activePlayerIndex) {
 
+		System.out.println(activePlayerIndex + " jnkjnkjnkjnij " + players.size());
+
 		int indexPl = activePlayerIndex + 1 >= players.size() ? 0 : activePlayerIndex + 1;
 
+		log.debug(activePlayerIndex + " jnkjnkjnkjnij " + players.size() + " next " + indexPl
+				+ " gdsfgsdfgsdfg " + players.get(indexPl).isPlaying());
+
+		
+		if (indexPl == 10) 
+			return -100;
+		
 		if (!players.get(indexPl).isPlaying())
 			return getIncreasedPlayerId(activePlayerIndex + 1);
 
@@ -455,7 +468,6 @@ public class UltiController {
 	}
 
 	private void setHands(int dealer) {
-		game.setHands(new ArrayList<Hand>());
 		game.setHands(new ArrayList<Hand>());
 		handList = new ArrayList<Hand>();
 		hands = Helper.getHands();

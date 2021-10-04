@@ -46,7 +46,7 @@ public class UltiController {
 
 	private final static Long LONG_POLLING_TIMEOUT = 600000L;
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
-	
+
 	public static final Logger log = LoggerFactory.getLogger(UltiController.class);
 
 	@PostMapping("status")
@@ -238,8 +238,7 @@ public class UltiController {
 
 	@PostMapping("sayparti")
 	public String sayParti(@RequestBody Request request) {
-		Say someSay = new Say(request.getId(), request.isHave40(), request.isHave120(), request.isHave220(),
-				request.isHave320());
+		Say someSay = new Say(request.getId(), request);
 
 		for (int i = 0; i < players.size(); i++) {
 			if (someSay.getPlayerId() == players.get(i).getId()) {
@@ -257,10 +256,7 @@ public class UltiController {
 
 	@PostMapping("saykontra")
 	public String saykontra(@RequestBody Request request) {
-		Say someSay = new Say(request.getId(), request.getKontraId(), request.isKontraPassz(), request.isKontra40100(),
-				request.isKontraUlti(), request.isKontraBetli(), request.isKontraDuri(), request.isKontraDuriSz(),
-				request.isKontra20100(), request.isKontraBetliTer(), request.isKontraDuriTer(),
-				request.isKontraDuriTerSz());
+		Say someSay = new Say(request);
 
 		for (int i = 0; i < players.size(); i++) {
 			if (someSay.getPlayerId() == players.get(i).getId() && someSay.getKontraId() == 1) {
@@ -337,7 +333,7 @@ public class UltiController {
 					if (game.isGameOver()) {
 						for (int i = 0; i < players.size(); i++) {
 							players.get(i).setReady(false);
-							players.get(i).setHand(null);
+							players.get(i).setHand(new ArrayList<Card>());
 						}
 						hands = null;
 						game.setTalon(talon);
@@ -347,8 +343,8 @@ public class UltiController {
 						game.setStartingValue(0);
 						game.setLastCallerId(0);
 						game.setPreviousCall(new ArrayList<Call>());
-						game.setSayMsgList(null);
-						game.setSays(null);
+						game.setSayMsgList(new ArrayList<SayMsg>());
+						game.setSays(new ArrayList<Say>());
 						game.setFirstTurn(true);
 					}
 				}
@@ -386,6 +382,7 @@ public class UltiController {
 			}
 
 			game.setGameOver(false);
+			game.getRound().clearStrike();
 			game.setResultList(new ArrayList<Result>());
 			roundCounter = 1;
 

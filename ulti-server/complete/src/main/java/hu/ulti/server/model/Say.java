@@ -22,30 +22,27 @@ public class Say {
 	public Say() {
 	}
 
-	public Say(int playerId, boolean have40, boolean have120, boolean have220, boolean have320) {
+	public Say(int playerId, Request req) {
 		this.playerId = playerId;
-		this.have40 = have40;
-		this.have120 = have120;
-		this.have220 = have220;
-		this.have320 = have320;
+		this.have40 = req.isHave40();
+		this.have120 = req.isHave120();
+		this.have220 = req.isHave220();
+		this.have320 = req.isHave320();
 	}
 
-	public Say(int playerId, int kontraId, boolean kontraPassz, boolean kontra40100, boolean kontraUlti,
-			boolean kontraBetli, boolean kontraDuri, boolean kontraDuriSz, boolean kontra20100, boolean kontraBetliTer,
-			boolean kontraDuriTer, boolean kontraDuriTerSz) {
-		super();
-		this.playerId = playerId;
-		this.kontraId = kontraId;
-		this.kontraPassz = kontraPassz;
-		this.kontra40100 = kontra40100;
-		this.kontraUlti = kontraUlti;
-		this.kontraBetli = kontraBetli;
-		this.kontraDuri = kontraDuri;
-		this.kontraDuriSz = kontraDuriSz;
-		this.kontra20100 = kontra20100;
-		this.kontraBetliTer = kontraBetliTer;
-		this.kontraDuriTer = kontraDuriTer;
-		this.kontraDuriTerSz = kontraDuriTerSz;
+	public Say(Request req) {
+		this.playerId = req.getId();
+		this.kontraId = req.getKontraId();
+		this.kontraPassz = req.isKontraPassz();
+		this.kontra40100 = req.isKontra40100();
+		this.kontraUlti = req.isKontraUlti();
+		this.kontraBetli = req.isKontraBetli();
+		this.kontraDuri = req.isKontraDuri();
+		this.kontraDuriSz = req.isKontraDuriSz();
+		this.kontra20100 = req.isKontra20100();
+		this.kontraBetliTer = req.isKontraBetliTer();
+		this.kontraDuriTer = req.isKontraDuriTer();
+		this.kontraDuriTerSz = req.isKontraDuriTerSz();
 	}
 
 	public int getPlayerId() {

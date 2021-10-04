@@ -47,7 +47,7 @@ public class UltiController {
 	private final static Long LONG_POLLING_TIMEOUT = 600000L;
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
 	
-	private static final Logger log = LoggerFactory.getLogger(UltiController.class);
+	public static final Logger log = LoggerFactory.getLogger(UltiController.class);
 
 	@PostMapping("status")
 	public DeferredResult<Game> keepAlive(@RequestBody Request request) {
@@ -415,19 +415,10 @@ public class UltiController {
 
 	private int getIncreasedPlayerId(int activePlayerIndex) {
 
-		System.out.println(activePlayerIndex + " jnkjnkjnkjnij " + players.size());
-
 		int indexPl = activePlayerIndex + 1 >= players.size() ? 0 : activePlayerIndex + 1;
 
-		log.debug(activePlayerIndex + " jnkjnkjnkjnij " + players.size() + " next " + indexPl
-				+ " gdsfgsdfgsdfg " + players.get(indexPl).isPlaying());
-
-		
-		if (indexPl == 10) 
-			return -100;
-		
 		if (!players.get(indexPl).isPlaying())
-			return getIncreasedPlayerId(activePlayerIndex + 1);
+			return getIncreasedPlayerId(indexPl);
 
 		return players.get(indexPl).getId();
 	}

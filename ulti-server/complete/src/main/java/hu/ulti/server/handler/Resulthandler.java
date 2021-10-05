@@ -275,9 +275,14 @@ public class Resulthandler {
 	private void proccessPassz(boolean isPassz) {
 
 		List<Integer> s10 = Arrays.asList(0, 0, 0);
+		int counter10 = 0;
+
 		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).isPlaying())
-				s10.set(i, get10Value(players.get(i)));
+
+			if (players.get(i).isPlaying()) {
+				s10.set(counter10, get10Value(players.get(i)));
+				counter10++;
+			}
 		}
 
 		int talon10s = 0;

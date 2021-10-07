@@ -2,7 +2,9 @@ package hu.ulti.server.handler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import hu.ulti.server.Constants;
@@ -273,24 +275,15 @@ public class Resulthandler {
 	}
 
 	private void proccessPassz(boolean isPassz) {
-
-		List<Integer> s10 = Arrays.asList(0, 0, 0);
-		int counter10 = 0;
-
-		for (int i = 0; i < players.size(); i++) {
-
-			if (players.get(i).isPlaying()) {
-				s10.set(counter10, get10Value(players.get(i)));
-				counter10++;
-			}
-		}
-
+		Map<Integer, Integer> s10Map = new HashMap<>();
 		int talon10s = 0;
-
 		int sum = 0;
 
-		for (int i = 0; i < s10.size(); i++) {
-			sum += s10.get(i);
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).isPlaying()) {
+				s10Map.put(players.get(i).getId(), get10Value(players.get(i)));
+				sum += get10Value(players.get(i));
+			}
 		}
 
 		if (sum != 90)
@@ -300,19 +293,19 @@ public class Resulthandler {
 			for (int j = 0; j < players.size(); j++) {
 				if (game.getSays().get(i).getPlayerId() == players.get(j).getId()) {
 					if (game.getSays().get(i).isHave40()) {
-						s10.set(j, s10.get(j) + 40);
+						s10Map.put(players.get(j).getId(), s10Map.get(players.get(j).getId()) + 40);
 					}
 
 					if (game.getSays().get(i).isHave120()) {
-						s10.set(j, s10.get(j) + 20);
+						s10Map.put(players.get(j).getId(), s10Map.get(players.get(j).getId()) + 20);
 					}
 
 					if (game.getSays().get(i).isHave220()) {
-						s10.set(j, s10.get(j) + 40);
+						s10Map.put(players.get(j).getId(), s10Map.get(players.get(j).getId()) + 40);
 					}
 
 					if (game.getSays().get(i).isHave320()) {
-						s10.set(j, s10.get(j) + 60);
+						s10Map.put(players.get(j).getId(), s10Map.get(players.get(j).getId()) + 60);
 					}
 				}
 			}
@@ -322,12 +315,16 @@ public class Resulthandler {
 		int others10s = 0;
 
 		for (int j = 0; j < players.size(); j++) {
-			if (game.getLastCallerId() == players.get(j).getId()) {
-				caller10s = s10.get(j);
-				others10s = s10.get(getIncreasedId(j + 1)) + s10.get(getIncreasedId(j + 2)) + talon10s;
-				break;
+			if (players.get(j).isPlaying()) {
+				if (game.getLastCallerId() == players.get(j).getId()) {
+					caller10s = s10Map.get(players.get(j).getId());
+				} else {
+					others10s += s10Map.get(players.get(j).getId());
+				}
 			}
 		}
+
+		others10s += talon10s;
 
 		if (isPassz) {
 			if (caller10s >= 100 || others10s >= 100) {

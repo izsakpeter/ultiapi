@@ -41,7 +41,7 @@ export class StartingValue extends React.Component<iProps, iState> {
 
     render() {
 
-        if (this.props.game.activePlayer != this.props.game.player.id || this.props.game.startingValue != 0)
+        if (this.props.game.activePlayer != this.props.game.player.id || this.props.game.startingValue != 0 || this.props.game.gameOver)
             return <></>;
 
         let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="button-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="button-card" /></div>

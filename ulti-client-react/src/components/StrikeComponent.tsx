@@ -35,7 +35,7 @@ export class StrikeComponent extends React.Component<iProps, iState> {
     }
 
     render() {
-        if (this.props.game.player.strikes.length > 0) {
+        if (this.props.game.player.strikes.length > 0 && !this.props.game.gameOver) {
 
             return (
                 <div>

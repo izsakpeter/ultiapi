@@ -2,6 +2,7 @@ import { Button } from "@blueprintjs/core";
 import React = require("react");
 import { getCallName } from "../helper/callHandler";
 import { GetCardSource } from "../helper/cardHandler";
+import { getUsernameById } from "../helper/loginHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
@@ -65,7 +66,7 @@ export class ResultComponent extends React.Component<iProps, iState> {
                 </div>
 
                 <div className={"first-player-strikes"}>
-                    <div>{this.props.game.strikeList[0].playerId} ütése</div>
+                    <div>{getUsernameById(this.props.game.strikeList[0].playerId)} ütése</div>
                     <div>{strikes[0]}</div>
                 </div>
 
@@ -75,12 +76,12 @@ export class ResultComponent extends React.Component<iProps, iState> {
                 </div>
 
                 <div className={"second-player-strikes"}>
-                    <div>{this.props.game.strikeList[1].playerId} ütése</div>
+                <div>{getUsernameById(this.props.game.strikeList[1].playerId)} ütése</div>
                     <div>{strikes[1]}</div>
                 </div>
 
                 <div className={"third-player-strikes"}>
-                    <div>{this.props.game.strikeList[2].playerId} ütése</div>
+                <div>{getUsernameById(this.props.game.strikeList[2].playerId)} ütése</div>
                     <div>{strikes[2]}</div>
                 </div>
             </div>

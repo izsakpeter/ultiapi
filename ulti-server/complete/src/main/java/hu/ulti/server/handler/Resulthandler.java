@@ -20,9 +20,7 @@ public class Resulthandler {
 	private Game game;
 	private int roundCounter;
 	private List<Player> players = new ArrayList<Player>();
-
 	private List<Result> resultList = new ArrayList<Result>();
-
 	public static List<Integer> listPassz = Arrays.asList(0, 12, 24, 36);
 	public static List<Integer> listCsendesSzaz = Arrays.asList(1, 13, 25, 37);
 	public static List<Integer> listCsendesUlti = Arrays.asList(2, 14, 26, 38);
@@ -142,17 +140,8 @@ public class Resulthandler {
 			game.setResultList(resultList);
 
 			for (int i = 0; i < players.size(); i++) {
-				if (players.get(i).getId() == game.getLastCallerId()) {
-					List<StrikeList> strikeList = new ArrayList<StrikeList>();
-
-					strikeList.add(0, new StrikeList(players.get(i).getId(), players.get(i).getStrikes()));
-					strikeList.add(1, new StrikeList(players.get(getIncreasedId(i + 1)).getId(),
-							players.get(getIncreasedId(i + 1)).getStrikes()));
-					strikeList.add(2, new StrikeList(players.get(getIncreasedId(i + 2)).getId(),
-							players.get(getIncreasedId(i + 2)).getStrikes()));
-
-					game.setStrikeList(strikeList);
-				}
+				if (players.get(i).getId() == game.getLastCallerId())
+					game.setStrikeList(getStrikeList(i));
 			}
 		}
 	}
@@ -532,12 +521,43 @@ public class Resulthandler {
 		return 0;
 	}
 
-	private int getIncreasedId(int id) {
-		if (id == 3)
-			return 0;
-		else if (id == 4)
-			return 1;
+	private List<StrikeList> getStrikeList(int i) {
 
-		return id;
+		List<StrikeList> strikeList = new ArrayList<StrikeList>();
+		strikeList.add(0, new StrikeList(players.get(i).getId(), players.get(i).getStrikes()));
+
+		int counter = 2;
+
+		if (players.size() == 4)
+			counter = 3;
+
+		for (int j = 1; j <= counter; j++) {
+			if (players.get(getIncreasedIndex(i + j)).isPlaying())
+				strikeList.add(j, new StrikeList(players.get(getIncreasedIndex(i + j)).getId(),
+						players.get(getIncreasedIndex(i + j)).getStrikes()));
+		}
+
+		return strikeList;
+	}
+
+	private int getIncreasedIndex(int index) {
+		if (players.size() == 3) {
+
+			if (index == 3)
+				return 0;
+			else if (index == 4)
+				return 1;
+
+		} else if (players.size() == 4) {
+
+			if (index == 4)
+				return 0;
+			else if (index == 5)
+				return 1;
+			else if (index == 6)
+				return 2;
+		}
+
+		return index;
 	}
 }

@@ -28,6 +28,7 @@ import hu.ulti.server.model.Result;
 import hu.ulti.server.model.Say;
 import hu.ulti.server.model.SayMsg;
 import hu.ulti.server.model.Strike;
+import hu.ulti.server.model.StrikeList;
 import hu.ulti.server.model.Player;
 
 @CrossOrigin
@@ -384,6 +385,7 @@ public class UltiController {
 			game.setGameOver(false);
 			game.getRound().clearStrike();
 			game.setResultList(new ArrayList<Result>());
+			game.setStrikeList(new ArrayList<StrikeList>());
 			roundCounter = 1;
 
 			dealer = Helper.dealerHandler(dealer, playersNumber);

@@ -82,6 +82,88 @@ export function GetHalfCardSource(id: number): string {
 	return "";
 }
 
+export function GetCard90Source(id: number): string {
+
+	switch (id) {
+		case -1: return "/resources/img/cards_90/hatlap.png";
+		case 0: return "/resources/img/cards_90/m7.png";
+		case 1: return "/resources/img/cards_90/m8.png";
+		case 2: return "/resources/img/cards_90/m9.png";
+		case 3: return "/resources/img/cards_90/m10.png";
+		case 4: return "/resources/img/cards_90/mal.png";
+		case 5: return "/resources/img/cards_90/mfel.png";
+		case 6: return "/resources/img/cards_90/mk.png";
+		case 7: return "/resources/img/cards_90/masz.png";
+		case 8: return "/resources/img/cards_90/z7.png";
+		case 9: return "/resources/img/cards_90/z8.png";
+		case 10: return "/resources/img/cards_90/z9.png";
+		case 11: return "/resources/img/cards_90/z10.png";
+		case 12: return "/resources/img/cards_90/zal.png";
+		case 13: return "/resources/img/cards_90/zfel.png";
+		case 14: return "/resources/img/cards_90/zk.png";
+		case 15: return "/resources/img/cards_90/zasz.png";
+		case 16: return "/resources/img/cards_90/t7.png";
+		case 17: return "/resources/img/cards_90/t8.png";
+		case 18: return "/resources/img/cards_90/t9.png";
+		case 19: return "/resources/img/cards_90/t10.png";
+		case 20: return "/resources/img/cards_90/tal.png";
+		case 21: return "/resources/img/cards_90/tfel.png";
+		case 22: return "/resources/img/cards_90/tk.png";
+		case 23: return "/resources/img/cards_90/tasz.png";
+		case 24: return "/resources/img/cards_90/p7.png";
+		case 25: return "/resources/img/cards_90/p8.png";
+		case 26: return "/resources/img/cards_90/p9.png";
+		case 27: return "/resources/img/cards_90/p10.png";
+		case 28: return "/resources/img/cards_90/pal.png";
+		case 29: return "/resources/img/cards_90/pfel.png";
+		case 30: return "/resources/img/cards_90/pk.png";
+		case 31: return "/resources/img/cards_90/pasz.png";
+	}
+
+	return "";
+}
+
+export function GetHalfCard90Source(id: number): string {
+
+	switch (id) {
+		case -1: return "/resources/img/half_cards_90/hatlap.png";
+		case 0: return "/resources/img/half_cards_90/m7.png";
+		case 1: return "/resources/img/half_cards_90/m8.png";
+		case 2: return "/resources/img/half_cards_90/m9.png";
+		case 3: return "/resources/img/half_cards_90/m10.png";
+		case 4: return "/resources/img/half_cards_90/mal.png";
+		case 5: return "/resources/img/half_cards_90/mfel.png";
+		case 6: return "/resources/img/half_cards_90/mk.png";
+		case 7: return "/resources/img/half_cards_90/masz.png";
+		case 8: return "/resources/img/half_cards_90/z7.png";
+		case 9: return "/resources/img/half_cards_90/z8.png";
+		case 10: return "/resources/img/half_cards_90/z9.png";
+		case 11: return "/resources/img/half_cards_90/z10.png";
+		case 12: return "/resources/img/half_cards_90/zal.png";
+		case 13: return "/resources/img/half_cards_90/zfel.png";
+		case 14: return "/resources/img/half_cards_90/zk.png";
+		case 15: return "/resources/img/half_cards_90/zasz.png";
+		case 16: return "/resources/img/half_cards_90/t7.png";
+		case 17: return "/resources/img/half_cards_90/t8.png";
+		case 18: return "/resources/img/half_cards_90/t9.png";
+		case 19: return "/resources/img/half_cards_90/t10.png";
+		case 20: return "/resources/img/half_cards_90/tal.png";
+		case 21: return "/resources/img/half_cards_90/tfel.png";
+		case 22: return "/resources/img/half_cards_90/tk.png";
+		case 23: return "/resources/img/half_cards_90/tasz.png";
+		case 24: return "/resources/img/half_cards_90/p7.png";
+		case 25: return "/resources/img/half_cards_90/p8.png";
+		case 26: return "/resources/img/half_cards_90/p9.png";
+		case 27: return "/resources/img/half_cards_90/p10.png";
+		case 28: return "/resources/img/half_cards_90/pal.png";
+		case 29: return "/resources/img/half_cards_90/pfel.png";
+		case 30: return "/resources/img/half_cards_90/pk.png";
+		case 31: return "/resources/img/half_cards_90/pasz.png";
+	}
+
+	return "";
+}
+
 export function GetOrderedHand(cards: Array<number>, isColorOrder: boolean): Array<number> {
 
 	var orderedCards = cards;

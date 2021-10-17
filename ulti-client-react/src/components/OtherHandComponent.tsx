@@ -1,5 +1,5 @@
 import React = require("react");
-import { GetCardSource, GetHalfCardSource } from "../helper/cardHandler";
+import { GetCard90Source, GetCardSource, GetHalfCard90Source, GetHalfCardSource } from "../helper/cardHandler";
 import { getUsernameById } from "../helper/loginHandler";
 import { Game } from "../model/game";
 import { Hand } from "../model/hand";
@@ -24,10 +24,10 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
     }
 
     renderRightPlayerHand(game: Game) {
-        let hand = getHand(1, game);
+        let hand = getHand(1, game, "right");
 
         return (
-            <div className="rightplayer">
+            <div className="rightPlayer">
                 <div>{getPlayerName(1, game)}</div>
                 <div >{hand}</div>
             </div>
@@ -36,10 +36,10 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
     }
 
     renderTopPlayerHand(game: Game) {
-        let hand = getHand(2, game);
+        let hand = getHand(2, game, "top");
 
         return (
-            <div className="topplayer">
+            <div className="topPlayer">
                 <div>{getPlayerName(2, game)}</div>
                 <div>{hand}</div>
             </div>
@@ -47,10 +47,10 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
     }
 
     renderLeftPlayerHand(game: Game) {
-        let hand = getHand(3, game);
+        let hand = getHand(3, game, "left");
 
         return (
-            <div className="leftplayer">
+            <div className="leftPlayer">
                 <div>{getPlayerName(3, game)}</div>
                 <div >{hand}</div>
             </div>
@@ -58,7 +58,7 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
     }
 }
 
-function getHand(index: number, game: Game): any[] {
+function getHand(index: number, game: Game, poz: string): any[] {
 
     let hand = [];
 
@@ -76,10 +76,18 @@ function getHand(index: number, game: Game): any[] {
 
                     let listItem = game.hands[getIncreasedIndex(j + index, handLength)].list[i];
 
-                    if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1)
-                        hand.push(<img key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"}/>);
-                    else
-                        hand.push(<img key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"}/>);
+                    if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1) {
+                        if (poz === "top")
+                            hand.push(<img key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
+                        else
+                            hand.push(<div key={listItem.uuid}><img src={GetHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
+                    } else {
+                        if (poz === "top")
+                            hand.push(<img key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
+                        else
+                            hand.push(<div key={listItem.uuid}><img key={listItem.uuid} src={GetCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
+                    }
+
                 }
             }
         }
@@ -116,7 +124,7 @@ function getIncreasedIndex(index: number, length: number) {
             return 0;
         else if (index == 5)
             return 1;
-            else if (index == 6)
+        else if (index == 6)
             return 2;
     }
 

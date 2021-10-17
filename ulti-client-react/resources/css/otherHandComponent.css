@@ -8,30 +8,30 @@
     height: 132px;
 }
 
-.rightplayer {
-    right: -150px;
-    position: absolute;
-    top: 30%;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+.otherhand-card-90 {
+    height: 90px;
+    width: 132px;
 }
 
-.topplayer {
+.otherhand-halfcard-90 {
+    height: 45px;
+    width: 132px;
+}
+
+.rightPlayer {
+    position: absolute;
+    right: 5%;
+    top: 10%;
+}
+
+.topPlayer {
+    position: absolute;
     top: 0%;
-    left: 30%;
-    position: absolute;
+    left: 35%;
 }
 
-.leftplayer {
-    left: -200px;
+.leftPlayer {
     position: absolute;
-    top: 30%;
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+    left: 5%;
+    top: 10%;
 }

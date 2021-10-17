@@ -5,7 +5,7 @@
     height: 75px;
     position: absolute;
     top: 40%;
-    left: 50%;
+    left: 45%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
@@ -27,6 +27,6 @@
 
 .talon-poz {
     position: absolute;
-    top: 30%;
-    left: 15%;
+    top: 45%;
+    left: 40%;
 }

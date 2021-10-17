@@ -59,19 +59,27 @@ export class Table extends React.Component<iProps, iState> {
             return <></>;
 
         return (
-            <div >
+            <div>
+                <div className={"align-center"}>
+                    <div><OtherHandComponent game={this.props.game} /></div>
+                </div>
+
+                <div className={"align-center"}>
+                    <div><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
+                </div>
+
                 <div className={"my-hand"}>
                     <div>{this.renderMyHand()}</div>
                     <div><OperationsComponent game={this.props.game} postReq={this.props.postReq} /></div>
                 </div>
 
 
-                <div className={"align-center"}><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
+
                 <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
                 <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
                 <div>{this.renderTalon()}</div>
 
-                <div><OtherHandComponent game={this.props.game} /></div>
+
                 <div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>
             </div>
         )

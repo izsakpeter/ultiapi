@@ -12,4 +12,5 @@ export class Player {
 	public isColorForced: boolean = false;
 	public bluff4020: boolean;
 	public said: boolean;
+	public playing: boolean;
 }

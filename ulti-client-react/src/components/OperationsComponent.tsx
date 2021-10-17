@@ -2,10 +2,12 @@ import { Button } from "@blueprintjs/core";
 import React = require("react");
 import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
+import { RequestModel } from "../model/requestModel";
 import { Strike } from "../model/strike";
 
 interface iProps {
-    game: Game
+    game: Game,
+    postReq: (reqObj: RequestModel) => void
 }
 
 interface iState {
@@ -13,7 +15,7 @@ interface iState {
     showStrikes: boolean
 }
 
-export class StrikeComponent extends React.Component<iProps, iState> {
+export class OperationsComponent extends React.Component<iProps, iState> {
 
     constructor(props) {
         super(props);
@@ -21,7 +23,10 @@ export class StrikeComponent extends React.Component<iProps, iState> {
         this.state = {
             strikes: [],
             showStrikes: false
-        }
+        };
+
+        this.changeOrderHandler = this.changeOrderHandler.bind(this);
+        this.showStrikesHandler = this.showStrikesHandler.bind(this);
     }
 
     static getDerivedStateFromProps(props: iProps, state: iState) {
@@ -30,28 +35,51 @@ export class StrikeComponent extends React.Component<iProps, iState> {
             ...state,
             strikes: props.game.player.strikes
         };
-        
+
         return state;
     }
 
     render() {
-        if (this.props.game.player.strikes.length > 0 && !this.props.game.gameOver) {
 
+        if (this.props.game.player.playing) {
             return (
                 <div>
-                    <div><Button onClick={() => this.clickHandler(this.state.showStrikes)} text="ütések" /></div>
+                    <Button onClick={this.changeOrderHandler} text="rendez" />
+                    <Button onClick={() => this.showStrikesHandler(this.state.showStrikes)} text="ütések" disabled={this.isShowStrikeButtonDisabled()} />
+                    <Button text="terít" />
+                    <Button text="bedob" />
+                    <Button text="feladás" />
+
                     <div>{StrikeList(this.state.strikes, this.state.showStrikes)}</div>
+
                 </div>
             )
         } else {
-            return (
-                <></>
-            )
+            return <></>;
         }
     }
 
-    clickHandler(showStrikes: boolean) {
+    async changeOrderHandler(event) {
+        event.preventDefault();
+
+        let reqObj: RequestModel = {
+            dest: "order",
+            id: this.props.game.player.id,
+            colorOrder: !this.props.game.player.colorOrder
+        }
+
+        this.props.postReq(reqObj);
+    }
+
+    showStrikesHandler(showStrikes: boolean) {
         this.setState({ showStrikes: !showStrikes });
+    }
+
+    isShowStrikeButtonDisabled() {
+        if (this.props.game.player.strikes.length > 0 && !this.props.game.gameOver)
+            return false;
+
+        return true;
     }
 }
 

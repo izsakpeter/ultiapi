@@ -6,10 +6,9 @@ import { StartingValue } from "./StartingValueComponent";
 import { Button } from "@blueprintjs/core";
 import { RequestModel } from "../model/requestModel";
 import { PlaygroundComponent } from "./PlaygroundComponent";
-import { StrikeComponent } from "./StrikeComponent";
 import { SayComponent } from "./SayComponent";
-import { getUsernameById } from "../helper/loginHandler";
 import OtherHandComponent from "./OtherHandComponent";
+import { OperationsComponent } from "./OperationsComponent";
 
 interface iProps {
     gotCards: boolean,
@@ -36,7 +35,6 @@ export class Table extends React.Component<iProps, iState> {
 
         this.cardAction = this.cardAction.bind(this);
         this.backToHand = this.backToHand.bind(this);
-        this.changeOrder = this.changeOrder.bind(this);
         this.clearTalon = this.clearTalon.bind(this);
     }
 
@@ -62,29 +60,21 @@ export class Table extends React.Component<iProps, iState> {
 
         return (
             <div >
+                <div className={"my-hand"}>
+                    <div>{this.renderMyHand()}</div>
+                    <div><OperationsComponent game={this.props.game} postReq={this.props.postReq} /></div>
+                </div>
+
+
                 <div className={"align-center"}><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
                 <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
                 <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
                 <div>{this.renderTalon()}</div>
-                <div>{this.renderMyHand()}</div>
-                <div className={"button-order"}><Button onClick={this.changeOrder}>rendez</Button></div>
-                <div><StrikeComponent game={this.props.game} /></div>
+
                 <div><OtherHandComponent game={this.props.game} /></div>
                 <div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>
             </div>
         )
-    }
-
-    async changeOrder(event) {
-        event.preventDefault();
-
-        let reqObj: RequestModel = {
-            dest: "order",
-            id: this.props.game.player.id,
-            colorOrder: !this.props.game.player.colorOrder
-        }
-
-        this.props.postReq(reqObj);
     }
 
     cardAction(event) {
@@ -125,8 +115,7 @@ export class Table extends React.Component<iProps, iState> {
         }
 
         return (
-            <div className={"my-card"}>
-                <div>{getUsernameById(this.props.game.player.id)}</div>
+            <div>
                 <div>{cardsImg}</div>
             </div>
         )

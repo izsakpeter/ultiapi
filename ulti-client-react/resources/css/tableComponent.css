@@ -1,7 +1,13 @@
-.my-card {
+.my-hand {
+    text-align: center;
     position: absolute;
-    top: 70%;
+    bottom: 5px;
     left: 5%;
+}
+
+.strike-button-card {
+    width: 100px;
+    height: 147px;
 }
 
 .button-card {
@@ -9,11 +15,9 @@
     height: 200px;
 }
 
-.button-order {
-    position: absolute;
-    top: 95%;
-    left: 48%;
-}
+
+
+
 
 .talon {
     position: absolute;

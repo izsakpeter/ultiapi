@@ -300,7 +300,7 @@ export class SayComponent extends React.Component<iProps, iState>{
 
         if (game.sayMsgList != null && game.sayMsgList.length > 0) {
             for (let i = 0; i < game.sayMsgList.length; i++) {
-                sayList.push(<div key={game.sayMsgList[i].id}>{getSayFromMsgList(game.sayMsgList[i])}</div>);
+                sayList.push(<div key={i}>{getSayFromMsgList(game.sayMsgList[i])}</div>);
             }
         }
 

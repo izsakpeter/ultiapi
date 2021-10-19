@@ -404,7 +404,7 @@ public class Resulthandler {
 				if (hasAdu7(card1)) {
 					int card2Color = StrikeHandler.getColor(card2);
 					int card3Color = StrikeHandler.getColor(card3);
-					int adu = StrikeHandler.getColor(game.getPreviousCall().get(0).getCallId());
+					int adu = StrikeHandler.getAdu(game.getPreviousCall().get(0).getCallId());
 
 					if (adu == card2Color || adu == card3Color)
 						return false;
@@ -420,7 +420,7 @@ public class Resulthandler {
 	private boolean hasAdu7(int card) {
 
 		int color = StrikeHandler.getColor(card);
-		int adu = StrikeHandler.getColor(game.getPreviousCall().get(0).getCallId());
+		int adu = StrikeHandler.getAdu(game.getPreviousCall().get(0).getCallId());
 
 		for (int i = 0; i < list7s.size(); i++) {
 			if (card == list7s.get(i) && color == adu) {

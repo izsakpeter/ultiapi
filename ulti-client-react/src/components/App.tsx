@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Game } from '../model/game';
-import axios, { AxiosRequestConfig } from "axios";
 import { Table } from './TableComponent';
 import { PostRequest, StatusPostRequest } from '../helper/request';
 import { LoginComponent } from './LoginComponent';
@@ -46,7 +45,7 @@ export default class App extends React.Component<{}, iState> {
 
             let gotCardsState = true;
 
-            if (res.player.hand === null || res.player.hand.length === 0 && res.playReadyToStart)
+            if (res.player.hand === null)
                 gotCardsState = false;
 
             this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true, lastTimeStamp: Date.now() });

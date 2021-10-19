@@ -76,12 +76,12 @@ export class ResultComponent extends React.Component<iProps, iState> {
                 </div>
 
                 <div className={"second-player-strikes"}>
-                <div>{getUsernameById(this.props.game.strikeList[1].playerId)} ütése</div>
+                    <div>{getUsernameById(this.props.game.strikeList[1].playerId)} ütése</div>
                     <div>{strikes[1]}</div>
                 </div>
 
                 <div className={"third-player-strikes"}>
-                <div>{getUsernameById(this.props.game.strikeList[2].playerId)} ütése</div>
+                    <div>{getUsernameById(this.props.game.strikeList[2].playerId)} ütése</div>
                     <div>{strikes[2]}</div>
                 </div>
             </div>

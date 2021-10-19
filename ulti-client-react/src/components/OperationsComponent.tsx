@@ -49,6 +49,7 @@ export class OperationsComponent extends React.Component<iProps, iState> {
                     <Button text="terít" />
                     <Button text="bedob" />
                     <Button text="feladás" />
+                    <Button text="mondás számoló" />
 
                     <div>{StrikeList(this.state.strikes, this.state.showStrikes)}</div>
 

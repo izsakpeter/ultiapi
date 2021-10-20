@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Game {
 
-	private int startingValue;
+	private int startingValue = 0;
 	private Player player;
 	private boolean isRoundStarted = false;
 	private boolean isPlayReadyToStart = false;
@@ -25,16 +25,17 @@ public class Game {
 	private List<Card> talon = new ArrayList<Card>();
 	private boolean isKontraPartFinished = true;
 	private List<SayMsg> sayMsgList = new ArrayList<SayMsg>();
+	private List<Score> scores = new ArrayList<Score>();
 
 	public Game() {
-		this.startingValue = 0;
 	}
 
 	public Game(int startingValue, Player player, boolean isRoundStarted, boolean isPlayReadyToStart, int lastCallerId,
 			int activePlayer, Strike round, List<Call> call, List<Call> previousCall, String errorMessage,
 			long lastModificationTimeStamp, boolean isGameOver, List<Result> resultList, boolean isFirstTurn,
 			List<Say> says, List<Hand> hands, List<StrikeList> strikeList, List<Card> talon,
-			boolean isKontraPartFinished, List<SayMsg> sayMsgList) {
+			boolean isKontraPartFinished, List<SayMsg> sayMsgList, List<Score> scores) {
+		super();
 		this.startingValue = startingValue;
 		this.player = player;
 		this.isRoundStarted = isRoundStarted;
@@ -55,7 +56,10 @@ public class Game {
 		this.talon = talon;
 		this.isKontraPartFinished = isKontraPartFinished;
 		this.sayMsgList = sayMsgList;
+		this.scores = scores;
 	}
+
+
 
 	public Player getPlayer() {
 		return player;
@@ -217,6 +221,22 @@ public class Game {
 		this.sayMsgList = sayMsgList;
 	}
 
+	public void addSayToList(Say say) {
+		this.says.add(say);
+	}
+
+	public void addSayMsgToList(SayMsg msg) {
+		this.sayMsgList.add(msg);
+	}
+
+	public List<Score> getScores() {
+		return scores;
+	}
+
+	public void setScores(List<Score> scores) {
+		this.scores = scores;
+	}
+
 	@Override
 	public Game clone() {
 		try {
@@ -225,15 +245,8 @@ public class Game {
 			return new Game(this.startingValue, this.player, this.isRoundStarted, this.isPlayReadyToStart,
 					this.lastCallerId, this.activePlayer, this.round, this.call, this.previousCall, this.errorMessage,
 					this.lastModificationTimeStamp, this.isGameOver, this.resultList, this.isFirstTurn, this.says,
-					this.hands, this.strikeList, this.talon, this.isKontraPartFinished, this.sayMsgList);
+					this.hands, this.strikeList, this.talon, this.isKontraPartFinished, this.sayMsgList, this.scores);
 		}
 	}
-	
-	public void addSayToList(Say say) {
-		this.says.add(say);
-	}
-	
-	public void addSayMsgToList(SayMsg msg) {
-		this.sayMsgList.add(msg);
-	}
+
 }

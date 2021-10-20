@@ -5,6 +5,7 @@ import { GetCardSource } from "../helper/cardHandler";
 import { getUsernameById } from "../helper/loginHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
+import { Score } from "../model/score";
 
 interface iProps {
     game: Game,
@@ -62,27 +63,30 @@ export class ResultComponent extends React.Component<iProps, iState> {
                 <div className={"result-border"}>
                     <div>Eredmény</div>
                     <div>{result}</div>
+                    <div>{this.getScores(this.props.game.scores)}</div>
                     <div><Button text="kész" onClick={() => this.readyButtonAction((this.state.playerId))} /></div>
                 </div>
 
-                <div className={"first-player-strikes"}>
-                    <div>{getUsernameById(this.props.game.strikeList[0].playerId)} ütése</div>
-                    <div>{strikes[0]}</div>
-                </div>
+                <div>
+                    <div className={"first-player-strikes"}>
+                        <div>{getUsernameById(this.props.game.strikeList[0].playerId)} ütése</div>
+                        <div>{strikes[0]}</div>
+                    </div>
 
-                <div className={"res-talon-poz"}>
-                    <div>talon</div>
-                    <div>{talon}</div>
-                </div>
+                    <div className={"res-talon-poz"}>
+                        <div>talon</div>
+                        <div>{talon}</div>
+                    </div>
 
-                <div className={"second-player-strikes"}>
-                    <div>{getUsernameById(this.props.game.strikeList[1].playerId)} ütése</div>
-                    <div>{strikes[1]}</div>
-                </div>
+                    <div className={"second-player-strikes"}>
+                        <div>{getUsernameById(this.props.game.strikeList[1].playerId)} ütése</div>
+                        <div>{strikes[1]}</div>
+                    </div>
 
-                <div className={"third-player-strikes"}>
-                    <div>{getUsernameById(this.props.game.strikeList[2].playerId)} ütése</div>
-                    <div>{strikes[2]}</div>
+                    <div className={"third-player-strikes"}>
+                        <div>{getUsernameById(this.props.game.strikeList[2].playerId)} ütése</div>
+                        <div>{strikes[2]}</div>
+                    </div>
                 </div>
             </div>
         )
@@ -95,5 +99,22 @@ export class ResultComponent extends React.Component<iProps, iState> {
         }
 
         this.props.postReq(reqObj);
+    }
+
+    getScores(scores: Array<Score>) {
+
+        let scoreTable = [];
+
+        for (let i = 0; i < scores.length; i++) {
+            scoreTable.push(<tr key={scores[i].id}><td>{getUsernameById(scores[i].id)}</td><td>{scores[i].lastPartyScore}</td><td>{scores[i].sumScore}</td></tr>);
+        }
+
+        return (
+            <div>
+                <table>
+                {scoreTable}
+                </table>
+            </div>
+        )
     }
 }

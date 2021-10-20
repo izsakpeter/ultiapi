@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.ulti.server.Constants;
+import hu.ulti.server.Helper;
 import hu.ulti.server.model.Call;
-import hu.ulti.server.model.CallWithValue;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Kontra;
 import hu.ulti.server.model.KontraAck;
@@ -50,16 +50,10 @@ public class CallHandler {
 	}
 
 	private static int getCallValue(List<Call> call) {
-
 		int szum = 0;
 
-		List<CallWithValue> allCalls = CallWithValue.getAllCalls();
-
 		for (int i = 0; i < call.size(); i++) {
-			for (CallWithValue allCall : allCalls) {
-				if (allCall.getId() == call.get(i).getCallId())
-					szum += allCall.getValue();
-			}
+			szum += Helper.getCallValue(call.get(i).getCallId());
 		}
 
 		return szum;
@@ -70,7 +64,7 @@ public class CallHandler {
 
 		for (int i = 0; i < game.getPreviousCall().size(); i++) {
 			List<Kontra> kontraList = new ArrayList<Kontra>();
-			
+
 			for (int j = 0; j < players.size(); j++) {
 				if (game.getLastCallerId() != players.get(j).getId()) {
 					kontraList.add(new Kontra(players.get(j).getId(), new KontraAck(), new KontraAck(), new KontraAck(),

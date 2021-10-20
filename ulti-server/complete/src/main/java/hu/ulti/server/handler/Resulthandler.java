@@ -138,6 +138,7 @@ public class Resulthandler {
 
 			game.setGameOver(true);
 			game.setResultList(resultList);
+			game.setScores(ScoreHandler.setScores(game));
 
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i).getId() == game.getLastCallerId())
@@ -157,16 +158,14 @@ public class Resulthandler {
 	private Result addResult(boolean isSuccess, int callIndex) {
 		return addResult(isSuccess, callIndex, "");
 	}
-
+	
 	private Result addResult(boolean isSuccess, int callIndex, String comment) {
-		Result result = new Result();
+		return addResult(isSuccess, callIndex, comment, game.getLastCallerId());
+	}
+
+	private Result addResult(boolean isSuccess, int callIndex, String comment, int playerId) {
 		UUID uuid = UUID.randomUUID();
-		result.setId(uuid.toString());
-		result.setPlayerId(game.getLastCallerId());
-		result.setCallId(callIndex);
-		result.setSuccess(isSuccess);
-		result.setComment(comment);
-		return result;
+		return  new Result(uuid.toString(), playerId, callIndex, isSuccess, comment);
 	}
 
 	private boolean isPassz() {
@@ -466,14 +465,14 @@ public class Resulthandler {
 
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i).getId() == playerId)
-						resultList.add(addResult(true, getCsendesUltiId(), "nyert: " + players.get(i).getId()));
+						resultList.add(addResult(true, getCsendesUltiId(), "", players.get(i).getId()));
 				}
 			} else {
 				int playerId = getPlayer7(lastStrike);
 
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i).getId() == playerId)
-						resultList.add(addResult(false, getCsendesUltiId(), "bukta: " + players.get(i).getId()));
+						resultList.add(addResult(false, getCsendesUltiId(), "", players.get(i).getId()));
 				}
 			}
 		}

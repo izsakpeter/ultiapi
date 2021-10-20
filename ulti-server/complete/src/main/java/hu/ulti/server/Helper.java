@@ -8,10 +8,12 @@ import java.util.Random;
 import java.util.UUID;
 
 import hu.ulti.server.model.Call;
+import hu.ulti.server.model.CallWithValue;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Player;
+import hu.ulti.server.model.Score;
 import hu.ulti.server.model.UuidWithCardId;
 
 public class Helper {
@@ -244,5 +246,27 @@ public class Helper {
 
 	public static boolean isSzintelen(Game game) {
 		return Helper.isBetli(game.getPreviousCall()) || Helper.isSzintelenDuri(game.getPreviousCall());
+	}
+
+	public static List<Score> getDefaultScoreList(List<Player> players) {
+		List<Score> scores = new ArrayList<Score>();
+
+		for (int i = 0; i < players.size(); i++) {
+			scores.add(new Score(players.get(i).getId()));
+		}
+
+		return scores;
+	}
+	
+	public static int getCallValue(int callId) {
+		
+		List<CallWithValue> allCalls = CallWithValue.getAllCalls();
+		
+		for (CallWithValue callWithValue : allCalls) {
+			if (callWithValue.getId() == callId)
+				return callWithValue.getValue();
+		}
+		
+		return 0;
 	}
 }

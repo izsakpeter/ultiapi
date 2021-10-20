@@ -116,6 +116,8 @@ public class UltiController {
 			game.setTalon(Helper.fillTalonWithMinusOne());
 			game.setHands(handList);
 			game.setRoundStarted(true);
+			game.setScores(Helper.getDefaultScoreList(players));
+			
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return "ok";
 		}

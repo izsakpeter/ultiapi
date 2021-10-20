@@ -8,6 +8,14 @@ public class Result {
 	private boolean isSuccess;
 	private String comment = "";
 
+	public Result(String id, int playerId, int callId, boolean isSuccess, String comment) {
+		this.id = id;
+		this.playerId = playerId;
+		this.callId = callId;
+		this.isSuccess = isSuccess;
+		this.comment = comment;
+	}
+
 	public String getId() {
 		return id;
 	}

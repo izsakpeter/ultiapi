@@ -39,7 +39,7 @@ public class ScoreHandlerTest {
 		game.setResultList(resultList);
 		game.setScores(scoreList);
 
-		Assertions.assertTrue(isSameScore(scoreListExcept, ScoreHandler.setScores(game)));
+		Assertions.assertTrue(isSameScore(scoreListExcept, ScoreHandler.setScores(game, null)));
 	}
 
 	private boolean isSameScore(List<Score> scoreList1, List<Score> scoreList2) {

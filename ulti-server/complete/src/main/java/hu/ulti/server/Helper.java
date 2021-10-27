@@ -112,8 +112,7 @@ public class Helper {
 		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
 
 		for (int i = 0; i < player.getHand().size(); i++) {
-			UUID uuid = UUID.randomUUID();
-			list.add(new UuidWithCardId(uuid.toString(), player.getHand().get(i).getId()));
+			list.add(new UuidWithCardId(getUUid().toString(), player.getHand().get(i).getId()));
 		}
 
 		hand.setList(list);
@@ -127,8 +126,7 @@ public class Helper {
 		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
 
 		for (int i = 0; i < player.getHand().size(); i++) {
-			UUID uuid = UUID.randomUUID();
-			list.add(new UuidWithCardId(uuid.toString(), -1));
+			list.add(new UuidWithCardId(getUUid().toString(), -1));
 		}
 		hand.setList(list);
 
@@ -141,8 +139,7 @@ public class Helper {
 		List<UuidWithCardId> list = new ArrayList<UuidWithCardId>();
 
 		for (int i = 0; i < 10; i++) {
-			UUID uuid = UUID.randomUUID();
-			list.add(new UuidWithCardId(uuid.toString(), -2));
+			list.add(new UuidWithCardId(getUUid().toString(), -2));
 		}
 		hand.setList(list);
 
@@ -268,5 +265,15 @@ public class Helper {
 		}
 		
 		return 0;
+	}
+	
+	public static List<Integer> getPlayers(List<Player> players){
+		List<Integer> playersList = new ArrayList<Integer>();
+		
+		for (Player player : players) {
+			playersList.add(player.getId());
+		}
+		
+		return playersList;
 	}
 }

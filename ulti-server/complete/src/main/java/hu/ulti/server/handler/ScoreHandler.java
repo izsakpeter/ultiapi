@@ -9,7 +9,7 @@ import hu.ulti.server.model.Score;
 
 public class ScoreHandler {
 
-	public static List<Score> setScores(Game game) {
+	public static List<Score> setScores(Game game, List<Integer> players) {
 		List<Result> resultList = game.getResultList();
 
 		for (int i = 0; i < resultList.size(); i++) {
@@ -21,7 +21,7 @@ public class ScoreHandler {
 					if (game.getScores().get(j).getId() == resultList.get(i).getPlayerId()) {
 						game.getScores().get(j).setLastPartyScore(2 * callScore);
 						game.getScores().get(j).setSumScore(2 * callScore);
-					} else {
+					} else if (istOtherPlayer(game.getScores().get(j).getId(), players)) {
 						game.getScores().get(j).setLastPartyScore(-1 * callScore);
 						game.getScores().get(j).setSumScore(-1 * callScore);
 					}
@@ -31,7 +31,7 @@ public class ScoreHandler {
 					if (game.getScores().get(j).getId() == resultList.get(i).getPlayerId()) {
 						game.getScores().get(j).setLastPartyScore(-2 * callScore);
 						game.getScores().get(j).setSumScore(-2 * callScore);
-					} else {
+					} else if (istOtherPlayer(game.getScores().get(j).getId(), players)) {
 						game.getScores().get(j).setLastPartyScore(callScore);
 						game.getScores().get(j).setSumScore(callScore);
 					}
@@ -40,5 +40,15 @@ public class ScoreHandler {
 		}
 
 		return game.getScores();
+	}
+	
+	private static boolean istOtherPlayer(int id, List<Integer> players) {
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i) == id)
+				return true;
+		}
+		
+		return false;
 	}
 }

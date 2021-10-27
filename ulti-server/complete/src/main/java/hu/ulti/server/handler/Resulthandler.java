@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import hu.ulti.server.Constants;
+import hu.ulti.server.Helper;
 import hu.ulti.server.controller.UltiController;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
@@ -138,7 +138,7 @@ public class Resulthandler {
 
 			game.setGameOver(true);
 			game.setResultList(resultList);
-			game.setScores(ScoreHandler.setScores(game));
+			game.setScores(ScoreHandler.setScores(game, Helper.getPlayers(players)));
 
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i).getId() == game.getLastCallerId())
@@ -164,8 +164,7 @@ public class Resulthandler {
 	}
 
 	private Result addResult(boolean isSuccess, int callIndex, String comment, int playerId) {
-		UUID uuid = UUID.randomUUID();
-		return  new Result(uuid.toString(), playerId, callIndex, isSuccess, comment);
+		return  new Result(Helper.getUUid().toString(), playerId, callIndex, isSuccess, comment);
 	}
 
 	private boolean isPassz() {

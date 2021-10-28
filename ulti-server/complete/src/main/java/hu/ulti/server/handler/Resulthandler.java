@@ -139,11 +139,7 @@ public class Resulthandler {
 			game.setGameOver(true);
 			game.setResultList(resultList);
 			game.setScores(ScoreHandler.setScores(game, Helper.getPlayers(players)));
-
-			for (int i = 0; i < players.size(); i++) {
-				if (players.get(i).getId() == game.getLastCallerId())
-					game.setStrikeList(getStrikeList(i));
-			}
+			game.setStrikeList(getStrikeList());
 		}
 	}
 
@@ -518,44 +514,16 @@ public class Resulthandler {
 
 		return 0;
 	}
-
-	private List<StrikeList> getStrikeList(int i) {
-
+	
+	private List<StrikeList> getStrikeList(){
 		List<StrikeList> strikeList = new ArrayList<StrikeList>();
-		strikeList.add(0, new StrikeList(players.get(i).getId(), players.get(i).getStrikes()));
-
-		int counter = 2;
-
-		if (players.size() == 4)
-			counter = 3;
-
-		for (int j = 1; j <= counter; j++) {
-			if (players.get(getIncreasedIndex(i + j)).isPlaying())
-				strikeList.add(j, new StrikeList(players.get(getIncreasedIndex(i + j)).getId(),
-						players.get(getIncreasedIndex(i + j)).getStrikes()));
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).isPlaying()) {
+				strikeList.add(new StrikeList(players.get(i).getId(), players.get(i).getStrikes()));
+			}
 		}
-
+		
 		return strikeList;
-	}
-
-	private int getIncreasedIndex(int index) {
-		if (players.size() == 3) {
-
-			if (index == 3)
-				return 0;
-			else if (index == 4)
-				return 1;
-
-		} else if (players.size() == 4) {
-
-			if (index == 4)
-				return 0;
-			else if (index == 5)
-				return 1;
-			else if (index == 6)
-				return 2;
-		}
-
-		return index;
 	}
 }

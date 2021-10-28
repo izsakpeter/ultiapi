@@ -5,10 +5,10 @@ public class Score {
 	private int id;
 	private int sumScore = 0;
 	private int lastPartyScore = 0;
-	
+
 	public Score() {
 	}
-	
+
 	public Score(int id) {
 		this.id = id;
 	}
@@ -40,6 +40,10 @@ public class Score {
 	}
 
 	public void setLastPartyScore(int lastPartyScore) {
-		this.lastPartyScore = lastPartyScore;
+		this.lastPartyScore += lastPartyScore;
+	}
+
+	public void resetLastPartyScore() {
+		this.lastPartyScore = 0;
 	}
 }

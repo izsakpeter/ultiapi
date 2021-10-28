@@ -14,6 +14,7 @@ import hu.ulti.server.controller.UltiController;
 import hu.ulti.server.handler.ScoreHandler;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Result;
+import hu.ulti.server.model.SayMsg;
 import hu.ulti.server.model.Score;
 
 public class ScoreHandlerTest {
@@ -23,23 +24,40 @@ public class ScoreHandlerTest {
 	@Test
 	void scoreTest() {
 		List<Score> scoreListExcept = new ArrayList<Score>();
-		scoreListExcept.add(new Score(1, 91, -5));
-		scoreListExcept.add(new Score(2, -38, 10));
-		scoreListExcept.add(new Score(3, -53, -5));
+		scoreListExcept.add(new Score(1, 40, 40));
+		scoreListExcept.add(new Score(2, -20, -20));
+		scoreListExcept.add(new Score(3, 0, 0));
+		scoreListExcept.add(new Score(4, -20, -20));
+		
+		Game game = new Game();
 
 		List<Result> resultList = new ArrayList<Result>();
-		resultList.add(new Result("xxxx", 2, 5, true, ""));
+		resultList.add(new Result("xxxx", 1, 5, true, ""));
+		game.setResultList(resultList);
 
 		List<Score> scoreList = new ArrayList<Score>();
-		scoreList.add(new Score(1, 96, 96));
-		scoreList.add(new Score(2, -48, -48));
-		scoreList.add(new Score(3, -48, -48));
-
-		Game game = new Game();
-		game.setResultList(resultList);
+		scoreList.add(new Score(1, 0, 0));
+		scoreList.add(new Score(2, 0, 0));
+		scoreList.add(new Score(3, 0, 0));
+		scoreList.add(new Score(4, 0, 0));
 		game.setScores(scoreList);
 
-		Assertions.assertTrue(isSameScore(scoreListExcept, ScoreHandler.setScores(game, null)));
+		List<Integer> players = new ArrayList<Integer>();
+		players.add(1);
+		players.add(2);
+		players.add(4);
+
+		List<SayMsg> sayMsgList = new ArrayList<SayMsg>();
+		sayMsgList.add(new SayMsg(2, 1, 5));
+		sayMsgList.add(new SayMsg(4, 1, 5));
+		sayMsgList.add(new SayMsg(1, 1, 5, "ok"));
+		sayMsgList.add(new SayMsg(1, 2, 5));
+		sayMsgList.add(new SayMsg(2, 2, 5, "ok"));
+		sayMsgList.add(new SayMsg(4, 2, 5, "ok"));
+		
+		game.setSayMsgList(sayMsgList);
+
+		Assertions.assertTrue(isSameScore(scoreListExcept, ScoreHandler.setScores(game, players)));
 	}
 
 	private boolean isSameScore(List<Score> scoreList1, List<Score> scoreList2) {
@@ -49,7 +67,7 @@ public class ScoreHandlerTest {
 			log.info("id: " + scoreList1.get(i).getId() + ", last: " + scoreList1.get(i).getLastPartyScore() + ", sum: "
 					+ scoreList1.get(i).getSumScore());
 		}
-
+		log.info("--------------------------------------------");
 		log.info("list2 size: " + scoreList2.size());
 		for (int i = 0; i < scoreList2.size(); i++) {
 			log.info("id: " + scoreList2.get(i).getId() + ", last: " + scoreList2.get(i).getLastPartyScore() + ", sum: "

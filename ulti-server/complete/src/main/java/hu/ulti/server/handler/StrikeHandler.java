@@ -27,7 +27,7 @@ public class StrikeHandler {
 		int card1ColorId = getColor(card1);
 		int card2ColorId = getColor(card2);
 		int card3ColorId = getColor(card3);
-		boolean isSzintelen = Helper.isSzintelen(game);
+		boolean isSzintelen = Helper.isSzintelenByList(game.getPreviousCall());
 
 		if (isSzintelen) {
 			if (card1ColorId != card2ColorId && card1ColorId != card3ColorId) {

@@ -12,7 +12,7 @@ public class KontraHandler {
 
 	public static List<Call> kontraHandler(Say say, Game game) {
 		game.setKontraPartFinished(false);
-		boolean isSzintelen = Helper.isSzintelen(game);
+		boolean isSzintelen = Helper.isSzintelenByList(game.getPreviousCall());
 
 		if (isSzintelen) {
 			for (int i = 0; i < game.getPreviousCall().size(); i++) {

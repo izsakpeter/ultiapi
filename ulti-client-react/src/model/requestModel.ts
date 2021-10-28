@@ -40,8 +40,6 @@ export class RequestModel {
     public kontraBetliTer?: boolean;
     public kontraDuriTer?: boolean;
     public kontraDuriTerSz?: boolean;
-
-
 }
 
 export function getRequestJson(model: RequestModel): any {

@@ -10,7 +10,6 @@ import java.util.UUID;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.CallWithValue;
 import hu.ulti.server.model.Card;
-import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.Score;
@@ -212,37 +211,9 @@ public class Helper {
 		return player.getHand();
 	}
 
-	public static boolean isBetli(List<Call> callList) {
-
-		for (Integer id : betliIds) {
-			for (int i = 0; i < callList.size(); i++) {
-				if (id == callList.get(i).getCallId())
-					return true;
-			}
-		}
-
-		return false;
-	}
-
-	public static boolean isSzintelenDuri(List<Call> callList) {
-
-		for (Integer id : duriIds) {
-			for (int i = 0; i < callList.size(); i++) {
-				if (id == callList.get(i).getCallId())
-					return true;
-			}
-		}
-
-		return false;
-	}
-
 	public static String getUUid() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
-	}
-
-	public static boolean isSzintelen(Game game) {
-		return Helper.isBetli(game.getPreviousCall()) || Helper.isSzintelenDuri(game.getPreviousCall());
 	}
 
 	public static List<Score> getDefaultScoreList(List<Player> players) {
@@ -254,26 +225,80 @@ public class Helper {
 
 		return scores;
 	}
-	
+
 	public static int getCallValue(int callId) {
-		
+
 		List<CallWithValue> allCalls = CallWithValue.getAllCalls();
-		
+
 		for (CallWithValue callWithValue : allCalls) {
 			if (callWithValue.getId() == callId)
 				return callWithValue.getValue();
 		}
-		
+
 		return 0;
 	}
-	
-	public static List<Integer> getPlayers(List<Player> players){
+
+	public static List<Integer> getPlayers(List<Player> players) {
 		List<Integer> playersList = new ArrayList<Integer>();
-		
+
 		for (Player player : players) {
-			playersList.add(player.getId());
+			if (player.isPlaying()) {
+				playersList.add(player.getId());
+			}
 		}
-		
+
 		return playersList;
+	}
+
+	public static boolean isSzintelenByList(List<Call> callList) {
+		return (Helper.isBetlibyList(callList) || Helper.isSzintelenDuribyList(callList));
+	}
+
+	public static boolean isBetlibyList(List<Call> callList) {
+
+		for (Integer id : betliIds) {
+			for (int i = 0; i < callList.size(); i++) {
+				if (id == callList.get(i).getCallId())
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isSzintelenDuribyList(List<Call> callList) {
+
+		for (Integer id : duriIds) {
+			for (int i = 0; i < callList.size(); i++) {
+				if (id == callList.get(i).getCallId())
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isSzintelenbyId(int callId) {
+		return (Helper.isBetliById(callId) || Helper.isSzintelenDuriById(callId));
+	}
+
+	private static boolean isBetliById(int callId) {
+
+		for (Integer id : betliIds) {
+			if (id == callId)
+				return true;
+		}
+
+		return false;
+	}
+
+	private static boolean isSzintelenDuriById(int callId) {
+
+		for (Integer id : duriIds) {
+			if (id == callId)
+				return true;
+		}
+
+		return false;
 	}
 }

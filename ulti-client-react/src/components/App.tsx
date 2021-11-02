@@ -32,7 +32,7 @@ export default class App extends React.Component<{}, iState> {
         return (
             <div>
                 <div><LoginComponent postReq={this.postRequest} game={this.state.game} /></div>
-                <div className={"align-center"}><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} postReq={this.postRequest} /></div>
+                <div><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} postReq={this.postRequest} /></div>
                 <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest} /></div>
             </div>
         );

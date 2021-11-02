@@ -35,7 +35,7 @@ export class StartingValue extends React.Component<iProps, iState> {
             ...state,
             id: props.game.player.id
         };
-        
+
         return state;
     }
 
@@ -48,18 +48,20 @@ export class StartingValue extends React.Component<iProps, iState> {
 
         return (
             <div>
-                <div className={"border"}>
-                    <div className={"margin"} >
-                        <Radio name="sv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChangeValue} defaultChecked={true} />
-                        <Radio name="sv" label={Constants.ZOLD} value={Constants.ZOLD_ID} onClick={this.onChangeValue} />
-                        <Radio name="sv" label={Constants.TOK} value={Constants.TOK_ID} onClick={this.onChangeValue} />
-                        <Radio name="sv" label={Constants.PIROS} value={Constants.PIROS_ID} onClick={this.onChangeValue} />
+                <div className={"msg-border"}>
+                    <div className={"msg-text"} >
+                        <div> Válassz kezdő szint!</div>
+                        <div>
+                            <Radio name="sv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChangeValue} defaultChecked={true} />
+                            <Radio name="sv" label={Constants.ZOLD} value={Constants.ZOLD_ID} onClick={this.onChangeValue} />
+                            <Radio name="sv" label={Constants.TOK} value={Constants.TOK_ID} onClick={this.onChangeValue} />
+                            <Radio name="sv" label={Constants.PIROS} value={Constants.PIROS_ID} onClick={this.onChangeValue} />
+                        </div>
                     </div>
                     <div><Button className={"button-ok"} onClick={this.setStartingValue}>ok</Button></div>
                 </div>
                 <div className={"talon-poz"}>{talon}</div>
             </div>
-
         )
     }
 

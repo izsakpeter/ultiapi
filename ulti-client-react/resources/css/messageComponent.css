@@ -1,11 +1,13 @@
 .msg-border {
+    text-align: center;
+    margin: auto;
+    margin-top: 300px;
     border-style: solid;
     border-width: 1px;
     width: 300px;
-    height: 75px;
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+}
+
+.msg-text-middle {
+    margin: 30px;
+    justify-content: center;
 }

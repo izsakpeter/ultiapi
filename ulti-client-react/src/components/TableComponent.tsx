@@ -60,12 +60,10 @@ export class Table extends React.Component<iProps, iState> {
 
         return (
             <div>
-                <div className={"align-center"}>
-                    <div><OtherHandComponent game={this.props.game} /></div>
-                </div>
-
-                <div className={"align-center"}>
+                <div>
                     <div><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
+                    <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
+                    <div className={"talon"}>{this.renderTalon()}</div>
                 </div>
 
                 <div className={"my-hand"}>
@@ -73,14 +71,14 @@ export class Table extends React.Component<iProps, iState> {
                     <div><OperationsComponent game={this.props.game} postReq={this.props.postReq} /></div>
                 </div>
 
+                <div className={"align-center"}>
+                    <div><OtherHandComponent game={this.props.game} /></div>
+                </div>
 
-
-                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
-                <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
-                <div>{this.renderTalon()}</div>
-
-
-                <div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>
+                <div>
+                    <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
+                    <div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>
+                </div>
             </div>
         )
     }
@@ -123,9 +121,7 @@ export class Table extends React.Component<iProps, iState> {
         }
 
         return (
-            <div>
-                <div>{cardsImg}</div>
-            </div>
+            <div>{cardsImg}</div>
         )
     }
 
@@ -136,7 +132,7 @@ export class Table extends React.Component<iProps, iState> {
         }
 
         return (
-            <div className={"talon"}>{talonImg} </div>
+            <div>{talonImg} </div>
         )
     }
 }

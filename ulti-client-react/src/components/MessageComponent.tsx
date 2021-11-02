@@ -73,16 +73,22 @@ export class MessageComponent extends React.Component<iProps, iState> {
                 if (this.state.isPlayRun) {
                     return (
                         <div className={"msg-border"}>
-                            <div>Aktiv játékos: {getUsernameById(this.state.activePlayerId)}</div>
-                            <div>Mondás: {getCallNameListString(this.state.callList)} {getUsernameById(this.state.lastCallerId)} által.</div>
-                        </div>
+                            <div className="msg-text-middle">
+                                <div>Aktiv játékos: {getUsernameById(this.state.activePlayerId)}</div>
+                                <div>Mondás: {getCallNameListString(this.state.callList)} {getUsernameById(this.state.lastCallerId)} által.</div>
+                            </div>
+                        </div >
                     )
                 } else {
                     if (this.state.activePlayerId != this.state.playerId) {
                         return (
                             <div className={"msg-border"}>
-                                <div>Aktiv játékos: {getUsernameById(this.state.activePlayerId)}</div>
-                                {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {getUsernameById(this.props.game.lastCallerId)} által.</div>}
+                                <div className="msg-text-middle">
+                                    <div>Aktiv játékos: {getUsernameById(this.state.activePlayerId)}</div>
+                                    {getCallValueSum(
+                                        this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)},
+                                         értéke: {getCallValueSum(this.props.game.previousCall)} {getUsernameById(this.props.game.lastCallerId)} által.</div>}
+                                </div>
                             </div>
                         )
                     } else {
@@ -94,8 +100,8 @@ export class MessageComponent extends React.Component<iProps, iState> {
             } else {
                 if (!this.state.gotCards && this.state.isLoggedIn) {
                     return (
-                        <div className={"msg-border"}>
-                            A leosztás még nem történt meg!
+                        <div className="msg-border">
+                            <div className="msg-text-middle">A leosztás még nem történt meg!</div>
                         </div>
                     )
                 } else {

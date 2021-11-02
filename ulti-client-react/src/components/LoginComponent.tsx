@@ -1,3 +1,4 @@
+import { H1 } from "@blueprintjs/core";
 import React = require("react");
 import { getSessionId, getUsernameById } from "../helper/loginHandler";
 import { Game } from "../model/game";
@@ -33,16 +34,14 @@ export class LoginComponent extends React.Component<iProps, iState> {
         if (this.props.game === null) {
             return (
                 <div className={"login-panel"}>
+                    <div><H1>Bejelentkezés</H1></div>
                     <form onSubmit={this.handleSubmit}>
-                        <table>
-                            <tbody>
-                                <tr><td> Név:</td><td><input type="text" value={this.state.username} onChange={this.usernameHandleChange} /></td></tr>
-                                <tr><td> Jelszó:</td><td><input type="password" value={this.state.password} onChange={this.passwordHandleChange} /></td></tr>
-                            </tbody>
-                        </table>
-                        <div>
-                            <input type="submit" value="Bejelenkezés" />
-                        </div>
+                        <div>Név</div>
+                        <div><input type="text" value={this.state.username} onChange={this.usernameHandleChange} /></div>
+                        <div>Jelszó</div>
+                        <div><input type="password" value={this.state.password} onChange={this.passwordHandleChange} /></div>
+                        <div> <input type="submit" value="Bejelenkezés" /></div>
+                        <div> <input type="button" value="Regisztráció" /></div>
                     </form>
                 </div>
             )

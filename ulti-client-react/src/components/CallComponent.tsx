@@ -70,9 +70,9 @@ export class CallComponent extends React.Component<iProps, iState>{
         } else if (this.props.hand.length + this.props.talon.length == 12) {
 
             return (
-                <div>
+                <div className="call-table-pos">
                     <div className={"call-table-border"}>
-                        <div>
+                        <div className={"align-center"}>
                             {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {getUsernameById(this.props.game.lastCallerId)} által.</div>}
                             <div><WronCallComponent game={this.props.game} /></div>
                             <Radio name="cv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.MAKK_ID, this.props.game)} />
@@ -81,7 +81,7 @@ export class CallComponent extends React.Component<iProps, iState>{
                             <Radio name="cv" label={Constants.PIROS} value={Constants.PIROS_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.PIROS_ID, this.props.game)} />
                         </div>
                         <div>
-                            <table>
+                            <table className="table-center">
                                 <tbody>
                                     <tr><td><input type="checkbox" name={Constants.PASSZ_CB} disabled={this.isCheckBoxDisable(Constants.PASSZ_ID)} onChange={this.onChoosePassz} /> {Constants.PASSZ} </td><td>{this.state.colorId * Constants.PASSZ_VALUE}</td></tr>
                                     <tr><td><input type="checkbox" name={Constants.SZAZ40_CB} disabled={this.isCheckBoxDisable(Constants.SZAZ40_ID)} onChange={this.onChoose40100} /> {Constants.SZAZ40} </td><td>{this.state.colorId * Constants.SZAZ40_VALUE}</td></tr>
@@ -96,8 +96,10 @@ export class CallComponent extends React.Component<iProps, iState>{
                                 </tbody>
                             </table>
                         </div>
-                        <div>Mondás összértéke: {this.getCallValueSum()}</div>
-                        <div className={"align-center"}><Button className={"button-ok"} onClick={this.call}>ok</Button></div>
+                        <div className={"align-center"}>
+                            <div >Mondás összértéke: {this.getCallValueSum()}</div>
+                            <div><Button className={"button-ok"} onClick={this.call}>OK</Button></div>
+                        </div>
                     </div>
                 </div>
             )

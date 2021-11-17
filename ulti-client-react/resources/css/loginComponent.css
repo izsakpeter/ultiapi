@@ -1,7 +1,16 @@
+.login {
+    width: 1920px;
+    height: 1080px;
+    background-color: red;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .login-panel {
     text-align: center;
-    margin: auto;
-    margin-top: 250px;
     border-style: solid;
     border-width: 1px;
     width: 300px;

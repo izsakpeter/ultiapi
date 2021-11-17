@@ -44,15 +44,13 @@ export class OperationsComponent extends React.Component<iProps, iState> {
         if (this.props.game.player.playing) {
             return (
                 <div>
-                    <Button onClick={this.changeOrderHandler} text="rendez" />
-                    <Button onClick={() => this.showStrikesHandler(this.state.showStrikes)} text="ütések" disabled={this.isShowStrikeButtonDisabled()} />
-                    <Button text="terít" />
-                    <Button text="bedob" />
-                    <Button text="feladás" />
-                    <Button text="mondás számoló" />
-
+                    <div><Button onClick={this.changeOrderHandler} text="rendez" /></div>
+                    <div><Button onClick={() => this.showStrikesHandler(this.state.showStrikes)} text="ütések" disabled={this.isShowStrikeButtonDisabled()} /></div>
+                    <div><Button text="terít" disabled={true}/></div>
+                    <div><Button text="bedob" disabled={true}/></div>
+                    <div><Button text="feladás" disabled={true}/></div>
+                    <div><Button text="mondás számoló" disabled={true}/></div>
                     <div>{StrikeList(this.state.strikes, this.state.showStrikes)}</div>
-
                 </div>
             )
         } else {

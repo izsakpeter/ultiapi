@@ -9,6 +9,14 @@
 @import "sayComponent.css";
 @import "resultComponent.css";
 @import "loginComponent.css";
+.container {
+    width: 1920px;
+    height: 1080px;
+    background-color: powderblue;
+    display: flex;
+    justify-content: flex-start
+}
+
 .align-center {
     text-align: center;
 }

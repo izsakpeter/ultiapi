@@ -44,12 +44,12 @@ export class StartingValue extends React.Component<iProps, iState> {
         if (this.props.game.activePlayer != this.props.game.player.id || this.props.game.startingValue != 0 || this.props.game.gameOver)
             return <></>;
 
-        let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="button-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="button-card" /></div>
+        let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="talon-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="talon-card" /></div>
 
         return (
             <div>
-                <div className={"msg-border"}>
-                    <div className={"msg-text"} >
+                <div className={"sv-border"}>
+                    <div>
                         <div> Válassz kezdő szint!</div>
                         <div>
                             <Radio name="sv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChangeValue} defaultChecked={true} />
@@ -60,7 +60,7 @@ export class StartingValue extends React.Component<iProps, iState> {
                     </div>
                     <div><Button className={"button-ok"} onClick={this.setStartingValue}>ok</Button></div>
                 </div>
-                <div className={"talon-poz"}>{talon}</div>
+                <div className={"talon-pos"}>{talon}</div>
             </div>
         )
     }

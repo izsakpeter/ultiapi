@@ -33,16 +33,18 @@ export class LoginComponent extends React.Component<iProps, iState> {
 
         if (this.props.game === null) {
             return (
-                <div className={"login-panel"}>
-                    <div><H1>Bejelentkezés</H1></div>
-                    <form onSubmit={this.handleSubmit}>
-                        <div>Név</div>
-                        <div><input type="text" value={this.state.username} onChange={this.usernameHandleChange} /></div>
-                        <div>Jelszó</div>
-                        <div><input type="password" value={this.state.password} onChange={this.passwordHandleChange} /></div>
-                        <div> <input type="submit" value="Bejelenkezés" /></div>
-                        <div> <input type="button" value="Regisztráció" /></div>
-                    </form>
+                <div className={"login"}>
+                    <div className={"login-panel"}>
+                        <div><H1>Bejelentkezés</H1></div>
+                        <form onSubmit={this.handleSubmit}>
+                            <div>Név</div>
+                            <div><input type="text" value={this.state.username} onChange={this.usernameHandleChange} /></div>
+                            <div>Jelszó</div>
+                            <div><input type="password" value={this.state.password} onChange={this.passwordHandleChange} /></div>
+                            <div> <input type="submit" value="Bejelenkezés" /></div>
+                            <div> <input type="button" value="Regisztráció" /></div>
+                        </form>
+                    </div>
                 </div>
             )
         } else {

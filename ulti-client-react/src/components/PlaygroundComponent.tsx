@@ -25,9 +25,9 @@ export class PlaygroundComponent extends React.Component<iProps, iState> {
         } else {
             return (
                 <div>
-                    <img src={GetCardSource(this.props.game.round.card1Id)} className="button-card" />
-                    <img src={GetCardSource(this.props.game.round.card2Id)} className="button-card" />
-                    <img src={GetCardSource(this.props.game.round.card3Id)} className="button-card" />
+                    <img src={GetCardSource(this.props.game.round.card1Id)} className="playcard" />
+                    <img src={GetCardSource(this.props.game.round.card2Id)} className="playcard" />
+                    <img src={GetCardSource(this.props.game.round.card3Id)} className="playcard" />
                 </div>
             )
         }

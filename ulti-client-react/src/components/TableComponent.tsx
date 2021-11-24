@@ -10,6 +10,8 @@ import { SayComponent } from "./SayComponent";
 import OtherHandComponent from "./OtherHandComponent";
 import { OperationsComponent } from "./OperationsComponent";
 import { getUsernameById } from "../helper/loginHandler";
+import { MessageComponent } from "./MessageComponent";
+import { ResultComponent } from "./ResultComponent";
 
 interface iProps {
     gotCards: boolean,
@@ -19,7 +21,8 @@ interface iProps {
 
 interface iState {
     talon: number[],
-    hand: number[]
+    hand: number[],
+    isGameOver: boolean
 }
 
 export class Table extends React.Component<iProps, iState> {
@@ -31,7 +34,8 @@ export class Table extends React.Component<iProps, iState> {
 
         this.state = {
             talon: [],
-            hand: []
+            hand: [],
+            isGameOver: false
         };
 
         this.cardAction = this.cardAction.bind(this);
@@ -40,6 +44,10 @@ export class Table extends React.Component<iProps, iState> {
     }
 
     static getDerivedStateFromProps(props: iProps, state: iState) {
+
+        if (props.game != null)
+            state.isGameOver = props.game.gameOver;
+
         let cards: number[] = [];
         if (props.gotCards === true && props.game.player && state.talon.length == 0) {
             for (let i = 0; i < props.game.player.hand.length; i++) {
@@ -59,7 +67,13 @@ export class Table extends React.Component<iProps, iState> {
         if (!this.props.gotCards)
             return <></>;
 
-        return (
+        if (this.state.isGameOver) {
+            return (
+                <div>
+                    <div><ResultComponent game={this.props.game} postReq={this.props.postReq} /></div>
+                </div>
+            )
+        } else {
             <div className="table-container">
                 <div className="menu">
                     <div>menu</div>
@@ -78,8 +92,15 @@ export class Table extends React.Component<iProps, iState> {
 
                         <div className={"main"}>
                             <div><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
-                            <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
-                            <div className={"talon-pos-call"}>{this.renderTalon()}</div>
+
+                            <div><MessageComponent game={this.props.game} postReq={this.props.postReq} /></div>
+                            <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
+
+                            <div>
+                                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
+                                <div>{this.renderTalon()}</div>
+                            </div>
+
                         </div>
 
                         <div className={"right-hand"}>
@@ -90,11 +111,6 @@ export class Table extends React.Component<iProps, iState> {
                     <div className={"my-hand"}>
                         <div>{this.renderMyHand()}</div>
                     </div>
-
-
-
-
-
 
                     {/* 
 
@@ -118,7 +134,7 @@ export class Table extends React.Component<iProps, iState> {
                     </div>*/}
                 </div>
             </div>
-        )
+        }
     }
 
     cardAction(event) {

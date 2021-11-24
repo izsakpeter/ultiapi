@@ -40,16 +40,16 @@ export class PassOrJoin extends React.Component<iProps, iState> {
 
     render() {
 
-        let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="button-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="button-card" /></div>
+        let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="talon-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="talon-card" /></div>
 
         return (
             <div>
-                <div className={"p-o-j-frame"}>
+                <div className={"p-o-j-panel"}>
                     <div>Előző mondás: {getCallNameListString(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {getUsernameById(this.state.lastCallerId)} által.</div>
                     <Button className={"p-o-j-button"} onClick={this.onPass}>passz</Button>
                     <Button className={"p-o-j-button"} onClick={this.onJoin}>felvesz</Button>
                 </div>
-                <div className={"talon-poz"}>{talon}</div>
+                <div className={"talon-pos"}>{talon}</div>
             </div>
         )
     }

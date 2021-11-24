@@ -1,10 +1,9 @@
 .msg-border {
     text-align: center;
     margin: auto;
-    margin-top: 300px;
     border-style: solid;
     border-width: 1px;
-    width: 300px;
+    width: 400px;
 }
 
 .msg-text-middle {

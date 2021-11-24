@@ -5,6 +5,7 @@ import { PostRequest, StatusPostRequest } from '../helper/request';
 import { LoginComponent } from './LoginComponent';
 import { RequestModel } from '../model/requestModel';
 import { MessageComponent } from './MessageComponent';
+import { WarningComponent } from './WarningComponent';
 
 interface iState {
     gotCards: boolean,
@@ -32,8 +33,9 @@ export default class App extends React.Component<{}, iState> {
         return (
             <div className="container">
                 <div><LoginComponent postReq={this.postRequest} game={this.state.game} /></div>
+                <div><WarningComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} /></div>
+
                 <div>
-                    <div><MessageComponent game={this.state.game} gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} postReq={this.postRequest} /></div>
                     <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest} /></div>
                 </div>
             </div>

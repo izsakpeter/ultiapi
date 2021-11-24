@@ -70,7 +70,7 @@ export class CallComponent extends React.Component<iProps, iState>{
         } else if (this.props.hand.length + this.props.talon.length == 12) {
 
             return (
-                <div className="call-table-pos">
+                <div>
                     <div className={"call-table-border"}>
                         <div className={"align-center"}>
                             {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {getUsernameById(this.props.game.lastCallerId)} által.</div>}
@@ -82,7 +82,7 @@ export class CallComponent extends React.Component<iProps, iState>{
                         </div>
                         <div>
                             <table className="table-center">
-                                <tbody>
+                                <tbody className="align-left">
                                     <tr><td><input type="checkbox" name={Constants.PASSZ_CB} disabled={this.isCheckBoxDisable(Constants.PASSZ_ID)} onChange={this.onChoosePassz} /> {Constants.PASSZ} </td><td>{this.state.colorId * Constants.PASSZ_VALUE}</td></tr>
                                     <tr><td><input type="checkbox" name={Constants.SZAZ40_CB} disabled={this.isCheckBoxDisable(Constants.SZAZ40_ID)} onChange={this.onChoose40100} /> {Constants.SZAZ40} </td><td>{this.state.colorId * Constants.SZAZ40_VALUE}</td></tr>
                                     <tr><td><input type="checkbox" name={Constants.ULTI_CB} disabled={this.isCheckBoxDisable(Constants.ULTI_ID)} onChange={this.onChooseUlti} /> {Constants.ULTI} </td><td>{this.state.colorId * Constants.ULTI_VALUE}</td></tr>

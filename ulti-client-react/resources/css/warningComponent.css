@@ -1,0 +1,10 @@
+.warn-border {
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    width: 300px;
+}
+
+.warn-text-middle {
+    margin: 30px;
+}

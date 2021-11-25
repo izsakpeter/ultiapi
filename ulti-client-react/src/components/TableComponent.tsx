@@ -74,66 +74,46 @@ export class Table extends React.Component<iProps, iState> {
                 </div>
             )
         } else {
-            <div className="table-container">
-                <div className="menu">
-                    <div>menu</div>
-                    <div><OperationsComponent game={this.props.game} postReq={this.props.postReq} /></div>
-                </div>
-                <div className="table">
-
-                    <div className={"top-hand"}>
-                        <div>{this.renderTopPlayerHand(this.props.game)}</div>
+            return (
+                <div className="table-container">
+                    <div className="menu">
+                        <div><OperationsComponent game={this.props.game} postReq={this.props.postReq} /></div>
                     </div>
+                    <div className="table">
 
-                    <div className={"mid"}>
-                        <div className={"left-hand"}>
-                            <div>{this.renderLeftPlayerHand(this.props.game)}</div>
+                        <div className={"top-hand"}>
+                            <div>{this.renderTopPlayerHand(this.props.game)}</div>
                         </div>
 
-                        <div className={"main"}>
-                            <div><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
-
-                            <div><MessageComponent game={this.props.game} postReq={this.props.postReq} /></div>
-                            <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
-
-                            <div>
-                                <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
-                                <div>{this.renderTalon()}</div>
+                        <div className={"mid"}>
+                            <div className={"left-hand"}>
+                                <div>{this.renderLeftPlayerHand(this.props.game)}</div>
                             </div>
 
+                            <div className={"main"}>
+                                <div><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
+
+                                <div>
+                                    <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
+                                    <div>{this.renderTalon()}</div>
+                                </div>
+
+                                <div><MessageComponent game={this.props.game} postReq={this.props.postReq} /></div>
+                                {/*<div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>*/}
+                                <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
+                            </div>
+
+                            <div className={"right-hand"}>
+                                <div>{this.renderRightPlayerHand(this.props.game)}</div>
+                            </div>
                         </div>
 
-                        <div className={"right-hand"}>
-                            <div>{this.renderRightPlayerHand(this.props.game)}</div>
+                        <div className={"my-hand"}>
+                            <div>{this.renderMyHand()}</div>
                         </div>
                     </div>
-
-                    <div className={"my-hand"}>
-                        <div>{this.renderMyHand()}</div>
-                    </div>
-
-                    {/* 
-
-                    <div className={"my-hand"}>
-                        <div>{this.renderMyHand()}</div>
-                    </div>
-
-                    <div>
-                        <div><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
-                        <div><CallComponent talon={this.state.talon} game={this.props.game} hand={this.state.hand} postReq={this.props.postReq} clearTalon={this.clearTalon} /></div>
-                        <div className={"talon"}>{this.renderTalon()}</div>
-                    </div>
-
-                    <div className={"align-center"}>
-                        <div><OtherHandComponent game={this.props.game} /></div>
-                    </div>
-
-                    <div>
-                        <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
-                        <div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>
-                    </div>*/}
                 </div>
-            </div>
+            )
         }
     }
 

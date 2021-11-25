@@ -1,35 +1,23 @@
-.result-border {
-    top: 5%;
-    left: 50%;
+.result-container {
+    display: flex;
+    flex-direction: row;
+    background-color: purple;
+}
+
+.result-firstcolumn {
+    display: flex;
+    flex-direction: column;
+    background-color: greenyellow;
+}
+
+.result-table-border {
     border-style: solid;
     border-width: 1px;
     width: 300px;
-    height: 75px;
-    position: absolute;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    margin-bottom: 10px;
 }
 
-.first-player-strikes {
-    top: 15%;
-    left: 10%;
-    position: absolute;
-}
-
-.second-player-strikes {
-    top: 15%;
-    left: 50%;
-    position: absolute;
-}
-
-.third-player-strikes {
-    top: 15%;
-    left: 70%;
-    position: absolute;
-}
-
-.res-talon-poz {
-    top: 15%;
-    left: 35%;
-    position: absolute;
+.flex-row {
+    display: flex;
+    flex-direction: row;
 }

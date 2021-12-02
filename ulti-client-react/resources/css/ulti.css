@@ -6,11 +6,10 @@
 @import "messageComponent.css";
 @import "otherHandComponent.css";
 @import "playgroundComponent.css";
-@import "sayComponent.css";
 @import "resultComponent.css";
 @import "loginComponent.css";
 @import "warningComponent.css";
-.container {
+.ulti-container {
     width: 1920px;
     height: 1080px;
     background-color: powderblue;

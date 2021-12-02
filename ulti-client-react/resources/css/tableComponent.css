@@ -73,3 +73,13 @@
     width: 100px;
     height: 147px;
 }
+
+.mid-side {
+    width: 300px;
+    background-color: green;
+}
+
+.saylist-border {
+    border-style: solid;
+    border-width: 1px;
+}

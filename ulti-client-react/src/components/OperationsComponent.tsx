@@ -4,6 +4,7 @@ import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { Strike } from "../model/strike";
+import { StrikesComponent } from "./StrikesComponent";
 
 interface iProps {
     game: Game,
@@ -45,12 +46,11 @@ export class OperationsComponent extends React.Component<iProps, iState> {
             return (
                 <div>
                     <div><Button onClick={this.changeOrderHandler} text="rendez" /></div>
-                    <div><Button onClick={() => this.showStrikesHandler(this.state.showStrikes)} text="ütések" disabled={this.isShowStrikeButtonDisabled()} /></div>
-                    <div><Button text="terít" disabled={true}/></div>
-                    <div><Button text="bedob" disabled={true}/></div>
-                    <div><Button text="feladás" disabled={true}/></div>
-                    <div><Button text="mondás számoló" disabled={true}/></div>
-                    <div>{StrikeList(this.state.strikes, this.state.showStrikes)}</div>
+                    <div><StrikesComponent strikes={this.state.strikes} /></div>
+                    <div><Button text="terít" disabled={true} /></div>
+                    <div><Button text="bedob" disabled={true} /></div>
+                    <div><Button text="feladás" disabled={true} /></div>
+                    <div><Button text="mondás számoló" disabled={true} /></div>
                 </div>
             )
         } else {
@@ -79,22 +79,5 @@ export class OperationsComponent extends React.Component<iProps, iState> {
             return false;
 
         return true;
-    }
-}
-
-function StrikeList(strikes: Array<Strike>, showStrikes: boolean) {
-
-    if (showStrikes) {
-        const strikeList = strikes.map((strike) => <div key={strike.round}>kör:{strike.round}<img src={GetCardSource(strike.card1Id)} className="strike-button-card" /><img src={GetCardSource(strike.card2Id)} className="strike-button-card" /><img src={GetCardSource(strike.card3Id)} className="strike-button-card" /></div>)
-
-        return (
-            <div>
-                {strikeList}
-            </div>
-        )
-    } else {
-        return (
-            <></>
-        )
     }
 }

@@ -1,11 +1,13 @@
 import { Button } from "@blueprintjs/core";
 import React = require("react");
+import { Modal } from "react-bootstrap";
 import { getColorIdByCallItem, have20, have40 } from "../helper/callHandler";
 import { Constants } from "../helper/constants";
 import { getSayFromMsgList } from "../helper/sayHandler";
 import { Call } from "../model/call";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
+import { SayListComponent } from "./SayListComponent";
 
 interface iProps {
     game: Game,
@@ -13,7 +15,6 @@ interface iProps {
 }
 
 interface iState {
-    showPanel: boolean,
     is40Checked: boolean,
     is120Checked: boolean,
     is220Checked: boolean,
@@ -30,7 +31,8 @@ interface iState {
     isKontra20100Checked: boolean,
     isKontraBetliTerChecked: boolean,
     isKontraDuriTerChecked: boolean,
-    isKontraDuriTerSzChecked: boolean
+    isKontraDuriTerSzChecked: boolean,
+    isShow: boolean
 }
 
 export class SayComponent extends React.Component<iProps, iState>{
@@ -39,7 +41,7 @@ export class SayComponent extends React.Component<iProps, iState>{
         super(props);
 
         this.state = {
-            showPanel: false,
+            isShow: false,
             is40Checked: false,
             is120Checked: false,
             is220Checked: false,
@@ -75,6 +77,8 @@ export class SayComponent extends React.Component<iProps, iState>{
         this.onKontraDuriTerSz = this.onKontraDuriTerSz.bind(this);
         this.sayOkButtonHandler = this.sayOkButtonHandler.bind(this);
         this.rekontraOkButtonHandler = this.rekontraOkButtonHandler.bind(this);
+
+        this.handleShow = this.handleShow.bind(this);
     }
 
     static getDerivedStateFromProps(props: iProps, state: iState) {
@@ -94,84 +98,86 @@ export class SayComponent extends React.Component<iProps, iState>{
         if (this.state.isFirstTurn && this.props.game.player.hand.length === 10 && this.props.game.activePlayer == this.props.game.player.id && !this.state.isSaid) {
             return (
                 <div>
-                    <div><Button text="mondás" onClick={() => this.clickHandler(this.state.showPanel)} /></div>
-                    <div>{this.renderSayPanel(this.state.showPanel, this.props.game)}</div>
-                    <div className={"sayMsg-poz"}>{this.renderSayListPanel(this.props.game)}</div>
+                    <div><Button onClick={() => this.handleShow(this.state.isShow)}>Mondás</Button></div>
+                    <div>
+                        <Modal show={this.state.isShow}>
+                            <Modal.Body>
+                                <div className="flex-row">
+                                    {this.renderSayPanel(this.state.isShow, this.props.game)}
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button onClick={() => this.handleShow(this.state.isShow)}>Bezár</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
                 </div>
             )
         } else {
             return (
                 <div>
                     <div>{this.renderRekontraPanel(this.props.game)}</div>
-                    <div className={"sayMsg-poz"}>{this.renderSayListPanel(this.props.game)}</div>
                 </div>
             )
         }
     }
 
-    clickHandler(showPanel: boolean) {
-        this.setState({ showPanel: !showPanel })
+    handleShow(lastState: boolean) {
+        this.setState({ isShow: !lastState });
     }
 
     renderSayPanel(showPanel: boolean, game: Game) {
-        if (showPanel) {
 
-            let sayList = [];
+        let sayList = [];
 
-            for (let i = 0; i < game.previousCall.length; i++) {
+        for (let i = 0; i < game.previousCall.length; i++) {
 
-                if (Constants.LIST_PASSZ.includes(game.previousCall[i].callId)) {
+            if (Constants.LIST_PASSZ.includes(game.previousCall[i].callId)) {
 
-                    sayList.push(
-                        <div key={"20-40"}>
-                            <div><input type="checkbox" name="40" disabled={this.disable40()} onChange={this.onChoose40} /> 40 </div>
-                            <div><input type="checkbox" name="120" disabled={this.disable20(1)} onChange={this.onChoose120} /> 20 </div>
-                            <div><input type="checkbox" name="220" disabled={this.disable20(2)} onChange={this.onChoose220} /> 2x20</div>
-                            <div><input type="checkbox" name="320" disabled={this.disable20(3)} onChange={this.onChoose320} /> 3x20</div>
-                        </div>)
-                }
+                sayList.push(
+                    <div key={"20-40"}>
+                        <div><input type="checkbox" name="40" disabled={this.disable40()} onChange={this.onChoose40} /> 40 </div>
+                        <div><input type="checkbox" name="120" disabled={this.disable20(1)} onChange={this.onChoose120} /> 20 </div>
+                        <div><input type="checkbox" name="220" disabled={this.disable20(2)} onChange={this.onChoose220} /> 2x20</div>
+                        <div><input type="checkbox" name="320" disabled={this.disable20(3)} onChange={this.onChoose320} /> 3x20</div>
+                    </div>)
             }
-
-            if (game.lastCallerId != game.activePlayer) {
-                for (let i = 0; i < game.previousCall.length; i++) {
-                    if (Constants.LIST_PASSZ.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"kopa"}><input type="checkbox" name="kontraparty" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraParti} /> Kontra {Constants.PASSZ} </div>)
-                    } else if (Constants.LIST_40100.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"ko40100"}><input type="checkbox" name="kontra40100" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontra40100} /> Kontra {Constants.SZAZ40} </div>)
-                    } else if (Constants.LIST_ULTI.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"kou"}><input type="checkbox" name="kontraulti" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraUlti} /> Kontra {Constants.ULTI} </div>)
-                    } else if (Constants.LIST_BETLI.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"kob"}><input type="checkbox" name="kontrabetli" onChange={this.onKontraBetli} /> Kontra {Constants.BETLI} </div>)
-                    } else if (Constants.LIST_DURI.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"kod"}><input type="checkbox" name="kontraduri" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraDuri} /> Kontra {Constants.DURI_SZINES} </div>)
-                    } else if (Constants.LIST_SZ_DURI.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"kodsz"}><input type="checkbox" name="kontradurisz" onChange={this.onKontraDuriSz} /> Kontra {Constants.DURI_SZINTELEN} </div>)
-                    } else if (Constants.LIST_20100.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"ko20100"}><input type="checkbox" name="kontra20100" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontra20100} /> Kontra {Constants.SZAZ20} </div>)
-                    } else if (Constants.LIST_TER_BETLI.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"kobt"}><input type="checkbox" name="kontrabetliter" onChange={this.onKontraBetliTer} /> Kontra {Constants.BETLI_TERITETT} </div>)
-                    } else if (Constants.LIST_TER_DURI.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"kodt"}><input type="checkbox" name="kontraduriter" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraDuriTer} /> Kontra {Constants.DURI_SZINES_TERITETT} </div>)
-                    } else if (Constants.LIST_TER_SZ_DURI.includes(game.previousCall[i].callId)) {
-                        sayList.push(<div key={"kodtsz"}><input type="checkbox" name="kontraduritersz" onChange={this.onKontraDuriTerSz} /> Kontra {Constants.DURI_SZINTELEN_TERITETT} </div>)
-                    }
-                }
-            }
-
-            if (sayList.length > 0)
-                sayList.push(<div key={"sayokb"}><Button text="ok" onClick={this.sayOkButtonHandler} /></div>);
-
-            return (
-                <div>
-                    {sayList}
-                </div>
-            )
-
-        } else {
-            return (
-                <></>
-            )
         }
+
+        if (game.lastCallerId != game.activePlayer) {
+            for (let i = 0; i < game.previousCall.length; i++) {
+                if (Constants.LIST_PASSZ.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"kopa"}><input type="checkbox" name="kontraparty" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraParti} /> Kontra {Constants.PASSZ} </div>)
+                } else if (Constants.LIST_40100.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"ko40100"}><input type="checkbox" name="kontra40100" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontra40100} /> Kontra {Constants.SZAZ40} </div>)
+                } else if (Constants.LIST_ULTI.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"kou"}><input type="checkbox" name="kontraulti" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraUlti} /> Kontra {Constants.ULTI} </div>)
+                } else if (Constants.LIST_BETLI.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"kob"}><input type="checkbox" name="kontrabetli" onChange={this.onKontraBetli} /> Kontra {Constants.BETLI} </div>)
+                } else if (Constants.LIST_DURI.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"kod"}><input type="checkbox" name="kontraduri" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraDuri} /> Kontra {Constants.DURI_SZINES} </div>)
+                } else if (Constants.LIST_SZ_DURI.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"kodsz"}><input type="checkbox" name="kontradurisz" onChange={this.onKontraDuriSz} /> Kontra {Constants.DURI_SZINTELEN} </div>)
+                } else if (Constants.LIST_20100.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"ko20100"}><input type="checkbox" name="kontra20100" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontra20100} /> Kontra {Constants.SZAZ20} </div>)
+                } else if (Constants.LIST_TER_BETLI.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"kobt"}><input type="checkbox" name="kontrabetliter" onChange={this.onKontraBetliTer} /> Kontra {Constants.BETLI_TERITETT} </div>)
+                } else if (Constants.LIST_TER_DURI.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"kodt"}><input type="checkbox" name="kontraduriter" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraDuriTer} /> Kontra {Constants.DURI_SZINES_TERITETT} </div>)
+                } else if (Constants.LIST_TER_SZ_DURI.includes(game.previousCall[i].callId)) {
+                    sayList.push(<div key={"kodtsz"}><input type="checkbox" name="kontraduritersz" onChange={this.onKontraDuriTerSz} /> Kontra {Constants.DURI_SZINTELEN_TERITETT} </div>)
+                }
+            }
+        }
+
+        if (sayList.length > 0)
+            sayList.push(<div key={"sayokb"}><Button text="ok" onClick={this.sayOkButtonHandler} /></div>);
+
+        return (
+            <div>
+                {sayList}
+            </div>
+        )
     }
 
     sayOkButtonHandler(event) {
@@ -259,14 +265,24 @@ export class SayComponent extends React.Component<iProps, iState>{
                 }
             }
 
-            if (rekontraList.length > 0)
-                rekontraList.push(<div key={"rekokb"}><Button text="ok" onClick={this.rekontraOkButtonHandler} /></div>);
-
-            return (
-                <div>
-                    {rekontraList}
-                </div>
-            )
+            if (rekontraList.length > 0) {
+                return (
+                    <div>
+                        <Modal show={true}>
+                            <Modal.Body>
+                                <div className="flex-column">
+                                    <div>{rekontraList}</div>
+                                    <div key={"rekokb"}><Button text="ok" onClick={this.rekontraOkButtonHandler} /></div>
+                                </div>
+                            </Modal.Body>
+                        </Modal>
+                    </div>
+                )
+            } else {
+                return (
+                    <></>
+                )
+            }
         } else {
             return (
                 <></>
@@ -292,29 +308,6 @@ export class SayComponent extends React.Component<iProps, iState>{
         }
 
         this.props.postReq(reqObj);
-    }
-
-    renderSayListPanel(game: Game) {
-
-        let sayList = [];
-
-        if (game.sayMsgList != null && game.sayMsgList.length > 0) {
-            for (let i = 0; i < game.sayMsgList.length; i++) {
-                sayList.push(<div key={i}>{getSayFromMsgList(game.sayMsgList[i])}</div>);
-            }
-        }
-
-        if (sayList.length > 0) {
-            return (
-                <div className={"sayMsg-border"}>
-                    {sayList}
-                </div>
-            )
-        } else {
-            return (
-                <></>
-            )
-        }
     }
 
     disable40(): boolean {

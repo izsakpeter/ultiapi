@@ -12,6 +12,7 @@ import { OperationsComponent } from "./OperationsComponent";
 import { getUsernameById } from "../helper/loginHandler";
 import { MessageComponent } from "./MessageComponent";
 import { ResultComponent } from "./ResultComponent";
+import { SayListComponent } from "./SayListComponent";
 
 interface iProps {
     gotCards: boolean,
@@ -90,6 +91,10 @@ export class Table extends React.Component<iProps, iState> {
                                 <div>{this.renderLeftPlayerHand(this.props.game)}</div>
                             </div>
 
+                            <div className="mid-side">
+                                <div className="align-left"><SayListComponent game={this.props.game} /></div>
+                            </div>
+
                             <div className={"main"}>
                                 <div><StartingValue game={this.props.game} postReq={this.props.postReq} /></div>
 
@@ -98,9 +103,15 @@ export class Table extends React.Component<iProps, iState> {
                                     <div>{this.renderTalon()}</div>
                                 </div>
 
-                                <div><MessageComponent game={this.props.game} postReq={this.props.postReq} /></div>
-                                {/*<div className={"saycomp"}><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>*/}
-                                <div className={"playground"}><PlaygroundComponent game={this.props.game} /></div>
+                                <div>
+                                    <div><MessageComponent game={this.props.game} postReq={this.props.postReq} /></div>
+                                    <div><PlaygroundComponent game={this.props.game} /></div>
+                                    <div><SayComponent game={this.props.game} postReq={this.props.postReq} /></div>
+                                </div>
+                            </div>
+
+                            <div className="mid-side">
+                                <></>
                             </div>
 
                             <div className={"right-hand"}>

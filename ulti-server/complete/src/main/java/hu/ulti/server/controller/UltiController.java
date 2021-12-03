@@ -24,6 +24,7 @@ import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Request;
+import hu.ulti.server.model.Response;
 import hu.ulti.server.model.Result;
 import hu.ulti.server.model.Say;
 import hu.ulti.server.model.SayMsg;
@@ -87,7 +88,7 @@ public class UltiController {
 	}
 
 	@PostMapping("start")
-	public String shuffle(@RequestBody Request request) {
+	public Response shuffle(@RequestBody Request request) {
 
 		int id = request.getId();
 
@@ -101,13 +102,13 @@ public class UltiController {
 		for (int i = 0; i < players.size(); i++) {
 			if (!players.get(i).isReady()) {
 				game.setLastModificationTimeStamp(System.currentTimeMillis());
-				return "waiting";
+				return new Response(true);
 			}
 		}
 
 		if (game.isRoundStarted()) {
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
-			return "Round started";
+			return new Response(true);
 		} else {
 			setStarterPlayer();
 			setHands(dealer);
@@ -117,14 +118,14 @@ public class UltiController {
 			game.setHands(handList);
 			game.setRoundStarted(true);
 			game.setScores(Helper.getDefaultScoreList(players));
-			
+
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
-			return "ok";
+			return new Response(true);
 		}
 	}
 
 	@PostMapping("order")
-	public String changeOrder(@RequestBody Request request) {
+	public Response changeOrder(@RequestBody Request request) {
 
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getId() == request.getId())
@@ -132,11 +133,13 @@ public class UltiController {
 		}
 
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
-		return "ok";
+		return new Response(true);
 	}
 
 	@PostMapping("startingvalue")
-	public String setStartingValue(@RequestBody Request request) {
+	public Response setStartingValue(@RequestBody Request request) {
+		
+		Response resp = new Response();
 
 		if (request.getId() == game.getActivePlayer() && request.getValue() > 0) {
 
@@ -149,17 +152,20 @@ public class UltiController {
 
 			game.setHands(handList);
 			game.setStartingValue(request.getValue());
-			game.setLastModificationTimeStamp(System.currentTimeMillis());
 
-			return "ok";
+			resp = new Response(true);
+		} else {
+			resp = new Response(false, "wrong player id or wrong value index");
 		}
 
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
-		return "bad";
+		return resp;
 	}
 
 	@PostMapping("call")
-	public String call(@RequestBody Request request) {
+	public Response call(@RequestBody Request request) {
+		
+		Response resp = new Response();
 
 		if (request.getId() == game.getActivePlayer()) {
 
@@ -187,16 +193,17 @@ public class UltiController {
 				}
 			}
 
-			game.setLastModificationTimeStamp(System.currentTimeMillis());
-			return "ok";
+			resp = new Response(true);
+		} else {
+			resp = new Response(false, "wrong player id");
 		}
-
+		
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
-		return "bad";
+		return resp;
 	}
 
 	@PostMapping("join")
-	public String join(@RequestBody Request request) {
+	public Response join(@RequestBody Request request) {
 
 		if (request.getId() == game.getActivePlayer()) {
 			if (!request.isIsjoin()) {
@@ -206,7 +213,7 @@ public class UltiController {
 					game.setFirstTurn(true);
 					game.setLastModificationTimeStamp(System.currentTimeMillis());
 					game.setPreviousCall(CallHandler.getFinalCall(game, players));
-					return "kezdődik a játék";
+					return new Response(true);
 				}
 
 				for (int i = 0; i < players.size(); i++) {
@@ -217,8 +224,7 @@ public class UltiController {
 				}
 
 				game.setLastModificationTimeStamp(System.currentTimeMillis());
-
-				return "passz";
+				return new Response(true);
 
 			} else {
 
@@ -232,15 +238,15 @@ public class UltiController {
 
 				game.setLastModificationTimeStamp(System.currentTimeMillis());
 
-				return "felvette";
+				return new Response(true);
 			}
 		}
 
-		return "bad";
+		return new Response(false, "wrong player id");
 	}
 
 	@PostMapping("sayparti")
-	public String sayParti(@RequestBody Request request) {
+	public Response sayParti(@RequestBody Request request) {
 		Say someSay = new Say(request.getId(), request);
 
 		for (int i = 0; i < players.size(); i++) {
@@ -254,11 +260,11 @@ public class UltiController {
 
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 
-		return "someSayParti";
+		return new Response(true);
 	}
 
 	@PostMapping("saykontra")
-	public String saykontra(@RequestBody Request request) {
+	public Response saykontra(@RequestBody Request request) {
 		Say someSay = new Say(request);
 
 		for (int i = 0; i < players.size(); i++) {
@@ -282,11 +288,11 @@ public class UltiController {
 		}
 
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
-		return "someSayKontra";
+		return new Response(true);
 	}
 
 	@PostMapping("play")
-	public String play(@RequestBody Request request) {
+	public Response play(@RequestBody Request request) {
 
 		if (game.isPlayReadyToStart() && request.getId() == game.getActivePlayer()) {
 
@@ -353,15 +359,15 @@ public class UltiController {
 			}
 
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
-			return "ok";
+			return new Response(true);
 		}
 
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
-		return "bad";
+		return new Response(false);
 	}
 
 	@PostMapping("newgame")
-	public String newGame(@RequestBody Request request) {
+	public Response newGame(@RequestBody Request request) {
 		int id = request.getId();
 
 		for (int i = 0; i < players.size(); i++) {
@@ -372,12 +378,12 @@ public class UltiController {
 
 		for (int i = 0; i < players.size(); i++) {
 			if (!players.get(i).isReady())
-				return "waiting";
+				return new Response(true);
 		}
 
 		if (game.isRoundStarted()) {
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
-			return "Round started";
+			return new Response(true);
 		} else {
 			for (int i = 0; i < players.size(); i++) {
 				players.get(i).setStrikes(new ArrayList<Strike>());
@@ -399,7 +405,7 @@ public class UltiController {
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 
-			return "ok";
+			return new Response(true);
 		}
 	}
 

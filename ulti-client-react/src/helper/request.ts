@@ -1,6 +1,7 @@
 import { Game } from "../model/game";
 import axios, { AxiosRequestConfig } from "axios";
 import { getRequestJson, RequestModel } from "../model/requestModel";
+import { Response } from "../model/response";
 
 const baseURL: string = "http://localhost:8888/";
 
@@ -22,14 +23,14 @@ export async function StatusPostRequest(id: number, lastTimeStamp: number): Prom
     }
 }
 
-export async function PostRequest(reqObj: RequestModel): Promise<string> {
+export async function PostRequest(reqObj: RequestModel): Promise<Response> {
 
     let reqModel: RequestModel;
 
-    const response = await axios.post<string>(baseURL + reqObj.dest, getRequestJson(reqObj), configuration);
+    const response = await axios.post<Response>(baseURL + reqObj.dest, getRequestJson(reqObj), configuration);
 
     if (response.status === 200) {
         return response.data;
     } else
-        return "ERROR: HTTP response code: " + response.status
+        return new Response(false, "ERROR: HTTP response code: " + response.status);
 }

@@ -303,8 +303,13 @@ public class UltiController {
 
 			for (int i = 0; i < players.size(); i++) {
 				if (request.getId() == players.get(i).getId()) {
-					game.getRound().addCardToStrike(request.getCardid(), request.getId());
-					players.get(i).setHand(Helper.removeCardbyId(players.get(i), request.getCardid()));
+					
+					/*
+					if (!Helper.isPlayedCardCorrect(game, request, players))
+						return new Response(false, "azt te nem rakod rá");*/
+					
+					game.getRound().addCardToStrike(request.getCardId(), request.getId());
+					players.get(i).setHand(Helper.removeCardbyId(players.get(i), request.getCardId()));
 					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 					game.setHands(handList);
 					game.setActivePlayer(getIncreasedPlayerId(i));

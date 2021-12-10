@@ -24,9 +24,9 @@ public class StrikeHandler {
 		int card1 = game.getRound().getCard1Id();
 		int card2 = game.getRound().getCard2Id();
 		int card3 = game.getRound().getCard3Id();
-		int card1ColorId = getColor(card1);
-		int card2ColorId = getColor(card2);
-		int card3ColorId = getColor(card3);
+		int card1ColorId = Helper.getColorId(card1);
+		int card2ColorId = Helper.getColorId(card2);
+		int card3ColorId = Helper.getColorId(card3);
 		boolean isSzintelen = Helper.isSzintelenByList(game.getPreviousCall());
 
 		if (isSzintelen) {
@@ -118,17 +118,6 @@ public class StrikeHandler {
 				}
 			}
 		}
-	}
-
-	public static int getColor(int id) {
-		if (id <= 7)
-			return Constants.MAKK_ID;
-		else if (id <= 15)
-			return Constants.ZOLD_ID;
-		else if (id <= 23)
-			return Constants.TOK_ID;
-		else
-			return Constants.PIROS_ID;
 	}
 
 	private void strikeHandler(int id) {

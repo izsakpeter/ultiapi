@@ -396,8 +396,8 @@ public class Resulthandler {
 				}
 
 				if (hasAdu7(card1)) {
-					int card2Color = StrikeHandler.getColor(card2);
-					int card3Color = StrikeHandler.getColor(card3);
+					int card2Color = Helper.getColorId(card2);
+					int card3Color = Helper.getColorId(card3);
 					int adu = StrikeHandler.getAdu(game.getPreviousCall().get(0).getCallId());
 
 					if (adu == card2Color || adu == card3Color)
@@ -413,7 +413,7 @@ public class Resulthandler {
 
 	private boolean hasAdu7(int card) {
 
-		int color = StrikeHandler.getColor(card);
+		int color = Helper.getColorId(card);
 		int adu = StrikeHandler.getAdu(game.getPreviousCall().get(0).getCallId());
 
 		for (int i = 0; i < list7s.size(); i++) {
@@ -442,11 +442,11 @@ public class Resulthandler {
 			int card1 = lastStrike.getCard1Id();
 			int card2 = lastStrike.getCard2Id();
 			int card3 = lastStrike.getCard3Id();
-			int card1Color = StrikeHandler.getColor(card1);
-			int card2Color = StrikeHandler.getColor(card2);
-			int card3Color = StrikeHandler.getColor(card3);
+			int card1Color = Helper.getColorId(card1);
+			int card2Color = Helper.getColorId(card2);
+			int card3Color = Helper.getColorId(card3);
 			int aduCounter = 0;
-			int adu = StrikeHandler.getColor(game.getPreviousCall().get(0).getCallId());
+			int adu = Helper.getColorId(game.getPreviousCall().get(0).getCallId());
 
 			if (card1Color == adu)
 				aduCounter++;

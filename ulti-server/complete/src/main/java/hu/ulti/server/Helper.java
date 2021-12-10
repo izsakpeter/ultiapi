@@ -10,8 +10,10 @@ import java.util.UUID;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.CallWithValue;
 import hu.ulti.server.model.Card;
+import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Player;
+import hu.ulti.server.model.Request;
 import hu.ulti.server.model.Score;
 import hu.ulti.server.model.UuidWithCardId;
 
@@ -300,5 +302,105 @@ public class Helper {
 		}
 
 		return false;
+	}
+
+	public static boolean isPlayedCardCorrect(Game game, Request request, List<Player> players) {
+		boolean isSzintelen = Helper.isSzintelenByList(game.getPreviousCall());
+		int playerIndex = getPlayerIndex(players, request.getId());
+
+		if (game.getRound().getCard1Id() == -1) {
+			return true;
+		} else if (game.getRound().getCard2Id() == -1) {
+
+			if (isSzintelen) {
+
+				List<Integer> correctCardListSameColorFromPHand = correctCardListSameColor(game.getRound().getCard1Id(),
+						players.get(playerIndex).getHand());
+
+				if (correctCardListSameColorFromPHand.size() == 0)
+					return true;
+
+				if (correctCardListSameColorFromPHand.contains(request.getCardId()))
+					return true;
+
+				return false;
+			} else {
+			}
+		} else if (game.getRound().getCard3Id() == -1) {
+
+			if (isSzintelen) {
+
+				List<Integer> correctCardListSameColorFromPHand = correctCardListSameColor(game.getRound().getCard1Id(),
+						players.get(playerIndex).getHand());
+
+				if (correctCardListSameColorFromPHand.size() == 0)
+					return true;
+
+				int card1Color = getColorId(game.getRound().getCard1Id());
+				int card2Color = getColorId(game.getRound().getCard2Id());
+
+				if (card1Color == card2Color) {
+					correctCardListSameColorFromPHand = correctCardListSameColor(game.getRound().getCard2Id(),
+							players.get(playerIndex).getHand());
+					if (correctCardListSameColorFromPHand.contains(request.getCardId()))
+						return true;
+				} else {
+					if (correctCardListSameColorFromPHand.contains(request.getCardId()))
+						return true;
+				}
+			} else {
+			}
+		}
+
+		return false;
+	}
+
+	public static int getColorId(int cardId) {
+		if (cardId <= 7)
+			return Constants.MAKK_ID;
+		else if (cardId <= 15)
+			return Constants.ZOLD_ID;
+		else if (cardId <= 23)
+			return Constants.TOK_ID;
+		else
+			return Constants.PIROS_ID;
+	}
+
+	public static List<Integer> correctCardListSameColor(int storedCardId, List<Card> playerHand) {
+
+		int colorId = getColorId(storedCardId);
+		List<Integer> allCardsByColor = getCardListByColor(colorId);
+		List<Integer> list = new ArrayList<Integer>();
+
+		for (int i = 0; i < allCardsByColor.size(); i++) {
+			for (int j = 0; j < playerHand.size(); j++) {
+				if (playerHand.get(j).getId() == allCardsByColor.get(i) && playerHand.get(j).getId() > storedCardId)
+					list.add(allCardsByColor.get(i));
+			}
+		}
+
+		return list;
+	}
+
+	private static int getPlayerIndex(List<Player> players, int id) {
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getId() == id)
+				return i;
+		}
+
+		return 0;
+	}
+
+	public static List<Integer> getCardListByColor(int colorId) {
+
+		List<Card> allCards = Card.getAllCards();
+		List<Integer> list = new ArrayList<Integer>();
+
+		for (int i = 0; i < allCards.size(); i++) {
+			if (allCards.get(i).getColorId() == colorId)
+				list.add(allCards.get(i).getId());
+		}
+
+		return list;
 	}
 }

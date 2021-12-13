@@ -17,6 +17,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import hu.ulti.server.Helper;
 import hu.ulti.server.handler.CallHandler;
 import hu.ulti.server.handler.KontraHandler;
+import hu.ulti.server.handler.PlayedCardHandler;
 import hu.ulti.server.handler.Resulthandler;
 import hu.ulti.server.handler.StrikeHandler;
 import hu.ulti.server.model.Call;
@@ -300,16 +301,19 @@ public class UltiController {
 					&& game.getRound().getCard3Id() != -1) {
 				game.getRound().clearStrike();
 			}
+			
+			log.error(request.getCardid() + " request cardid");
 
 			for (int i = 0; i < players.size(); i++) {
 				if (request.getId() == players.get(i).getId()) {
 					
-					/*
-					if (!Helper.isPlayedCardCorrect(game, request, players))
-						return new Response(false, "azt te nem rakod rá");*/
+					if (!PlayedCardHandler.isPlayedCardCorrect(game, request, players)) {
+						log.error("rossz lap");
+						return new Response(false, "azt te nem rakod rá");
+					}
 					
-					game.getRound().addCardToStrike(request.getCardId(), request.getId());
-					players.get(i).setHand(Helper.removeCardbyId(players.get(i), request.getCardId()));
+					game.getRound().addCardToStrike(request.getCardid(), request.getId());
+					players.get(i).setHand(Helper.removeCardbyId(players.get(i), request.getCardid()));
 					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 					game.setHands(handList);
 					game.setActivePlayer(getIncreasedPlayerId(i));

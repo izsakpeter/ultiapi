@@ -11,7 +11,7 @@ public class Request {
 	private List<Call> call;
 	private List<Integer> talonid;
 	private boolean isjoin;
-	private int cardId;
+	private int cardid;
 	private boolean bluff4020;
 	private boolean have40;
 	private boolean have120;
@@ -88,12 +88,12 @@ public class Request {
 		this.isjoin = isjoin;
 	}
 
-	public int getCardId() {
-		return cardId;
+	public int getCardid() {
+		return cardid;
 	}
 
-	public void setCardId(int cardId) {
-		this.cardId = cardId;
+	public void setCardid(int cardid) {
+		this.cardid = cardid;
 	}
 
 	public boolean isBluff4020() {

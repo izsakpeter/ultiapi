@@ -1,10 +1,8 @@
 package hu.ulti.server.handler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import hu.ulti.server.Constants;
 import hu.ulti.server.Helper;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
@@ -54,11 +52,11 @@ public class StrikeHandler {
 					strikeHandler(game.getRound().getCard3PlayerId());
 			}
 		} else {
-			int ADU = getAdu(game.getPreviousCall().get(0).getCallId());
+			int ADU = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
-			card1 = fixCardOrder(card1);
-			card2 = fixCardOrder(card2);
-			card3 = fixCardOrder(card3);
+			card1 = Helper.changeCardOrder(card1);
+			card2 = Helper.changeCardOrder(card2);
+			card3 = Helper.changeCardOrder(card3);
 
 			if (ADU == card1ColorId && ADU == card2ColorId && ADU == card3ColorId) {
 				if (card1 > card2 && card1 > card3)
@@ -130,34 +128,6 @@ public class StrikeHandler {
 				game.setActivePlayer(players.get(i).getId());
 			}
 		}
-	}
-
-	public static int getAdu(int id) {
-
-		if (id < 12)
-			return Constants.MAKK_ID;
-		else if (id < 24)
-			return Constants.ZOLD_ID;
-		else if (id < 36)
-			return Constants.TOK_ID;
-		else if (id < 48)
-			return Constants.PIROS_ID;
-
-		return 0;
-	}
-
-	private int fixCardOrder(int cardId) {
-
-		List<Integer> list10s = Arrays.asList(3, 11, 19, 27);
-		List<Integer> others = Arrays.asList(4, 5, 6, 12, 13, 14, 20, 21, 22, 28, 29, 30);
-
-		if (list10s.contains(cardId))
-			return cardId + 3;
-
-		if (others.contains(cardId))
-			return cardId - 1;
-
-		return cardId;
 	}
 
 	public Game getGame() {

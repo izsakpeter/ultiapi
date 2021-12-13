@@ -10,10 +10,8 @@ import java.util.UUID;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.CallWithValue;
 import hu.ulti.server.model.Card;
-import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Player;
-import hu.ulti.server.model.Request;
 import hu.ulti.server.model.Score;
 import hu.ulti.server.model.UuidWithCardId;
 
@@ -304,57 +302,6 @@ public class Helper {
 		return false;
 	}
 
-	public static boolean isPlayedCardCorrect(Game game, Request request, List<Player> players) {
-		boolean isSzintelen = Helper.isSzintelenByList(game.getPreviousCall());
-		int playerIndex = getPlayerIndex(players, request.getId());
-
-		if (game.getRound().getCard1Id() == -1) {
-			return true;
-		} else if (game.getRound().getCard2Id() == -1) {
-
-			if (isSzintelen) {
-
-				List<Integer> correctCardListSameColorFromPHand = correctCardListSameColor(game.getRound().getCard1Id(),
-						players.get(playerIndex).getHand());
-
-				if (correctCardListSameColorFromPHand.size() == 0)
-					return true;
-
-				if (correctCardListSameColorFromPHand.contains(request.getCardId()))
-					return true;
-
-				return false;
-			} else {
-			}
-		} else if (game.getRound().getCard3Id() == -1) {
-
-			if (isSzintelen) {
-
-				List<Integer> correctCardListSameColorFromPHand = correctCardListSameColor(game.getRound().getCard1Id(),
-						players.get(playerIndex).getHand());
-
-				if (correctCardListSameColorFromPHand.size() == 0)
-					return true;
-
-				int card1Color = getColorId(game.getRound().getCard1Id());
-				int card2Color = getColorId(game.getRound().getCard2Id());
-
-				if (card1Color == card2Color) {
-					correctCardListSameColorFromPHand = correctCardListSameColor(game.getRound().getCard2Id(),
-							players.get(playerIndex).getHand());
-					if (correctCardListSameColorFromPHand.contains(request.getCardId()))
-						return true;
-				} else {
-					if (correctCardListSameColorFromPHand.contains(request.getCardId()))
-						return true;
-				}
-			} else {
-			}
-		}
-
-		return false;
-	}
-
 	public static int getColorId(int cardId) {
 		if (cardId <= 7)
 			return Constants.MAKK_ID;
@@ -366,41 +313,42 @@ public class Helper {
 			return Constants.PIROS_ID;
 	}
 
-	public static List<Integer> correctCardListSameColor(int storedCardId, List<Card> playerHand) {
+	public static int changeCardOrder(int cardId) {
 
-		int colorId = getColorId(storedCardId);
-		List<Integer> allCardsByColor = getCardListByColor(colorId);
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list10s = Arrays.asList(3, 11, 19, 27);
+		List<Integer> others = Arrays.asList(4, 5, 6, 12, 13, 14, 20, 21, 22, 28, 29, 30);
 
-		for (int i = 0; i < allCardsByColor.size(); i++) {
-			for (int j = 0; j < playerHand.size(); j++) {
-				if (playerHand.get(j).getId() == allCardsByColor.get(i) && playerHand.get(j).getId() > storedCardId)
-					list.add(allCardsByColor.get(i));
-			}
+		if (list10s.contains(cardId))
+			return cardId + 3;
+
+		if (others.contains(cardId))
+			return cardId - 1;
+
+		return cardId;
+	}
+	
+	public static List<Card> fixChangeCardOrderHand(List<Card> hand){
+		
+		List<Card> list = new ArrayList<Card>();
+		
+		for (int i = 0; i < hand.size(); i++) {
+			list.add(new Card(changeCardOrder(hand.get(i).getId()), hand.get(i).getColorId()));
 		}
-
+		
 		return list;
 	}
 
-	private static int getPlayerIndex(List<Player> players, int id) {
-		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).getId() == id)
-				return i;
-		}
+	public static int getAduByCall(int id) {
+
+		if (id < 12)
+			return Constants.MAKK_ID;
+		else if (id < 24)
+			return Constants.ZOLD_ID;
+		else if (id < 36)
+			return Constants.TOK_ID;
+		else if (id < 48)
+			return Constants.PIROS_ID;
 
 		return 0;
-	}
-
-	public static List<Integer> getCardListByColor(int colorId) {
-
-		List<Card> allCards = Card.getAllCards();
-		List<Integer> list = new ArrayList<Integer>();
-
-		for (int i = 0; i < allCards.size(); i++) {
-			if (allCards.get(i).getColorId() == colorId)
-				list.add(allCards.get(i).getId());
-		}
-
-		return list;
 	}
 }

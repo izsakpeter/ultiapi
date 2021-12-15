@@ -6,8 +6,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import hu.ulti.server.Constants;
 import hu.ulti.server.Helper;
 import hu.ulti.server.controller.UltiController;
+import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
@@ -22,6 +24,11 @@ public class PlayedCardHandler {
 		int playerIndex = getPlayerIndex(players, request.getId());
 
 		if (game.getRound().getCard1Id() == -1) {
+
+			if (request.getId() == game.getLastCallerId() && players.get(playerIndex).getHand().size() > 1
+					&& isUltiAndAdu7(request.getCardid(), game.getPreviousCall()))
+				return false;
+
 			return true;
 		} else if (game.getRound().getCard2Id() == -1) {
 
@@ -32,14 +39,13 @@ public class PlayedCardHandler {
 			int card1 = Helper.changeCardOrder(game.getRound().getCard1Id());
 			int card2 = Helper.changeCardOrder(request.getCardid());
 			List<Card> hand = Helper.fixChangeCardOrderHand(players.get(playerIndex).getHand());
-			boolean isCard1Adu = isCard1Adu(game);
+			boolean isCard1Adu = isCardAdu(game.getRound().getCard1Id(), game.getPreviousCall().get(0).getCallId());
 
 			if (isCard1Adu)
 				return playedPlayableCard(card1, hand, card2);
 
 			List<Integer> correctCardSameColor = getCorrectCardSameColor(card1, hand);
 			List<Integer> allCardSameColor = getAllCardSameColor(card1, hand);
-			List<Integer> allAdu = getAdu(game, hand);
 
 			if (correctCardSameColor.size() > 0)
 				return correctCardSameColor.contains(card2);
@@ -47,10 +53,7 @@ public class PlayedCardHandler {
 			if (allCardSameColor.size() > 0)
 				return allCardSameColor.contains(card2);
 
-			if (allAdu.size() > 0)
-				return allAdu.contains(card2);
-
-			return true;
+			return playedPlayableAduOrAnyCard(game, hand, request.getId(), card2);
 
 		} else if (game.getRound().getCard3Id() == -1) {
 
@@ -78,8 +81,8 @@ public class PlayedCardHandler {
 			List<Card> hand = Helper.fixChangeCardOrderHand(players.get(playerIndex).getHand());
 			int card1Color = Helper.getColorId(card1);
 			int card2Color = Helper.getColorId(card2);
-			boolean isCard1Adu = isCard1Adu(game);
-			boolean isCard2Adu = isCard2Adu(game);
+			boolean isCard1Adu = isCardAdu(game.getRound().getCard1Id(), game.getPreviousCall().get(0).getCallId());
+			boolean isCard2Adu = isCardAdu(game.getRound().getCard2Id(), game.getPreviousCall().get(0).getCallId());
 
 			if (isCard1Adu && isCard2Adu) {
 				int higherId = card1 > card2 ? card1 : card2;
@@ -90,7 +93,6 @@ public class PlayedCardHandler {
 				int higherId = card1 > card2 ? card1 : card2;
 				List<Integer> correctCardSameColor = getCorrectCardSameColor(higherId, hand);
 				List<Integer> allCardSameColor = getAllCardSameColor(higherId, hand);
-				List<Integer> allAdu = getAdu(game, hand);
 
 				if (card1Color != card2Color) {
 					correctCardSameColor = getCorrectCardSameColor(card1, hand);
@@ -103,10 +105,7 @@ public class PlayedCardHandler {
 				if (allCardSameColor.size() > 0)
 					return allCardSameColor.contains(card3);
 
-				if (allAdu.size() > 0)
-					return allAdu.contains(card3);
-
-				return true;
+				return playedPlayableAduOrAnyCard(game, hand, request.getId(), card3);
 			}
 
 			if (isCard1Adu && !isCard2Adu)
@@ -115,15 +114,11 @@ public class PlayedCardHandler {
 			if (!isCard1Adu && isCard2Adu) {
 
 				List<Integer> allCardSameColor = getAllCardSameColor(card1, players.get(playerIndex).getHand());
-				List<Integer> allAdu = getAdu(game, players.get(playerIndex).getHand());
 
 				if (allCardSameColor.size() > 0)
 					return allCardSameColor.contains(card3);
 
-				if (allAdu.size() > 0)
-					return allAdu.contains(card3);
-
-				return true;
+				return playedPlayableAduOrAnyCard(game, hand, request.getId(), card3);
 			}
 		}
 
@@ -140,6 +135,21 @@ public class PlayedCardHandler {
 
 		if (allCardSameColor.size() > 0)
 			return allCardSameColor.contains(newCardId);
+
+		return true;
+	}
+
+	private static boolean playedPlayableAduOrAnyCard(Game game, List<Card> hand, int requestId, int requestCardId) {
+
+		List<Integer> allAdu = getAdu(game.getPreviousCall().get(0).getCallId(), hand);
+
+		if (allAdu.size() > 0) {
+			if (hand.size() > 1 && requestId == game.getLastCallerId()
+					&& isUltiAndAdu7(requestCardId, game.getPreviousCall()) && allAdu.size() > 1)
+				return false;
+
+			return allAdu.contains(requestCardId);
+		}
 
 		return true;
 	}
@@ -173,9 +183,9 @@ public class PlayedCardHandler {
 		return list;
 	}
 
-	private static List<Integer> getAdu(Game game, List<Card> hand) {
+	private static List<Integer> getAdu(int callId, List<Card> hand) {
 
-		int aduId = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
+		int aduId = Helper.getAduByCall(callId);
 		List<Integer> list = new ArrayList<Integer>();
 
 		for (int i = 0; i < hand.size(); i++) {
@@ -208,18 +218,34 @@ public class PlayedCardHandler {
 		return 0;
 	}
 
-	private static boolean isCard1Adu(Game game) {
-		int cardColor = Helper.getColorId(game.getRound().getCard1Id());
-		return isCardAdu(cardColor, game);
+	private static boolean isCardAdu(int cardId, int callId) {
+		int cardColor = Helper.getColorId(cardId);
+		return Helper.getAduByCall(callId) == cardColor;
 	}
 
-	private static boolean isCard2Adu(Game game) {
-		int cardColor = Helper.getColorId(game.getRound().getCard2Id());
-		return isCardAdu(cardColor, game);
+	private static boolean isUltiAndAdu7(int cardid, List<Call> previousCall) {
+
+		int colorId = Helper.getColorId(cardid);
+		int ultiId = getUltiId(colorId);
+
+		for (int i = 0; i < previousCall.size(); i++) {
+			if (previousCall.get(i).getCallId() == ultiId && Constants.CARD_7LIST.contains(cardid))
+				return true;
+		}
+
+		return false;
 	}
 
-	private static boolean isCardAdu(int cardColor, Game game) {
-		return Helper.getAduByCall(game.getPreviousCall().get(0).getCallId()) == cardColor;
-	}
+	private static int getUltiId(int colorId) {
+		if (colorId == Constants.MAKK_ID)
+			return 4;
+		else if (colorId == Constants.ZOLD_ID)
+			return 16;
+		else if (colorId == Constants.TOK_ID)
+			return 28;
+		else if (colorId == Constants.PIROS_ID)
+			return 40;
 
+		return 0;
+	}
 }

@@ -2,6 +2,7 @@ package hu.ulti.server.handler;
 
 import java.util.List;
 
+import hu.ulti.server.Constants;
 import hu.ulti.server.Helper;
 import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Game;
@@ -33,7 +34,7 @@ public class KontraHandler {
 					processKontrazasok(game, say, i, false, say.isKontraPassz());
 				} else if (Resulthandler.list40100.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, false, say.isKontra40100());
-				} else if (Resulthandler.listUlti.contains(game.getPreviousCall().get(i).getCallId())) {
+				} else if (Constants.CALL_ULTI.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, false, say.isKontraUlti());
 				} else if (Resulthandler.listDuri.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, false, say.isKontraDuri());

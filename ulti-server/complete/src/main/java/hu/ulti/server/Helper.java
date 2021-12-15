@@ -351,4 +351,16 @@ public class Helper {
 
 		return 0;
 	}
+	
+	public static boolean isInList(List<Integer> list, List<Call> finalCall) {
+
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = 0; j < finalCall.size(); j++) {
+				if (finalCall.get(j).getCallId() == list.get(i))
+					return true;
+			}
+		}
+
+		return false;
+	}
 }

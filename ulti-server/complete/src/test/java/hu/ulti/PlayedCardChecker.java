@@ -23,11 +23,81 @@ public class PlayedCardChecker {
 	private Request request = new Request();
 	private Game game = new Game();
 	private List<Call> callList = new ArrayList<Call>();
-	private List<Player> players = getPlayers();
+	private List<Player> playersRound1 = getPlayersRound1();
+	private List<Player> playersRound10 = getPlayersRound10();
 
-	// p:1 c: 2 3 4 9 12 22 24 25 26 31
-	// p:8 c: 0 1 5 10 14 16 23 27 28 30
+	// p:1 c: 0 3 4 9 12 22 24 25 26 31
+	// p:8 c: 2 1 5 10 14 16 23 27 28 30
 	// p:88 c: 6 7 11 13 15 17 18 20 21 29
+	
+	@Test
+	void ultiPlayer2Round10OK() {
+		request.setId(1);
+		request.setCardid(0);
+
+		callList.add(new Call(0, null));
+		callList.add(new Call(4, null));
+		game.setPreviousCall(callList);
+		game.setLastCallerId(1);
+
+		game.getRound().setCard1Id(6);
+		game.getRound().setCard2Id(-1);
+		game.getRound().setCard3Id(-1);
+
+		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound10));
+	}
+	
+	@Test
+	void ultiPlayer2Round1False() {
+		request.setId(1);
+		request.setCardid(0);
+
+		callList.add(new Call(0, null));
+		callList.add(new Call(4, null));
+		game.setPreviousCall(callList);
+		game.setLastCallerId(1);
+
+		game.getRound().setCard1Id(6);
+		game.getRound().setCard2Id(-1);
+		game.getRound().setCard3Id(-1);
+
+		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
+	}
+	
+	@Test
+	void ultiPlayer1Round1OK() {
+		request.setId(1);
+		request.setCardid(0);
+
+		callList.add(new Call(0, null));
+		callList.add(new Call(4, null));
+		game.setPreviousCall(callList);
+		game.setLastCallerId(1);
+
+		game.getRound().setCard1Id(-1);
+		game.getRound().setCard2Id(-1);
+		game.getRound().setCard3Id(-1);
+
+		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound10));
+	}
+	
+	@Test
+	void ultiPlayer1Round1False() {
+		request.setId(1);
+		request.setCardid(0);
+
+		callList.add(new Call(0, null));
+		callList.add(new Call(4, null));
+		game.setPreviousCall(callList);
+		game.setLastCallerId(1);
+
+		game.getRound().setCard1Id(-1);
+		game.getRound().setCard2Id(-1);
+		game.getRound().setCard3Id(-1);
+
+		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
+	}
+	
 
 	@Test
 	void makkPasszPlayer2() {
@@ -41,7 +111,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(-1);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -56,7 +126,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(-1);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -72,7 +142,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(14);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -88,7 +158,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(14);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -104,7 +174,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(28);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -120,7 +190,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(27);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -136,7 +206,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(-1);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -152,7 +222,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(-1);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertFalse(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -168,7 +238,7 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(-1);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
 	@Test
@@ -184,10 +254,10 @@ public class PlayedCardChecker {
 		game.getRound().setCard2Id(-1);
 		game.getRound().setCard3Id(-1);
 
-		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, players));
+		Assertions.assertTrue(PlayedCardHandler.isPlayedCardCorrect(game, request, playersRound1));
 	}
 
-	private List<Player> getPlayers() {
+	private List<Player> getPlayersRound1() {
 		List<Player> players = new ArrayList<Player>();
 		Player player1 = new Player(1);
 		Player player2 = new Player(8);
@@ -197,7 +267,7 @@ public class PlayedCardChecker {
 		List<Card> player2Hand = new ArrayList<Card>(); // 0 1 5 10 14 16 23 27 28 30
 		List<Card> player3Hand = new ArrayList<Card>(); // 6 7 11 13 15 17 18 20 21 29
 
-		player1Hand.add(new Card(2, 1));
+		player1Hand.add(new Card(0, 1));
 		player1Hand.add(new Card(3, 1));
 		player1Hand.add(new Card(4, 1));
 		player1Hand.add(new Card(9, 2));
@@ -209,8 +279,8 @@ public class PlayedCardChecker {
 		player1Hand.add(new Card(31, 4));
 		player1.setHand(player1Hand);
 
-		player2Hand.add(new Card(0, 1));
 		player2Hand.add(new Card(1, 1));
+		player2Hand.add(new Card(2, 1));
 		player2Hand.add(new Card(5, 1));
 		player2Hand.add(new Card(10, 2));
 		player2Hand.add(new Card(14, 2));
@@ -231,6 +301,32 @@ public class PlayedCardChecker {
 		player3Hand.add(new Card(20, 3));
 		player3Hand.add(new Card(21, 3));
 		player3Hand.add(new Card(29, 4));
+		player3.setHand(player3Hand);
+
+		players.add(player1);
+		players.add(player2);
+		players.add(player3);
+
+		return players;
+	}
+	
+	private List<Player> getPlayersRound10() {
+		List<Player> players = new ArrayList<Player>();
+		Player player1 = new Player(1);
+		Player player2 = new Player(8);
+		Player player3 = new Player(88);
+
+		List<Card> player1Hand = new ArrayList<Card>(); // 2 3 4 9 12 22 24 25 26 31
+		List<Card> player2Hand = new ArrayList<Card>(); // 0 1 5 10 14 16 23 27 28 30
+		List<Card> player3Hand = new ArrayList<Card>(); // 6 7 11 13 15 17 18 20 21 29
+
+		player1Hand.add(new Card(0, 1));
+		player1.setHand(player1Hand);
+
+		player2Hand.add(new Card(1, 1));
+		player2.setHand(player2Hand);
+
+		player3Hand.add(new Card(6, 1));
 		player3.setHand(player3Hand);
 
 		players.add(player1);

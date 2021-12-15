@@ -25,7 +25,6 @@ public class Resulthandler {
 	public static List<Integer> listCsendesSzaz = Arrays.asList(1, 13, 25, 37);
 	public static List<Integer> listCsendesUlti = Arrays.asList(2, 14, 26, 38);
 	public static List<Integer> list40100 = Arrays.asList(3, 15, 27, 39);
-	public static List<Integer> listUlti = Arrays.asList(4, 16, 28, 40);
 	public static List<Integer> listBetli = Arrays.asList(5, 17, 29, 41);
 	public static List<Integer> listDuri = Arrays.asList(6, 18, 30, 42);
 	public static List<Integer> listSzDuri = Arrays.asList(7, 19, 31, 43);
@@ -34,7 +33,6 @@ public class Resulthandler {
 	public static List<Integer> listTerDuri = Arrays.asList(10, 22, 34, 46);
 	public static List<Integer> listTerSzDuri = Arrays.asList(11, 23, 35, 47);
 
-	private List<Integer> list7s = Arrays.asList(0, 8, 16, 24);
 	private List<Integer> list10s = Arrays.asList(7, 15, 23, 31, 3, 11, 19, 27);
 
 	public Resulthandler(Game game, int roundCounter, List<Player> players) {
@@ -154,65 +152,53 @@ public class Resulthandler {
 	private Result addResult(boolean isSuccess, int callIndex) {
 		return addResult(isSuccess, callIndex, "");
 	}
-	
+
 	private Result addResult(boolean isSuccess, int callIndex, String comment) {
 		return addResult(isSuccess, callIndex, comment, game.getLastCallerId());
 	}
 
 	private Result addResult(boolean isSuccess, int callIndex, String comment, int playerId) {
-		return  new Result(Helper.getUUid().toString(), playerId, callIndex, isSuccess, comment);
+		return new Result(Helper.getUUid().toString(), playerId, callIndex, isSuccess, comment);
 	}
 
 	private boolean isPassz() {
-		return isInList(listPassz);
+		return Helper.isInList(listPassz, game.getPreviousCall());
 	}
 
 	private boolean is40100() {
-		return isInList(list40100);
+		return Helper.isInList(list40100, game.getPreviousCall());
 	}
 
 	private boolean isUlti() {
-		return isInList(listUlti);
+		return Helper.isInList(Constants.CALL_ULTI, game.getPreviousCall());
 	}
 
 	private boolean isBetli() {
-		return isInList(listBetli);
+		return Helper.isInList(listBetli, game.getPreviousCall());
 	}
 
 	private boolean isDuri() {
-		return isInList(listDuri);
+		return Helper.isInList(listDuri, game.getPreviousCall());
 	}
 
 	private boolean isSzintelenDuri() {
-		return isInList(listSzDuri);
+		return Helper.isInList(listSzDuri, game.getPreviousCall());
 	}
 
 	private boolean is20100() {
-		return isInList(list20100);
+		return Helper.isInList(list20100, game.getPreviousCall());
 	}
 
 	private boolean isTeritettBetli() {
-		return isInList(listTerBetli);
+		return Helper.isInList(listTerBetli, game.getPreviousCall());
 	}
 
 	private boolean isTeritettDuri() {
-		return isInList(listTerDuri);
+		return Helper.isInList(listTerDuri, game.getPreviousCall());
 	}
 
 	private boolean isTeritettSzintelenDuri() {
-		return isInList(listTerSzDuri);
-	}
-
-	private boolean isInList(List<Integer> list) {
-
-		for (int i = 0; i < list.size(); i++) {
-			for (int j = 0; j < game.getPreviousCall().size(); j++) {
-				if (game.getPreviousCall().get(j).getCallId() == list.get(i))
-					return true;
-			}
-		}
-
-		return false;
+		return Helper.isInList(listTerSzDuri, game.getPreviousCall());
 	}
 
 	private boolean isBetliSuccess() {
@@ -367,7 +353,7 @@ public class Resulthandler {
 			proccessPassz(true);
 		}
 
-		resultList.add(addResult(isUltiSuccess(), getRespCallId(listUlti)));
+		resultList.add(addResult(isUltiSuccess(), getRespCallId(Constants.CALL_ULTI)));
 	}
 
 	private boolean isUltiSuccess() {
@@ -416,8 +402,8 @@ public class Resulthandler {
 		int color = Helper.getColorId(card);
 		int adu = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
-		for (int i = 0; i < list7s.size(); i++) {
-			if (card == list7s.get(i) && color == adu) {
+		for (int i = 0; i < Constants.CARD_7LIST.size(); i++) {
+			if (card == Constants.CARD_7LIST.get(i) && color == adu) {
 				return true;
 			}
 		}
@@ -475,11 +461,11 @@ public class Resulthandler {
 
 	private int getPlayer7(Strike lastStrike) {
 
-		if (list7s.contains(lastStrike.getCard1Id()))
+		if (Constants.CARD_7LIST.contains(lastStrike.getCard1Id()))
 			return lastStrike.getCard1PlayerId();
-		else if (list7s.contains(lastStrike.getCard2Id()))
+		else if (Constants.CARD_7LIST.contains(lastStrike.getCard2Id()))
 			return lastStrike.getCard2PlayerId();
-		else if (list7s.contains(lastStrike.getCard3Id()))
+		else if (Constants.CARD_7LIST.contains(lastStrike.getCard3Id()))
 			return lastStrike.getCard3PlayerId();
 
 		return 0;
@@ -514,16 +500,16 @@ public class Resulthandler {
 
 		return 0;
 	}
-	
-	private List<StrikeList> getStrikeList(){
+
+	private List<StrikeList> getStrikeList() {
 		List<StrikeList> strikeList = new ArrayList<StrikeList>();
-		
+
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).isPlaying()) {
 				strikeList.add(new StrikeList(players.get(i).getId(), players.get(i).getStrikes()));
 			}
 		}
-		
+
 		return strikeList;
 	}
 }

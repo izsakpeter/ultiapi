@@ -9,6 +9,7 @@ import java.util.Map;
 import hu.ulti.server.Constants;
 import hu.ulti.server.Helper;
 import hu.ulti.server.controller.UltiController;
+import hu.ulti.server.model.Call;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Player;
 import hu.ulti.server.model.Result;
@@ -21,11 +22,11 @@ public class Resulthandler {
 	private int roundCounter;
 	private List<Player> players = new ArrayList<Player>();
 	private List<Result> resultList = new ArrayList<Result>();
-	public static List<Integer> listPassz = Arrays.asList(0, 12, 24, 36);
-	public static List<Integer> listCsendesSzaz = Arrays.asList(1, 13, 25, 37);
-	public static List<Integer> listCsendesUlti = Arrays.asList(2, 14, 26, 38);
-	public static List<Integer> list40100 = Arrays.asList(3, 15, 27, 39);
-	public static List<Integer> listBetli = Arrays.asList(5, 17, 29, 41);
+	
+	
+	
+	
+	
 	public static List<Integer> listDuri = Arrays.asList(6, 18, 30, 42);
 	public static List<Integer> listSzDuri = Arrays.asList(7, 19, 31, 43);
 	public static List<Integer> list20100 = Arrays.asList(8, 20, 32, 44);
@@ -43,7 +44,7 @@ public class Resulthandler {
 		if (roundCounter != 10) {
 			if (isBetli() && !isBetliSuccess()) {
 				game.setGameOver(true);
-				resultList.add(addResult(false, getRespCallId(listBetli)));
+				resultList.add(addResult(false, getRespCallId(Constants.CALL_BETLI)));
 				game.setResultList(resultList);
 			} else if (isTeritettBetli() && !isBetliSuccess()) {
 				game.setGameOver(true);
@@ -123,7 +124,7 @@ public class Resulthandler {
 				proccessPassz(false);
 				checkCsendesUlti();
 			} else if (isBetli()) {
-				resultList.add(addResult(isBetliSuccess(), getRespCallId(listBetli)));
+				resultList.add(addResult(isBetliSuccess(), getRespCallId(Constants.CALL_BETLI)));
 			} else if (isUlti()) {
 				proccessUlti();
 			} else if (is40100()) {
@@ -162,43 +163,43 @@ public class Resulthandler {
 	}
 
 	private boolean isPassz() {
-		return Helper.isInList(listPassz, game.getPreviousCall());
+		return isListItemInList(Constants.CALL_PASSZ, game.getPreviousCall());
 	}
 
 	private boolean is40100() {
-		return Helper.isInList(list40100, game.getPreviousCall());
+		return isListItemInList(Constants.CALL_40100, game.getPreviousCall());
 	}
 
 	private boolean isUlti() {
-		return Helper.isInList(Constants.CALL_ULTI, game.getPreviousCall());
+		return isListItemInList(Constants.CALL_ULTI, game.getPreviousCall());
 	}
 
 	private boolean isBetli() {
-		return Helper.isInList(listBetli, game.getPreviousCall());
+		return isListItemInList(Constants.CALL_BETLI, game.getPreviousCall());
 	}
 
 	private boolean isDuri() {
-		return Helper.isInList(listDuri, game.getPreviousCall());
+		return isListItemInList(listDuri, game.getPreviousCall());
 	}
 
 	private boolean isSzintelenDuri() {
-		return Helper.isInList(listSzDuri, game.getPreviousCall());
+		return isListItemInList(listSzDuri, game.getPreviousCall());
 	}
 
 	private boolean is20100() {
-		return Helper.isInList(list20100, game.getPreviousCall());
+		return isListItemInList(list20100, game.getPreviousCall());
 	}
 
 	private boolean isTeritettBetli() {
-		return Helper.isInList(listTerBetli, game.getPreviousCall());
+		return isListItemInList(listTerBetli, game.getPreviousCall());
 	}
 
 	private boolean isTeritettDuri() {
-		return Helper.isInList(listTerDuri, game.getPreviousCall());
+		return isListItemInList(listTerDuri, game.getPreviousCall());
 	}
 
 	private boolean isTeritettSzintelenDuri() {
-		return Helper.isInList(listTerSzDuri, game.getPreviousCall());
+		return isListItemInList(listTerSzDuri, game.getPreviousCall());
 	}
 
 	private boolean isBetliSuccess() {
@@ -300,7 +301,7 @@ public class Resulthandler {
 				resultList.add(addResult(caller10s > others10s, getCsendesSzazId(), caller10s + " - " + others10s));
 			} else {
 				resultList
-						.add(addResult(caller10s > others10s, getRespCallId(listPassz), caller10s + " - " + others10s));
+						.add(addResult(caller10s > others10s, getRespCallId(Constants.CALL_PASSZ), caller10s + " - " + others10s));
 			}
 		} else {
 			if (caller10s >= 100 || others10s >= 100) {
@@ -319,7 +320,7 @@ public class Resulthandler {
 			caller10Value += 40;
 		}
 
-		resultList.add(addResult(caller10Value >= 100, getRespCallId(list40100), String.valueOf(caller10Value)));
+		resultList.add(addResult(caller10Value >= 100, getRespCallId(Constants.CALL_40100), String.valueOf(caller10Value)));
 	}
 
 	private void proccess20100() {
@@ -475,13 +476,13 @@ public class Resulthandler {
 		int color = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
 		if (color == Constants.MAKK_ID)
-			return listCsendesSzaz.get(0);
+			return Constants.CALL_CSENDES_SZAZ.get(0);
 		else if (color == Constants.ZOLD_ID)
-			return listCsendesSzaz.get(1);
+			return Constants.CALL_CSENDES_SZAZ.get(1);
 		else if (color == Constants.TOK_ID)
-			return listCsendesSzaz.get(2);
+			return Constants.CALL_CSENDES_SZAZ.get(2);
 		else if (color == Constants.PIROS_ID)
-			return listCsendesSzaz.get(3);
+			return Constants.CALL_CSENDES_SZAZ.get(3);
 
 		return 0;
 	}
@@ -490,13 +491,13 @@ public class Resulthandler {
 		int color = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
 		if (color == Constants.MAKK_ID)
-			return listCsendesUlti.get(0);
+			return Constants.CALL_CSENDES_ULTI.get(0);
 		else if (color == Constants.ZOLD_ID)
-			return listCsendesUlti.get(1);
+			return Constants.CALL_CSENDES_ULTI.get(1);
 		else if (color == Constants.TOK_ID)
-			return listCsendesUlti.get(2);
+			return Constants.CALL_CSENDES_ULTI.get(2);
 		else if (color == Constants.PIROS_ID)
-			return listCsendesUlti.get(3);
+			return Constants.CALL_CSENDES_ULTI.get(3);
 
 		return 0;
 	}
@@ -511,5 +512,17 @@ public class Resulthandler {
 		}
 
 		return strikeList;
+	}
+	
+	private boolean isListItemInList(List<Integer> list, List<Call> finalCall) {
+
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = 0; j < finalCall.size(); j++) {
+				if (finalCall.get(j).getCallId() == list.get(i))
+					return true;
+			}
+		}
+
+		return false;
 	}
 }

@@ -17,7 +17,7 @@ public class KontraHandler {
 
 		if (isSzintelen) {
 			for (int i = 0; i < game.getPreviousCall().size(); i++) {
-				if (Resulthandler.listBetli.contains(game.getPreviousCall().get(i).getCallId())) {
+				if (Constants.CALL_BETLI.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, true, say.isKontraBetli());
 				} else if (Resulthandler.listTerBetli.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, true, say.isKontraBetliTer());
@@ -30,9 +30,9 @@ public class KontraHandler {
 		} else {
 			
 			for (int i = 0; i < game.getPreviousCall().size(); i++) {
-				if (Resulthandler.listPassz.contains(game.getPreviousCall().get(i).getCallId())) {
+				if (Constants.CALL_PASSZ.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, false, say.isKontraPassz());
-				} else if (Resulthandler.list40100.contains(game.getPreviousCall().get(i).getCallId())) {
+				} else if (Constants.CALL_40100.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, false, say.isKontra40100());
 				} else if (Constants.CALL_ULTI.contains(game.getPreviousCall().get(i).getCallId())) {
 					processKontrazasok(game, say, i, false, say.isKontraUlti());

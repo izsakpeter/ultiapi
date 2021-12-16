@@ -23,5 +23,15 @@ public class Constants {
 	
 	public static final List<Integer> CARD_7LIST = Arrays.asList(0, 8, 16, 24);
 	
+	public static final List<Integer> CALL_PASSZ = Arrays.asList(0, 12, 24, 36);
+	public static final List<Integer> CALL_CSENDES_SZAZ = Arrays.asList(1, 13, 25, 37);
+	public static final List<Integer> CALL_CSENDES_ULTI = Arrays.asList(2, 14, 26, 38);
+	public static final List<Integer> CALL_40100 = Arrays.asList(3, 15, 27, 39);
 	public static final List<Integer> CALL_ULTI = Arrays.asList(4, 16, 28, 40);
+	public static final List<Integer> CALL_BETLI = Arrays.asList(5, 17, 29, 41);
+
+
+
+
+
 }

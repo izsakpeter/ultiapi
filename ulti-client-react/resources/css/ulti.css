@@ -1,0 +1,30 @@
+@import "callComponent.css";
+@import "tableComponent.css";
+@import "appComponent.css";
+@import "startingValueComponent.css";
+@import "passOrJoinComponent.css";
+@import "messageComponent.css";
+@import "otherHandComponent.css";
+@import "playgroundComponent.css";
+@import "resultComponent.css";
+@import "loginComponent.css";
+@import "warningComponent.css";
+.ulti-container {
+    width: 1920px;
+    height: 1080px;
+    background-color: powderblue;
+    display: flex;
+    justify-content: flex-start
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-left {
+    text-align: left;
+}

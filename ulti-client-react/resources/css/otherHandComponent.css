@@ -1,0 +1,37 @@
+.otherhand-card {
+    width: 90px;
+    height: 132px;
+}
+
+.otherhand-halfcard {
+    width: 45px;
+    height: 132px;
+}
+
+.otherhand-card-90 {
+    height: 90px;
+    width: 132px;
+}
+
+.otherhand-halfcard-90 {
+    height: 45px;
+    width: 132px;
+}
+
+.rightPlayer {
+    position: absolute;
+    right: 5%;
+    top: 10%;
+}
+
+.topPlayer {
+    position: absolute;
+    top: 0%;
+    left: 35%;
+}
+
+.leftPlayer {
+    position: absolute;
+    left: 5%;
+    top: 10%;
+}

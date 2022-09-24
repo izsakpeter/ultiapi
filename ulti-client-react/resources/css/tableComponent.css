@@ -1,0 +1,85 @@
+.table-container {
+    background-color: powderblue;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.menu {
+    width: 200px;
+    background-color: blue;
+}
+
+.table {
+    display: flex;
+    flex-flow: row wrap;
+    font-weight: bold;
+    text-align: center;
+    flex-direction: column;
+}
+
+.my-hand {
+    background-color: cyan;
+    height: 200px;
+    width: 1650px;
+}
+
+.top-hand {
+    background-color: purple;
+    height: 170px;
+}
+
+.mid {
+    display: flex;
+    flex-direction: row;
+}
+
+.right-hand {
+    background-color: gold;
+    width: 200px;
+}
+
+.left-hand {
+    background-color: pink;
+    width: 200px;
+}
+
+.main {
+    background-color: red;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+@media all {
+    .top-hand {
+        order: 1;
+    }
+    .mid {
+        order: 2;
+    }
+    .my-hand {
+        order: 3;
+    }
+}
+
+.my-card {
+    width: 115px;
+    height: 169px;
+}
+
+.strike-button-card {
+    width: 100px;
+    height: 147px;
+}
+
+.mid-side {
+    width: 300px;
+    background-color: green;
+}
+
+.saylist-border {
+    border-style: solid;
+    border-width: 1px;
+}

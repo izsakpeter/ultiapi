@@ -3,35 +3,76 @@
     "private": true,
     "type": "commonjs",
     "devDependencies": {
-        "@types/react": "^17.0.17",
+        "@types/react": "^18.0.31",
         "gulp": "^4.0.2",
         "gulp-cli": "^2.3.0",
-        "react-dom": "^17.0.2"
+        "react-dom": "^18.2.0",
+        "eslint-plugin-react-hooks": "^4.6.0"
     },
     "dependencies": {
-        "@blueprintjs/core": "^3.47.0",
-        "@blueprintjs/select": "^3.16.6",
-        "@emotion/react": "^11.7.0",
-        "@emotion/styled": "^11.6.0",
-        "@mui/material": "^5.2.2",
-        "@types/react-dom": "^17.0.9",
-        "axios": "^0.21.1",
+        "@blueprintjs/core": "^4.17.8",
+        "@blueprintjs/select": "^4.9.12",
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
+        "@mui/material": "^5.11.15",
+        "@types/react-dom": "^18.0.11",
+        "axios": "^1.3.4",
         "BigInt": "^5.5.3",
-        "bootstrap": "^5.1.3",
+        "bootstrap": "^5.2.3",
         "browserify": "^17.0.0",
-        "css-loader": "^6.2.0",
-        "gulp-typescript": "^2.12.2",
-        "jquery": "^3.6.0",
+        "css-loader": "^6.7.3",
+        "gulp-typescript": "^5.0.1",
+        "jquery": "^3.6.4",
         "loadash": "^1.0.0",
         "proptypes": "^1.1.0",
-        "react": "^17.0.2",
-        "react-bootstrap": "^2.0.3",
+        "react": "^18.2.0",
+        "react-bootstrap": "^2.7.2",
         "speed-measure-webpack-plugin": "^1.5.0",
-        "style-loader": "^3.2.1",
-        "ts-loader": "^9.2.5",
-        "typescript": "^4.3.5",
-        "webpack": "^5.50.0",
-        "webpack-bundle-analyzer": "^4.4.2",
-        "webpack-dev-server": "^3.11.2"
+        "style-loader": "^3.3.2",
+        "ts-loader": "^9.4.2",
+        "webpack": "^5.77.0",
+        "webpack-bundle-analyzer": "^4.8.0",
+        "webpack-dev-server": "^4.13.1",
+        "@blueprintjs/popover2": "^1.12.1",
+        "@mui/lab": "^5.0.0-alpha.112",
+        "@mui/x-data-grid": "^5.17.16",
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^13.5.0",
+        "@types/jest": "^27.5.2",
+        "@types/node": "^16.18.8",
+        "@types/react": "^18.0.26",
+        "moment": "^2.29.4",
+        "react-cookie": "^4.1.1",
+        "react-data-grid": "^7.0.0-beta.20",
+        "react-dom": "^18.2.0",
+        "react-localization": "^1.0.19",
+        "react-scripts": "5.0.1",
+        "typescript": "^4.9.4",
+        "web-vitals": "^2.1.4"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     }
 }

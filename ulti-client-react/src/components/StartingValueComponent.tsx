@@ -1,5 +1,5 @@
 import { Button, Radio } from "@blueprintjs/core";
-import React = require("react");
+import React from "react";
 import { GetCardSource } from "../helper/cardHandler";
 import { Constants } from "../helper/constants";
 import { Game } from "../model/game";
@@ -17,7 +17,7 @@ interface iState {
 
 export class StartingValue extends React.Component<iProps, iState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -41,10 +41,10 @@ export class StartingValue extends React.Component<iProps, iState> {
 
     render() {
 
-        if (this.props.game.activePlayer != this.props.game.player.id || this.props.game.startingValue != 0 || this.props.game.gameOver)
+        if (this.props.game.activePlayer !== this.props.game.player.id || this.props.game.startingValue !== 0 || this.props.game.gameOver)
             return <></>;
 
-        let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="talon-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="talon-card" /></div>
+        let talon = <div><img alt="card" src={GetCardSource(this.props.game.talon[0].id)} className="talon-card" /><img alt="card" src={GetCardSource(this.props.game.talon[1].id)} className="talon-card" /></div>
 
         return (
             <div>
@@ -65,11 +65,11 @@ export class StartingValue extends React.Component<iProps, iState> {
         )
     }
 
-    onChangeValue(event) {
+    onChangeValue(event: any) {
         this.setState({ value: event.target.value });
     }
 
-    setStartingValue(event) {
+    setStartingValue() {
         if (this.state.value > 0) {
 
             let reqObj: RequestModel = {

@@ -1,11 +1,9 @@
-import { Button } from "@blueprintjs/core";
-import React = require("react");
+import React from "react";
 import { getCallNameListString, getCallValueSum } from "../helper/callHandler";
 import { getUsernameById } from "../helper/loginHandler";
 import { Call } from "../model/call";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
-import { ResultComponent } from "./ResultComponent";
 
 interface iProps {
     game: Game,
@@ -23,7 +21,7 @@ interface iState {
 
 export class MessageComponent extends React.Component<iProps, iState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props)
 
         this.state = {
@@ -61,7 +59,7 @@ export class MessageComponent extends React.Component<iProps, iState> {
                     </div >
                 )
             } else {
-                if (this.state.activePlayerId != this.state.playerId) {
+                if (this.state.activePlayerId !== this.state.playerId) {
                     return (
                         <div className={"msg-border"}>
                             <div className="msg-text-middle">

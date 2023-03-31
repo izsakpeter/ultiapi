@@ -1,4 +1,4 @@
-import React = require("react");
+import React from "react";
 import { Game } from "../model/game";
 
 interface iProps {
@@ -9,11 +9,7 @@ interface iState {
 }
 
 export class WronCallComponent extends React.Component<iProps, iState> {
-
-    constructor(props) {
-        super(props)
-    }
-
+    
     render() {
 
         if (!this.props.game.player.callOk) {

@@ -1,9 +1,8 @@
-import { ids } from "webpack";
 import { Call } from "./call";
 
 export class RequestModel {
-    public dest: string;
-    public id: number;
+    public dest?: string;
+    public id!: number;
 
     //order
     public colorOrder?: boolean;

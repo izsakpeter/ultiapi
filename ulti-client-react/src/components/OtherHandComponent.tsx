@@ -1,8 +1,7 @@
-import React = require("react");
+import React from "react";
 import { GetCard90Source, GetCardSource, GetHalfCard90Source, GetHalfCardSource } from "../helper/cardHandler";
 import { getUsernameById } from "../helper/loginHandler";
 import { Game } from "../model/game";
-import { Hand } from "../model/hand";
 
 interface iProps {
     game: Game
@@ -60,7 +59,7 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
 
 function getHand(index: number, game: Game, poz: string): any[] {
 
-    let hand = [];
+    let hand: any = [];
 
     if (index === 3 && game.hands.length === 3)
         return hand;
@@ -78,14 +77,14 @@ function getHand(index: number, game: Game, poz: string): any[] {
 
                     if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1) {
                         if (poz === "top")
-                            hand.push(<img key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
+                            hand.push(<img alt="card" key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
                         else
-                            hand.push(<div key={listItem.uuid}><img src={GetHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
+                            hand.push(<div key={listItem.uuid}><img alt="card" src={GetHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
                     } else {
                         if (poz === "top")
-                            hand.push(<img key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
+                            hand.push(<img alt="card" key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
                         else
-                            hand.push(<div key={listItem.uuid}><img key={listItem.uuid} src={GetCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
+                            hand.push(<div key={listItem.uuid}><img alt="card" key={listItem.uuid} src={GetCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
                     }
 
                 }
@@ -115,16 +114,16 @@ function getPlayerName(index: number, game: Game): string {
 function getIncreasedIndex(index: number, length: number) {
 
     if (length === 3) {
-        if (index == 3)
+        if (index === 3)
             return 0;
-        else if (index == 4)
+        else if (index ===4)
             return 1;
     } else if (length === 4) {
-        if (index == 4)
+        if (index === 4)
             return 0;
-        else if (index == 5)
+        else if (index === 5)
             return 1;
-        else if (index == 6)
+        else if (index === 6)
             return 2;
     }
 

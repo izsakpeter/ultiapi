@@ -7,7 +7,6 @@ import { Button } from "@blueprintjs/core";
 import { RequestModel } from "../model/requestModel";
 import { PlaygroundComponent } from "./PlaygroundComponent";
 import { SayComponent } from "./SayComponent";
-import OtherHandComponent from "./OtherHandComponent";
 import { OperationsComponent } from "./OperationsComponent";
 import { getUsernameById } from "../helper/loginHandler";
 import { MessageComponent } from "./MessageComponent";
@@ -30,7 +29,7 @@ export class Table extends React.Component<iProps, iState> {
 
     cards: number[] = [];
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -50,7 +49,7 @@ export class Table extends React.Component<iProps, iState> {
             state.isGameOver = props.game.gameOver;
 
         let cards: number[] = [];
-        if (props.gotCards === true && props.game.player && state.talon.length == 0) {
+        if (props.gotCards === true && props.game.player && state.talon.length === 0) {
             for (let i = 0; i < props.game.player.hand.length; i++) {
                 cards.push(props.game.player.hand[i].id);
             }
@@ -128,7 +127,7 @@ export class Table extends React.Component<iProps, iState> {
         }
     }
 
-    cardAction(event) {
+    cardAction(event: any) {
 
         if (this.props.game.kontraPartFinished || this.props.game.firstTurn)
             if (this.props.game.playReadyToStart) {
@@ -141,14 +140,14 @@ export class Table extends React.Component<iProps, iState> {
 
                 this.props.postReq(reqObj);
 
-            } else if (this.state.hand.length + this.state.talon.length == 12 && this.state.talon.length < 2) { //<2 = 2 ????????????????????????????????????
+            } else if (this.state.hand.length + this.state.talon.length === 12 && this.state.talon.length < 2) { //<2 = 2 ????????????????????????????????????
                 const index = this.state.hand.indexOf(parseInt(event.target.id));
                 this.state.hand.splice(index, 1);
                 this.setState({ talon: [...this.state.talon, parseInt(event.target.id)] });
             }
     }
 
-    backToHand(event) {
+    backToHand(event: any) {
         const index = this.state.talon.indexOf(parseInt(event.target.id));
         this.state.talon.splice(index, 1);
         this.setState({ hand: [...this.state.hand, parseInt(event.target.id)] });
@@ -162,7 +161,7 @@ export class Table extends React.Component<iProps, iState> {
         let cardsInHand = GetOrderedHand(this.state.hand.sort((a, b) => a - b), this.props.game.player.colorOrder);
         let cardsImg = [];
         for (let i = 0; i < cardsInHand.length; i++) {
-            cardsImg.push(<Button key={"idh" + i} ><img src={GetCardSource(cardsInHand[i])} className="my-card" onClick={this.cardAction} id={cardsInHand[i].toString()} /></Button>);
+            cardsImg.push(<Button key={"idh" + i} ><img alt="card" src={GetCardSource(cardsInHand[i])} className="my-card" onClick={this.cardAction} id={cardsInHand[i].toString()} /></Button>);
         }
 
         return (
@@ -207,7 +206,7 @@ export class Table extends React.Component<iProps, iState> {
     renderTalon() {
         let talonImg = [];
         for (let i = 0; i < this.state.talon.length; i++) {
-            talonImg.push(<Button key={"idt" + i}><img src={GetCardSource(this.state.talon[i])} className="talon-card" onClick={this.backToHand} id={this.state.talon[i].toString()} /></Button>);
+            talonImg.push(<Button key={"idt" + i}><img alt="card" src={GetCardSource(this.state.talon[i])} className="talon-card" onClick={this.backToHand} id={this.state.talon[i].toString()} /></Button>);
         }
 
         return (
@@ -218,7 +217,7 @@ export class Table extends React.Component<iProps, iState> {
 
 function getHand(index: number, game: Game, poz: string): any[] {
 
-    let hand = [];
+    let hand: any = [];
 
     if (index === 3 && game.hands.length === 3)
         return hand;
@@ -236,14 +235,14 @@ function getHand(index: number, game: Game, poz: string): any[] {
 
                     if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1) {
                         if (poz === "top")
-                            hand.push(<img key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
+                            hand.push(<img alt="card" key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
                         else
-                            hand.push(<div key={listItem.uuid}><img src={GetHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
+                            hand.push(<div key={listItem.uuid}><img alt="card" src={GetHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
                     } else {
                         if (poz === "top")
-                            hand.push(<img key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
+                            hand.push(<img alt="card" key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
                         else
-                            hand.push(<div key={listItem.uuid}><img key={listItem.uuid} src={GetCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
+                            hand.push(<div key={listItem.uuid}><img alt="card" key={listItem.uuid} src={GetCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
                     }
 
                 }
@@ -273,16 +272,16 @@ function getPlayerName(index: number, game: Game): string {
 function getIncreasedIndex(index: number, length: number) {
 
     if (length === 3) {
-        if (index == 3)
+        if (index === 3)
             return 0;
-        else if (index == 4)
+        else if (index === 4)
             return 1;
     } else if (length === 4) {
-        if (index == 4)
+        if (index === 4)
             return 0;
-        else if (index == 5)
+        else if (index === 5)
             return 1;
-        else if (index == 6)
+        else if (index === 6)
             return 2;
     }
 

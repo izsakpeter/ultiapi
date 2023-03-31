@@ -1,5 +1,5 @@
 import { Button } from "@blueprintjs/core";
-import React = require("react");
+import React from "react";
 import { getCallName } from "../helper/callHandler";
 import { GetCardSource } from "../helper/cardHandler";
 import { getUsernameById } from "../helper/loginHandler";
@@ -17,7 +17,7 @@ interface iState {
 
 export class ResultComponent extends React.Component<iProps, iState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props)
 
         this.state = {
@@ -101,7 +101,7 @@ export class ResultComponent extends React.Component<iProps, iState> {
 
     renderTalon() {
 
-        let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="strike-button-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="strike-button-card" /></div>
+        let talon = <div><img alt="card" src={GetCardSource(this.props.game.talon[0].id)} className="strike-button-card" /><img alt="card" src={GetCardSource(this.props.game.talon[1].id)} className="strike-button-card" /></div>
 
         return (
             <div>
@@ -126,9 +126,9 @@ export class ResultComponent extends React.Component<iProps, iState> {
                     tmp.push(
                         <div key={this.props.game.strikeList[i].strikeList[j].round}>
                             kör:{this.props.game.strikeList[i].strikeList[j].round}
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card1Id)} className="strike-button-card" />
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card2Id)} className="strike-button-card" />
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card3Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card1Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card2Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card3Id)} className="strike-button-card" />
                         </div>);
                 }
 
@@ -140,9 +140,9 @@ export class ResultComponent extends React.Component<iProps, iState> {
                     tmp.push(
                         <div key={this.props.game.strikeList[i].strikeList[j].round}>
                             kör:{this.props.game.strikeList[i].strikeList[j].round}
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card1Id)} className="strike-button-card" />
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card2Id)} className="strike-button-card" />
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card3Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card1Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card2Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card3Id)} className="strike-button-card" />
                         </div>);
                 }
 
@@ -156,9 +156,9 @@ export class ResultComponent extends React.Component<iProps, iState> {
                     tmp.push(
                         <div key={this.props.game.strikeList[i].strikeList[j].round}>
                             kör:{this.props.game.strikeList[i].strikeList[j].round}
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card1Id)} className="strike-button-card" />
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card2Id)} className="strike-button-card" />
-                            <img src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card3Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card1Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card2Id)} className="strike-button-card" />
+                            <img alt="card" src={GetCardSource(this.props.game.strikeList[i].strikeList[j].card3Id)} className="strike-button-card" />
                         </div>);
                 }
 

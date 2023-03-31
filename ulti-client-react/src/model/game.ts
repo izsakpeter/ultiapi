@@ -12,25 +12,25 @@ import { StrikeList } from "./strikeList";
 
 export class Game {
 
-    public startingValue: number;
-	public player: Player;
+    public startingValue!: number;
+	public player!: Player;
 	public roundStarted: boolean = false;
 	public playReadyToStart: boolean = false;
-	public lastCallerId: number;
-	public activePlayer: number;
-	public round: Strike;
+	public lastCallerId!: number;
+	public activePlayer!: number;
+	public round!: Strike;
 	public gameOver: boolean = false;
-	public resultList: Array<Result>;
-	public firstTurn: boolean;
-	public says: Array<Say>;
-	public hands: Array<Hand>;
-	public strikeList: Array<StrikeList>;
-	public talon: Array<Card>;
-	public previousCall: Array<Call>;
-	public call: Array<Call>;
-	public kontraPartFinished: boolean;
-	public sayMsgList: Array<SayMsg>;
-	public scores: Array<Score>;
+	public resultList!: Array<Result>;
+	public firstTurn!: boolean;
+	public says!: Array<Say>;
+	public hands!: Array<Hand>;
+	public strikeList!: Array<StrikeList>;
+	public talon!: Array<Card>;
+	public previousCall!: Array<Call>;
+	public call!: Array<Call>;
+	public kontraPartFinished!: boolean;
+	public sayMsgList!: Array<SayMsg>;
+	public scores!: Array<Score>;
 
-	public errorMessage: string ;
+	public errorMessage!: string ;
 }

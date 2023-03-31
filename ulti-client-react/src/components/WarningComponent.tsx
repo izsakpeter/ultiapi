@@ -1,4 +1,4 @@
-import React = require("react");
+import React from "react";
 
 
 interface iProps {
@@ -13,7 +13,7 @@ interface iState {
 
 export class WarningComponent extends React.Component<iProps, iState>{
 
-    constructor(props) {
+    constructor(props: any) {
         super(props)
 
         this.state = {

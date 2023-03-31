@@ -1,5 +1,5 @@
 import { Button } from "@blueprintjs/core";
-import React = require("react");
+import React from "react";
 import { getCallNameListString, getCallValueSum } from "../helper/callHandler";
 import { GetCardSource } from "../helper/cardHandler";
 import { getUsernameById } from "../helper/loginHandler";
@@ -19,7 +19,7 @@ interface iState {
 
 export class PassOrJoin extends React.Component<iProps, iState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props)
 
         this.state = {
@@ -40,7 +40,7 @@ export class PassOrJoin extends React.Component<iProps, iState> {
 
     render() {
 
-        let talon = <div><img src={GetCardSource(this.props.game.talon[0].id)} className="talon-card" /><img src={GetCardSource(this.props.game.talon[1].id)} className="talon-card" /></div>
+        let talon = <div><img alt="card" src={GetCardSource(this.props.game.talon[0].id)} className="talon-card" /><img alt="card" src={GetCardSource(this.props.game.talon[1].id)} className="talon-card" /></div>
 
         return (
             <div>
@@ -54,7 +54,7 @@ export class PassOrJoin extends React.Component<iProps, iState> {
         )
     }
 
-    async onPass(event) {
+    async onPass() {
 
         let reqObj: RequestModel = {
             dest: "join",
@@ -65,7 +65,7 @@ export class PassOrJoin extends React.Component<iProps, iState> {
         this.props.postReq(reqObj);
     }
 
-    async onJoin(event) {
+    async onJoin() {
 
         let reqObj: RequestModel = {
             dest: "join",

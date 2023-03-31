@@ -1,5 +1,5 @@
 export class UuidWithCardId {
 
-    public uuid: string;
-    public cardId: number;
+    public uuid!: string;
+    public cardId!: number;
 }

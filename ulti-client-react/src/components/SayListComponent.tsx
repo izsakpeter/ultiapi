@@ -1,4 +1,4 @@
-import React = require("react");
+import React from "react";
 import { getSayFromMsgList } from "../helper/sayHandler";
 import { Game } from "../model/game";
 

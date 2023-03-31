@@ -4,7 +4,6 @@ import { Table } from './TableComponent';
 import { PostRequest, StatusPostRequest } from '../helper/request';
 import { LoginComponent } from './LoginComponent';
 import { RequestModel } from '../model/requestModel';
-import { MessageComponent } from './MessageComponent';
 import { WarningComponent } from './WarningComponent';
 
 interface iState {
@@ -17,12 +16,12 @@ interface iState {
 
 export default class App extends React.Component<{}, iState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
             gotCards: false,
-            game: null,
+            game: new Game(),
             isWrongLogin: false,
             isLoggedIn: false,
             lastTimeStamp: 0

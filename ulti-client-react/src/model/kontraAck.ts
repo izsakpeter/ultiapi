@@ -1,4 +1,4 @@
 export class KontraAck {
-    public said: boolean;
-    public ackBy: number;
+    public said!: boolean;
+    public ackBy!: number;
 }

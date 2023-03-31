@@ -1,6 +1,6 @@
 import { H1 } from "@blueprintjs/core";
-import React = require("react");
-import { getSessionId, getUsernameById } from "../helper/loginHandler";
+import React from "react";
+import { getSessionId } from "../helper/loginHandler";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
@@ -16,7 +16,7 @@ interface iState {
 
 export class LoginComponent extends React.Component<iProps, iState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props)
 
         this.state = {
@@ -54,21 +54,21 @@ export class LoginComponent extends React.Component<iProps, iState> {
         }
     }
 
-    usernameHandleChange(event) {
+    usernameHandleChange(event: { target: { value: any; }; }) {
         this.setState({ username: event.target.value });
     }
 
-    passwordHandleChange(event) {
+    passwordHandleChange(event: { target: { value: any; }; }) {
         this.setState({ password: event.target.value });
     }
 
-    async handleSubmit(event) {
+    async handleSubmit(event: { preventDefault: () => void; }) {
 
         let sessionId = -1;
 
         sessionId = getSessionId(this.state.username, this.state.password);
 
-        if (sessionId != -1) {
+        if (sessionId !== -1) {
             event.preventDefault();
 
             let reqObj: RequestModel = {

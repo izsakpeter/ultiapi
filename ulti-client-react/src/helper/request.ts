@@ -10,22 +10,19 @@ let configuration: AxiosRequestConfig = {
 };
 
 export async function StatusPostRequest(id: number, lastTimeStamp: number): Promise<Game> {
-    const response = await axios.post<Game>("http://localhost:8888/status", {
+    const response = await axios.post<Game>(baseURL + "status", {
         id: id,
         lastTimeStamp: lastTimeStamp
     }, configuration);
 
-    if (response.status === 200) {
-        return response.data;
-    } else {
+    if (response.status !== 200) {
         console.log("ERROR: HTTP response code: " + response.status);
-        return null;
     }
+
+    return response.data;
 }
 
 export async function PostRequest(reqObj: RequestModel): Promise<Response> {
-
-    let reqModel: RequestModel;
 
     const response = await axios.post<Response>(baseURL + reqObj.dest, getRequestJson(reqObj), configuration);
 

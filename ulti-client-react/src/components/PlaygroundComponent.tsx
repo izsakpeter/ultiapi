@@ -1,4 +1,4 @@
-import React = require("react");
+import React from "react";
 import { GetCardSource } from "../helper/cardHandler";
 import { Game } from "../model/game";
 
@@ -12,10 +12,6 @@ interface iState {
 
 export class PlaygroundComponent extends React.Component<iProps, iState> {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
         if (!this.props.game.playReadyToStart) {
@@ -25,9 +21,9 @@ export class PlaygroundComponent extends React.Component<iProps, iState> {
         } else {
             return (
                 <div>
-                    <img src={GetCardSource(this.props.game.round.card1Id)} className="playcard" />
-                    <img src={GetCardSource(this.props.game.round.card2Id)} className="playcard" />
-                    <img src={GetCardSource(this.props.game.round.card3Id)} className="playcard" />
+                    <img alt="card" src={GetCardSource(this.props.game.round.card1Id)} className="playcard" />
+                    <img alt="card" src={GetCardSource(this.props.game.round.card2Id)} className="playcard" />
+                    <img alt="card" src={GetCardSource(this.props.game.round.card3Id)} className="playcard" />
                 </div>
             )
         }

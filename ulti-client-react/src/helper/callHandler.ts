@@ -141,15 +141,15 @@ export function getCallList(colorNum: number, list: Array<number>): Array<Call> 
 	let colorValue: number = 0;
 	let res: Array<Call> = [];
 
-	if (colorNum == Constants.ZOLD_ID)
+	if (colorNum === Constants.ZOLD_ID)
 		colorValue = 12;
-	else if (colorNum == Constants.TOK_ID)
+	else if (colorNum === Constants.TOK_ID)
 		colorValue = 24;
-	else if (colorNum == Constants.PIROS_ID)
+	else if (colorNum === Constants.PIROS_ID)
 		colorValue = 36;
 
 	for (let i = 0; i < list.length; i++) {
-		res.push(new Call(list[i] + colorValue, null));
+		res.push(new Call(list[i] + colorValue, []));
 	}
 
 	return res;
@@ -179,23 +179,25 @@ export function getCallValue(callId: number): number {
 		case Constants.DURI_SZINTELEN_TERITETT_ID:
 			return Constants.DURI_TERITETT_VALUE;
 	}
+
+	return 0;
 }
 
 export function isBluff4020(callList: Array<number>, colorId: number, game: Game): boolean {
 
-	let call40Id: number;
-	let call20Id: number;
+	let call40Id: number = 0;
+	let call20Id: number = 0;
 
-	if (colorId == 1) {
+	if (colorId === 1) {
 		call40Id = 1;
 		call20Id = 6;
-	} else if (colorId == 2) {
+	} else if (colorId === 2) {
 		call40Id = 11;
 		call20Id = 16;
-	} else if (colorId == 3) {
+	} else if (colorId === 3) {
 		call40Id = 21;
 		call20Id = 26;
-	} else if (colorId == 4) {
+	} else if (colorId === 4) {
 		call40Id = 31;
 		call20Id = 36;
 	}
@@ -210,19 +212,19 @@ export function isBluff4020(callList: Array<number>, colorId: number, game: Game
 }
 
 export function have40(colorId: number, game: Game): boolean {
-	let aduFelsoId: number;
-	let aduKiralyId: number;
+	let aduFelsoId: number = 0;
+	let aduKiralyId: number = 0;
 
-	if (colorId == 1) {
+	if (colorId === 1) {
 		aduFelsoId = 5;
 		aduKiralyId = 6;
-	} else if (colorId == 2) {
+	} else if (colorId === 2) {
 		aduFelsoId = 13;
 		aduKiralyId = 14;
-	} else if (colorId == 3) {
+	} else if (colorId === 3) {
 		aduFelsoId = 21;
 		aduKiralyId = 22;
-	} else if (colorId == 4) {
+	} else if (colorId === 4) {
 		aduFelsoId = 29;
 		aduKiralyId = 30;
 	}
@@ -247,35 +249,35 @@ export function have20(colorId: number, game: Game): number {
 
 	let result = 0;
 
-	let fel1: number;
-	let kir1: number;
-	let fel2: number;
-	let kir2: number;
-	let fel3: number;
-	let kir3: number;
+	let fel1: number = 0;
+	let kir1: number = 0;
+	let fel2: number = 0;
+	let kir2: number = 0;
+	let fel3: number = 0;
+	let kir3: number = 0;
 
-	if (colorId == 1) {
+	if (colorId === 1) {
 		fel1 = 13;
 		kir1 = 14;
 		fel2 = 21;
 		kir2 = 22;
 		fel3 = 29;
 		kir3 = 30;
-	} else if (colorId == 2) {
+	} else if (colorId === 2) {
 		fel1 = 5;
 		kir1 = 6;
 		fel2 = 21;
 		kir2 = 22;
 		fel3 = 29;
 		kir3 = 30;
-	} else if (colorId == 3) {
+	} else if (colorId === 3) {
 		fel1 = 5;
 		kir1 = 6;
 		fel2 = 13;
 		kir2 = 14;
 		fel3 = 29;
 		kir3 = 30;
-	} else if (colorId == 4) {
+	} else if (colorId === 4) {
 		fel1 = 5;
 		kir1 = 6;
 		fel2 = 13;

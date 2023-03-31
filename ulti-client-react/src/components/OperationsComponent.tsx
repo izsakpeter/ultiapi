@@ -1,6 +1,5 @@
 import { Button } from "@blueprintjs/core";
-import React = require("react");
-import { GetCardSource } from "../helper/cardHandler";
+import React from "react";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 import { Strike } from "../model/strike";
@@ -18,7 +17,7 @@ interface iState {
 
 export class OperationsComponent extends React.Component<iProps, iState> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -58,7 +57,7 @@ export class OperationsComponent extends React.Component<iProps, iState> {
         }
     }
 
-    async changeOrderHandler(event) {
+    async changeOrderHandler(event: { preventDefault: () => void; }) {
         event.preventDefault();
 
         let reqObj: RequestModel = {

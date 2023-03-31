@@ -1,4 +1,4 @@
-import React = require("react");
+import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { GetCardSource } from "../helper/cardHandler";
 import { Strike } from "../model/strike";
@@ -13,7 +13,7 @@ interface iState {
 
 export class StrikesComponent extends React.Component<iProps, iState>{
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -42,9 +42,9 @@ export class StrikesComponent extends React.Component<iProps, iState>{
                 tmp.push(
                     <div key={this.props.strikes[j].round}>
                         kör:{this.props.strikes[j].round}
-                        <img src={GetCardSource(this.props.strikes[j].card1Id)} className="strike-button-card" />
-                        <img src={GetCardSource(this.props.strikes[j].card2Id)} className="strike-button-card" />
-                        <img src={GetCardSource(this.props.strikes[j].card3Id)} className="strike-button-card" />
+                        <img alt="card" src={GetCardSource(this.props.strikes[j].card1Id)} className="strike-button-card" />
+                        <img alt="card" src={GetCardSource(this.props.strikes[j].card2Id)} className="strike-button-card" />
+                        <img alt="card"  src={GetCardSource(this.props.strikes[j].card3Id)} className="strike-button-card" />
                     </div>);
             }
 
@@ -56,9 +56,9 @@ export class StrikesComponent extends React.Component<iProps, iState>{
                 tmp.push(
                     <div key={this.props.strikes[j].round}>
                         kör:{this.props.strikes[j].round}
-                        <img src={GetCardSource(this.props.strikes[j].card1Id)} className="strike-button-card" />
-                        <img src={GetCardSource(this.props.strikes[j].card2Id)} className="strike-button-card" />
-                        <img src={GetCardSource(this.props.strikes[j].card3Id)} className="strike-button-card" />
+                        <img alt="card" src={GetCardSource(this.props.strikes[j].card1Id)} className="strike-button-card" />
+                        <img alt="card" src={GetCardSource(this.props.strikes[j].card2Id)} className="strike-button-card" />
+                        <img alt="card" src={GetCardSource(this.props.strikes[j].card3Id)} className="strike-button-card" />
                     </div>);
             }
 
@@ -72,9 +72,9 @@ export class StrikesComponent extends React.Component<iProps, iState>{
                 tmp.push(
                     <div key={this.props.strikes[j].round}>
                         kör:{this.props.strikes[j].round}
-                        <img src={GetCardSource(this.props.strikes[j].card1Id)} className="strike-button-card" />
-                        <img src={GetCardSource(this.props.strikes[j].card2Id)} className="strike-button-card" />
-                        <img src={GetCardSource(this.props.strikes[j].card3Id)} className="strike-button-card" />
+                        <img alt="card" src={GetCardSource(this.props.strikes[j].card1Id)} className="strike-button-card" />
+                        <img alt="card" src={GetCardSource(this.props.strikes[j].card2Id)} className="strike-button-card" />
+                        <img alt="card" src={GetCardSource(this.props.strikes[j].card3Id)} className="strike-button-card" />
                     </div>);
             }
 

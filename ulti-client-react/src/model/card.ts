@@ -1,6 +1,6 @@
 
 export class Card{
     
-    public id: number;
-	public colorId: number;
+    public id!: number;
+	public colorId!: number;
 }

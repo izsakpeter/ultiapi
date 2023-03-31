@@ -1,13 +1,11 @@
 import { Button } from "@blueprintjs/core";
-import React = require("react");
+import React from "react";
 import { Modal } from "react-bootstrap";
 import { getColorIdByCallItem, have20, have40 } from "../helper/callHandler";
 import { Constants } from "../helper/constants";
-import { getSayFromMsgList } from "../helper/sayHandler";
 import { Call } from "../model/call";
 import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
-import { SayListComponent } from "./SayListComponent";
 
 interface iProps {
     game: Game,
@@ -37,7 +35,7 @@ interface iState {
 
 export class SayComponent extends React.Component<iProps, iState>{
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -95,7 +93,7 @@ export class SayComponent extends React.Component<iProps, iState>{
     }
 
     render() {
-        if (this.state.isFirstTurn && this.props.game.player.hand.length === 10 && this.props.game.activePlayer == this.props.game.player.id && !this.state.isSaid) {
+        if (this.state.isFirstTurn && this.props.game.player.hand.length === 10 && this.props.game.activePlayer === this.props.game.player.id && !this.state.isSaid) {
             return (
                 <div>
                     <div><Button onClick={() => this.handleShow(this.state.isShow)}>Mondás</Button></div>
@@ -144,7 +142,7 @@ export class SayComponent extends React.Component<iProps, iState>{
             }
         }
 
-        if (game.lastCallerId != game.activePlayer) {
+        if (game.lastCallerId !== game.activePlayer) {
             for (let i = 0; i < game.previousCall.length; i++) {
                 if (Constants.LIST_PASSZ.includes(game.previousCall[i].callId)) {
                     sayList.push(<div key={"kopa"}><input type="checkbox" name="kontraparty" disabled={this.isDisabledCb(game.previousCall[i])} defaultChecked={this.isCheckedCb(game.previousCall[i])} onChange={this.onKontraParti} /> Kontra {Constants.PASSZ} </div>)
@@ -180,7 +178,7 @@ export class SayComponent extends React.Component<iProps, iState>{
         )
     }
 
-    sayOkButtonHandler(event) {
+    sayOkButtonHandler() {
         if (this.state.is40Checked || this.state.is120Checked || this.state.is220Checked || this.state.is320Checked) {
 
             let reqObj: RequestModel = {
@@ -290,7 +288,7 @@ export class SayComponent extends React.Component<iProps, iState>{
         }
     }
 
-    rekontraOkButtonHandler(event) {
+    rekontraOkButtonHandler() {
         let reqObj: RequestModel = {
             dest: "saykontra",
             id: this.props.game.player.id,
@@ -318,59 +316,59 @@ export class SayComponent extends React.Component<iProps, iState>{
         return !(have20(this.state.colorId, this.props.game) === counter);
     }
 
-    onChoose40(event) {
+    onChoose40(event: { target: { checked: any; }; }) {
         this.setState({ is40Checked: event.target.checked });
     }
 
-    onChoose120(event) {
+    onChoose120(event: { target: { checked: any; }; }) {
         this.setState({ is120Checked: event.target.checked });
     }
 
-    onChoose220(event) {
+    onChoose220(event: { target: { checked: any; }; }) {
         this.setState({ is220Checked: event.target.checked });
     }
 
-    onChoose320(event) {
+    onChoose320(event: { target: { checked: any; }; }) {
         this.setState({ is320Checked: event.target.checked });
     }
 
-    onKontraParti(event) {
+    onKontraParti(event: { target: { checked: any; }; }) {
         this.setState({ isKontraPasszChecked: event.target.checked });
     }
 
-    onKontra40100(event) {
+    onKontra40100(event: { target: { checked: any; }; }) {
         this.setState({ isKontra40100Checked: event.target.checked });
     }
 
-    onKontraUlti(event) {
+    onKontraUlti(event: { target: { checked: any; }; }) {
         this.setState({ isKontraUltiChecked: event.target.checked });
     }
 
-    onKontraBetli(event) {
+    onKontraBetli(event: { target: { checked: any; }; }) {
         this.setState({ isKontraBetliChecked: event.target.checked });
     }
 
-    onKontraDuri(event) {
+    onKontraDuri(event: { target: { checked: any; }; }) {
         this.setState({ isKontraDuriChecked: event.target.checked });
     }
 
-    onKontraDuriSz(event) {
+    onKontraDuriSz(event: { target: { checked: any; }; }) {
         this.setState({ isKontraDuriSzChecked: event.target.checked });
     }
 
-    onKontra20100(event) {
+    onKontra20100(event: { target: { checked: any; }; }) {
         this.setState({ isKontra20100Checked: event.target.checked });
     }
 
-    onKontraBetliTer(event) {
+    onKontraBetliTer(event: { target: { checked: any; }; }) {
         this.setState({ isKontraBetliTerChecked: event.target.checked });
     }
 
-    onKontraDuriTer(event) {
+    onKontraDuriTer(event: { target: { checked: any; }; }) {
         this.setState({ isKontraDuriTerChecked: event.target.checked });
     }
 
-    onKontraDuriTerSz(event) {
+    onKontraDuriTerSz(event: { target: { checked: any; }; }) {
         this.setState({ isKontraDuriTerSzChecked: event.target.checked });
     }
 

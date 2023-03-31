@@ -1,5 +1,5 @@
 import { Button, Radio, RadioGroup } from "@blueprintjs/core";
-import React = require("react");
+import React from "react";
 import { getCallList, getCallNameListString, getCallValue, getCallValueSum, isBluff4020 } from "../helper/callHandler";
 import { Constants } from "../helper/constants";
 import { getUsernameById } from "../helper/loginHandler";
@@ -24,13 +24,13 @@ interface iState {
 
 export class CallComponent extends React.Component<iProps, iState>{
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
             colorId: 1,
             callList: [],
-            game: null
+            game: new Game(),
         }
 
         this.call = this.call.bind(this);
@@ -62,12 +62,12 @@ export class CallComponent extends React.Component<iProps, iState>{
 
     render() {
 
-        if (this.props.game.activePlayer != this.props.game.player.id || this.props.game.playReadyToStart || this.props.game.startingValue == 0)
+        if (this.props.game.activePlayer !== this.props.game.player.id || this.props.game.playReadyToStart || this.props.game.startingValue === 0)
             return <></>;
 
-        if (this.props.hand.length == 10 && this.props.talon.length == 0) {
+        if (this.props.hand.length === 10 && this.props.talon.length === 0) {
             return <PassOrJoin game={this.props.game} postReq={this.props.postReq} />;
-        } else if (this.props.hand.length + this.props.talon.length == 12) {
+        } else if (this.props.hand.length + this.props.talon.length === 12) {
 
             return (
                 <div>
@@ -75,10 +75,13 @@ export class CallComponent extends React.Component<iProps, iState>{
                         <div className={"align-center"}>
                             {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {getUsernameById(this.props.game.lastCallerId)} által.</div>}
                             <div><WronCallComponent game={this.props.game} /></div>
-                            <Radio name="cv" label={Constants.MAKK} value={Constants.MAKK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.MAKK_ID, this.props.game)} />
-                            <Radio name="cv" label={Constants.ZOLD} value={Constants.ZOLD_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.ZOLD_ID, this.props.game)} />
-                            <Radio name="cv" label={Constants.TOK} value={Constants.TOK_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.TOK_ID, this.props.game)} />
-                            <Radio name="cv" label={Constants.PIROS} value={Constants.PIROS_ID} onClick={this.onChooseColor} defaultChecked={this.isRadioButtonChecked(Constants.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.PIROS_ID, this.props.game)} />
+
+                            <RadioGroup onChange={this.onChooseColor.bind(this)}>
+                                <Radio name="cv" label={Constants.MAKK} value={Constants.MAKK_ID} defaultChecked={this.isRadioButtonChecked(Constants.MAKK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.MAKK_ID, this.props.game)} />
+                                <Radio name="cv" label={Constants.ZOLD} value={Constants.ZOLD_ID} defaultChecked={this.isRadioButtonChecked(Constants.ZOLD_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.ZOLD_ID, this.props.game)} />
+                                <Radio name="cv" label={Constants.TOK} value={Constants.TOK_ID} defaultChecked={this.isRadioButtonChecked(Constants.TOK_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.TOK_ID, this.props.game)} />
+                                <Radio name="cv" label={Constants.PIROS} value={Constants.PIROS_ID} defaultChecked={this.isRadioButtonChecked(Constants.PIROS_ID, this.props.game)} disabled={this.isRadioButtonDisabled(Constants.PIROS_ID, this.props.game)} />
+                            </RadioGroup>
                         </div>
                         <div>
                             <table className="table-center">
@@ -106,9 +109,9 @@ export class CallComponent extends React.Component<iProps, iState>{
         }
     }
 
-    async call(event) {
+    async call() {
 
-        if (this.props.talon.length == 2) {
+        if (this.props.talon.length === 2) {
             if (this.state.callList.length > 0) {
                 let finalCallList = getCallList(this.state.colorId, this.state.callList);
 
@@ -147,12 +150,12 @@ export class CallComponent extends React.Component<iProps, iState>{
         if (game.previousCall.length > 0)
             return false;
 
-        return radioId != this.state.colorId;
+        return radioId !== this.state.colorId;
     }
 
     isRadioButtonChecked(radioId: number, game: Game): boolean {
 
-        if (game.previousCall.length > 0 && radioId == 1) {
+        if (game.previousCall.length > 0 && radioId === 1) {
             return true;
         } else if (game.previousCall.length === 0 && radioId === this.state.colorId) {
             return true;
@@ -253,7 +256,7 @@ export class CallComponent extends React.Component<iProps, iState>{
         return (res * this.state.colorId);
     }
 
-    onChooseColor(event) {
+    onChooseColor(event: any) {
         this.UnSelectAllCheckbox();
         this.resetValue();
         this.setState({ colorId: event.target.value });
@@ -297,17 +300,17 @@ export class CallComponent extends React.Component<iProps, iState>{
         (items[0] as HTMLInputElement).checked = false;
     }
 
-    onChoosePassz(event) {
+    onChoosePassz(event: { target: { checked: boolean; }; }) {
         this.callListHandler(Constants.PASSZ_ID, event.target.checked, Constants.PASSZ_VALUE);
     }
 
-    onChoose40100(event) {
+    onChoose40100(event: { target: { checked: boolean; }; }) {
         this.checkAndRemove(Constants.PASSZ_ID, Constants.PASSZ_CB);
         this.ultiCheckAddPasz(event.target.checked);
         this.callListHandler(Constants.SZAZ40_ID, event.target.checked, Constants.SZAZ40_VALUE);
     }
 
-    onChooseUlti(event) {
+    onChooseUlti(event: { target: { checked: boolean; }; }) {
 
         if (this.state.callList.length === 0) {
             let items = document.getElementsByName(Constants.PASSZ_CB);
@@ -331,39 +334,39 @@ export class CallComponent extends React.Component<iProps, iState>{
         this.callListHandler(Constants.ULTI_ID, event.target.checked, Constants.ULTI_VALUE);
     }
 
-    onChooseBetli(event) {
+    onChooseBetli(event: { target: { checked: boolean; }; }) {
         this.callListHandler(Constants.BETLI_ID, event.target.checked, Constants.BETLI_VALUE);
     }
 
-    onChooseDuri(event) {
+    onChooseDuri(event: { target: { checked: boolean; }; }) {
         this.checkAndRemove(Constants.PASSZ_ID, Constants.PASSZ_CB);
         this.ultiCheckAddPasz(event.target.checked);
         this.callListHandler(Constants.DURI_SZINES_ID, event.target.checked, Constants.DURI_VALUE);
     }
 
-    onChooseSzDuri(event) {
+    onChooseSzDuri(event: { target: { checked: boolean; }; }) {
         this.callListHandler(Constants.DURI_SZINTELEN_ID, event.target.checked, Constants.DURI_VALUE);
     }
 
-    onChoose20100(event) {
+    onChoose20100(event: { target: { checked: boolean; }; }) {
         this.checkAndRemove(Constants.PASSZ_ID, Constants.PASSZ_CB);
         this.ultiCheckAddPasz(event.target.checked);
         this.callListHandler(Constants.SZAZ20_ID, event.target.checked, Constants.SZAZ20_VALUE);
     }
 
-    onChooseTBetli(event) {
+    onChooseTBetli(event: { target: { checked: boolean; }; }) {
         this.checkAndRemove(Constants.BETLI_ID, Constants.BETLI_CB);
         this.callListHandler(Constants.BETLI_TERITETT_ID, event.target.checked, Constants.BETLI_TERITETT_VALUE);
     }
 
-    onChooseTDuri(event) {
+    onChooseTDuri(event: { target: { checked: boolean; }; }) {
         this.checkAndRemove(Constants.PASSZ_ID, Constants.PASSZ_CB);
         this.checkAndRemove(Constants.DURI_SZINES_ID, Constants.DURI_CB);
         this.ultiCheckAddPasz(event.target.checked);
         this.callListHandler(Constants.DURI_SZINES_TERITETT_ID, event.target.checked, Constants.DURI_TERITETT_VALUE);
     }
 
-    onChooseTSzDuri(event) {
+    onChooseTSzDuri(event: { target: { checked: boolean; }; }) {
         this.checkAndRemove(Constants.DURI_SZINTELEN_ID, Constants.DURI_SZINTELEN_CB);
         this.callListHandler(Constants.DURI_SZINTELEN_TERITETT_ID, event.target.checked, Constants.DURI_TERITETT_VALUE);
     }

@@ -16,15 +16,15 @@ export function getSayFromMsgList(say: SayMsg): string {
 
 function getKontraName(kontraId: number): string {
 
-    if (kontraId == Constants.KONTRA_ID)
+    if (kontraId === Constants.KONTRA_ID)
         return Constants.KONTRA;
-    else if (kontraId == Constants.REKONTRA_ID)
+    else if (kontraId === Constants.REKONTRA_ID)
         return Constants.REKONTRA;
-    else if (kontraId == Constants.SZUPKONTRA_ID)
+    else if (kontraId === Constants.SZUPKONTRA_ID)
         return Constants.SZUPKONTRA;
-    else if (kontraId == Constants.SZUPREKONTRA_ID)
+    else if (kontraId === Constants.SZUPREKONTRA_ID)
         return Constants.SZUPREKONTRA;
-    else if (kontraId == Constants.MAXKONTRA_ID)
+    else if (kontraId === Constants.MAXKONTRA_ID)
         return Constants.MAXKONTRA;
 
     return "";

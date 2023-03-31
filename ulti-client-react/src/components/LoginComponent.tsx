@@ -1,12 +1,10 @@
 import { H1 } from "@blueprintjs/core";
 import React from "react";
 import { getSessionId } from "../helper/loginHandler";
-import { Game } from "../model/game";
 import { RequestModel } from "../model/requestModel";
 
 interface iProps {
     postReq: (reqObj: RequestModel) => void,
-    game: Game
 }
 
 interface iState {
@@ -30,28 +28,22 @@ export class LoginComponent extends React.Component<iProps, iState> {
     }
 
     render() {
-
-        if (this.props.game === null) {
-            return (
-                <div className={"login"}>
-                    <div className={"login-panel"}>
-                        <div><H1>Bejelentkezés</H1></div>
-                        <form onSubmit={this.handleSubmit}>
-                            <div>Név</div>
-                            <div><input type="text" value={this.state.username} onChange={this.usernameHandleChange} /></div>
-                            <div>Jelszó</div>
-                            <div><input type="password" value={this.state.password} onChange={this.passwordHandleChange} /></div>
-                            <div> <input type="submit" value="Bejelenkezés" /></div>
-                            <div> <input type="button" value="Regisztráció" /></div>
-                        </form>
-                    </div>
+        return (
+            <div className={"login"}>
+                <div className={"login-panel"}>
+                    <div><H1>Bejelentkezés</H1></div>
+                    <form onSubmit={this.handleSubmit}>
+                        <div>Név</div>
+                        <div><input type="text" value={this.state.username} onChange={this.usernameHandleChange} /></div>
+                        <div>Jelszó</div>
+                        <div><input type="password" value={this.state.password} onChange={this.passwordHandleChange} /></div>
+                        <div> <input type="submit" value="Bejelenkezés" /></div>
+                    </form>
                 </div>
-            )
-        } else {
-            return (
-                <></>
-            )
-        }
+
+                <img alt="card" src={require('../resources/img/cards/hatlap.png')}/>
+            </div>
+        )
     }
 
     usernameHandleChange(event: { target: { value: any; }; }) {

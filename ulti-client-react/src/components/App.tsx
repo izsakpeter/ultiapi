@@ -31,7 +31,7 @@ export default class App extends React.Component<{}, iState> {
     render() {
         return (
             <div className="ulti-container">
-                <div><LoginComponent postReq={this.postRequest} game={this.state.game} /></div>
+                {!this.state.isLoggedIn && <div><LoginComponent postReq={this.postRequest} /></div>}
                 <div><WarningComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} /></div>
 
                 <div>

@@ -3,7 +3,7 @@ import { User } from "../model/user";
 export function getSessionId(username: string, password: string): number {
     //ez majd db lesz a jővőben
 
-    if (username != "" && password != "") {
+    if (username !== "" && password !== "") {
         let allUser = getAlluser();
 
         for (let i = 0; i < allUser.length; i++) {

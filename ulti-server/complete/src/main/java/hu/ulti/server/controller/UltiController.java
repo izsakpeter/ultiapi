@@ -37,7 +37,7 @@ import hu.ulti.server.model.Player;
 @RestController
 public class UltiController {
 
-	private static int playersNumber = 4;
+	private static int playersNumber = 3;
 	private static List<Player> players = Helper.getPlayerList(playersNumber);
 	private int dealer = Helper.setFirstDealer(playersNumber);
 

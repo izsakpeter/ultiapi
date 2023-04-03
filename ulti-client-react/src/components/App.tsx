@@ -5,44 +5,17 @@ import { PostRequest, StatusPostRequest } from '../helper/request';
 import { RequestModel } from '../model/requestModel';
 import { WarningComponent } from './WarningComponent';
 import { LoginComponent } from './LoginComponent';
+import { useState } from 'react';
 
-interface iState {
-    gotCards: boolean,
-    game: Game,
-    isWrongLogin: boolean,
-    isLoggedIn: boolean,
-    lastTimeStamp: number
-}
+export default function App() {
 
-export default class App extends React.Component<{}, iState> {
+    const [gotCards, setGotCards] = useState(false);
+    const [game, setGame] = useState(new Game());
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [lastTimeStamp, setLastTimeStamp] = useState(0);
 
-    constructor(props: any) {
-        super(props);
-
-        this.state = {
-            gotCards: false,
-            game: new Game(),
-            isWrongLogin: false,
-            isLoggedIn: false,
-            lastTimeStamp: 0
-        }
-    }
-
-    render() {
-        return (
-            <div className="ulti-container">
-                {!this.state.isLoggedIn && <div><LoginComponent postReq={this.postRequest} /></div>}
-                <div><WarningComponent gotCards={this.state.gotCards} isLoggedIn={this.state.isLoggedIn} /></div>
-
-                <div>
-                    <div><Table gotCards={this.state.gotCards} game={this.state.game} postReq={this.postRequest} /></div>
-                </div>
-            </div>
-        );
-    }
-
-    async status(id: number) {
-        const res = await StatusPostRequest(id, this.state.lastTimeStamp);
+    async function status(id: number) {
+        const res = await StatusPostRequest(id, lastTimeStamp);
 
         if (res != null) {
 
@@ -51,23 +24,34 @@ export default class App extends React.Component<{}, iState> {
             if (res.player.hand === null)
                 gotCardsState = false;
 
-            this.setState({ game: res, gotCards: gotCardsState, isWrongLogin: false, isLoggedIn: true, lastTimeStamp: Date.now() });
+            setGame(res);
+            setGotCards(gotCardsState);
+            setLoggedIn(true);
+            setLastTimeStamp(Date.now());
 
         } else {
-            this.setState({ gotCards: false, isWrongLogin: true, isLoggedIn: true });
+            setGotCards(false);
+            setLoggedIn(true)
         }
 
-        await this.status(id);
+        await status(id);
     }
 
-    postRequest = (reqObj: RequestModel): Promise<void> => {
-        return this.postRequestImpl(reqObj);
-    }
-
-    async postRequestImpl(reqObj: RequestModel) {
+    const postRequest = async (reqObj: RequestModel) => {
         await PostRequest(reqObj);
 
         if (reqObj.dest === "start")
-            this.status(reqObj.id);
+            status(reqObj.id);
     }
+
+    return (
+        <div className="ulti-container">
+            {!isLoggedIn && <div><LoginComponent postReq={postRequest} /></div>}
+            <div><WarningComponent gotCards={gotCards} isLoggedIn={isLoggedIn} /></div>
+
+            <div>
+                <div><Table gotCards={gotCards} game={game} postReq={postRequest} /></div>
+            </div>
+        </div>
+    );
 }

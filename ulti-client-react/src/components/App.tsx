@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Game } from '../model/game';
 import { Table } from './TableComponent';
 import { PostRequest, StatusPostRequest } from '../helper/request';
-import { LoginComponent } from './LoginComponent';
 import { RequestModel } from '../model/requestModel';
 import { WarningComponent } from './WarningComponent';
+import { LoginComponent } from './LoginComponent';
 
 interface iState {
     gotCards: boolean,

@@ -2,6 +2,10 @@ import { Call } from "./call";
 
 export class RequestModel {
     public dest?: string;
+
+    public username?: string;
+    public password?: string;
+
     public id!: number;
 
     //order
@@ -44,6 +48,11 @@ export class RequestModel {
 export function getRequestJson(model: RequestModel): any {
 
     switch (model.dest) {
+        case "login":
+            return {
+                username: model.username,
+                password: model.password
+            };
         case "start":
         case "newgame":
             return {

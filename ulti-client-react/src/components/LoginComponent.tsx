@@ -40,8 +40,6 @@ export class LoginComponent extends React.Component<iProps, iState> {
                         <div> <input type="submit" value="Bejelenkezés" /></div>
                     </form>
                 </div>
-
-                <img alt="card" src={require('../resources/img/cards/hatlap.png')}/>
             </div>
         )
     }

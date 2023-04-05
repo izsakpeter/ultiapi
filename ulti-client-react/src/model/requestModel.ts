@@ -6,7 +6,7 @@ export class RequestModel {
     public username?: string;
     public password?: string;
 
-    public id!: number;
+    public id?: number;
 
     //order
     public colorOrder?: boolean;

@@ -1,8 +1,8 @@
 import React from "react";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 
 interface iProps {
-    game: Game
+    game: GameOld
 }
 
 interface iState {

@@ -4,11 +4,11 @@ import { Modal } from "react-bootstrap";
 import { getColorIdByCallItem, have20, have40 } from "../helper/callHandler";
 import { Constants } from "../helper/constants";
 import { Call } from "../model/call";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { RequestModel } from "../model/requestModel";
 
 interface iProps {
-    game: Game,
+    game: GameOld,
     postReq: (reqObj: RequestModel) => void
 }
 
@@ -124,7 +124,7 @@ export class SayComponent extends React.Component<iProps, iState>{
         this.setState({ isShow: !lastState });
     }
 
-    renderSayPanel(showPanel: boolean, game: Game) {
+    renderSayPanel(showPanel: boolean, game: GameOld) {
 
         let sayList = [];
 
@@ -218,7 +218,7 @@ export class SayComponent extends React.Component<iProps, iState>{
         }
     }
 
-    renderRekontraPanel(game: Game) {
+    renderRekontraPanel(game: GameOld) {
 
         let showPanel: boolean = false;
 

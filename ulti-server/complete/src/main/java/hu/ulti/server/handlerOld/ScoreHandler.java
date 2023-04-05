@@ -1,13 +1,13 @@
-package hu.ulti.server.handler;
+package hu.ulti.server.handlerOld;
 
 import java.util.Arrays;
 import java.util.List;
 
-import hu.ulti.server.Helper;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Result;
-import hu.ulti.server.model.SayMsg;
-import hu.ulti.server.model.Score;
+import hu.ulti.server.HelperOld;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Result;
+import hu.ulti.server.modelOld.SayMsg;
+import hu.ulti.server.modelOld.Score;
 
 public class ScoreHandler {
 	private static List<Integer> ultiList = Arrays.asList(2, 14, 26, 38);
@@ -19,10 +19,10 @@ public class ScoreHandler {
 
 		for (int i = 0; i < resultList.size(); i++) {
 
-			int callScore = Helper.getCallValue(resultList.get(i).getCallId());
+			int callScore = HelperOld.getCallValue(resultList.get(i).getCallId());
 			int multiplier = 1;
 
-			if (!Helper.isSzintelenbyId(resultList.get(i).getCallId())) {
+			if (!HelperOld.isSzintelenbyId(resultList.get(i).getCallId())) {
 				if (isThisCallHasKontra(resultList.get(i).getCallId(), game.getSayMsgList())) {
 					multiplier = getMultiplier(resultList.get(i).getCallId(), game.getSayMsgList());
 				}
@@ -34,7 +34,7 @@ public class ScoreHandler {
 
 						int callerMultiplier = 0;
 
-						if (Helper.isSzintelenbyId(resultList.get(i).getCallId())
+						if (HelperOld.isSzintelenbyId(resultList.get(i).getCallId())
 								&& isThisCallHasKontra(resultList.get(i).getCallId(), game.getSayMsgList())) {
 							callerMultiplier = getMultiplierSzintelenCaller(resultList.get(i).getCallId(),
 									game.getSayMsgList());
@@ -48,7 +48,7 @@ public class ScoreHandler {
 
 						int otherMultiplier = 0;
 
-						if (Helper.isSzintelenbyId(resultList.get(i).getCallId())
+						if (HelperOld.isSzintelenbyId(resultList.get(i).getCallId())
 								&& isThisCallHasKontra(resultList.get(i).getCallId(), game.getSayMsgList())) {
 							multiplier = getMultiplierSzintelenOther(resultList.get(i).getCallId(),
 									game.getSayMsgList(), game.getScores().get(j).getId());
@@ -70,7 +70,7 @@ public class ScoreHandler {
 
 						int callerMultiplier = 0;
 
-						if (Helper.isSzintelenbyId(resultList.get(i).getCallId())
+						if (HelperOld.isSzintelenbyId(resultList.get(i).getCallId())
 								&& isThisCallHasKontra(resultList.get(i).getCallId(), game.getSayMsgList())) {
 							callerMultiplier = -1
 									* getMultiplierSzintelenCaller(resultList.get(i).getCallId(), game.getSayMsgList());
@@ -83,7 +83,7 @@ public class ScoreHandler {
 
 					} else if (isOtherPlayer(game.getScores().get(j).getId(), players)) {
 
-						if (Helper.isSzintelenbyId(resultList.get(i).getCallId())
+						if (HelperOld.isSzintelenbyId(resultList.get(i).getCallId())
 								&& isThisCallHasKontra(resultList.get(i).getCallId(), game.getSayMsgList())) {
 							multiplier = getMultiplierSzintelenOther(resultList.get(i).getCallId(),
 									game.getSayMsgList(), game.getScores().get(j).getId());

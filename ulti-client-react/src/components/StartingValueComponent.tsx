@@ -2,11 +2,11 @@ import { Button, Radio } from "@blueprintjs/core";
 import React from "react";
 import { GetCardSource } from "../helper/cardHandler";
 import { Constants } from "../helper/constants";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { RequestModel } from "../model/requestModel";
 
 interface iProps {
-    game: Game,
+    game: GameOld,
     postReq: (reqObj: RequestModel) => void
 }
 

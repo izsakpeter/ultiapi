@@ -1,10 +1,9 @@
 import React from "react";
 import { GetCard90Source, GetCardSource, GetHalfCard90Source, GetHalfCardSource } from "../helper/cardHandler";
-import { getUsernameById } from "../helper/loginHandler";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 
 interface iProps {
-    game: Game
+    game: GameOld
 }
 
 interface iState {
@@ -22,7 +21,7 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
         )
     }
 
-    renderRightPlayerHand(game: Game) {
+    renderRightPlayerHand(game: GameOld) {
         let hand = getHand(1, game, "right");
 
         return (
@@ -34,7 +33,7 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
 
     }
 
-    renderTopPlayerHand(game: Game) {
+    renderTopPlayerHand(game: GameOld) {
         let hand = getHand(2, game, "top");
 
         return (
@@ -45,7 +44,7 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
         )
     }
 
-    renderLeftPlayerHand(game: Game) {
+    renderLeftPlayerHand(game: GameOld) {
         let hand = getHand(3, game, "left");
 
         return (
@@ -57,7 +56,7 @@ export default class OtherHandComponent extends React.Component<iProps, iState> 
     }
 }
 
-function getHand(index: number, game: Game, poz: string): any[] {
+function getHand(index: number, game: GameOld, poz: string): any[] {
 
     let hand: any = [];
 
@@ -95,7 +94,7 @@ function getHand(index: number, game: Game, poz: string): any[] {
     return hand;
 }
 
-function getPlayerName(index: number, game: Game): string {
+function getPlayerName(index: number, game: GameOld): string {
 
     if (index === 3 && game.hands.length === 3)
         return "";
@@ -103,7 +102,7 @@ function getPlayerName(index: number, game: Game): string {
     for (let j = 0; j < game.hands.length; j++) {
         if (game.player.id === game.hands[j].id) {
             let handLength: number = game.hands.length;
-            return getUsernameById(game.hands[getIncreasedIndex(j + index, handLength)].id);
+            return game.hands[getIncreasedIndex(j + index, handLength)].id.toString();
         }
     }
 

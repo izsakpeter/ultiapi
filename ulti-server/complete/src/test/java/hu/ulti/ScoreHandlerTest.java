@@ -11,11 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import hu.ulti.server.controller.UltiController;
-import hu.ulti.server.handler.ScoreHandler;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Result;
-import hu.ulti.server.model.SayMsg;
-import hu.ulti.server.model.Score;
+import hu.ulti.server.handlerOld.ScoreHandler;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Result;
+import hu.ulti.server.modelOld.SayMsg;
+import hu.ulti.server.modelOld.Score;
 
 public class ScoreHandlerTest {
 

@@ -2,15 +2,14 @@ import { Button, Radio, RadioGroup } from "@blueprintjs/core";
 import React from "react";
 import { getCallList, getCallNameListString, getCallValue, getCallValueSum, isBluff4020 } from "../helper/callHandler";
 import { Constants } from "../helper/constants";
-import { getUsernameById } from "../helper/loginHandler";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { RequestModel } from "../model/requestModel";
 import { PassOrJoin } from "./PassOrJoinComponent";
 import { WronCallComponent } from "./WrongCallComponent";
 
 interface iProps {
     talon: Array<number>,
-    game: Game,
+    game: GameOld,
     hand: Array<number>,
     postReq: (reqObj: RequestModel) => void,
     clearTalon: () => void
@@ -19,7 +18,7 @@ interface iProps {
 interface iState {
     colorId: number,
     callList: Array<number>,
-    game: Game
+    game: GameOld
 }
 
 export class CallComponent extends React.Component<iProps, iState>{
@@ -30,7 +29,7 @@ export class CallComponent extends React.Component<iProps, iState>{
         this.state = {
             colorId: 1,
             callList: [],
-            game: new Game(),
+            game: new GameOld(),
         }
 
         this.call = this.call.bind(this);
@@ -73,7 +72,7 @@ export class CallComponent extends React.Component<iProps, iState>{
                 <div>
                     <div className={"call-table-border"}>
                         <div className={"align-center"}>
-                            {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {getUsernameById(this.props.game.lastCallerId)} által.</div>}
+                            {getCallValueSum(this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)}, értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>}
                             <div><WronCallComponent game={this.props.game} /></div>
 
                             <RadioGroup onChange={this.onChooseColor.bind(this)}>
@@ -145,7 +144,7 @@ export class CallComponent extends React.Component<iProps, iState>{
         }
     }
 
-    isRadioButtonDisabled(radioId: number, game: Game): boolean {
+    isRadioButtonDisabled(radioId: number, game: GameOld): boolean {
 
         if (game.previousCall.length > 0)
             return false;
@@ -153,7 +152,7 @@ export class CallComponent extends React.Component<iProps, iState>{
         return radioId !== this.state.colorId;
     }
 
-    isRadioButtonChecked(radioId: number, game: Game): boolean {
+    isRadioButtonChecked(radioId: number, game: GameOld): boolean {
 
         if (game.previousCall.length > 0 && radioId === 1) {
             return true;

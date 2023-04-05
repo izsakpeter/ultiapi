@@ -1,4 +1,4 @@
-package hu.ulti.server.handler;
+package hu.ulti.server.handlerOld;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import hu.ulti.server.Constants;
-import hu.ulti.server.Helper;
+import hu.ulti.server.HelperOld;
 import hu.ulti.server.controller.UltiController;
-import hu.ulti.server.model.Call;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Player;
-import hu.ulti.server.model.Result;
-import hu.ulti.server.model.Strike;
-import hu.ulti.server.model.StrikeList;
+import hu.ulti.server.modelOld.Call;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Player;
+import hu.ulti.server.modelOld.Result;
+import hu.ulti.server.modelOld.Strike;
+import hu.ulti.server.modelOld.StrikeList;
 
 public class Resulthandler {
 
@@ -137,7 +137,7 @@ public class Resulthandler {
 
 			game.setGameOver(true);
 			game.setResultList(resultList);
-			game.setScores(ScoreHandler.setScores(game, Helper.getPlayers(players)));
+			game.setScores(ScoreHandler.setScores(game, HelperOld.getPlayers(players)));
 			game.setStrikeList(getStrikeList());
 		}
 	}
@@ -159,7 +159,7 @@ public class Resulthandler {
 	}
 
 	private Result addResult(boolean isSuccess, int callIndex, String comment, int playerId) {
-		return new Result(Helper.getUUid().toString(), playerId, callIndex, isSuccess, comment);
+		return new Result(HelperOld.getUUid().toString(), playerId, callIndex, isSuccess, comment);
 	}
 
 	private boolean isPassz() {
@@ -383,9 +383,9 @@ public class Resulthandler {
 				}
 
 				if (hasAdu7(card1)) {
-					int card2Color = Helper.getColorId(card2);
-					int card3Color = Helper.getColorId(card3);
-					int adu = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
+					int card2Color = HelperOld.getColorId(card2);
+					int card3Color = HelperOld.getColorId(card3);
+					int adu = HelperOld.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
 					if (adu == card2Color || adu == card3Color)
 						return false;
@@ -400,8 +400,8 @@ public class Resulthandler {
 
 	private boolean hasAdu7(int card) {
 
-		int color = Helper.getColorId(card);
-		int adu = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
+		int color = HelperOld.getColorId(card);
+		int adu = HelperOld.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
 		for (int i = 0; i < Constants.CARD_7LIST.size(); i++) {
 			if (card == Constants.CARD_7LIST.get(i) && color == adu) {
@@ -429,11 +429,11 @@ public class Resulthandler {
 			int card1 = lastStrike.getCard1Id();
 			int card2 = lastStrike.getCard2Id();
 			int card3 = lastStrike.getCard3Id();
-			int card1Color = Helper.getColorId(card1);
-			int card2Color = Helper.getColorId(card2);
-			int card3Color = Helper.getColorId(card3);
+			int card1Color = HelperOld.getColorId(card1);
+			int card2Color = HelperOld.getColorId(card2);
+			int card3Color = HelperOld.getColorId(card3);
 			int aduCounter = 0;
-			int adu = Helper.getColorId(game.getPreviousCall().get(0).getCallId());
+			int adu = HelperOld.getColorId(game.getPreviousCall().get(0).getCallId());
 
 			if (card1Color == adu)
 				aduCounter++;
@@ -473,7 +473,7 @@ public class Resulthandler {
 	}
 
 	private int getCsendesSzazId() {
-		int color = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
+		int color = HelperOld.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
 		if (color == Constants.MAKK_ID)
 			return Constants.CALL_CSENDES_SZAZ.get(0);
@@ -488,7 +488,7 @@ public class Resulthandler {
 	}
 
 	private int getCsendesUltiId() {
-		int color = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
+		int color = HelperOld.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
 		if (color == Constants.MAKK_ID)
 			return Constants.CALL_CSENDES_ULTI.get(0);

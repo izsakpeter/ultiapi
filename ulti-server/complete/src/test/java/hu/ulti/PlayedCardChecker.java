@@ -9,12 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import hu.ulti.server.controller.UltiController;
-import hu.ulti.server.handler.PlayedCardHandler;
-import hu.ulti.server.model.Call;
-import hu.ulti.server.model.Card;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Player;
-import hu.ulti.server.model.Request;
+import hu.ulti.server.handlerOld.PlayedCardHandler;
+import hu.ulti.server.modelOld.Call;
+import hu.ulti.server.modelOld.Card;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Player;
+import hu.ulti.server.modelOld.Request;
 
 public class PlayedCardChecker {
 

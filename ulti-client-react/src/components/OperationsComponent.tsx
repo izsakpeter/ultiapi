@@ -1,12 +1,12 @@
 import { Button } from "@blueprintjs/core";
 import React from "react";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { RequestModel } from "../model/requestModel";
 import { Strike } from "../model/strike";
 import { StrikesComponent } from "./StrikesComponent";
 
 interface iProps {
-    game: Game,
+    game: GameOld,
     postReq: (reqObj: RequestModel) => void
 }
 

@@ -2,12 +2,11 @@ import { Button } from "@blueprintjs/core";
 import React from "react";
 import { getCallName } from "../helper/callHandler";
 import { GetCardSource } from "../helper/cardHandler";
-import { getUsernameById } from "../helper/loginHandler";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { RequestModel } from "../model/requestModel";
 
 interface iProps {
-    game: Game,
+    game: GameOld,
     postReq: (reqObj: RequestModel) => void
 }
 
@@ -68,7 +67,7 @@ export class ResultComponent extends React.Component<iProps, iState> {
 
         let result = [];
         for (let i = 0; i < this.props.game.resultList.length; i++) {
-            result.push(<div key={this.props.game.resultList[i].id}>{getUsernameById(this.props.game.resultList[i].playerId)} - {getCallName(this.props.game.resultList[i].callId)}: {this.props.game.resultList[i].success ? "sikeres" : "bukott"} {this.props.game.resultList[i].comment === "" ? "" : "(" + this.props.game.resultList[i].comment + ")"}</div>);
+            result.push(<div key={this.props.game.resultList[i].id}>{this.props.game.resultList[i].playerId} - {getCallName(this.props.game.resultList[i].callId)}: {this.props.game.resultList[i].success ? "sikeres" : "bukott"} {this.props.game.resultList[i].comment === "" ? "" : "(" + this.props.game.resultList[i].comment + ")"}</div>);
         }
 
         return (
@@ -80,7 +79,7 @@ export class ResultComponent extends React.Component<iProps, iState> {
 
         let scores = [];
         for (let i = 0; i < this.props.game.scores.length; i++) {
-            scores.push(<tr key={this.props.game.scores[i].id}><td>{getUsernameById(this.props.game.scores[i].id)}</td><td>{this.props.game.scores[i].sumScore}</td><td>{this.props.game.scores[i].lastPartyScore}</td></tr>);
+            scores.push(<tr key={this.props.game.scores[i].id}><td>{this.props.game.scores[i].id}</td><td>{this.props.game.scores[i].sumScore}</td><td>{this.props.game.scores[i].lastPartyScore}</td></tr>);
         }
 
         return (
@@ -171,7 +170,7 @@ export class ResultComponent extends React.Component<iProps, iState> {
         return (
             <div className="flex-row">
                 <div className="align-center">
-                    <div>{getUsernameById(this.props.game.strikeList[0].playerId)} ütése</div>
+                    <div>{this.props.game.strikeList[0].playerId} ütése</div>
                     <div className="flex-row">
                         <div>{strikes1Col[0]}</div>
                         <div>{strikes2Col[0]}</div>
@@ -179,7 +178,7 @@ export class ResultComponent extends React.Component<iProps, iState> {
                 </div>
 
                 <div className="align-center">
-                    <div>{getUsernameById(this.props.game.strikeList[1].playerId)} ütése</div>
+                    <div>{this.props.game.strikeList[1].playerId} ütése</div>
                     <div className="flex-row">
                         <div>{strikes1Col[1]}</div>
                         <div>{strikes2Col[1]}</div>
@@ -187,7 +186,7 @@ export class ResultComponent extends React.Component<iProps, iState> {
                 </div>
 
                 <div className="align-center">
-                    <div>{getUsernameById(this.props.game.strikeList[2].playerId)} ütése</div>
+                    <div>{this.props.game.strikeList[2].playerId} ütése</div>
                     <div className="flex-row">
                         <div>{strikes1Col[2]}</div>
                         <div>{strikes2Col[2]}</div>

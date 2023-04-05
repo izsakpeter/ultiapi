@@ -1,4 +1,4 @@
-package hu.ulti.server.handler;
+package hu.ulti.server.handlerOld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,20 +7,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import hu.ulti.server.Constants;
-import hu.ulti.server.Helper;
+import hu.ulti.server.HelperOld;
 import hu.ulti.server.controller.UltiController;
-import hu.ulti.server.model.Call;
-import hu.ulti.server.model.Card;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Player;
-import hu.ulti.server.model.Request;
+import hu.ulti.server.modelOld.Call;
+import hu.ulti.server.modelOld.Card;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Player;
+import hu.ulti.server.modelOld.Request;
 
 public class PlayedCardHandler {
 
 	public static final Logger log = LoggerFactory.getLogger(UltiController.class);
 
 	public static boolean isPlayedCardCorrect(Game game, Request request, List<Player> players) {
-		boolean isSzintelen = Helper.isSzintelenByList(game.getPreviousCall());
+		boolean isSzintelen = HelperOld.isSzintelenByList(game.getPreviousCall());
 		int playerIndex = getPlayerIndex(players, request.getId());
 
 		if (game.getRound().getCard1Id() == -1) {
@@ -36,9 +36,9 @@ public class PlayedCardHandler {
 				return playedPlayableCard(game.getRound().getCard1Id(), players.get(playerIndex).getHand(),
 						request.getCardid());
 
-			int card1 = Helper.changeCardOrder(game.getRound().getCard1Id());
-			int card2 = Helper.changeCardOrder(request.getCardid());
-			List<Card> hand = Helper.fixChangeCardOrderHand(players.get(playerIndex).getHand());
+			int card1 = HelperOld.changeCardOrder(game.getRound().getCard1Id());
+			int card2 = HelperOld.changeCardOrder(request.getCardid());
+			List<Card> hand = HelperOld.fixChangeCardOrderHand(players.get(playerIndex).getHand());
 			boolean isCard1Adu = isCardAdu(game.getRound().getCard1Id(), game.getPreviousCall().get(0).getCallId());
 
 			if (isCard1Adu)
@@ -61,8 +61,8 @@ public class PlayedCardHandler {
 
 				int card1 = game.getRound().getCard1Id();
 				int card2 = game.getRound().getCard2Id();
-				int card1Color = Helper.getColorId(card1);
-				int card2Color = Helper.getColorId(card2);
+				int card1Color = HelperOld.getColorId(card1);
+				int card2Color = HelperOld.getColorId(card2);
 
 				if (card1Color == card2Color) {
 
@@ -75,12 +75,12 @@ public class PlayedCardHandler {
 				}
 			}
 
-			int card1 = Helper.changeCardOrder(game.getRound().getCard1Id());
-			int card2 = Helper.changeCardOrder(game.getRound().getCard2Id());
-			int card3 = Helper.changeCardOrder(request.getCardid());
-			List<Card> hand = Helper.fixChangeCardOrderHand(players.get(playerIndex).getHand());
-			int card1Color = Helper.getColorId(card1);
-			int card2Color = Helper.getColorId(card2);
+			int card1 = HelperOld.changeCardOrder(game.getRound().getCard1Id());
+			int card2 = HelperOld.changeCardOrder(game.getRound().getCard2Id());
+			int card3 = HelperOld.changeCardOrder(request.getCardid());
+			List<Card> hand = HelperOld.fixChangeCardOrderHand(players.get(playerIndex).getHand());
+			int card1Color = HelperOld.getColorId(card1);
+			int card2Color = HelperOld.getColorId(card2);
 			boolean isCard1Adu = isCardAdu(game.getRound().getCard1Id(), game.getPreviousCall().get(0).getCallId());
 			boolean isCard2Adu = isCardAdu(game.getRound().getCard2Id(), game.getPreviousCall().get(0).getCallId());
 
@@ -156,7 +156,7 @@ public class PlayedCardHandler {
 
 	private static List<Integer> getCorrectCardSameColor(int storedCardId, List<Card> playerHand) {
 
-		int colorId = Helper.getColorId(storedCardId);
+		int colorId = HelperOld.getColorId(storedCardId);
 		List<Integer> allCardsByColor = getCardListByColor(colorId);
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -172,7 +172,7 @@ public class PlayedCardHandler {
 
 	private static List<Integer> getAllCardSameColor(int card1Id, List<Card> hand) {
 
-		int colorId = Helper.getColorId(card1Id);
+		int colorId = HelperOld.getColorId(card1Id);
 		List<Integer> list = new ArrayList<Integer>();
 
 		for (int i = 0; i < hand.size(); i++) {
@@ -185,7 +185,7 @@ public class PlayedCardHandler {
 
 	private static List<Integer> getAdu(int callId, List<Card> hand) {
 
-		int aduId = Helper.getAduByCall(callId);
+		int aduId = HelperOld.getAduByCall(callId);
 		List<Integer> list = new ArrayList<Integer>();
 
 		for (int i = 0; i < hand.size(); i++) {
@@ -219,13 +219,13 @@ public class PlayedCardHandler {
 	}
 
 	private static boolean isCardAdu(int cardId, int callId) {
-		int cardColor = Helper.getColorId(cardId);
-		return Helper.getAduByCall(callId) == cardColor;
+		int cardColor = HelperOld.getColorId(cardId);
+		return HelperOld.getAduByCall(callId) == cardColor;
 	}
 
 	private static boolean isUltiAndAdu7(int cardid, List<Call> previousCall) {
 
-		int colorId = Helper.getColorId(cardid);
+		int colorId = HelperOld.getColorId(cardid);
 		int ultiId = getUltiId(colorId);
 
 		for (int i = 0; i < previousCall.size(); i++) {

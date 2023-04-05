@@ -1,6 +1,6 @@
-package hu.ulti.server.model;
+package hu.ulti.server.modelOld;
 
-import hu.ulti.server.Helper;
+import hu.ulti.server.HelperOld;
 
 public class SayMsg {
 
@@ -13,7 +13,7 @@ public class SayMsg {
 	private String otherSay;
 
 	public SayMsg(int playerId, int kontraId, int callId) {
-		this.id = Helper.getUUid();
+		this.id = HelperOld.getUUid();
 		this.playerId = playerId;
 		this.kontraId = kontraId;
 		this.callId = callId;
@@ -21,7 +21,7 @@ public class SayMsg {
 	}
 
 	public SayMsg(int playerId, String otherSay) {
-		this.id = Helper.getUUid();
+		this.id = HelperOld.getUUid();
 		this.playerId = playerId;
 		this.otherSay = otherSay;
 		this.kontraId = -1;
@@ -29,7 +29,7 @@ public class SayMsg {
 	}
 
 	public SayMsg(int playerId, int kontraId, int callId, String otherSay) {
-		this.id = Helper.getUUid();
+		this.id = HelperOld.getUUid();
 		this.playerId = playerId;
 		this.kontraId = kontraId;
 		this.callId = callId;

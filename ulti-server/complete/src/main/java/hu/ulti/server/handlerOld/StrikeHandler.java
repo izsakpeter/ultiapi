@@ -1,12 +1,12 @@
-package hu.ulti.server.handler;
+package hu.ulti.server.handlerOld;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.ulti.server.Helper;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Player;
-import hu.ulti.server.model.Strike;
+import hu.ulti.server.HelperOld;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Player;
+import hu.ulti.server.modelOld.Strike;
 
 public class StrikeHandler {
 
@@ -22,10 +22,10 @@ public class StrikeHandler {
 		int card1 = game.getRound().getCard1Id();
 		int card2 = game.getRound().getCard2Id();
 		int card3 = game.getRound().getCard3Id();
-		int card1ColorId = Helper.getColorId(card1);
-		int card2ColorId = Helper.getColorId(card2);
-		int card3ColorId = Helper.getColorId(card3);
-		boolean isSzintelen = Helper.isSzintelenByList(game.getPreviousCall());
+		int card1ColorId = HelperOld.getColorId(card1);
+		int card2ColorId = HelperOld.getColorId(card2);
+		int card3ColorId = HelperOld.getColorId(card3);
+		boolean isSzintelen = HelperOld.isSzintelenByList(game.getPreviousCall());
 
 		if (isSzintelen) {
 			if (card1ColorId != card2ColorId && card1ColorId != card3ColorId) {
@@ -52,11 +52,11 @@ public class StrikeHandler {
 					strikeHandler(game.getRound().getCard3PlayerId());
 			}
 		} else {
-			int ADU = Helper.getAduByCall(game.getPreviousCall().get(0).getCallId());
+			int ADU = HelperOld.getAduByCall(game.getPreviousCall().get(0).getCallId());
 
-			card1 = Helper.changeCardOrder(card1);
-			card2 = Helper.changeCardOrder(card2);
-			card3 = Helper.changeCardOrder(card3);
+			card1 = HelperOld.changeCardOrder(card1);
+			card2 = HelperOld.changeCardOrder(card2);
+			card3 = HelperOld.changeCardOrder(card3);
 
 			if (ADU == card1ColorId && ADU == card2ColorId && ADU == card3ColorId) {
 				if (card1 > card2 && card1 > card3)

@@ -14,32 +14,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import hu.ulti.server.Helper;
-import hu.ulti.server.handler.CallHandler;
-import hu.ulti.server.handler.KontraHandler;
-import hu.ulti.server.handler.PlayedCardHandler;
-import hu.ulti.server.handler.Resulthandler;
-import hu.ulti.server.handler.StrikeHandler;
-import hu.ulti.server.model.Call;
-import hu.ulti.server.model.Card;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Hand;
-import hu.ulti.server.model.Request;
-import hu.ulti.server.model.Response;
-import hu.ulti.server.model.Result;
-import hu.ulti.server.model.Say;
-import hu.ulti.server.model.SayMsg;
-import hu.ulti.server.model.Strike;
-import hu.ulti.server.model.StrikeList;
-import hu.ulti.server.model.Player;
+import hu.ulti.server.HelperOld;
+import hu.ulti.server.handlerOld.CallHandler;
+import hu.ulti.server.handlerOld.KontraHandler;
+import hu.ulti.server.handlerOld.PlayedCardHandler;
+import hu.ulti.server.handlerOld.Resulthandler;
+import hu.ulti.server.handlerOld.StrikeHandler;
+import hu.ulti.server.modelOld.Call;
+import hu.ulti.server.modelOld.Card;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Hand;
+import hu.ulti.server.modelOld.Player;
+import hu.ulti.server.modelOld.Request;
+import hu.ulti.server.modelOld.Response;
+import hu.ulti.server.modelOld.Result;
+import hu.ulti.server.modelOld.Say;
+import hu.ulti.server.modelOld.SayMsg;
+import hu.ulti.server.modelOld.Strike;
+import hu.ulti.server.modelOld.StrikeList;
 
 @CrossOrigin
 @RestController
 public class UltiController {
 
 	private static int playersNumber = 3;
-	private static List<Player> players = Helper.getPlayerList(playersNumber);
-	private int dealer = Helper.setFirstDealer(playersNumber);
+	private static List<Player> players = HelperOld.getPlayerList(playersNumber);
+	private int dealer = HelperOld.setFirstDealer(playersNumber);
 
 	private static List<Hand> handList = new ArrayList<Hand>();
 	private List<List<Card>> hands = null;
@@ -51,8 +51,8 @@ public class UltiController {
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
 
 	public static final Logger log = LoggerFactory.getLogger(UltiController.class);
-
-	@PostMapping("status")
+	
+	/*
 	public DeferredResult<Game> keepAlive(@RequestBody Request request) {
 		DeferredResult<Game> output = new DeferredResult<>(LONG_POLLING_TIMEOUT);
 		statusPoll.execute(new Runnable() {
@@ -87,8 +87,7 @@ public class UltiController {
 
 		return output;
 	}
-
-	@PostMapping("start")
+	
 	public Response shuffle(@RequestBody Request request) {
 
 		int id = request.getId();
@@ -115,15 +114,15 @@ public class UltiController {
 			setHands(dealer);
 
 			talon = hands.get(3);
-			game.setTalon(Helper.fillTalonWithMinusOne());
+			game.setTalon(HelperOld.fillTalonWithMinusOne());
 			game.setHands(handList);
 			game.setRoundStarted(true);
-			game.setScores(Helper.getDefaultScoreList(players));
+			game.setScores(HelperOld.getDefaultScoreList(players));
 
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return new Response(true);
 		}
-	}
+	}*/
 
 	@PostMapping("order")
 	public Response changeOrder(@RequestBody Request request) {
@@ -146,8 +145,8 @@ public class UltiController {
 
 			for (int i = 0; i < players.size(); i++) {
 				if (request.getId() == players.get(i).getId()) {
-					players.get(i).setHand(Helper.addTalon(players.get(i), talon));
-					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
+					players.get(i).setHand(HelperOld.addTalon(players.get(i), talon));
+					handList.set(i, HelperOld.fillHandWithCoveredCards(players.get(i)));
 				}
 			}
 
@@ -180,9 +179,9 @@ public class UltiController {
 
 						players.get(i).setCallOk(true);
 						players.get(i).setBluff4020(request.isBluff4020());
-						talon = Helper.getTalonById(request.getTalonid());
-						players.get(i).setHand(Helper.removeTalon(players.get(i), talon));
-						handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
+						talon = HelperOld.getTalonById(request.getTalonid());
+						players.get(i).setHand(HelperOld.removeTalon(players.get(i), talon));
+						handList.set(i, HelperOld.fillHandWithCoveredCards(players.get(i)));
 						game.setHands(handList);
 						game.setLastCallerId(request.getId());
 						game.setPreviousCall(game.getCall());
@@ -231,8 +230,8 @@ public class UltiController {
 
 				for (int i = 0; i < players.size(); i++) {
 					if (request.getId() == players.get(i).getId()) {
-						players.get(i).setHand(Helper.addTalon(players.get(i), talon));
-						handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
+						players.get(i).setHand(HelperOld.addTalon(players.get(i), talon));
+						handList.set(i, HelperOld.fillHandWithCoveredCards(players.get(i)));
 						game.setHands(handList);
 					}
 				}
@@ -278,9 +277,9 @@ public class UltiController {
 		game.setPreviousCall(KontraHandler.kontraHandler(someSay, game));
 
 		if (game.isKontraPartFinished()) {
-			if (Helper.isTeritett(game.getPreviousCall())) {
+			if (HelperOld.isTeritett(game.getPreviousCall())) {
 				for (int i = 0; i < players.size(); i++) {
-					handList.set(i, Helper.fillHandWithUncoveredCards(players.get(i)));
+					handList.set(i, HelperOld.fillHandWithUncoveredCards(players.get(i)));
 					game.setHands(handList);
 				}
 			}
@@ -313,8 +312,8 @@ public class UltiController {
 					}
 					
 					game.getRound().addCardToStrike(request.getCardid(), request.getId());
-					players.get(i).setHand(Helper.removeCardbyId(players.get(i), request.getCardid()));
-					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
+					players.get(i).setHand(HelperOld.removeCardbyId(players.get(i), request.getCardid()));
+					handList.set(i, HelperOld.fillHandWithCoveredCards(players.get(i)));
 					game.setHands(handList);
 					game.setActivePlayer(getIncreasedPlayerId(i));
 				}
@@ -335,9 +334,9 @@ public class UltiController {
 					game.setActivePlayer(game.getLastCallerId());
 				} else {
 
-					if (Helper.isTeritett(game.getPreviousCall())) {
+					if (HelperOld.isTeritett(game.getPreviousCall())) {
 						for (int i = 0; i < players.size(); i++) {
-							handList.set(i, Helper.fillHandWithUncoveredCards(players.get(i)));
+							handList.set(i, HelperOld.fillHandWithUncoveredCards(players.get(i)));
 							game.setHands(handList);
 						}
 					}
@@ -404,12 +403,12 @@ public class UltiController {
 			game.setStrikeList(new ArrayList<StrikeList>());
 			roundCounter = 1;
 
-			dealer = Helper.dealerHandler(dealer, playersNumber);
+			dealer = HelperOld.dealerHandler(dealer, playersNumber);
 			setStarterPlayer();
 			setHands(dealer);
 
 			talon = hands.get(3);
-			game.setTalon(Helper.fillTalonWithMinusOne());
+			game.setTalon(HelperOld.fillTalonWithMinusOne());
 			game.setHands(handList);
 			game.setRoundStarted(true);
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
@@ -476,7 +475,7 @@ public class UltiController {
 	private void setHands(int dealer) {
 		game.setHands(new ArrayList<Hand>());
 		handList = new ArrayList<Hand>();
-		hands = Helper.getHands();
+		hands = HelperOld.getHands();
 
 		if (players.size() == 4) {
 			int handIndex = 0;
@@ -487,13 +486,13 @@ public class UltiController {
 					players.get(i).setPlaying(false);
 					players.get(i).setHand(new ArrayList<Card>());
 					handList.add(i, new Hand());
-					handList.set(i, Helper.setEmptyHand(players.get(i)));
+					handList.set(i, HelperOld.setEmptyHand(players.get(i)));
 				} else {
 					players.get(i).setPlaying(true);
 					players.get(i).setHand(hands.get(handIndex));
 					players.get(i).getHand().sort(Comparator.comparing(Card::getId));
 					handList.add(i, new Hand());
-					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
+					handList.set(i, HelperOld.fillHandWithCoveredCards(players.get(i)));
 					handIndex++;
 				}
 			}
@@ -503,7 +502,7 @@ public class UltiController {
 				players.get(i).setHand(hands.get(i));
 				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
 				handList.add(i, new Hand());
-				handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
+				handList.set(i, HelperOld.fillHandWithCoveredCards(players.get(i)));
 			}
 		}
 	}

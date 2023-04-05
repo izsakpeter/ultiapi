@@ -1,9 +1,9 @@
 import React from "react";
 import { getSayFromMsgList } from "../helper/sayHandler";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 
 interface iProps {
-    game: Game,
+    game: GameOld,
 }
 
 interface iState {
@@ -20,7 +20,7 @@ export class SayListComponent extends React.Component<iProps, iState>{
     }
 
 
-    renderSayListPanel(game: Game) {
+    renderSayListPanel(game: GameOld) {
 
         let sayList = [];
 

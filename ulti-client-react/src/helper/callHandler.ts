@@ -1,7 +1,7 @@
 
 import { Call } from "../model/call";
 import { CallInfo } from "../model/callInfo";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { Constants } from "./constants";
 
 export function getAllCall(): Array<CallInfo> {
@@ -183,7 +183,7 @@ export function getCallValue(callId: number): number {
 	return 0;
 }
 
-export function isBluff4020(callList: Array<number>, colorId: number, game: Game): boolean {
+export function isBluff4020(callList: Array<number>, colorId: number, game: GameOld): boolean {
 
 	let call40Id: number = 0;
 	let call20Id: number = 0;
@@ -211,7 +211,7 @@ export function isBluff4020(callList: Array<number>, colorId: number, game: Game
 	return false;
 }
 
-export function have40(colorId: number, game: Game): boolean {
+export function have40(colorId: number, game: GameOld): boolean {
 	let aduFelsoId: number = 0;
 	let aduKiralyId: number = 0;
 
@@ -245,7 +245,7 @@ export function have40(colorId: number, game: Game): boolean {
 	return true;
 }
 
-export function have20(colorId: number, game: Game): number {
+export function have20(colorId: number, game: GameOld): number {
 
 	let result = 0;
 

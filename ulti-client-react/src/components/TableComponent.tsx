@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GetCard90Source, GetCardSource, GetHalfCard90Source, GetHalfCardSource, GetOrderedHand } from "../helper/cardHandler";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { CallComponent } from "./CallComponent";
 import { StartingValue } from "./StartingValueComponent";
 import { Button } from "@blueprintjs/core";
@@ -8,14 +8,13 @@ import { RequestModel } from "../model/requestModel";
 import { PlaygroundComponent } from "./PlaygroundComponent";
 import { SayComponent } from "./SayComponent";
 import { OperationsComponent } from "./OperationsComponent";
-import { getUsernameById } from "../helper/loginHandler";
 import { MessageComponent } from "./MessageComponent";
 import { ResultComponent } from "./ResultComponent";
 import { SayListComponent } from "./SayListComponent";
 
 interface iProps {
     gotCards: boolean,
-    game: Game,
+    game: GameOld,
     postReq: (reqObj: RequestModel) => void
 }
 
@@ -25,7 +24,7 @@ interface iState {
     isGameOver: boolean
 }
 
-export class Table extends React.Component<iProps, iState> {
+export class TableComponent extends React.Component<iProps, iState> {
 
     cards: number[] = [];
 
@@ -169,7 +168,7 @@ export class Table extends React.Component<iProps, iState> {
         )
     }
 
-    renderRightPlayerHand(game: Game) {
+    renderRightPlayerHand(game: GameOld) {
         let hand = getHand(1, game, "right");
 
         return (
@@ -181,7 +180,7 @@ export class Table extends React.Component<iProps, iState> {
 
     }
 
-    renderTopPlayerHand(game: Game) {
+    renderTopPlayerHand(game: GameOld) {
         let hand = getHand(2, game, "top");
 
         return (
@@ -192,7 +191,7 @@ export class Table extends React.Component<iProps, iState> {
         )
     }
 
-    renderLeftPlayerHand(game: Game) {
+    renderLeftPlayerHand(game: GameOld) {
         let hand = getHand(3, game, "left");
 
         return (
@@ -215,7 +214,7 @@ export class Table extends React.Component<iProps, iState> {
     }
 }
 
-function getHand(index: number, game: Game, poz: string): any[] {
+function getHand(index: number, game: GameOld, poz: string): any[] {
 
     let hand: any = [];
 
@@ -253,7 +252,7 @@ function getHand(index: number, game: Game, poz: string): any[] {
     return hand;
 }
 
-function getPlayerName(index: number, game: Game): string {
+function getPlayerName(index: number, game: GameOld): string {
 
     if (index === 3 && game.hands.length === 3)
         return "";
@@ -261,7 +260,7 @@ function getPlayerName(index: number, game: Game): string {
     for (let j = 0; j < game.hands.length; j++) {
         if (game.player.id === game.hands[j].id) {
             let handLength: number = game.hands.length;
-            return getUsernameById(game.hands[getIncreasedIndex(j + index, handLength)].id);
+            return game.hands[getIncreasedIndex(j + index, handLength)].id.toString();
         }
     }
 

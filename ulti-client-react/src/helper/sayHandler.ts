@@ -1,16 +1,15 @@
 import { SayMsg } from "../model/sayMsg";
 import { getCallName } from "./callHandler";
 import { Constants } from "./constants";
-import { getUsernameById } from "./loginHandler";
 
 export function getSayFromMsgList(say: SayMsg): string {
 
     if (say.kontraId === -1 && say.callId === -1) {
-        return (getUsernameById(say.playerId) + ": " + say.otherSay + "!");
+        return (say.playerId + ": " + say.otherSay + "!");
     } else if (say.otherSay === "-1") {
-        return (getUsernameById(say.playerId) + ": " + getKontraName(say.kontraId) + " " + getCallName(say.callId) + "!");
+        return (say.playerId + ": " + getKontraName(say.kontraId) + " " + getCallName(say.callId) + "!");
     } else {
-        return (getUsernameById(say.playerId) + ": " + getKontraName(say.kontraId) + " " + getCallName(say.callId) + " " + say.otherSay + "!");
+        return (say.playerId + ": " + getKontraName(say.kontraId) + " " + getCallName(say.callId) + " " + say.otherSay + "!");
     }
 }
 

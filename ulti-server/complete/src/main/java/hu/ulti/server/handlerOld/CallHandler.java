@@ -1,15 +1,15 @@
-package hu.ulti.server.handler;
+package hu.ulti.server.handlerOld;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import hu.ulti.server.Constants;
-import hu.ulti.server.Helper;
-import hu.ulti.server.model.Call;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Kontra;
-import hu.ulti.server.model.KontraAck;
-import hu.ulti.server.model.Player;
+import hu.ulti.server.HelperOld;
+import hu.ulti.server.modelOld.Call;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Kontra;
+import hu.ulti.server.modelOld.KontraAck;
+import hu.ulti.server.modelOld.Player;
 
 public class CallHandler {
 
@@ -53,7 +53,7 @@ public class CallHandler {
 		int szum = 0;
 
 		for (int i = 0; i < call.size(); i++) {
-			szum += Helper.getCallValue(call.get(i).getCallId());
+			szum += HelperOld.getCallValue(call.get(i).getCallId());
 		}
 
 		return szum;

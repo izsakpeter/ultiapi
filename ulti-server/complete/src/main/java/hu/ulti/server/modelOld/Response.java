@@ -1,4 +1,4 @@
-package hu.ulti.server.model;
+package hu.ulti.server.modelOld;
 
 public class Response {
 

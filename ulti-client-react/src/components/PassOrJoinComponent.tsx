@@ -2,13 +2,12 @@ import { Button } from "@blueprintjs/core";
 import React from "react";
 import { getCallNameListString, getCallValueSum } from "../helper/callHandler";
 import { GetCardSource } from "../helper/cardHandler";
-import { getUsernameById } from "../helper/loginHandler";
 import { Call } from "../model/call";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { RequestModel } from "../model/requestModel";
 
 interface iProps {
-    game: Game,
+    game: GameOld,
      postReq: (reqObj: RequestModel) => void
 }
 
@@ -45,7 +44,7 @@ export class PassOrJoin extends React.Component<iProps, iState> {
         return (
             <div>
                 <div className={"p-o-j-panel"}>
-                    <div>Előző mondás: {getCallNameListString(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {getUsernameById(this.state.lastCallerId)} által.</div>
+                    <div>Előző mondás: {getCallNameListString(this.state.callList)}, értéke: {getCallValueSum(this.state.callList)} {this.state.lastCallerId} által.</div>
                     <Button className={"p-o-j-button"} onClick={this.onPass}>passz</Button>
                     <Button className={"p-o-j-button"} onClick={this.onJoin}>felvesz</Button>
                 </div>

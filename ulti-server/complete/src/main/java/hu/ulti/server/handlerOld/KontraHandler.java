@@ -1,19 +1,19 @@
-package hu.ulti.server.handler;
+package hu.ulti.server.handlerOld;
 
 import java.util.List;
 
 import hu.ulti.server.Constants;
-import hu.ulti.server.Helper;
-import hu.ulti.server.model.Call;
-import hu.ulti.server.model.Game;
-import hu.ulti.server.model.Say;
-import hu.ulti.server.model.SayMsg;
+import hu.ulti.server.HelperOld;
+import hu.ulti.server.modelOld.Call;
+import hu.ulti.server.modelOld.Game;
+import hu.ulti.server.modelOld.Say;
+import hu.ulti.server.modelOld.SayMsg;
 
 public class KontraHandler {
 
 	public static List<Call> kontraHandler(Say say, Game game) {
 		game.setKontraPartFinished(false);
-		boolean isSzintelen = Helper.isSzintelenByList(game.getPreviousCall());
+		boolean isSzintelen = HelperOld.isSzintelenByList(game.getPreviousCall());
 
 		if (isSzintelen) {
 			for (int i = 0; i < game.getPreviousCall().size(); i++) {

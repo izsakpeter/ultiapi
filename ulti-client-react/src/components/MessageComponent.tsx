@@ -1,12 +1,11 @@
 import React from "react";
 import { getCallNameListString, getCallValueSum } from "../helper/callHandler";
-import { getUsernameById } from "../helper/loginHandler";
 import { Call } from "../model/call";
-import { Game } from "../model/game";
+import { GameOld } from "../model/gameOld";
 import { RequestModel } from "../model/requestModel";
 
 interface iProps {
-    game: Game,
+    game: GameOld,
     postReq: (reqObj: RequestModel) => void
 }
 
@@ -53,8 +52,8 @@ export class MessageComponent extends React.Component<iProps, iState> {
                 return (
                     <div className={"msg-border"}>
                         <div className="msg-text-middle">
-                            <div>Aktiv játékos: {getUsernameById(this.state.activePlayerId)}</div>
-                            <div>Mondás: {getCallNameListString(this.state.callList)} {getUsernameById(this.state.lastCallerId)} által.</div>
+                            <div>Aktiv játékos: {this.state.activePlayerId}</div>
+                            <div>Mondás: {getCallNameListString(this.state.callList)} {this.state.lastCallerId} által.</div>
                         </div>
                     </div >
                 )
@@ -63,10 +62,10 @@ export class MessageComponent extends React.Component<iProps, iState> {
                     return (
                         <div className={"msg-border"}>
                             <div className="msg-text-middle">
-                                <div>Aktiv játékos: {getUsernameById(this.state.activePlayerId)}</div>
+                                <div>Aktiv játékos: {this.state.activePlayerId}</div>
                                 {getCallValueSum(
                                     this.props.game.previousCall) === 0 ? "" : <div>Előző mondás: {getCallNameListString(this.props.game.previousCall)},
-                                        értéke: {getCallValueSum(this.props.game.previousCall)} {getUsernameById(this.props.game.lastCallerId)} által.</div>}
+                                        értéke: {getCallValueSum(this.props.game.previousCall)} {this.props.game.lastCallerId} által.</div>}
                             </div>
                         </div>
                     )

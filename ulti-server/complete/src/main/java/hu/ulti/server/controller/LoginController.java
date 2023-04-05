@@ -21,5 +21,4 @@ public class LoginController {
 	public LoginResponse login(@RequestBody LoginRequest request) {
 		return loginService.login(request);
 	}
-
 }

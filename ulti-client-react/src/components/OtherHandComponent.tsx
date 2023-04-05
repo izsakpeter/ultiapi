@@ -1,5 +1,5 @@
 import React from "react";
-import { GetCard90Source, GetCardSource, GetHalfCard90Source, GetHalfCardSource } from "../helper/cardHandler";
+import { getCard90Source, getCardSource, getHalfCard90Source, getHalfCardSource } from "../helper/cardHandler";
 import { GameOld } from "../model/gameOld";
 
 interface iProps {
@@ -76,14 +76,14 @@ function getHand(index: number, game: GameOld, poz: string): any[] {
 
                     if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1) {
                         if (poz === "top")
-                            hand.push(<img alt="card" key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
+                            hand.push(<img alt="card" key={listItem.uuid} src={getHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
                         else
-                            hand.push(<div key={listItem.uuid}><img alt="card" src={GetHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
+                            hand.push(<div key={listItem.uuid}><img alt="card" src={getHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
                     } else {
                         if (poz === "top")
-                            hand.push(<img alt="card" key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
+                            hand.push(<img alt="card" key={listItem.uuid} src={getCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
                         else
-                            hand.push(<div key={listItem.uuid}><img alt="card" key={listItem.uuid} src={GetCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
+                            hand.push(<div key={listItem.uuid}><img alt="card" key={listItem.uuid} src={getCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
                     }
 
                 }

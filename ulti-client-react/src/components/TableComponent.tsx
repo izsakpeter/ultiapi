@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GetCard90Source, GetCardSource, GetHalfCard90Source, GetHalfCardSource, GetOrderedHand } from "../helper/cardHandler";
+import { getCard90Source, getCardSource, getHalfCard90Source, getHalfCardSource, getOrderedHand } from "../helper/cardHandler";
 import { GameOld } from "../model/gameOld";
 import { CallComponent } from "./CallComponent";
 import { StartingValue } from "./StartingValueComponent";
@@ -157,10 +157,10 @@ export class TableComponent extends React.Component<iProps, iState> {
     }
 
     renderMyHand() {
-        let cardsInHand = GetOrderedHand(this.state.hand.sort((a, b) => a - b), this.props.game.player.colorOrder);
+        let cardsInHand = getOrderedHand(this.state.hand.sort((a, b) => a - b), this.props.game.player.colorOrder);
         let cardsImg = [];
         for (let i = 0; i < cardsInHand.length; i++) {
-            cardsImg.push(<Button key={"idh" + i} ><img alt="card" src={GetCardSource(cardsInHand[i])} className="my-card" onClick={this.cardAction} id={cardsInHand[i].toString()} /></Button>);
+            cardsImg.push(<Button key={"idh" + i} ><img alt="card" src={getCardSource(cardsInHand[i])} className="my-card" onClick={this.cardAction} id={cardsInHand[i].toString()} /></Button>);
         }
 
         return (
@@ -205,7 +205,7 @@ export class TableComponent extends React.Component<iProps, iState> {
     renderTalon() {
         let talonImg = [];
         for (let i = 0; i < this.state.talon.length; i++) {
-            talonImg.push(<Button key={"idt" + i}><img alt="card" src={GetCardSource(this.state.talon[i])} className="talon-card" onClick={this.backToHand} id={this.state.talon[i].toString()} /></Button>);
+            talonImg.push(<Button key={"idt" + i}><img alt="card" src={getCardSource(this.state.talon[i])} className="talon-card" onClick={this.backToHand} id={this.state.talon[i].toString()} /></Button>);
         }
 
         return (
@@ -234,14 +234,14 @@ function getHand(index: number, game: GameOld, poz: string): any[] {
 
                     if (i !== game.hands[getIncreasedIndex(j + index, handLength)].list.length - 1) {
                         if (poz === "top")
-                            hand.push(<img alt="card" key={listItem.uuid} src={GetHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
+                            hand.push(<img alt="card" key={listItem.uuid} src={getHalfCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard"} />);
                         else
-                            hand.push(<div key={listItem.uuid}><img alt="card" src={GetHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
+                            hand.push(<div key={listItem.uuid}><img alt="card" src={getHalfCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-halfcard-90"} /></div>);
                     } else {
                         if (poz === "top")
-                            hand.push(<img alt="card" key={listItem.uuid} src={GetCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
+                            hand.push(<img alt="card" key={listItem.uuid} src={getCardSource(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card"} />);
                         else
-                            hand.push(<div key={listItem.uuid}><img alt="card" key={listItem.uuid} src={GetCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
+                            hand.push(<div key={listItem.uuid}><img alt="card" key={listItem.uuid} src={getCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
                     }
 
                 }

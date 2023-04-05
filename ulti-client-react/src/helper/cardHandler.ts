@@ -1,6 +1,6 @@
 
 
-export function GetCardSource(id: number): string {
+export function getCardSource(id: number): string {
 
 	switch (id) {
 		case 0: return require('../resources/img/cards/m7.png');
@@ -40,7 +40,7 @@ export function GetCardSource(id: number): string {
 	return require('../resources/img/cards/hatlap.png');
 }
 
-export function GetHalfCardSource(id: number): string {
+export function getHalfCardSource(id: number): string {
 
 	switch (id) {
 		case 0: return require('../resources/img/half_cards/m7.png');
@@ -80,7 +80,7 @@ export function GetHalfCardSource(id: number): string {
 	return require('../resources/img/half_cards/hatlap.png');
 }
 
-export function GetCard90Source(id: number): string {
+export function getCard90Source(id: number): string {
 
 	switch (id) {		
 		case 0: return require('../resources/img/cards_90/m7.png');
@@ -120,7 +120,7 @@ export function GetCard90Source(id: number): string {
 	return require('../resources/img/cards_90/hatlap.png');
 }
 
-export function GetHalfCard90Source(id: number): string {
+export function getHalfCard90Source(id: number): string {
 
 	switch (id) {
 		case 0: return require('../resources/img/half_cards_90/m7.png');
@@ -160,7 +160,7 @@ export function GetHalfCard90Source(id: number): string {
 	return require('../resources/img/half_cards_90/hatlap.png');
 }
 
-export function GetOrderedHand(cards: Array<number>, isColorOrder: boolean): Array<number> {
+export function getOrderedHand(cards: Array<number>, isColorOrder: boolean): Array<number> {
 
 	var orderedCards = cards;
 

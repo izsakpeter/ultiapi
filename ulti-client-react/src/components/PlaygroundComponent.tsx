@@ -1,5 +1,5 @@
 import React from "react";
-import { GetCardSource } from "../helper/cardHandler";
+import { getCardSource } from "../helper/cardHandler";
 import { GameOld } from "../model/gameOld";
 
 interface iProps {
@@ -21,9 +21,9 @@ export class PlaygroundComponent extends React.Component<iProps, iState> {
         } else {
             return (
                 <div>
-                    <img alt="card" src={GetCardSource(this.props.game.round.card1Id)} className="playcard" />
-                    <img alt="card" src={GetCardSource(this.props.game.round.card2Id)} className="playcard" />
-                    <img alt="card" src={GetCardSource(this.props.game.round.card3Id)} className="playcard" />
+                    <img alt="card" src={getCardSource(this.props.game.round.card1Id)} className="playcard" />
+                    <img alt="card" src={getCardSource(this.props.game.round.card2Id)} className="playcard" />
+                    <img alt="card" src={getCardSource(this.props.game.round.card3Id)} className="playcard" />
                 </div>
             )
         }

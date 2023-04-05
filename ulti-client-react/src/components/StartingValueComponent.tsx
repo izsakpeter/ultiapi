@@ -1,6 +1,6 @@
 import { Button, Radio } from "@blueprintjs/core";
 import React from "react";
-import { GetCardSource } from "../helper/cardHandler";
+import { getCardSource } from "../helper/cardHandler";
 import { Constants } from "../helper/constants";
 import { GameOld } from "../model/gameOld";
 import { RequestModel } from "../model/requestModel";
@@ -44,7 +44,7 @@ export class StartingValue extends React.Component<iProps, iState> {
         if (this.props.game.activePlayer !== this.props.game.player.id || this.props.game.startingValue !== 0 || this.props.game.gameOver)
             return <></>;
 
-        let talon = <div><img alt="card" src={GetCardSource(this.props.game.talon[0].id)} className="talon-card" /><img alt="card" src={GetCardSource(this.props.game.talon[1].id)} className="talon-card" /></div>
+        let talon = <div><img alt="card" src={getCardSource(this.props.game.talon[0].id)} className="talon-card" /><img alt="card" src={getCardSource(this.props.game.talon[1].id)} className="talon-card" /></div>
 
         return (
             <div>

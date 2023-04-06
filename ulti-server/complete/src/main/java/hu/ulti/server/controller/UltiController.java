@@ -87,17 +87,17 @@ public class UltiController {
 
 		return output;
 	}*/
-	
+	/*
 	public Response shuffle(@RequestBody Request request) {
 		
 		int id = request.getId();
-/*
+
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getId() == 0) {
 				players.set(i, new Player(id));
 				break;
 			}
-		}*/
+		}
 
 		for (int i = 0; i < players.size(); i++) {
 			if (!players.get(i).isReady()) {
@@ -122,7 +122,7 @@ public class UltiController {
 			game.setLastModificationTimeStamp(System.currentTimeMillis());
 			return new Response(true);
 		}
-	}
+	}*/
 
 	@PostMapping("order")
 	public Response changeOrder(@RequestBody Request request) {

@@ -7,11 +7,11 @@ import Table from './Table';
 import { Game } from '../model/game';
 
 let lastTimeStamp: number = 0;
+let playerId: number = -1;
 
 export default function App() {
 
     const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
-    const [playerId, setPlayerId] = useState<number>(-1);
     const [game, setGame] = useState<Game>(new Game());
     
     async function status(id: number) {
@@ -29,7 +29,7 @@ export default function App() {
 
         if (result.isSuccess){
             setLoggedIn(true);
-            setPlayerId(result.playerId);
+            playerId = result.playerId;
             status(result.playerId);
         }  
     }

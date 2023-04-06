@@ -33,7 +33,7 @@ public class Helper {
 
 		for (Player player : players) {
 			if (player.getPlayerId() != -1)
-				result.add(player);
+				result.add(new Player(player.getPlayerId(), player.getPlayerName()));
 		}
 
 		return result;

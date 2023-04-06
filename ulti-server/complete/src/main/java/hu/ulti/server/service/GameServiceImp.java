@@ -27,7 +27,7 @@ public class GameServiceImp implements GameService {
 	private ExecutorService statusPoll = Executors.newFixedThreadPool(5);
 
 	private Game game = new Game();
-	
+
 	private List<List<Card>> cardPacks = null;
 	private static List<Hand> handList = new ArrayList<Hand>();
 	private List<Card> talon = new ArrayList<Card>();
@@ -43,14 +43,23 @@ public class GameServiceImp implements GameService {
 			if (players.get(i).getPlayerId() == -1) {
 				players.set(i, player);
 				game.setLastModificationTimeStamp(System.currentTimeMillis());
-
-				if (i == players.size() - 1) {
-					startRound();
-				}
-				
 				break;
 			}
 		}
+
+		if (!game.isRoundStarted() && isRoundReadyToStart()) {
+			startRound();
+		}
+
+	}
+
+	private boolean isRoundReadyToStart() {
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getPlayerId() == -1)
+				return false;
+		}
+		
+		return true;
 	}
 
 	@Override
@@ -89,9 +98,9 @@ public class GameServiceImp implements GameService {
 
 		return output;
 	}
-	
+
 	/////////////////////////////////////////////
-	
+
 	private void startRound() {
 		game.setRoundStarted(true);
 		setStarterPlayer();
@@ -99,10 +108,9 @@ public class GameServiceImp implements GameService {
 		game.setTalon(Helper.getCoveredTalon());
 		game.setHands(handList);
 		game.setScores(Helper.getDefaultScoreList(players));
-		
+
 	}
-	
-	
+
 	private void setStarterPlayer() {
 		for (int i = 0; i < players.size(); i++) {
 			if (dealer == i) {
@@ -113,7 +121,7 @@ public class GameServiceImp implements GameService {
 			}
 		}
 	}
-	
+
 	private void setHands() {
 		cardPacks = Helper.getPacks();
 		game.setHands(new ArrayList<Hand>());
@@ -128,11 +136,13 @@ public class GameServiceImp implements GameService {
 				if (dealer == i) {
 					players.get(i).setPlaying(false);
 					players.get(i).setHand(new ArrayList<Card>());
+					handList.add(i, new Hand());
 					handList.set(i, Helper.setEmptyHand(players.get(i)));
 				} else {
 					players.get(i).setPlaying(true);
 					players.get(i).setHand(cardPacks.get(handIndex));
 					players.get(i).getHand().sort(Comparator.comparing(Card::getId));
+					handList.add(i, new Hand());
 					handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 					handIndex++;
 				}
@@ -142,6 +152,7 @@ public class GameServiceImp implements GameService {
 				players.get(i).setPlaying(true);
 				players.get(i).setHand(cardPacks.get(i));
 				players.get(i).getHand().sort(Comparator.comparing(Card::getId));
+				handList.add(i, new Hand());
 				handList.set(i, Helper.fillHandWithCoveredCards(players.get(i)));
 			}
 		}

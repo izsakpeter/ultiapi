@@ -133,7 +133,7 @@ export class TableComponent extends React.Component<iProps, iState> {
 
                 let reqObj: RequestModel = {
                     dest: "play",
-                    id: this.props.game.player.id,
+                    playerId: this.props.game.player.id,
                     cardid: event.target.id
                 }
 

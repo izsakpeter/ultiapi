@@ -6,10 +6,10 @@ export class RequestModel {
     public username?: string;
     public password?: string;
 
-    public id?: number;
+    public playerId?: number;
 
     //order
-    public colorOrder?: boolean;
+    public isColorOrder?: boolean;
 
     //startingvalue
     public value?: number;
@@ -56,39 +56,39 @@ export function getRequestJson(model: RequestModel): any {
         case "start":
         case "newgame":
             return {
-                id: model.id
+                id: model.playerId
             };
         case "order":
             return {
-                id: model.id,
-                colorOrder: model.colorOrder
+                playerId: model.playerId,
+                isColorOrder: model.isColorOrder
             };
         case "startingvalue":
             return {
-                id: model.id,
+                id: model.playerId,
                 value: model.value
             };
         case "call":
             return {
-                id: model.id,
+                id: model.playerId,
                 call: model.call,
                 talonid: model.talonid,
                 bluff4020: model.bluff4020
             };
         case "join":
             return {
-                id: model.id,
+                id: model.playerId,
                 isjoin: model.isjoin
             };
         case "play":
             return {
-                id: model.id,
+                id: model.playerId,
                 cardid: model.cardid
             };
 
         case "sayparti":
             return {
-                id: model.id,
+                id: model.playerId,
                 have40: model.have40,
                 have120: model.have120,
                 have220: model.have220,
@@ -96,7 +96,7 @@ export function getRequestJson(model: RequestModel): any {
             };
         case "saykontra":
             return {
-                id: model.id,
+                id: model.playerId,
                 kontraId: model.kontraId,
                 kontraPassz: model.kontraPassz,
                 kontra40100: model.kontra40100,

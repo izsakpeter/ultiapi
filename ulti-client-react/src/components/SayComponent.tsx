@@ -183,7 +183,7 @@ export class SayComponent extends React.Component<iProps, iState>{
 
             let reqObj: RequestModel = {
                 dest: "sayparti",
-                id: this.props.game.player.id,
+                playerId: this.props.game.player.id,
                 have40: this.state.is40Checked,
                 have120: this.state.is120Checked,
                 have220: this.state.is220Checked,
@@ -200,7 +200,7 @@ export class SayComponent extends React.Component<iProps, iState>{
 
             let reqObj: RequestModel = {
                 dest: "saykontra",
-                id: this.props.game.player.id,
+                playerId: this.props.game.player.id,
                 kontraId: 1,
                 kontraPassz: this.state.isKontraPasszChecked,
                 kontra40100: this.state.isKontra40100Checked,
@@ -291,7 +291,7 @@ export class SayComponent extends React.Component<iProps, iState>{
     rekontraOkButtonHandler() {
         let reqObj: RequestModel = {
             dest: "saykontra",
-            id: this.props.game.player.id,
+            playerId: this.props.game.player.id,
             kontraId: 2,
             kontraPassz: this.state.isKontraPasszChecked,
             kontra40100: this.state.isKontra40100Checked,

@@ -5,6 +5,7 @@ import Login from './Login';
 import { StatusPostRequest } from '../request/statusRequest';
 import Table from './Table';
 import { Game } from '../model/game';
+import { postRequest } from '../request/postRequest';
 
 let lastTimeStamp: number = 0;
 let playerId: number = -1;
@@ -34,11 +35,15 @@ export default function App() {
         }  
     }
 
+    const postReq = async (reqObj: RequestModel) => {
+        await postRequest(reqObj);
+    }
+    
     return (
         <div className="ulti-container">
             {!isLoggedIn && <div><Login loginRequest={login} /></div>}
 
-            {isLoggedIn && <div><Table game={game} /></div>}
+            {isLoggedIn && <div><Table game={game} postReq={postReq}/></div>}
           
         </div>
     );

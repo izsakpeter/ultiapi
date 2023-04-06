@@ -62,8 +62,8 @@ export class OperationsComponent extends React.Component<iProps, iState> {
 
         let reqObj: RequestModel = {
             dest: "order",
-            id: this.props.game.player.id,
-            colorOrder: !this.props.game.player.colorOrder
+            playerId: this.props.game.player.id,
+            isColorOrder: !this.props.game.player.colorOrder
         }
 
         this.props.postReq(reqObj);

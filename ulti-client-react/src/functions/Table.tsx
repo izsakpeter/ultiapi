@@ -2,12 +2,15 @@ import { Button } from "@blueprintjs/core";
 import { getCard90Source, getCardSource, getHalfCard90Source, getHalfCardSource, getOrderedHand } from "../helper/cardHandler";
 import { Card } from "../model/card";
 import { Game } from "../model/game";
+import { RequestModel } from "../model/requestModel";
+import Operations from "./Operations";
 
 interface IGame {
-    game: Game;
+    game: Game,
+    postReq: (reqObj: RequestModel) => void
 }
 
-export default function Table({ game }: IGame) {
+export default function Table({ game, postReq }: IGame) {
 
     if (!game.isRoundStarted && game.players) {
         return (<div>
@@ -27,7 +30,7 @@ export default function Table({ game }: IGame) {
 
             <div className="table-container">
                 <div className="menu">
-                    menü
+                    <div><Operations game={game} postReq={postReq} /></div>
                 </div>
                 <div className="table">
 
@@ -168,7 +171,6 @@ function getHand(index: number, game: Game, poz: string): any[] {
                         else
                             hand.push(<div key={listItem.uuid}><img alt="card" key={listItem.uuid} src={getCard90Source(listItem.cardId)} className={listItem.cardId === -2 ? "" : "otherhand-card-90"} /></div>);
                     }
-
                 }
             }
         }
@@ -185,7 +187,14 @@ function getPlayerName(index: number, game: Game): string {
     for (let j = 0; j < game.hands.length; j++) {
         if (game.player.playerId === game.hands[j].id) {
             let handLength: number = game.hands.length;
-            return game.hands[getIncreasedIndex(j + index, handLength)].id.toString();
+
+            let id = game.hands[getIncreasedIndex(j + index, handLength)].id;
+
+
+            for (let index = 0; index < game.players.length; index++) {
+                if (game.players[index].playerId === id)
+                    return game.players[index].playerName;
+            }
         }
     }
 

@@ -57,7 +57,7 @@ export class PassOrJoin extends React.Component<iProps, iState> {
 
         let reqObj: RequestModel = {
             dest: "join",
-            id: this.props.game.player.id,
+            playerId: this.props.game.player.id,
             isjoin: false
         }
 
@@ -68,7 +68,7 @@ export class PassOrJoin extends React.Component<iProps, iState> {
 
         let reqObj: RequestModel = {
             dest: "join",
-            id: this.props.game.player.id,
+            playerId: this.props.game.player.id,
             isjoin: true
         }
 

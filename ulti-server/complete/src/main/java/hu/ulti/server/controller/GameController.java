@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import hu.ulti.server.model.Game;
+import hu.ulti.server.request.Request;
 import hu.ulti.server.request.StatusRequest;
+import hu.ulti.server.response.Response;
 import hu.ulti.server.service.GameService;
 
 @CrossOrigin
@@ -21,5 +23,10 @@ public class GameController {
 	@PostMapping("gamestatus")
 	public DeferredResult<Game> keepAlive(@RequestBody StatusRequest request) {
 		return gameService.gameStatus(request);
+	}
+	
+	@PostMapping("order")
+	public Response changeOrder(@RequestBody Request request) {
+		return gameService.changeOrder(request);
 	}
 }

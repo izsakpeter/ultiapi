@@ -116,7 +116,7 @@ export class CallComponent extends React.Component<iProps, iState>{
 
                 let reqObj: RequestModel = {
                     dest: "call",
-                    id: this.props.game.player.id,
+                    playerId: this.props.game.player.id,
                     call: finalCallList,
                     talonid: this.props.talon,
                     bluff4020: isBluff4020(this.state.callList, this.state.colorId, this.props.game)

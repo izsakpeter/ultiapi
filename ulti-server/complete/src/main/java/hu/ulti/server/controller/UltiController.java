@@ -123,7 +123,7 @@ public class UltiController {
 			return new Response(true);
 		}
 	}*/
-
+	/*
 	@PostMapping("order")
 	public Response changeOrder(@RequestBody Request request) {
 
@@ -134,7 +134,7 @@ public class UltiController {
 
 		game.setLastModificationTimeStamp(System.currentTimeMillis());
 		return new Response(true);
-	}
+	}*/
 
 	@PostMapping("startingvalue")
 	public Response setStartingValue(@RequestBody Request request) {

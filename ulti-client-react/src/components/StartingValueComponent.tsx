@@ -74,7 +74,7 @@ export class StartingValue extends React.Component<iProps, iState> {
 
             let reqObj: RequestModel = {
                 dest: "startingvalue",
-                id: this.props.game.player.id,
+                playerId: this.props.game.player.id,
                 value: this.state.value
             }
 

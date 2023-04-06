@@ -14,7 +14,9 @@ import hu.ulti.server.model.Card;
 import hu.ulti.server.model.Game;
 import hu.ulti.server.model.Hand;
 import hu.ulti.server.model.Player;
+import hu.ulti.server.request.Request;
 import hu.ulti.server.request.StatusRequest;
+import hu.ulti.server.response.Response;
 
 @Service
 public class GameServiceImp implements GameService {
@@ -58,7 +60,7 @@ public class GameServiceImp implements GameService {
 			if (players.get(i).getPlayerId() == -1)
 				return false;
 		}
-		
+
 		return true;
 	}
 
@@ -97,6 +99,19 @@ public class GameServiceImp implements GameService {
 		 */
 
 		return output;
+	}
+
+	@Override
+	public Response changeOrder(Request request) {
+		
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getPlayerId() == request.getPlayerId()) {
+				players.get(i).setColorOrder(request.isColorOrder());
+			}
+		}
+
+		game.setLastModificationTimeStamp(System.currentTimeMillis());
+		return new Response(true);
 	}
 
 	/////////////////////////////////////////////

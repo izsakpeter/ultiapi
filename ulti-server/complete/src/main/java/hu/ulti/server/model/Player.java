@@ -2,6 +2,8 @@ package hu.ulti.server.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Player {
 
 	private int playerId = -1;
@@ -43,6 +45,7 @@ public class Player {
 		this.hand = hand;
 	}
 
+	@JsonProperty(value = "isColorOrder")
 	public boolean isColorOrder() {
 		return isColorOrder;
 	}
@@ -51,6 +54,7 @@ public class Player {
 		this.isColorOrder = isColorOrder;
 	}
 
+	@JsonProperty(value = "isColorForced")
 	public boolean isColorForced() {
 		return isColorForced;
 	}
@@ -59,6 +63,7 @@ public class Player {
 		this.isColorForced = isColorForced;
 	}
 
+	@JsonProperty(value = "isPlaying")
 	public boolean isPlaying() {
 		return isPlaying;
 	}

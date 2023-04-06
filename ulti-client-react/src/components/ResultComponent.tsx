@@ -199,7 +199,7 @@ export class ResultComponent extends React.Component<iProps, iState> {
     readyButtonAction(playerId: number) {
         let reqObj: RequestModel = {
             dest: "newgame",
-            id: playerId
+            playerId: playerId
         }
 
         this.props.postReq(reqObj);

@@ -1,4 +1,4 @@
-package ulti.hu;
+package hu.ulti;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

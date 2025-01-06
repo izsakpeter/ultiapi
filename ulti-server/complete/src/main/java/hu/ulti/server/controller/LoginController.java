@@ -17,7 +17,7 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 
-	@PostMapping("login")
+	@PostMapping("/login")
 	public LoginResponse login(@RequestBody LoginRequest request) {
 		return loginService.login(request);
 	}

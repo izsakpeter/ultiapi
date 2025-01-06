@@ -1,0 +1,16 @@
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/Application.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/controller/LoginController.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/controller/PlayController.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/controller/TableController.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/controller/UserController.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/model/LoginRequest.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/LoginService.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/LoginServiceImp.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/PlayService.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/PlayServiceImp.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/TableService.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/TableServiceImp.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/UltiService.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/UltiServiceImp.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/UserService.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/UserServiceImp.java

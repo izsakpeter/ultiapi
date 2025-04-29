@@ -1,4 +1,4 @@
-package hu.ulti.service;
+package ulti.service;
 
 import org.springframework.stereotype.Service;
 

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/src/core/request/loginRequest.dart';
+import 'package:frontend/src/screen/registration/registration.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
@@ -23,7 +24,6 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -60,7 +60,17 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: submitForm,
-                child: const Text('Login'),
+                child: const Text('Belépés'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegistrationPage()),
+                  );
+                },
+                child: const Text('Regisztráció'),
               ),
             ],
           ),

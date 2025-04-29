@@ -1,4 +1,4 @@
-package hu.ulti.service;
+package ulti.service;
 
 public interface UltiService {
 

@@ -1,9 +1,9 @@
-package hu.ulti.controller;
+package ulti.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import hu.ulti.service.TableService;
+import ulti.service.TableService;
 
 @Controller
 public class TableController {

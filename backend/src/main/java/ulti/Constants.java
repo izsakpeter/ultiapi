@@ -1,4 +1,4 @@
-package hu.ulti;
+package ulti;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,9 +1,15 @@
 /home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/Application.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/Constants.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/LoginResponse.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/UserRepository.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/WebConfig.java
 /home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/controller/LoginController.java
 /home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/controller/PlayController.java
 /home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/controller/TableController.java
 /home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/controller/UserController.java
-/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/model/LoginRequest.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/dto/UserDto.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/entity/User.java
+/home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/model/request/LoginRequest.java
 /home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/LoginService.java
 /home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/LoginServiceImp.java
 /home/ubuntu/eclipse-workspace/ultiapi/backend/src/main/java/hu/ulti/service/PlayService.java

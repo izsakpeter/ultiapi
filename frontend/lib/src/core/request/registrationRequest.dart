@@ -1,26 +1,22 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:frontend/src/screen/lobby/lobby.dart';
-import 'package:frontend/src/screen/table/table.dart';
 
-import 'config.dart';
+import 'package:flutter/material.dart';
+import 'package:frontend/src/core/request/config.dart';
+import 'package:frontend/src/screen/login/login.dart';
+
 import 'package:http/http.dart' as http;
 
-Future<void> loginRequest(
-    String email, String password, BuildContext context) async {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const LobbyScreen()),
-  );
-
+Future<void> registrationRequest(
+    String email, String user, String password, BuildContext context) async {
   final body = jsonEncode({
-    'email': email,
+    'username': user,
     'password': password,
+    'email': email,
   });
 
   try {
     final response = await http.post(
-      getUri("login"),
+      getUri("registration"),
       headers: headers,
       body: body,
     );
@@ -31,8 +27,7 @@ Future<void> loginRequest(
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const TableScreen()),
-        // MaterialPageRoute(builder: (context) => LobbyScreen()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     } else {
       // Handle error response

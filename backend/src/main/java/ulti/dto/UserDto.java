@@ -1,12 +1,12 @@
-package hu.ulti.model;
+package ulti.dto;
 
-public class User {
+public class UserDto {
 	private int name;
 	private int id;
 	private int score;
 	private int permission;
 
-	public User() {
+	public UserDto() {
 		super();		
 	}
 

@@ -1,9 +1,9 @@
-package hu.ulti.service;
+package ulti.service;
 
 import org.springframework.http.ResponseEntity;
 
-import hu.ulti.LoginResponse;
-import hu.ulti.model.request.LoginRequest;
+import ulti.model.request.LoginRequest;
+import ulti.response.LoginResponse;
 
 public interface LoginService {
 

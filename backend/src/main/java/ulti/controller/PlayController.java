@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class PlayController {
 
-	@PostMapping("status")
 	public void keepAlive() {
 	}
 

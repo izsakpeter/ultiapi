@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/src/screen/lobby/lobby.dart';
-import 'package:frontend/src/screen/table/table.dart';
 
 import 'config.dart';
 import 'package:http/http.dart' as http;
@@ -26,14 +25,21 @@ Future<void> loginRequest(
     );
 
     if (response.statusCode == 200) {
-      // Handle successful response
-      print('Response data: ${response.body}');
+      // Decode JSON response
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const TableScreen()),
-        // MaterialPageRoute(builder: (context) => LobbyScreen()),
-      );
+      print('Response data: $jsonResponse');
+
+      // Check if 'isSuccess' exists and is true
+      if (jsonResponse['isSuccess'] == true) {
+        print('+++++++++++++++++++++++++');
+        Future.microtask(() {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const LobbyScreen()),
+          );
+        });
+      }
     } else {
       // Handle error response
       print('Error: ${response.statusCode}');
@@ -41,4 +47,8 @@ Future<void> loginRequest(
   } catch (e) {
     print('Exception: $e');
   }
+}
+
+extension on String {
+  get isSuccess => "";
 }

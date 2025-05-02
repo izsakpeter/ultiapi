@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import ulti.entity.User;
+import ulti.helper.MD5;
 import ulti.model.request.UserRequest;
 import ulti.repository.UserRepository;
 import ulti.response.BaseResponse;
@@ -16,12 +17,21 @@ public class UserServiceImp implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private LobbyService lobbyService;
+
 	@Override
 	public ResponseEntity<BaseResponse> addUser(UserRequest request) {
 
-		User user = userRepository.save(new User(request.getUsername(), request.getPassword(), request.getEmail()));
+		String password = MD5.getMD5(request.getPassword());
+		User user = userRepository.save(new User(request.getUsername(), password, request.getEmail()));
 
-		return new ResponseEntity<BaseResponse>(new BaseResponse(user != null), HttpStatus.OK);
+		if (user != null) {
+			lobbyService.addLoggedUser(user.getName());
+			return new ResponseEntity<BaseResponse>(new BaseResponse(false), HttpStatus.OK);
+		}
+
+		return new ResponseEntity<BaseResponse>(new BaseResponse(false), HttpStatus.OK);
 	}
 
 	@Override

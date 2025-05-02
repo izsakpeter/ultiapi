@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:frontend/src/core/request/loginRequest.dart';
 import 'package:frontend/src/screen/registration/registration.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
   LoginPageState createState() => LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
@@ -56,6 +56,7 @@ class LoginPageState extends State<LoginPage> {
                 onSaved: (value) {
                   _password = value!;
                 },
+                onFieldSubmitted: (value) => submitForm(),
               ),
               const SizedBox(height: 20),
               ElevatedButton(

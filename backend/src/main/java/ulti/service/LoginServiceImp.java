@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import ulti.entity.User;
+import ulti.helper.MD5;
 import ulti.model.request.LoginRequest;
 import ulti.repository.UserRepository;
 import ulti.response.LoginResponse;
@@ -20,7 +21,6 @@ public class LoginServiceImp implements LoginService {
 
 	@Override
 	public ResponseEntity<LoginResponse> login(LoginRequest request) {
-		System.out.println("login " + request.getEmail() + ", " + request.getPassword());
 		
 		List<User> userList = userRepository.findAll();
 		
@@ -28,16 +28,14 @@ public class LoginServiceImp implements LoginService {
 		
 		for (User user : userList) {
 			
-			System.out.println(user.toString());
+			String password = MD5.getMD5(request.getPassword());
 			
-			if (user.getEmail().equals(request.getEmail()) && user.getPassword().equals(request.getPassword()))
+			if (user.getEmail().equals(request.getEmail()) && user.getPassword().equals(password))
 				loginUser = user;
 		}
 		
 		if (loginUser == null)
 			return new ResponseEntity<LoginResponse>(new LoginResponse(false), HttpStatus.OK);
-		
-		System.out.println("loginuser: " + loginUser.toString());
 		
 		
 		return new ResponseEntity<LoginResponse>(new LoginResponse(true, loginUser.getId(), loginUser.getName()), HttpStatus.OK);

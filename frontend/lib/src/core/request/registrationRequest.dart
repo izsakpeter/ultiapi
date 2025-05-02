@@ -27,7 +27,7 @@ Future<void> registrationRequest(
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     } else {
       // Handle error response

@@ -1,14 +1,13 @@
 package ulti.service;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
 import ulti.response.BaseResponse;
+import ulti.response.LobbyResponse;
 
 public interface LobbyService {
 	
-	ResponseEntity<List<String>> getLoggedInUsers();
+	ResponseEntity<LobbyResponse> getLoggedInUsers();
 	
 	void addLoggedUser(String name);
 	
